@@ -1,13 +1,16 @@
 ---
 id: PROFILE-PRODUCT-FEATURE
 title: Product feature profile
+description: Routes user-facing feature work to trust, safe-change, evidence, and verification requirements.
 type: profile
-status: active
+status: stable
+governance_status: active
 owners: [product, design, engineering]
 last_reviewed: 2026-08-10
 applies_to: [product-feature]
 tags: [profile, product]
 depends_on: [FND-TRUST, FND-CHANGE, AGENT-VERIFICATION]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
 ---
 
 # Product feature profile
@@ -36,4 +39,3 @@ Use for new or materially changed user-facing behavior.
 - Loading, empty, error, permission, offline, and destructive states are handled where relevant.
 - Accessibility, privacy, security, analytics, rollout, and support impact were considered.
 - The actual end-to-end user flow was inspected.
-

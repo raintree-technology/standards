@@ -1,13 +1,16 @@
 ---
 id: PROFILE-GROWTH-EXPERIMENT
 title: Growth experiment profile
+description: Routes growth experiments to evidence, measurement, trust, and safe-change requirements.
 type: profile
-status: active
+status: stable
+governance_status: active
 owners: [growth, product, analytics]
 last_reviewed: 2026-08-10
 applies_to: [growth-experiment]
 tags: [profile, growth, experiment]
 depends_on: [GROWTH-EXPERIMENTS, ANALYTICS-MEASUREMENT, FND-TRUST]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
 ---
 
 # Growth experiment profile
@@ -35,4 +38,3 @@ Use for acquisition, activation, monetization, engagement, retention, referral, 
 - Primary and guardrail metrics have exact definitions.
 - Instrumentation is validated end to end.
 - Stop, ship, iterate, or abandon decision is recorded with limitations.
-

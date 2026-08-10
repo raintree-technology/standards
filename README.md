@@ -1,3 +1,16 @@
+---
+type: Reference
+title: Raintree Standards
+description: Entry point for Raintree's governed, agent-readable quality standards.
+tags: [standards, governance, agents]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
+sources:
+  - id: okf-v02
+    resource: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
+    title: Open Knowledge Format v0.2
+    author: org:GoogleCloudPlatform
+---
+
 # Raintree Standards
 
 An authoritative quality system for humans and agents building products, software, data systems, content, growth programs, and operations.
@@ -6,13 +19,17 @@ This is not a general collection of tips. It defines what acceptable work looks 
 
 ## Format
 
-Markdown is the source of truth. Every governed document starts with YAML front matter containing machine-readable metadata. `schema/standard.schema.json` defines the standard contract, while `catalog.yaml` provides a fast index for agents and tooling.
+Markdown is the source of truth. The repository is an Open Knowledge Format (OKF) v0.2 bundle with a stricter Raintree application profile. Every concept document starts with YAML front matter containing machine-readable metadata. `schema/standard.schema.json` defines the Raintree standard contract, while `catalog.yaml` provides a fast index for agents and tooling.
 
 This hybrid has three advantages:
 
 - Markdown remains easy to read, review, diff, and cite.
 - YAML metadata supports discovery and task routing without duplicating the body.
 - JSON Schema allows automated validation without making JSON the authoring format.
+
+OKF supplies portable discovery, provenance, trust, and lifecycle conventions. Raintree adds stable IDs, controlled document types, ownership, applicability, dependencies, rule levels, exceptions, and verification requirements. Consumers must preserve unknown front-matter fields rather than treating the Raintree profile as the complete OKF vocabulary.
+
+Raintree maps its governance lifecycle onto OKF's lifecycle vocabulary: `status` uses OKF's `draft`, `stable`, and `deprecated` values, while `governance_status` retains Raintree's `draft`, `active`, `deprecated`, and `retired` states. `stale_after` mirrors `review_by` where a review deadline exists. An absent `verified` field means the document has not yet been independently verified; migration and structural validation do not count as content verification.
 
 ## Library model
 
@@ -49,4 +66,3 @@ The initial library establishes standards for database changes, product delivery
 ## Important distinction
 
 “Read-only for agents” is a behavioral and governance rule, not merely a filesystem permission. Agents are instructed by `AGENTS.md` not to modify this repository unless the user explicitly assigns standards maintenance. Filesystem permissions may be added in deployment environments, but Git review and repository ownership remain the durable enforcement mechanism.
-

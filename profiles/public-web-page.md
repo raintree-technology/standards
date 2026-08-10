@@ -1,13 +1,16 @@
 ---
 id: PROFILE-PUBLIC-WEB-PAGE
 title: Public web page profile
+description: Routes public web work to quality, search, trust, evidence, and verification requirements.
 type: profile
-status: active
+status: stable
+governance_status: active
 owners: [web, design, seo, content]
 last_reviewed: 2026-08-10
 applies_to: [public-web-page, landing-page, marketing-site]
 tags: [profile, web, seo]
 depends_on: [WEB-QUALITY, SEO-FOUNDATIONS, FND-TRUST]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
 ---
 
 # Public web page profile
@@ -36,4 +39,3 @@ Use for landing pages, marketing pages, public documentation, editorial pages, a
 - Indexability, status code, canonical, metadata, internal links, and structured data are intentional.
 - Performance and third-party behavior were measured.
 - Analytics and consent behavior were validated end to end.
-

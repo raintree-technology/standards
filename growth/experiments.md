@@ -1,14 +1,18 @@
 ---
 id: GROWTH-EXPERIMENTS
 title: Growth experiments
+description: Requires growth experiments to produce trustworthy learning and durable user and business value.
 type: standard
-status: active
+status: stable
+governance_status: active
 owners: [growth, product, analytics]
 last_reviewed: 2026-08-10
 review_by: 2027-02-10
+stale_after: 2027-02-10
 applies_to: [growth-experiment]
 tags: [growth, experiments, conversion, retention]
 depends_on: [FND-EVIDENCE, FND-TRUST, ANALYTICS-MEASUREMENT]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
 ---
 
 # Growth experiments
@@ -58,4 +62,3 @@ Do not end an experiment merely when a desired significance threshold appears. U
 **Applies when:** An experiment concludes.
 
 Record implementation, exposure, result, limitations, decision, and reusable learning. A non-winning result is organizational knowledge, not failed work.
-

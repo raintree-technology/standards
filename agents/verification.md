@@ -1,14 +1,18 @@
 ---
 id: AGENT-VERIFICATION
 title: Agent verification and handoff
+description: Requires proportionate verification and reproducible, honest handoffs for agent work.
 type: standard
-status: active
+status: stable
+governance_status: active
 owners: [standards]
 last_reviewed: 2026-08-10
 review_by: 2027-02-10
+stale_after: 2027-02-10
 applies_to: [all-agent-work]
 tags: [agents, testing, handoff]
 depends_on: [FND-EVIDENCE]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
 ---
 
 # Agent verification and handoff
@@ -51,4 +55,3 @@ State what was not verified, why, and the practical risk. Do not bury limitation
 **Applies when:** Completing implementation or analysis.
 
 Identify material outputs, verification performed, outcomes, exceptions, and any next action the user must take. Cite applicable failed or deferred standards by ID.
-

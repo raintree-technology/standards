@@ -1,14 +1,27 @@
 ---
 id: CONTENT-ERRORS
 title: Error messages
+description: Defines actionable, safe, accessible, and technically honest user-facing failure messages.
 type: standard
-status: active
+status: stable
+governance_status: active
 owners: [content, product, design]
 last_reviewed: 2026-08-10
 review_by: 2027-02-10
+stale_after: 2027-02-10
 applies_to: [product-feature, public-web-page, support-experience]
 tags: [content, errors, interface-copy]
 depends_on: [FND-TRUST]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
+sources:
+  - id: wix-error-messages
+    resource: https://wix-ux.com/when-life-gives-you-lemons-write-better-error-messages-46c5223e1a2f
+    title: When life gives you lemons, write better error messages
+    author: human:jenni-nadler
+  - id: website-spec-resilience
+    resource: https://specification.website/spec/resilience/
+    title: Website Specification — Resilience
+    author: human:joost-de-valk-and-contributors
 ---
 
 # Error Message Spec

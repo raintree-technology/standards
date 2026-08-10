@@ -1,13 +1,17 @@
 ---
 id: FND-EVIDENCE
 title: Evidence and claims
+description: Requires decisions and completion claims to match the strength and limits of available evidence.
 type: foundation
-status: active
+status: stable
+governance_status: active
 owners: [standards]
 last_reviewed: 2026-08-10
 review_by: 2027-02-10
+stale_after: 2027-02-10
 applies_to: [all-work]
 tags: [evidence, research, verification]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
 ---
 
 # Evidence and claims
@@ -53,4 +57,3 @@ State meaningful limitations such as sample size, selection bias, missing data, 
 ## Guidance
 
 Strong evidence is inspectable and reproducible. A passing test is evidence for the behavior it covers, not proof that the entire system is correct. A metric movement is an observation, not automatically proof of causation.
-

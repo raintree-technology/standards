@@ -1,14 +1,18 @@
 ---
 id: DATA-DATABASE
 title: Database changes
+description: Protects correctness, availability, recoverability, and ownership during database changes.
 type: standard
-status: active
+status: stable
+governance_status: active
 owners: [data, engineering]
 last_reviewed: 2026-08-10
 review_by: 2027-02-10
+stale_after: 2027-02-10
 applies_to: [database-change, product-feature]
 tags: [database, schema, migrations, queries, recovery]
 depends_on: [FND-CHANGE, FND-EVIDENCE]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
 ---
 
 # Database changes
@@ -73,4 +77,3 @@ Avoid unbounded reads, writes, cascades, and offset pagination on large changing
 ## Change evidence
 
 A production database change should include the forward migration, compatibility analysis, representative performance evidence, monitoring plan, recovery plan, and owner for any deferred contraction.
-

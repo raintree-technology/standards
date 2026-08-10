@@ -1,14 +1,18 @@
 ---
 id: ANALYTICS-MEASUREMENT
 title: Product and growth measurement
+description: Defines decision-driven, interpretable, privacy-conscious product and growth instrumentation.
 type: standard
-status: active
+status: stable
+governance_status: active
 owners: [analytics, product]
 last_reviewed: 2026-08-10
 review_by: 2027-02-10
+stale_after: 2027-02-10
 applies_to: [product-feature, growth-experiment, public-web-page]
 tags: [analytics, events, metrics, privacy]
 depends_on: [FND-EVIDENCE, FND-TRUST]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
 ---
 
 # Product and growth measurement
@@ -51,4 +55,3 @@ Collect only what is needed for the documented decision. Do not place secrets, f
 **Applies when:** Reporting a rate, funnel, cohort, or experiment outcome.
 
 State who could qualify, the time window, exclusions, identity unit, and late-arriving-data behavior. A metric name alone is not a definition.
-

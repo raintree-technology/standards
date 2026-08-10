@@ -1,14 +1,18 @@
 ---
 id: SEO-FOUNDATIONS
 title: Search foundations
+description: Makes useful public content discoverable and understandable without misleading users or crawlers.
 type: standard
-status: active
+status: stable
+governance_status: active
 owners: [seo, content, engineering]
 last_reviewed: 2026-08-10
 review_by: 2026-11-10
+stale_after: 2026-11-10
 applies_to: [public-web-page, seo-migration, content-program]
 tags: [seo, crawling, indexing, content]
 depends_on: [FND-EVIDENCE, FND-TRUST]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
 ---
 
 # Search foundations
@@ -71,4 +75,3 @@ Inventory valuable URLs, define one-to-one redirects where equivalents exist, pr
 ## Measurement
 
 Evaluate search work using qualified organic outcomes and user value, not rankings alone. Segment brand and non-brand demand where useful, annotate releases, and account for seasonality and reporting latency.
-

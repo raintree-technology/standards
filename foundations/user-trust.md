@@ -1,13 +1,17 @@
 ---
 id: FND-TRUST
 title: User trust
+description: Protects informed user choice from concealment, coercion, and manufactured urgency.
 type: foundation
-status: active
+status: stable
+governance_status: active
 owners: [product]
 last_reviewed: 2026-08-10
 review_by: 2027-02-10
+stale_after: 2027-02-10
 applies_to: [product-feature, growth-experiment, public-web-page, lifecycle-message]
 tags: [trust, consent, dark-patterns]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
 ---
 
 # User trust
@@ -45,4 +49,3 @@ Claims must reflect real, current evidence and must not imply a constraint that 
 **Applies when:** Optimizing conversion, engagement, retention, or revenue.
 
 Evaluate user harm and downstream outcomes alongside the target metric. At minimum consider complaints, cancellations, refunds, reversals, accessibility, and long-term retention where relevant.
-

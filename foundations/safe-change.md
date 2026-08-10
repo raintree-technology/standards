@@ -1,13 +1,17 @@
 ---
 id: FND-CHANGE
 title: Safe and reversible change
+description: Scales rollout, observability, and recovery controls to the risk of a change.
 type: foundation
-status: active
+status: stable
+governance_status: active
 owners: [engineering]
 last_reviewed: 2026-08-10
 review_by: 2027-02-10
+stale_after: 2027-02-10
 applies_to: [database-change, product-feature, deployment, growth-experiment]
 tags: [reversibility, rollout, reliability]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
 ---
 
 # Safe and reversible change
@@ -43,4 +47,3 @@ Use the smallest rollout that can produce useful evidence, then expand deliberat
 **Applies when:** A change modifies critical behavior or a key metric.
 
 Ensure operators can distinguish expected transition effects from failures and compare pre-change and post-change behavior.
-

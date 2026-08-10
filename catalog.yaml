@@ -1,4 +1,6 @@
 version: 1
+okf_version: "0.2"
+bundle_index: index.md
 updated: 2026-08-10
 
 governance:
@@ -39,4 +41,3 @@ profiles:
     path: profiles/growth-experiment.md
   - id: PROFILE-PUBLIC-WEB-PAGE
     path: profiles/public-web-page.md
-

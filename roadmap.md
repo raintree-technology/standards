@@ -1,3 +1,11 @@
+---
+type: Roadmap
+title: Coverage roadmap
+description: Prioritized gaps and triggers for expanding the Raintree standards library.
+tags: [roadmap, coverage, governance]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
+---
+
 # Coverage roadmap
 
 The library should grow when recurring work exposes a real decision, risk, or verification gap. Empty category files are intentionally avoided.
@@ -24,4 +32,3 @@ The library should grow when recurring work exposes a real decision, risk, or ve
 - Reviews repeatedly produce the same feedback.
 - Agents need an explicit completion test.
 - An incident, experiment, or decision produced reusable knowledge.
-

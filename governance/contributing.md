@@ -1,3 +1,11 @@
+---
+type: Playbook
+title: Contributing standards
+description: Acceptance, writing, and review requirements for maintaining the standards library.
+tags: [governance, contribution, review]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
+---
+
 # Contributing standards
 
 Only update this repository when explicitly assigned a standards-maintenance task.
@@ -16,6 +24,8 @@ A new or materially changed standard must:
 - Include at least one realistic example for rules that are easy to misinterpret.
 - Add or update relevant task profiles.
 - Update `catalog.yaml`.
+- Preserve unknown OKF front-matter fields when reading and writing documents.
+- Record `generated` after a meaningful content change; record `verified` only after an independent source or resource check.
 
 ## Writing style
 
@@ -29,4 +39,3 @@ A new or materially changed standard must:
 ## Review
 
 Review changes for technical correctness, operational feasibility, unintended incentives, and conflicts with existing rules. High-impact security, legal, privacy, financial, or regulatory standards require a qualified human owner.
-

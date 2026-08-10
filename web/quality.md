@@ -1,14 +1,18 @@
 ---
 id: WEB-QUALITY
 title: Public web quality
+description: Defines accessible, performant, resilient, secure, private, and discoverable public web experiences.
 type: standard
-status: active
+status: stable
+governance_status: active
 owners: [web, design, security]
 last_reviewed: 2026-08-10
 review_by: 2026-11-10
+stale_after: 2026-11-10
 applies_to: [public-web-page, web-application]
 tags: [web, accessibility, performance, resilience, security, privacy]
 depends_on: [FND-CHANGE, FND-TRUST, SEO-FOUNDATIONS]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
 ---
 
 # Public web quality
@@ -119,4 +123,3 @@ Use descriptive titles, semantic headings, stable URLs, meaningful link text, st
 ## Release evidence
 
 Record representative browser/device coverage, accessibility checks, performance results, security/privacy review of third parties, broken-link and status-code checks, and any known exceptions.
-

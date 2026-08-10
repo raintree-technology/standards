@@ -1,3 +1,11 @@
+---
+type: Agent Instructions
+title: Standards Repository Instructions
+description: Binding instructions for agents reading or maintaining the Raintree standards library.
+tags: [agents, governance, read-only]
+generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
+---
+
 # Standards Repository Instructions
 
 This repository is the authoritative, read-only standards library for agents working on Raintree projects.
@@ -43,4 +51,3 @@ When explicitly asked to maintain this repository:
 - Prefer testable rules over general advice.
 - Preserve existing IDs; never reuse a retired ID.
 - Update `catalog.yaml` when adding, moving, or retiring a standard or profile.
-
