@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://standards.raintree.dev/schema/standard.schema.json",
+  "title": "Raintree standard front matter",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "type", "status", "owners", "last_reviewed", "applies_to", "tags"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$" },
+    "title": { "type": "string", "minLength": 3 },
+    "type": { "enum": ["foundation", "standard", "pattern", "playbook", "profile", "decision"] },
+    "status": { "enum": ["draft", "active", "deprecated", "retired"] },
+    "owners": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "last_reviewed": { "type": "string", "format": "date" },
+    "review_by": { "type": "string", "format": "date" },
+    "applies_to": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "depends_on": { "type": "array", "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$" }, "uniqueItems": true },
+    "supersedes": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  }
+}
+

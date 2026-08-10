@@ -1,0 +1,42 @@
+version: 1
+updated: 2026-08-10
+
+governance:
+  - path: governance/authority.md
+  - path: governance/contributing.md
+  - path: governance/exceptions.md
+
+foundations:
+  - id: FND-EVIDENCE
+    path: foundations/evidence.md
+  - id: FND-TRUST
+    path: foundations/user-trust.md
+  - id: FND-CHANGE
+    path: foundations/safe-change.md
+
+standards:
+  - id: DATA-DATABASE
+    path: data/database-changes.md
+  - id: ANALYTICS-MEASUREMENT
+    path: analytics/measurement.md
+  - id: GROWTH-EXPERIMENTS
+    path: growth/experiments.md
+  - id: SEO-FOUNDATIONS
+    path: seo/foundations.md
+  - id: WEB-QUALITY
+    path: web/quality.md
+  - id: AGENT-VERIFICATION
+    path: agents/verification.md
+  - id: CONTENT-ERRORS
+    path: error-messages.md
+
+profiles:
+  - id: PROFILE-DATABASE-CHANGE
+    path: profiles/database-change.md
+  - id: PROFILE-PRODUCT-FEATURE
+    path: profiles/product-feature.md
+  - id: PROFILE-GROWTH-EXPERIMENT
+    path: profiles/growth-experiment.md
+  - id: PROFILE-PUBLIC-WEB-PAGE
+    path: profiles/public-web-page.md
+
