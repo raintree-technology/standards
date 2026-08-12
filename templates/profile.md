@@ -3,7 +3,7 @@ type: Template
 title: Task profile authoring template
 description: Starting structure for an OKF-compatible Raintree task profile.
 tags: [template, profiles, authoring]
-generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
+generated: { by: codex/gpt-5, at: "2026-08-12T00:00:00Z" }
 ---
 
 # Task profile authoring template
@@ -21,10 +21,13 @@ governance_status: draft
 owners:
   - <team-or-role>
 last_reviewed: <YYYY-MM-DD>
+review_by: <YYYY-MM-DD>
+stale_after: <same date as review_by>
 applies_to:
   - <task-name>
 tags: [profile, <domain>]
-depends_on: []
+depends_on:
+  - <REQUIRED-STANDARD-ID>
 generated: { by: "human:<author-id>", at: "<ISO-8601 datetime>" }
 # verified: { by: "human:<reviewer-id>", at: "<ISO-8601 datetime>" }
 ---
@@ -36,12 +39,15 @@ Use this profile when...
 
 ## Required standards
 
+The front-matter `depends_on` list is the authoritative machine-readable route. Keep this section synchronized with it.
+
 - `STANDARD-ID` — why it applies
 
 ## Conditional standards
 
 - Condition → `STANDARD-ID`
+- Condition with no governed standard → state the gap, escalation owner, and required decision record
 
 ## Completion evidence
 
-- Evidence the agent must provide before declaring the task complete
+- `STANDARD-RULE-ID` — Artifact, check output, or review record the agent must provide before declaring the task complete

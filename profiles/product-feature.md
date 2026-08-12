@@ -6,11 +6,13 @@ type: profile
 status: stable
 governance_status: active
 owners: [product, design, engineering]
-last_reviewed: 2026-08-10
+last_reviewed: 2026-08-12
+review_by: 2027-02-12
+stale_after: 2027-02-12
 applies_to: [product-feature]
 tags: [profile, product]
-depends_on: [FND-TRUST, FND-CHANGE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
+depends_on: [FND-TRUST, FND-CHANGE, FND-EVIDENCE, AGENT-VERIFICATION]
+generated: { by: codex/gpt-5, at: "2026-08-12T00:00:00Z" }
 ---
 
 # Product feature profile

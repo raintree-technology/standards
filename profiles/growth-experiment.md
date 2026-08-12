@@ -6,11 +6,13 @@ type: profile
 status: stable
 governance_status: active
 owners: [growth, product, analytics]
-last_reviewed: 2026-08-10
+last_reviewed: 2026-08-12
+review_by: 2027-02-12
+stale_after: 2027-02-12
 applies_to: [growth-experiment]
 tags: [profile, growth, experiment]
-depends_on: [GROWTH-EXPERIMENTS, ANALYTICS-MEASUREMENT, FND-TRUST]
-generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
+depends_on: [GROWTH-EXPERIMENTS, ANALYTICS-MEASUREMENT, FND-TRUST, FND-EVIDENCE, FND-CHANGE]
+generated: { by: codex/gpt-5, at: "2026-08-12T00:00:00Z" }
 ---
 
 # Growth experiment profile

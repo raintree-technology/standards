@@ -3,7 +3,7 @@ type: Governance
 title: Authority and requirement levels
 description: Defines requirement strength, precedence, conflict handling, and freshness semantics.
 tags: [governance, authority, requirements]
-generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
+generated: { by: codex/gpt-5, at: "2026-08-12T00:00:00Z" }
 ---
 
 # Authority and requirement levels
@@ -35,6 +35,14 @@ An enforceable rule contains:
 - Exceptions or escalation instructions where appropriate
 
 Broad advice belongs in explanatory guidance, not in a `required` rule.
+
+## Profile composition
+
+A profile's front-matter `depends_on` list is the authoritative machine-readable set of standards that always apply. Its **Required standards** section must contain the same IDs and explains why they apply.
+
+When more than one profile applies, combine their required standards. Conditional routes are additive: activate every route whose condition is true. The task is complete only when it satisfies the completion evidence from every active profile and standard. If two active rules conflict, use the conflict process below.
+
+A conditional route must name a governed ID. If this library has no applicable standard, the route must state the gap, name the role that must decide, and require the governing external policy or decision to be recorded.
 
 ## Conflicts
 

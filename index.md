@@ -16,6 +16,7 @@ okf_version: "0.2"
 * [Search](seo/) - Search discovery and indexing standards.
 * [Templates](templates/) - OKF-compatible authoring templates.
 * [Web](web/) - Public web quality standards.
+* [Writing](writing/) - Standards for functional writing and change summaries.
 
 ## Start here
 
@@ -27,6 +28,7 @@ okf_version: "0.2"
 ## Task profiles
 
 * [Database change](profiles/database-change.md) - Standards activated by schema, migration, query, indexing, and recovery work.
+* [Functional writing](profiles/functional-writing.md) - Clarity, evidence, trust, and review requirements for functional writing.
 * [Product feature](profiles/product-feature.md) - Cross-domain completion requirements for user-facing features.
 * [Growth experiment](profiles/growth-experiment.md) - Evidence, measurement, trust, and rollout requirements for experiments.
 * [Public web page](profiles/public-web-page.md) - Web, SEO, accessibility, privacy, performance, and verification requirements.
@@ -43,6 +45,7 @@ okf_version: "0.2"
 * [Product and growth measurement](analytics/measurement.md) - Event contracts, metric definitions, validation, and minimization.
 * [Database changes](data/database-changes.md) - Integrity, migration safety, query performance, and recovery.
 * [Error messages](error-messages.md) - User-facing failure content and review criteria.
+* [Functional writing](writing/functional.md) - Clear, consistent, actionable documentation, explanations, summaries, interface text, reports, and messages.
 * [Growth experiments](growth/experiments.md) - Hypotheses, assignment, guardrails, stopping, and learning.
 * [Search foundations](seo/foundations.md) - Indexability, canonicalization, structured data, and migrations.
 * [Public web quality](web/quality.md) - Accessibility, performance, resilience, security, and agent readiness.
