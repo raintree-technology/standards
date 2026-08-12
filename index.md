@@ -52,7 +52,12 @@ okf_version: "0.2"
 
 ## Maintenance
 
+* [Code of Conduct](CODE_OF_CONDUCT.md) - Expected behavior and enforcement in project spaces.
+* [Contributing](CONTRIBUTING.md) - Process for proposing and validating changes.
 * [Contributing standards](governance/contributing.md) - Acceptance and review requirements.
 * [Exceptions](governance/exceptions.md) - Scoped deviation records and approval boundaries.
+* [License](LICENSE.md) - Reuse terms for standards content and repository software.
 * [Standard template](templates/standard.md) - Starting point for a governed standard.
 * [Profile template](templates/profile.md) - Starting point for a task-oriented bundle.
+* [Security policy](SECURITY.md) - Private and public reporting paths for security concerns.
+* [Third-party notices](THIRD_PARTY_NOTICES.md) - Attribution and license notices for upstream sources.
