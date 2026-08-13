@@ -1,7 +1,7 @@
 version: 1
 okf_version: "0.2"
 bundle_index: index.md
-updated: 2026-08-12
+updated: 2026-08-13
 
 governance:
   - path: governance/authority.md
@@ -17,6 +17,8 @@ foundations:
     path: foundations/safe-change.md
 
 standards:
+  - id: AI-AGENTS
+    path: ai/agentic-systems.md
   - id: DATA-DATABASE
     path: data/database-changes.md
   - id: ANALYTICS-MEASUREMENT
@@ -33,8 +35,14 @@ standards:
     path: error-messages.md
   - id: WRITING-FUNCTIONAL
     path: writing/functional.md
+  - id: PRIVACY-DATA
+    path: privacy/data-handling.md
+  - id: SECURITY-APPLICATION
+    path: security/application.md
 
 profiles:
+  - id: PROFILE-AGENTIC-SYSTEM
+    path: profiles/agentic-system.md
   - id: PROFILE-DATABASE-CHANGE
     path: profiles/database-change.md
   - id: PROFILE-PRODUCT-FEATURE

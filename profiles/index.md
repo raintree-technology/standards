@@ -1,5 +1,6 @@
 # Task profiles
 
+* [Agentic system](agentic-system.md) - Routes model workflows and agents to architecture, evidence, trust, safe-change, and verification requirements.
 * [Database change](database-change.md) - Routes database changes to integrity, safety, evidence, and verification requirements.
 * [Functional writing](functional-writing.md) - Routes functional writing to clarity, evidence, trust, and final-artifact review requirements.
 * [Growth experiment](growth-experiment.md) - Routes growth experiments to evidence, measurement, trust, and safe-change requirements.

@@ -3,7 +3,7 @@ type: Reference
 title: Raintree Standards
 description: Entry point for Raintree's governed, agent-readable quality standards.
 tags: [standards, governance, agents]
-generated: { by: codex/gpt-5, at: "2026-08-12T00:00:00Z" }
+generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
 sources:
   - id: okf-v02
     resource: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
@@ -32,6 +32,7 @@ Useful entry points:
 
 - [Authority and requirement levels](governance/authority.md)
 - [Contribution requirements](governance/contributing.md)
+- [Agentic system profile](profiles/agentic-system.md)
 - [Database change profile](profiles/database-change.md)
 - [Functional writing profile](profiles/functional-writing.md)
 - [Growth experiment profile](profiles/growth-experiment.md)
@@ -67,7 +68,7 @@ The `stale_after` date matches `review_by` when a review deadline exists. If a d
 
 ## Coverage
 
-The library covers database changes, product delivery, growth experiments, analytics, search engine optimization, public web quality, functional writing, agent verification, and cross-cutting foundations. The [coverage roadmap](roadmap.md) lists domains that still need standards.
+The library covers agentic systems, database changes, product delivery, growth experiments, analytics, privacy, application security, search engine optimization, public web quality, functional writing, agent verification, and cross-cutting foundations. Agentic systems, privacy, and application security are governed drafts pending qualified owner review. The [coverage roadmap](roadmap.md) lists domains that still need standards.
 
 ## Agent access
 

@@ -6,13 +6,13 @@ type: profile
 status: stable
 governance_status: active
 owners: [web, design, seo, content]
-last_reviewed: 2026-08-12
-review_by: 2027-02-12
-stale_after: 2027-02-12
+last_reviewed: 2026-08-13
+review_by: 2027-02-13
+stale_after: 2027-02-13
 applies_to: [public-web-page, landing-page, marketing-site]
 tags: [profile, web, seo]
 depends_on: [WEB-QUALITY, SEO-FOUNDATIONS, FND-TRUST, FND-EVIDENCE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-12T00:00:00Z" }
+generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
 ---
 
 # Public web page profile
@@ -20,6 +20,8 @@ generated: { by: codex/gpt-5, at: "2026-08-12T00:00:00Z" }
 Use for landing pages, marketing pages, public documentation, editorial pages, and indexable application surfaces.
 
 ## Required standards
+
+The front-matter `depends_on` list is the authoritative machine-readable route. This section explains why each dependency applies and must match that list.
 
 - `WEB-QUALITY` — document, accessibility, performance, resilience, security, and privacy quality
 - `SEO-FOUNDATIONS` — crawling, indexing, canonicalization, and content purpose
@@ -30,14 +32,27 @@ Use for landing pages, marketing pages, public documentation, editorial pages, a
 ## Conditional standards
 
 - Experiment or personalization → `GROWTH-EXPERIMENTS` and `ANALYTICS-MEASUREMENT`
-- Form or user data collection → applicable privacy, security, and retention policy
+- Documentation, marketing claims, interface text, or explanatory content → `PROFILE-FUNCTIONAL-WRITING`
+- Form, upload, account, personalization, or other personal-data processing → `PRIVACY-DATA`
+- Form submission, upload, authentication, authorization, server-side fetch, or other application behavior beyond static delivery → `SECURITY-APPLICATION`
+- Public chat, model-generated content, retrieval, browser agent, or model-selected tool use → `PROFILE-AGENTIC-SYSTEM`
 - URL or platform migration → `SEO-FOUNDATIONS-007` plus a dedicated migration plan
 
 ## Completion evidence
 
-- Page purpose and intended audience are explicit.
-- Rendered behavior was inspected on representative viewport sizes.
-- Keyboard, focus, labels, hierarchy, contrast, zoom, and error states were checked.
-- Indexability, status code, canonical, metadata, internal links, and structured data are intentional.
-- Performance and third-party behavior were measured.
-- Analytics and consent behavior were validated end to end.
+- `SEO-FOUNDATIONS-001` and `FND-TRUST-001` — The page record identifies its audience and purpose, and the final page presents material consequences before commitment.
+- `WEB-QUALITY-001`, `WEB-QUALITY-002`, and `WEB-QUALITY-015` — Delivered document semantics and rendered behavior were inspected across the declared representative environments.
+- `WEB-QUALITY-003`, `WEB-QUALITY-004`, and `WEB-QUALITY-005` — Keyboard, focus, names, labels, alternatives, errors, contrast, zoom, reflow, and appropriate assistive behavior were checked.
+- `SEO-FOUNDATIONS-002`, `SEO-FOUNDATIONS-003`, `SEO-FOUNDATIONS-004`, `SEO-FOUNDATIONS-006`, and `SEO-FOUNDATIONS-008` — Indexability, protocol status, canonical signals, structured data, titles, headings, and links are intentional and consistent.
+- `WEB-QUALITY-006`, `WEB-QUALITY-008`, and `WEB-QUALITY-009` — Performance results, layout behavior, and third-party impact were measured against their budgets and documented boundaries.
+- `WEB-QUALITY-011` — Actual storage and network behavior was inspected before consent, after consent, and after withdrawal where applicable.
+- `SEO-FOUNDATIONS-011` — The page or generated page family has an identified audience, owner, source basis, and distinct user value rather than ranking-only variation.
+- When localized, `SEO-FOUNDATIONS-012` and `WEB-QUALITY-012` — Locale URLs, content, language metadata, reciprocal alternates, fallback, layout, and locale switching were verified.
+- When motion, timing, dragging, or gesture behavior exists, `WEB-QUALITY-016` — Reduced motion, control, time adjustment, and simpler input alternatives were exercised.
+- For consequential submissions, `WEB-QUALITY-017` and `CONTENT-ERRORS-012` — Reversal, validation and correction, or review and confirmation prevents material input errors.
+- When browser permissions are requested, `WEB-QUALITY-018` — Grant, denial, revocation, embedded capability, and fallback behavior were inspected.
+- When `PRIVACY-DATA` is active, `PRIVACY-DATA-001`, `PRIVACY-DATA-003`, `PRIVACY-DATA-005`, `PRIVACY-DATA-006`, and `PRIVACY-DATA-015` — The processing map, minimization, rendered explanation, choice states, and observed network and storage behavior agree.
+- When `SECURITY-APPLICATION` is active, `SECURITY-APPLICATION-002`, `SECURITY-APPLICATION-005`, `SECURITY-APPLICATION-006`, `SECURITY-APPLICATION-010`, and `SECURITY-APPLICATION-015` — Authorization, untrusted input, uploaded content, deployment configuration, and integrated verification evidence cover the page's application behavior.
+- When `PROFILE-AGENTIC-SYSTEM` is active, its evidence covers model limits, user control, prompt injection, data paths, tools, repeated outcomes, refusals, escalation, and final-state verification.
+- `AGENT-VERIFICATION-002` and `AGENT-VERIFICATION-005` — The final page was inspected in its intended medium and the handoff records checks, results, exceptions, and limitations.
+- When a conditional standard is active, include its rule-level completion evidence before declaring the page complete.

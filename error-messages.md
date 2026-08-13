@@ -6,275 +6,347 @@ type: standard
 status: stable
 governance_status: active
 owners: [content, product, design]
-last_reviewed: 2026-08-10
-review_by: 2027-02-10
-stale_after: 2027-02-10
-applies_to: [product-feature, public-web-page, support-experience]
+last_reviewed: 2026-08-13
+review_by: 2027-02-13
+stale_after: 2027-02-13
+applies_to: [product-feature, public-web-page, support-experience, functional-writing]
 tags: [content, errors, interface-copy]
-depends_on: [FND-TRUST]
-generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
+depends_on: [FND-TRUST, WRITING-FUNCTIONAL]
+generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
 sources:
+  - id: wcag-22
+    resource: https://www.w3.org/TR/WCAG22/
+    title: Web Content Accessibility Guidelines 2.2
+    author: organization:w3c
+  - id: ietf-http-semantics
+    resource: https://www.rfc-editor.org/rfc/rfc9110.html
+    title: HTTP Semantics
+    author: organization:ietf
+  - id: ietf-additional-status
+    resource: https://www.rfc-editor.org/rfc/rfc6585.html
+    title: Additional HTTP Status Codes
+    author: organization:ietf
+  - id: ietf-problem-details
+    resource: https://www.rfc-editor.org/rfc/rfc9457.html
+    title: Problem Details for HTTP APIs
+    author: organization:ietf
   - id: wix-error-messages
     resource: https://wix-ux.com/when-life-gives-you-lemons-write-better-error-messages-46c5223e1a2f
     title: When life gives you lemons, write better error messages
     author: human:jenni-nadler
-  - id: website-spec-resilience
-    resource: https://specification.website/spec/resilience/
-    title: Website Specification — Resilience
-    author: human:joost-de-valk-and-contributors
+  - id: anthropic-effective-agents
+    resource: https://www.anthropic.com/engineering/building-effective-agents
+    title: Building effective agents
+    author: organization:anthropic
+  - id: scale-mcp-atlas
+    resource: https://scale.com/blog/mcp-atlas
+    title: Actions, Not Words - MCP-Atlas Raises the Bar for Agentic Evaluation
+    author: organization:scale-ai
 ---
 
-# Error Message Spec
+# Error messages
 
-**Purpose:** A repeatable standard for writing, reviewing, and shipping user-facing error messages.
+A user-facing failure must leave the user knowing what happened and what to do next, with the cause, preservation state, and support path included when relevant. This standard covers inline validation, toasts, banners, dialogs, full-page failures, offline states, and failure-caused empty states.
 
-**Scope:** Every surface where a failure is shown to a user — inline validation, toasts, banners, modals, full-page errors, and empty states caused by a failure.
+Prevent avoidable failures before writing them: validate at the right time, preserve input, autosave where appropriate, disable actions that cannot succeed, and confirm destructive actions.
 
-**How to use:** Pick the surface (§3), draft with the required components (§2) and templates (§6), then run the ship checklist (§8). A message ships only when every check passes.
+## Rules
 
-*Adapted from Wix UX's error-message overhaul (Jenni Nadler, "When life gives you lemons, write better error messages," 2022). Full-page and downtime guidance draws on the Website Spec's resilience section (Joost de Valk and contributors, CC BY 4.0).*
+### CONTENT-ERRORS-001 — State what happened and the next action
 
----
+**Level:** required
+**Applies when:** Showing any user-facing failure.
 
-## 1. The standard
+State what did or did not happen, then give one concrete next action or an honest statement that no action is available yet. Include the known cause, what was preserved or lost, and a support path when they affect the user's decision.
 
-An error message must leave the user knowing three things: **what happened, why, and what to do next.**
+**Why:** “Something went wrong” confirms failure but does not help the user recover or judge impact.
 
-Two failure modes are equally unacceptable:
+**Verify:**
 
-- **Generic** — tells the user nothing. *"Something went wrong."*
-- **Unclear** — attempts specificity, but in language the user can't act on. *"Make sure permissions are configured correctly and retry."*
+- Identify the failed action or unavailable state in the message.
+- Follow the stated next step and confirm it can resolve or route around the actual trigger.
+- Confirm preservation and loss claims against system behavior.
 
-If the system knows the cause and the message doesn't say it, the message fails this spec.
+**Exceptions:** A security-sensitive message can withhold cause under `CONTENT-ERRORS-004` but still owes the user the failed outcome and a safe next action.
 
-And the best error message is the one that never appears: validate as users type, disable actions until they can succeed, autosave work, and confirm destructive steps. This spec governs what happens when prevention isn't enough.
+### CONTENT-ERRORS-002 — Match the surface and persistence to severity
 
----
+**Level:** required
+**Applies when:** Choosing where and how a failure appears.
 
-## 2. Required components
+Place field-specific errors at the field, ongoing conditions in a persistent page-level region, blocking decisions in a focused interruption, and destination failures on a full page. Any message that requires action must remain available until the action is completed, replaced, or intentionally dismissed.
 
-Include these, in this order:
+**Why:** A blocking failure hidden in a temporary toast strands users, while a dialog for a minor correction interrupts them unnecessarily.
 
-| # | Component | Requirement |
-|---|---|---|
-| 1 | **What happened** | Always. State plainly what did or didn't occur. |
-| 2 | **Why** | Whenever known. If the cause is internal or unknown, own it: "a technical issue on our end." |
-| 3 | **What's safe** | Whenever true. Say what was preserved: "Your changes were saved as a draft." |
-| 4 | **What to do** | Always. One concrete next step — or a descriptive help link ("How do I fix this?") when space is short. |
-| 5 | **A way out** | Whenever the fix can fail or the error can recur. Route to support. |
+**Verify:**
 
-A space-constrained message may drop 2, 3, or 5 — never 1 or 4.
+- Trigger the failure in context and confirm the message appears where the user is looking or acting.
+- Confirm actionable content does not disappear before it can be read and used.
+- Check repeated and simultaneous errors for priority and duplication.
 
----
+**Exceptions:** A toast can report a non-blocking outcome when no immediate response is required or the same recovery action remains available elsewhere.
 
-## 3. Choosing the surface
+### CONTENT-ERRORS-003 — Use calm language without blame
 
-Severity picks the surface. The message and its placement are one decision, not two.
+**Level:** required
+**Applies when:** Writing failure text or action labels.
 
-| Situation | Surface |
+Use plain, direct language that matches the stakes. Describe the condition rather than blaming the user or a provider. Do not use playful interjections, jokes, excessive apology, or jargon. Label the primary action with the recovery verb.
+
+**Why:** Users often encounter errors while stressed or interrupted; blame and vague tone increase confusion without improving recovery.
+
+**Verify:**
+
+- Remove “Oops,” “Whoops,” “Yikes,” “Uh oh,” and similar openers.
+- Replace mechanism-first language, error codes, and passive blame with user-relevant meaning.
+- Confirm buttons say what they do, such as “Reconnect account” or “Try again,” rather than “OK.”
+
+**Exceptions:** A legal or safety message can require formal language, but must remain understandable and actionable.
+
+### CONTENT-ERRORS-004 — Balance specificity with security
+
+**Level:** required
+**Applies when:** The system knows a cause, but disclosing it could expose accounts, fraud controls, internal architecture, or sensitive state.
+
+Give the most specific explanation that remains safe. Do not reveal whether an account exists, which credential was correct, detection thresholds, stack traces, queries, file paths, secrets, or internal service names.
+
+**Why:** Detailed diagnostics can help an attacker enumerate accounts, bypass controls, or map internal systems.
+
+**Verify:**
+
+- Review authentication, password reset, access, anti-abuse, payment, and rate-limit messages for enumeration and implementation disclosure.
+- Confirm detailed diagnostics are recorded only in protected logs with a correlation path for support.
+
+**Exceptions:** A non-sensitive request or correlation ID can appear in secondary text when support can use it and it conveys no protected information.
+
+### CONTENT-ERRORS-005 — Preserve work and provide a way out
+
+**Level:** required
+**Applies when:** A failed action involves user input, a retry, an external dependency, or a recurring condition.
+
+Preserve valid input and completed work where technically possible. Make retry safe, state what was retained, prevent duplicate side effects, and provide an alternate path or support route when retry can fail again.
+
+**Why:** Recovery that destroys work, double-charges, duplicates actions, or loops indefinitely turns a transient failure into user harm.
+
+**Verify:**
+
+- Trigger failure before and after submission, then inspect retained input and durable state.
+- Repeat the action and confirm idempotency or explicit duplicate protection where needed.
+- Follow the alternate or support path.
+
+**Exceptions:** Sensitive fields can require re-entry when retention would create greater security risk; explain the requirement without exposing the sensitive value.
+
+### CONTENT-ERRORS-006 — Make errors accessible
+
+**Level:** required
+**Applies when:** A failure appears in a visual or interactive interface.
+
+Use words and semantics in addition to color or icons. Connect inline errors to their fields, identify invalid state programmatically, announce dynamic errors appropriately, and move focus only when needed to make a failed submission understandable.
+
+**Why:** Visual placement, color, and live changes are not perceivable in the same way by every user.
+
+**Verify:**
+
+- Trigger errors with keyboard and a representative screen reader.
+- Confirm the error is announced once, names the affected field or action, and does not trap or unexpectedly steal focus.
+- Inspect contrast, zoom, reflow, and persistence.
+
+**Exceptions:** Static content already encountered in reading order does not need a live announcement.
+
+### CONTENT-ERRORS-007 — Localize complete messages
+
+**Level:** required
+**Applies when:** Error text can be translated or shown in more than one locale.
+
+Provide translators complete sentences with named placeholders and context. Do not concatenate fragments, embed assumptions about word order, or hard-code locale-specific dates, numbers, or time zones. Allow layout expansion and set correct language and direction.
+
+**Why:** Error messages often contain variables and instructions whose grammar and order differ across languages.
+
+**Verify:**
+
+- Inspect placeholder definitions and translator context.
+- Render representative long, plural, right-to-left, and non-Latin messages.
+- Confirm full-page navigation and support routes remain in the user's locale.
+
+**Exceptions:** A product with one supported locale must still keep dynamic values distinct from sentence fragments.
+
+### CONTENT-ERRORS-008 — Keep protocol and human meaning consistent
+
+**Level:** required
+**Applies when:** A failure is represented through HTTP or another machine-consumed protocol.
+
+Return the status and retry metadata that describe the actual condition. Do not serve missing or failed content with a success status, redirect unrelated missing pages to a generic destination, or describe planned downtime while returning success.
+
+**Why:** Crawlers, clients, caches, monitoring, and automation act on protocol semantics even when the visible copy sounds correct.
+
+**Verify:**
+
+- Inspect headers and rendered bodies for missing, forbidden, gone, server-failure, maintenance, and rate-limit cases.
+- Confirm planned unavailability uses `503` and appropriate `Retry-After`; client-specific throttling uses `429` and appropriate retry guidance.
+- Verify error pages remain available when the application or a third party is unavailable.
+
+**Exceptions:** Security policy can intentionally collapse some client-visible statuses; document the policy and preserve accurate internal observability.
+
+### CONTENT-ERRORS-009 — Map each message to a known trigger
+
+**Level:** required
+**Applies when:** Implementing, reviewing, or reusing an error message.
+
+Give each message or failure family a stable identifier and map it to its triggering conditions, owning component, severity, user impact, and recovery path. Do not reuse one generic string across failures that require different actions.
+
+**Why:** Writers cannot make a message accurate without knowing what the system knows, and teams cannot prioritize errors they cannot trace.
+
+**Verify:**
+
+- Follow the message ID from interface to code path, logs or telemetry, and content owner.
+- Confirm every mapped trigger has the same user meaning and recovery action.
+
+**Exceptions:** A last-resort unknown-error fallback can cover truly unclassified failures if it creates a traceable diagnostic event and an owned follow-up.
+
+### CONTENT-ERRORS-010 — Review failures as product behavior
+
+**Level:** required
+**Applies when:** Shipping a new failure path or maintaining a recurring one.
+
+Review frequency, blocking impact, recovery success, accessibility, support demand, and fallback use. Prioritize failures by user harm and frequency, and retire obsolete messages and telemetry.
+
+**Why:** Error content becomes inaccurate as systems and recovery paths change, and frequent messages often reveal preventable product defects.
+
+**Verify:**
+
+- Inspect real trigger and recovery data after release on a defined schedule.
+- Confirm high-frequency, high-impact, and fallback errors have owners and actions.
+- Re-run the ship checklist after system or support-path changes.
+
+**Exceptions:** Low-volume systems can use scheduled manual review when automated frequency data is unavailable.
+
+### CONTENT-ERRORS-011 — Use stable machine-readable API problems
+
+**Level:** required
+**Applies when:** An HTTP API returns errors to software clients and does not already have a governed domain error format.
+
+Use RFC 9457 problem details or an equally stable documented contract. Give each problem type durable semantics, an appropriate HTTP status, a short stable title, occurrence-specific human detail, structured extension fields for machine decisions, and documentation for recovery.
+
+**Why:** Clients break when they must parse human prose, implementation messages, or inconsistent response shapes to decide how to recover.
+
+**Verify:**
+
+- Compare representative responses with the published schema and problem-type documentation.
+- Confirm clients branch on status, type, and structured fields rather than localized `detail` text.
+- Review problem fields for internal, personal, account-enumeration, and security-sensitive disclosure.
+
+**Exceptions:** An established domain protocol can retain its native error format when status and recovery semantics are documented and consistent.
+
+### CONTENT-ERRORS-012 — Prevent high-impact submission errors
+
+**Level:** required
+**Applies when:** A submission creates a legal or financial commitment, changes or deletes user-controlled data, publishes sensitive information, or is otherwise difficult to reverse.
+
+Before final submission, provide at least one effective safeguard: make the action reversible, validate and let the user correct the data, or present a review and confirmation step that identifies the material consequence.
+
+**Why:** An explanatory error shown after an irreversible action cannot prevent the loss, obligation, or disclosure.
+
+**Verify:**
+
+- Complete the flow with an intentional mistake and confirm the safeguard detects, exposes, or reverses it.
+- Confirm the review step displays the decision-relevant values and consequence, not only a generic confirmation question.
+- Test keyboard, assistive-technology, timeout, retry, and duplicate-submission behavior.
+
+**Exceptions:** None when the governing accessibility or product policy requires error prevention; other high-impact flows need an approved alternate control if all three safeguards are technically impossible.
+
+### CONTENT-ERRORS-013 — Make tool failures actionable to agents
+
+**Level:** required
+**Applies when:** An API, function, MCP tool, job, or command returns an error that an automated caller may handle.
+
+Return a stable error code or type, safe human summary, affected operation or field, retry classification, and structured correction details needed to recover. Distinguish invalid input, unauthorized scope, unavailable approval, rate or resource limit, temporary dependency failure, conflict, already-completed state, and terminal failure. Do not expose secrets or let free-form error text become executable instruction.
+
+**Why:** Agents often abandon recoverable tasks, retry terminal failures, or repeat side effects when errors do not identify what can safely change.
+
+**Verify:**
+
+- Exercise each error class and confirm a caller can choose correct, retry, stop, escalate, or reconcile behavior without parsing prose.
+- Test malformed inputs, wrong units and enumerations, duplicate actions, timeouts after success, partial completion, and unavailable approval.
+- Confirm untrusted downstream error content remains labeled data and cannot alter tool authority or instructions.
+
+**Exceptions:** A public client can receive a less detailed safe error while protected logs retain the correlation and diagnostic detail needed by operators.
+
+## Guidance
+
+Use this order when the information applies:
+
+1. What happened.
+2. Why it happened.
+3. What was preserved or lost.
+4. What the user can do.
+5. Where the user can go if recovery fails.
+
+Space-constrained messages can omit cause, preservation, or support only when the surrounding interface provides them. They cannot omit the failed outcome or next action.
+
+Select the surface from the user's situation:
+
+| Situation | Preferred surface |
 |---|---|
-| One field's input needs fixing | Inline, at the field, the moment it can be fixed |
-| A non-blocking action failed and no response is required | Toast — only if the user needs to do nothing, or the retry is also available elsewhere |
-| An ongoing condition affects the page or app (offline, degraded service, expired plan) | Persistent banner that stays until the condition clears |
-| The flow can't continue without the user fixing or deciding something | Modal — interrupt once, with the fix as the primary button |
-| The destination itself can't load — not found, no access, server down, or planned maintenance | Full-page error (§5) |
+| One field needs correction | Inline at the field when correction is possible |
+| A non-blocking action failed and no response is required | Toast, if recovery remains available elsewhere |
+| An ongoing condition affects the page or application | Persistent banner or status region |
+| The flow cannot continue without a decision or correction | Dialog or focused inline interruption |
+| The destination cannot load | Full-page error with truthful protocol status |
 
-Two rules:
+Use fine print for correlation IDs and technical details intended for support. Keep the human headline and primary action focused on recovery.
 
-- Match interruption to severity. A blocking failure buried in a toast strands the user; a modal for a typo is hostile.
-- Anything that requires action must persist until acted on or dismissed. A self-dismissing toast can never be the only notice.
+## Templates
 
----
+### Internal failure with retry
 
-## 4. Rules
+> Couldn't [complete action]. [What was preserved.] This was due to an issue on our end. [Specific retry action]. If it keeps happening, contact [support route].
 
-### Tone
+### Invalid input
 
-- Match the stakes. An error interrupts someone's work — sometimes their livelihood. Write like it matters.
-- **Never** open with "Oops," "Whoops," "Yikes," "Uh oh," or any playful interjection. No humor in failure states.
-- Don't over-apologize. Reserve "please" for situations that are genuinely dire or that the user can't solve — where it adds real empathy, not filler.
-- Voice check: a calm, capable person explaining the situation to a friend.
+> [Field] must [specific requirement].
 
-### Blame
+### Missing access
 
-- Describe the problem, never the user's mistake. *"This file type isn't supported"* — not *"You uploaded the wrong file type."*
-- Own internal failures explicitly when space allows: "an issue on our end."
-- Never throw third parties under the bus, even when accurate — it reads as unprofessional. Acceptable: *"We're having trouble connecting to [Service]."* Not acceptable: *"[Service] isn't responding."*
+> [Blocked action] requires [permission or role]. [How to request or change it].
 
-### Language
+### Offline
 
-- Plain words only. Users don't need the mechanism; they need the meaning.
-- Error codes, exception names, and request IDs never headline a message. If support needs them, put them in fine print.
-- Link text is descriptive: "How do I fix this?" — never "Click here" or a bare "Learn more."
-- Common jargon swaps:
+> You're offline. [What is available or preserved.] [What reconnecting restores].
 
-| Instead of | Write |
-|---|---|
-| "Failed to fetch data" | "We couldn't load your data" |
-| "Invalid credentials" | "That email or password doesn't match our records" |
-| "Authentication required" | "Sign in to continue" |
-| "Request timed out" | "This is taking longer than expected" |
-| "Unsupported file format" | "This file type isn't supported. Use JPG, PNG, or PDF." |
-| "Error 403: Forbidden" | "You don't have access to this page" |
+### No available action
 
-### Specificity
+> [What happened and impact]. We're working on it. [When or where to check for updates]. [Support route if needed].
 
-- One distinct cause → one distinct message. A single string reused across unrelated failures is a generic error in disguise.
-- Generic copy is a placeholder, not a destination. It's allowed only when the system truly can't know the cause — and it creates a follow-up task (§9).
+## Examples
 
-### Security — the exception to specificity
-
-- When accuracy would help an attacker, withhold it deliberately. Sign-in: "That email or password doesn't match our records" — never confirming which is wrong, or whether the account exists. Password reset: "If an account exists for this email, we've sent a reset link."
-- Anti-fraud, abuse, and rate-limit errors state that the action didn't work and what to do next — never how the detection works.
-- Never expose stack traces, file paths, queries, or internal service names in user-facing copy.
-- These messages still owe the user components 1 and 4: what happened, and what to do.
-
-### Actions
-
-- The primary button is the fix, labeled with its verb: "Try Again," "Reconnect Account," "Update Payment Method." "OK" and "Got It" are only for messages where there is truly nothing to do.
-- When the error is likely to recur, the way out ("Contact Support") is a visible secondary action, not a link buried in body copy.
-- Recovery costs nothing extra: after a failed submit, the user's input is still there. An error never destroys work.
-
-### Accessibility
-
-- Never color alone. Pair the red with an icon and words.
-- Announce dynamic errors to assistive tech (`role="alert"` / `aria-live`), and tie inline errors to their fields (`aria-invalid` + `aria-describedby`) so screen readers read them together.
-- On a failed submit, move focus to the error summary or the first invalid field.
-- Error text meets your normal contrast standards — failure states get no exemption.
-
-### Localization
-
-- No idioms, puns, or cultural references — they don't survive translation.
-- Give translators whole sentences with named placeholders. Never assemble messages from concatenated fragments.
-- Leave layout room: translations often run ~30% longer than English.
-- Full-page errors render in the visitor's locale — the URL prefix already tells the server which — with a matching `lang` attribute and search, home, and support links that stay in that locale.
-
----
-
-## 5. Full-page errors: the status code is part of the message
-
-A full-page error is two messages in one response: the copy a human reads, and the HTTP status code that crawlers, link checkers, and monitoring tools read. The honesty rules apply to both — a well-written "page not found" that returns `200 OK` is a generic error told to machines.
-
-- **Return the real code.** `404` for a missing page, `500` for a failure on our end. Same principle for `403` (no access) and `410` (gone for good). Planned downtime and throttling have their own codes, below.
-- **No soft 404s.** Serving a not-found message with a `200` status — or blanket-redirecting unknown URLs to the homepage — makes search engines index the failure, blinds link checkers, and counts errors as normal traffic in analytics.
-- **Survive the outage.** Configure 404, 500, and 503 pages at the server or edge layer (nginx `error_page`, Apache `ErrorDocument`, CDN rules) so they render even when the application is down — and give them zero external dependencies. Analytics, chat widgets, and CDN fonts can fail for the same reason the page is showing.
-- **404s get exits, not dead ends.** Keep the site's header, navigation, and footer; offer search, a link home, and the most-visited sections so the user can carry on.
-- **500s get a request ID.** Log the underlying error server-side and print the same ID in the page's fine print, so a support conversation can find the log line. This is the one place an ID belongs in front of users.
-- **Planned downtime is a `503` with an ETA.** The maintenance page returns `503 Service Unavailable` plus a `Retry-After` header — an integer of seconds for a rough estimate, an HTTP date when you've committed to a window. A `200` "back soon" page becomes the indexed content of every URL on the domain. Serve it from the edge (the application is the thing being taken down), let an admin IP through so you can verify before lifting the block, and make lifting the flag part of the deploy — a forgotten flag keeps the site "down" for hours.
-- **Throttling is a `429`, not a `503`.** When one client sends too much, `429 Too Many Requests` with its own `Retry-After` says "you specifically — slow down and come back." A `503`, a silent drop, or a `200` with an error body teaches bots and agents that the site is down, or that the throttle page was real content. The human copy still follows the security rule (§4): what's paused and when to retry, never how the limit works.
-- **Prove it.** `curl -I` a nonsense URL and expect `404`; force a `500` in staging and confirm the code with nothing internal leaking; during a maintenance window, `curl -I` the homepage and expect `503` with `Retry-After` while the page renders with the backend off; confirm a throttled client receives `429`, not a silent drop; watch Search Console for soft-404 flags; run a link checker and confirm breaks surface as 404s, not 200s.
-
----
-
-## 6. Templates
-
-Fill-in patterns for the common cases. Scale length to the surface (inline < toast < modal < full page).
-
-**Internal failure, retry possible**
-
-> Couldn't [do the thing]. [What was preserved.] This was due to a technical issue on our end. [Try again / specific step]. If it keeps happening, contact [Support].
-
-*"Couldn't publish your site. Your changes were saved, but publishing failed due to a technical issue on our end. Try publishing again. If it keeps happening, contact Customer Care."*
-
-**Third-party connection**
-
-> We're having trouble connecting to [Service]. [What this means for the user.] [Next step.]
-
-*"We're having trouble connecting to your Instagram account. Existing posts aren't affected, but new posts can't sync right now. Try reconnecting in a few minutes."*
-
-**Invalid input (inline validation)**
-
-> [Field] must [requirement].
-
-*"Password must be at least 12 characters."* · *"Enter the date as MM/DD/YYYY."*
-
-Show it at the field, the moment it can be fixed. State the rule, not the mistake.
-
-**Missing permission or access**
-
-> [What's blocked] requires [what's needed]. [How to get it.]
-
-*"Editing this doc requires edit access. Request access from the owner below."*
-
-**Nothing the user can do**
-
-> [What happened]. [Why]. We're working on it — [when to check back / status link]. Need [X] sooner? Contact [Support].
-
-*"Payouts are delayed due to an issue on our end. We're working on it — check the status page for updates. If you need help sooner, contact Support."*
-
-**Offline**
-
-> You're offline. [What's preserved.] [What reconnecting restores.]
-
-*"You're offline. Your edits are saved on this device and will sync when you reconnect."*
-
-**Page not found (full page, status 404)**
-
-> We couldn't find that page. [Likely reason, if known.] [Search + home + popular sections, with site navigation intact.]
-
-*"We couldn't find that page. It may have moved, or the link may be out of date. Try a search, or start again from the homepage."*
-
-**Server failure (full page, status 500)**
-
-> [What didn't load] due to a technical issue on our end. [Retry guidance.] If it keeps happening, contact [Support] and mention request ID [ID].
-
-*"We couldn't load this page due to a technical issue on our end. Try refreshing in a minute. If it keeps happening, contact Support and mention request ID 8F3K2."*
-
-**Maintenance (full page, status 503 + Retry-After)**
-
-> We're offline for scheduled maintenance — [what's happening, briefly]. We expect to be back by [time, with timezone]. [Where to follow updates.]
-
-*"We're offline for scheduled maintenance while we upgrade our database. Back by 3:00 PM UTC — follow progress on our status page."*
-
-**Too many attempts (rate limited, status 429 + Retry-After)**
-
-> [What's paused]. Try again in [interval].
-
-*"Too many sign-in attempts. Wait a minute, then try again."*
-
----
-
-## 7. Rewrites: before → after
-
-| Before | What's wrong | After |
+| Non-compliant | Problem | Compliant |
 |---|---|---|
-| "Whoops! Something went wrong. Try again later." | Playful tone, no cause, vague action | "We couldn't load your reports due to an issue on our end. Refresh to try again. If it keeps happening, contact Support." |
-| "Error 500: Internal Server Error" | Jargon headline, no next step | "We couldn't save your changes due to a technical issue on our end. Your last saved version is safe. Try again in a few minutes." |
-| "You entered an invalid email." | Blames the user, doesn't state the rule | "Enter an email address in the format name@example.com." |
-| "PayFlow isn't responding, so your payment didn't go through." | Blames a third party | "We're having trouble processing payments right now. You haven't been charged. Try again in a few minutes." |
-| "Make sure permissions are configured correctly and retry." | Specific-ish but unclear — which permissions, configured where? | "To import contacts, allow contact access: Settings → Privacy → Contacts. Then try importing again." |
+| “Whoops! Something went wrong. Try later.” | Playful, generic, and vague | “We couldn't load your reports due to an issue on our end. Refresh to try again. If it keeps happening, contact Support.” |
+| “You entered an invalid email.” | Blames the user and omits the rule | “Enter an email address in the format name@example.com.” |
+| “PayFlow isn't responding.” | Blames a provider and omits payment state | “We couldn't process the payment. You haven't been charged. Try again in a few minutes.” |
+| “Error 403: Forbidden” | Leads with a code and gives no route | “You don't have access to this page. Request access from the workspace owner.” |
 
----
+## Ship checklist
 
-## 8. Ship checklist
+- [ ] States what did or did not happen.
+- [ ] Gives one concrete next action or an honest no-action state.
+- [ ] Gives the known safe cause and preservation state when relevant.
+- [ ] Offers a route out when retry can fail.
+- [ ] Uses calm, plain language without blame or playful tone.
+- [ ] Reveals no sensitive account, control, or implementation detail.
+- [ ] Uses the correct persistent surface for its severity.
+- [ ] Preserves input and prevents duplicate side effects where relevant.
+- [ ] Works with keyboard, assistive technology, zoom, and reflow.
+- [ ] Uses complete localizable messages.
+- [ ] Matches protocol status and retry semantics.
+- [ ] Maps to a stable trigger and owner.
 
-Run every message through this before it ships. Any unchecked box means revise.
+## Sources
 
-- [ ] Says plainly what did or didn't happen
-- [ ] Gives the cause — or owns it as an issue on our end
-- [ ] States what was preserved or lost, when relevant
-- [ ] Gives one concrete next step (or an honest "nothing to do yet" with a time or status link)
-- [ ] Offers a support path if the fix can fail or the error can recur
-- [ ] No playful openers; tone matches the stakes
-- [ ] No jargon; any code or ID demoted to fine print
-- [ ] Blames no one — not the user, not a third party
-- [ ] Written for this specific trigger, not shared across unrelated failures
-- [ ] Leaks nothing sensitive — no stack traces, internal names, or account-existence hints
-- [ ] Appears on the right surface for its severity, and persists if it needs action
-- [ ] Full-page errors return the true HTTP status — no soft 404s, blanket redirects home, or 200 "back soon" pages — with `Retry-After` on 503s and 429s
-- [ ] Accessible: icon and words (never color alone), announced to assistive tech, focus handled on failed submits
-- [ ] Clear on first read to a stressed person mid-task
-
----
-
-## 9. Process rules
-
-Bad error messages are usually a product and engineering problem wearing a content costume. The spec covers the workflow too:
-
-1. **No writing blind.** Before drafting, get answers from engineering: What triggers this message? How often does it fire? Does it block the user's flow? What does the system know at that moment? Writers can and should refuse a "just add a generic error here" request until these are answered.
-2. **Map before you write.** Every message maps to the code path(s) that trigger it. If one string serves five different failures, split it into five messages.
-3. **Instrument every message.** Each error string gets a stable ID and logs an event when shown. You can't prioritize, review, or retire what you can't see firing. Log 404s too — they're a live map of broken inbound links.
-4. **Prioritize by pain.** Fix first the errors that (a) fire most often and (b) block users from completing their task.
-5. **Fallbacks expire.** New launches may ship with placeholder errors, but schedule a review of real error logs about a month after launch and replace the top offenders with specific copy.
-6. **Review on a cycle.** Error content is never finished — revisit it regularly, including recently rewritten messages.
-7. **Own it together.** PMs spec edge cases, not just happy paths. Engineers document triggers and IDs. Designers make room in layouts for real explanations. Writers challenge generic strings.
+- World Wide Web Consortium, [Web Content Accessibility Guidelines 2.2](https://www.w3.org/TR/WCAG22/), W3C Recommendation, October 5, 2023. Reviewed August 13, 2026.
+- Internet Engineering Task Force, [RFC 9110: HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html), June 2022. Reviewed August 13, 2026.
+- Internet Engineering Task Force, [RFC 6585: Additional HTTP Status Codes](https://www.rfc-editor.org/rfc/rfc6585.html), April 2012. Reviewed August 13, 2026.
+- Internet Engineering Task Force, [RFC 9457: Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc9457.html), July 2023. Reviewed August 13, 2026.
+- Jenni Nadler, [When life gives you lemons, write better error messages](https://wix-ux.com/when-life-gives-you-lemons-write-better-error-messages-46c5223e1a2f), 2022. Existing provenance source; automated review was unavailable because the site returned `403 Forbidden` on August 13, 2026.
+- Anthropic, [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents), December 19, 2024. Reviewed August 13, 2026.
+- Scale AI, [Actions, Not Words: MCP-Atlas Raises the Bar for Agentic Evaluation](https://scale.com/blog/mcp-atlas), September 19, 2025. Reviewed August 13, 2026.
