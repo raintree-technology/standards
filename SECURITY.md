@@ -3,7 +3,7 @@ type: Policy
 title: Security policy
 description: Process for reporting security concerns in Raintree Standards.
 tags: [security, reporting]
-generated: { by: codex/gpt-5, at: "2026-08-12T00:00:00Z" }
+generated: { by: codex/gpt-5, at: "2026-08-13T20:05:45Z" }
 ---
 
 # Security policy
@@ -16,7 +16,7 @@ Do not open a public issue for a concern that contains sensitive information or 
 
 Email [hello@raintree.technology](mailto:hello@raintree.technology) with the subject `Standards security report`. Include the affected file or workflow, the risk, reproduction details when applicable, and a safe way to confirm the issue.
 
-After this repository becomes public, you may also use its **Security** tab when private vulnerability reporting is available.
+You may also use the repository's **Security** tab when private vulnerability reporting is available.
 
 Use a public GitHub issue for non-sensitive corrections and documentation problems.
 
