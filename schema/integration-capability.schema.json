@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://standards.raintree.dev/schema/integration-capability.schema.json",
+  "title": "Raintree integration capability bundle",
+  "description": "Machine-readable contract for a governed vendor integration capability map.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "integration", "reviewed_on", "capabilities"],
+  "properties": {
+    "version": { "const": 1 },
+    "integration": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "reviewed_on": { "type": "string", "format": "date" },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/capability" }
+    }
+  },
+  "$defs": {
+    "nonEmptyStrings": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "quotas", "latency", "sampling", "privacy_suppression",
+        "aggregation", "completeness", "operational"
+      ],
+      "properties": {
+        "quotas": { "$ref": "#/$defs/nonEmptyStrings", "description": "Provider, account, project, site, request-rate, load, or cost ceilings." },
+        "latency": { "$ref": "#/$defs/nonEmptyStrings", "description": "Freshness, propagation, retry, recrawl, and completion timing boundaries." },
+        "sampling": { "$ref": "#/$defs/nonEmptyStrings", "description": "Sampling, example selection, top-row selection, or explicit non-sampling behavior." },
+        "privacy_suppression": { "$ref": "#/$defs/nonEmptyStrings", "description": "Anonymization, suppression, property-boundary, and non-reconstruction rules." },
+        "aggregation": { "$ref": "#/$defs/nonEmptyStrings", "description": "Metric grain, grouping, canonical assignment, deduplication, and required aggregation." },
+        "completeness": { "$ref": "#/$defs/nonEmptyStrings", "description": "Known omissions, bounded rows, prospective windows, unsupported state, and absence semantics." },
+        "operational": { "$ref": "#/$defs/nonEmptyStrings", "description": "Additional capability-specific limits and safe-use constraints." }
+      }
+    },
+    "access": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["oauth_scopes", "property_roles"],
+      "properties": {
+        "oauth_scopes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "https://www.googleapis.com/auth/webmasters.readonly",
+              "https://www.googleapis.com/auth/webmasters",
+              "https://www.googleapis.com/auth/indexing"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "property_roles": {
+          "type": "array",
+          "items": { "enum": ["none", "restricted_user", "full_user", "owner", "verified_owner", "google_cloud_role"] },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "name", "interface", "availability", "access", "effect", "approval",
+        "inputs", "outputs", "data_semantics", "limits", "limitations", "verification",
+        "idempotency", "rollback", "sources"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^GSC-CAP-[A-Z0-9]+(?:-[A-Z0-9]+)*$" },
+        "name": { "type": "string", "minLength": 3 },
+        "interface": {
+          "enum": [
+            "search_console_api", "search_console_ui", "bigquery_export",
+            "email_notification", "indexing_api", "external_google_tool"
+          ]
+        },
+        "availability": { "enum": ["current", "adjacent", "legacy", "unavailable"] },
+        "access": { "$ref": "#/$defs/access" },
+        "effect": { "enum": ["observe", "diagnose", "mutate_reversible", "mutate_high_impact", "human_only"] },
+        "approval": { "enum": ["none", "bounded", "exact", "human_only"] },
+        "inputs": { "$ref": "#/$defs/nonEmptyStrings" },
+        "outputs": { "$ref": "#/$defs/nonEmptyStrings" },
+        "data_semantics": { "$ref": "#/$defs/nonEmptyStrings" },
+        "limits": { "$ref": "#/$defs/limits" },
+        "limitations": { "$ref": "#/$defs/nonEmptyStrings" },
+        "verification": { "$ref": "#/$defs/nonEmptyStrings" },
+        "idempotency": { "type": "string", "minLength": 1 },
+        "rollback": { "type": "string", "minLength": 1 },
+        "sources": { "$ref": "#/$defs/nonEmptyStrings" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "effect": { "enum": ["observe", "diagnose"] } }, "required": ["effect"] },
+          "then": { "properties": { "approval": { "const": "none" } } }
+        },
+        {
+          "if": { "properties": { "effect": { "const": "mutate_reversible" } }, "required": ["effect"] },
+          "then": { "properties": { "approval": { "enum": ["bounded", "exact", "human_only"] } } }
+        },
+        {
+          "if": { "properties": { "effect": { "const": "mutate_high_impact" } }, "required": ["effect"] },
+          "then": { "properties": { "approval": { "enum": ["exact", "human_only"] } } }
+        },
+        {
+          "if": { "properties": { "effect": { "const": "human_only" } }, "required": ["effect"] },
+          "then": { "properties": { "approval": { "const": "human_only" } } }
+        }
+      ]
+    }
+  }
+}

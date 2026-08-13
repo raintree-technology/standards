@@ -1,0 +1,114 @@
+version: 1
+integration: google-search-console
+reviewed_on: 2026-08-13
+concepts:
+  - id: GSC-DATA-GOOGLE-OBSERVATION
+    name: Google-observed state
+    definition: Search Console describes what Google observed, processed, indexed, or served; it is not the authoritative live application state.
+    cautions: ["Corroborate with HTTP responses, rendered pages, server logs, source data, releases, analytics, and user outcomes"]
+    sources: [GSC-SRC-START, GSC-SRC-DATA]
+  - id: GSC-DATA-CLICKS
+    name: Clicks
+    definition: Clicks count qualifying user actions from a particular Google surface to the property under that surface's rules.
+    cautions: ["Clicks are not sessions, unique users, conversions, or revenue", "Definitions differ by Search, Discover, and News surface"]
+    sources: [GSC-SRC-PERFORMANCE]
+  - id: GSC-DATA-IMPRESSIONS
+    name: Impressions
+    definition: Impressions count qualifying appearances under the rules of the specific Google surface and result type.
+    cautions: ["Visibility requirements vary by surface", "An impression change can reflect demand or appearance changes rather than ranking alone"]
+    sources: [GSC-SRC-PERFORMANCE]
+  - id: GSC-DATA-CTR
+    name: Click-through rate
+    definition: CTR is clicks divided by impressions for the exact report, filters, aggregation, and time window.
+    cautions: ["Stable impressions with falling clicks directs attention to appearance, intent, or competition before indexing", "Aggregated CTR can move when query mix changes"]
+    sources: [GSC-SRC-PERFORMANCE, GSC-SRC-TRAFFIC-DROPS]
+  - id: GSC-DATA-POSITION
+    name: Average position
+    definition: Position is an aggregated property of the topmost qualifying result under Search Console's rules, not a fixed universal rank.
+    cautions: ["Do not overreact to small fluctuations", "Device, country, query, appearance, and result mix affect interpretation"]
+    sources: [GSC-SRC-PERFORMANCE, GSC-SRC-TRAFFIC-DROPS]
+  - id: GSC-DATA-CANONICAL-AGGREGATION
+    name: Canonical aggregation
+    definition: Most page performance data is assigned to Google's canonical URL rather than necessarily the exact URL a user visited.
+    cautions: ["Compare Google-selected and declared canonicals", "Crawl Stats instead counts actual requested URLs"]
+    sources: [GSC-SRC-DATA, GSC-SRC-URL-INSPECTION, GSC-SRC-CRAWL-STATS]
+  - id: GSC-DATA-QUERY-PRIVACY
+    name: Query privacy suppression
+    definition: Google omits anonymized and privacy-sensitive queries from row-level reporting while some totals can still include their contribution.
+    cautions: ["Do not reconstruct hidden queries", "Filtered and unfiltered totals can differ legitimately"]
+    sources: [GSC-SRC-DATA, GSC-SRC-ALL-DATA, GSC-SRC-BULK-OVERVIEW]
+  - id: GSC-DATA-API-TRUNCATION
+    name: Search Analytics row truncation
+    definition: The Search Analytics API returns top rows and exposes at most 50,000 rows per day per search type even when paged.
+    cautions: ["Pagination does not make the API a complete warehouse", "Page-plus-query requests are expensive and still bounded"]
+    sources: [GSC-SRC-ALL-DATA, GSC-SRC-LIMITS]
+  - id: GSC-DATA-MISSING-DATES
+    name: Missing dates
+    definition: When date is a query dimension, days without returned data are omitted rather than represented by explicit zero rows.
+    cautions: ["Build a calendar spine before time-series comparisons", "Distinguish no row, zero, immature data, and export failure"]
+    sources: [GSC-SRC-API, GSC-SRC-DATA]
+  - id: GSC-DATA-TIME-ZONE
+    name: Reporting time zone
+    definition: Search Console daily performance data is labeled using California local time.
+    cautions: ["Normalize explicitly before joining with systems using UTC or another business time zone"]
+    sources: [GSC-SRC-DATA]
+  - id: GSC-DATA-LATENCY
+    name: Processing latency
+    definition: Search Console data normally appears after processing delay, and recent data can be preliminary or incomplete.
+    cautions: ["Do not compare immature recent dates with mature baselines", "Record observation and data dates separately"]
+    sources: [GSC-SRC-DATA]
+  - id: GSC-DATA-DATA-STATE
+    name: Search Analytics data state
+    definition: Search Analytics requests can select finalized data, fresh data that may still change, or hourly fresh data whose partial state must remain attached to the result.
+    cautions: ["Record dataState with every extraction", "Do not compare fresh or partial hourly periods with finalized daily baselines without aligned maturity", "Requery stored fresh periods after finalization when the decision requires stable evidence"]
+    sources: [GSC-SRC-SEARCH-ANALYTICS-METHOD, GSC-SRC-DATA]
+  - id: GSC-DATA-PROPERTY-SCOPE
+    name: Property scope
+    definition: Domain and URL-prefix properties, protocols, hosts, and paths define different evidence boundaries and can produce different totals.
+    cautions: ["Record the exact property identifier with every result", "Do not silently combine overlapping properties"]
+    sources: [GSC-SRC-VERIFY, GSC-SRC-API]
+  - id: GSC-DATA-INDEXED-VS-LIVE
+    name: Indexed versus live inspection
+    definition: Indexed inspection describes Google's stored observation; live testing describes a current test fetch and neither guarantees future indexing or serving.
+    cautions: ["Record both timestamps", "A successful live test is not an indexing guarantee"]
+    sources: [GSC-SRC-URL-INSPECTION]
+  - id: GSC-DATA-SITEMAP-STATES
+    name: Sitemap state separation
+    definition: Submission, successful fetch, parsing, URL discovery, crawling, indexing, and Search performance are separate states.
+    cautions: ["Deleting a submission does not make Google forget URLs", "Discovered counts are not indexed counts"]
+    sources: [GSC-SRC-SITEMAPS]
+  - id: GSC-DATA-BIGQUERY-GRAIN
+    name: BigQuery export grain
+    definition: Export rows are not guaranteed to be consolidated by date, URL, site, query, or a combination of keys and measures must be aggregated.
+    cautions: ["Use partition filters", "Keep site-impression and URL-impression grains explicit", "Record bytes scanned and query text"]
+    sources: [GSC-SRC-BULK-TABLES, GSC-SRC-BULK-QUERIES]
+  - id: GSC-DATA-BULK-COMPLETENESS
+    name: Bulk-export completeness
+    definition: Bulk export provides the available performance data except anonymized queries and begins prospectively after configuration.
+    cautions: ["Monitor ExportLog, partitions, settings status, and Cloud logs", "Failed dates can become unrecoverable after retries end"]
+    sources: [GSC-SRC-BULK-OVERVIEW, GSC-SRC-BULK-MONITOR]
+  - id: GSC-DATA-REPORT-SAMPLES
+    name: Report samples and example limits
+    definition: Several Search Console reports provide comprehensive totals but only bounded examples, while other reports such as Links are explicitly sampled.
+    cautions: ["Absence from an example list is not evidence of absence", "Sample representative URL families deliberately"]
+    sources: [GSC-SRC-DATA, GSC-SRC-LINKS, GSC-SRC-CRAWL-STATS]
+  - id: GSC-DATA-CROSS-SYSTEM
+    name: Cross-system reconciliation
+    definition: Search Console, server logs, analytics, commerce, and rank tools measure different populations and should not be forced to match exactly.
+    cautions: ["Explain differences in scope, privacy, bots, JavaScript, canonicalization, time zone, latency, and identity", "Preserve each system's metric contract"]
+    sources: [GSC-SRC-DATA, GSC-SRC-PERFORMANCE]
+  - id: GSC-DATA-GENERATIVE-AI-PERFORMANCE
+    name: Generative AI performance scope
+    definition: The limited-rollout Search and Discover reports count impressions under surface-specific rules for the documented generative AI features and use different aggregation behavior.
+    cautions: ["Preserve Search versus Discover scope and aggregation", "Do not infer invisible grounding, training use, clicks, conversions, or total AI exposure from impression rows", "Feature membership and rollout eligibility can change"]
+    sources: [GSC-SRC-GENERATIVE-AI-SEARCH, GSC-SRC-GENERATIVE-AI-DISCOVER, GSC-SRC-GENERATIVE-AI-CONTROL]
+  - id: GSC-DATA-EXPORT-SENTINELS
+    name: Generative AI export sentinels
+    definition: Generative AI report values displayed as unavailable or non-numeric sentinels can be exported as numeric zero, collapsing distinct states in the downloaded file.
+    cautions: ["Do not interpret exported zero as observed zero without the original UI state and report documentation", "Preserve unavailable, suppressed, not-a-number, and measured zero as distinct analytical states"]
+    sources: [GSC-SRC-GENERATIVE-AI-SEARCH, GSC-SRC-GENERATIVE-AI-DISCOVER]
+  - id: GSC-DATA-PLATFORM-PROPERTY
+    name: Platform-property scope
+    definition: A platform property measures how one supported external account or channel's content performs on Google surfaces, not activity within the source platform.
+    cautions: ["Do not merge identities across accounts or channels", "Track external connection and reporting availability separately"]
+    sources: [GSC-SRC-PLATFORM-PROPERTIES]

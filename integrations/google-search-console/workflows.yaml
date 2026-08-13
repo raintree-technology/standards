@@ -1,0 +1,142 @@
+version: 1
+integration: google-search-console
+workflows:
+  - id: GSC-WF-ACCESS-ONBOARDING
+    name: Access onboarding and periodic review
+    trigger: New property, new operator, ownership change, or scheduled access review.
+    capabilities: [GSC-CAP-PROPERTIES-LIST, GSC-CAP-PROPERTY-GET, GSC-CAP-PROPERTY-ADD, GSC-CAP-PROPERTY-DELETE, GSC-CAP-PLATFORM-PROPERTY-REVIEW, GSC-CAP-PLATFORM-PROPERTY-CONNECT, GSC-CAP-OWNERSHIP-VERIFY, GSC-CAP-ACCESS-REVIEW, GSC-CAP-ACCESS-MANAGE, GSC-CAP-ASSOCIATIONS-REVIEW, GSC-CAP-ASSOCIATIONS-MANAGE, GSC-CAP-GENERATIVE-AI-CONTROL-REVIEW]
+    steps:
+      - Inventory exact domain, URL-prefix, and platform properties; production hosts and protocols; external account identities; accountable owners; and incident contacts.
+      - Establish organization-controlled verified ownership through a human owner; do not store tokens or credentials in this repository.
+      - Grant the least role needed, record inherited access, and inspect unused ownership tokens.
+      - Reconcile service associations, downstream recipients, and the effective Search generative AI control including parent inheritance with approved purposes.
+      - Add or remove a property from a principal's set, connect a platform property, or change an association only after the capability's exact or human-only authority requirement is satisfied.
+      - Retest access from the intended principal and record the next review date.
+    stop_conditions: ["Property scope is ambiguous", "No organization-controlled verified owner exists", "A stale owner or token cannot be safely removed"]
+    outputs: ["Property inventory", "Owner and role matrix", "Association inventory", "Access exceptions and review date"]
+
+  - id: GSC-WF-MONTHLY-HEALTH
+    name: Monthly Search health review
+    trigger: Scheduled monthly review or material Search Console alert.
+    capabilities: [GSC-CAP-OVERVIEW, GSC-CAP-RECOMMENDATIONS, GSC-CAP-ACHIEVEMENTS, GSC-CAP-INSIGHTS, GSC-CAP-MESSAGES, GSC-CAP-GENERATIVE-AI-CONTROL-REVIEW, GSC-CAP-GENERATIVE-AI-PERFORMANCE-SEARCH, GSC-CAP-GENERATIVE-AI-PERFORMANCE-DISCOVER, GSC-CAP-PERFORMANCE-SEARCH, GSC-CAP-PAGE-INDEXING, GSC-CAP-SITEMAPS-READ, GSC-CAP-MANUAL-ACTIONS, GSC-CAP-SECURITY-ISSUES, GSC-CAP-CORE-WEB-VITALS, GSC-CAP-MERCHANT-OPPORTUNITIES, GSC-CAP-BULK-EXPORT-STATUS]
+    steps:
+      - Freeze the property, observation timestamp, mature comparison windows, and intended indexable URL inventory.
+      - Review messages, manual actions, security issues, export status, recommendations, achievements, merchant opportunities, the effective Search generative AI control, eligible generative AI performance, and material overview changes first.
+      - Compare clicks, impressions, CTR, and position by important URL family and search surface.
+      - Reconcile sitemap and page-indexing changes by intended URL family rather than sitewide totals alone.
+      - Correlate material changes with releases, server evidence, analytics, conversions, and known external events.
+      - Record findings, uncertainty, owners, actions, and the next review date.
+    stop_conditions: ["Manual action or security issue requires incident escalation", "Recent data is too immature for the intended comparison", "Property access or export coverage is unavailable"]
+    outputs: ["Dated health report", "Segmented metric comparison", "Indexing and sitemap reconciliation", "Escalations and owners"]
+
+  - id: GSC-WF-RELEASE-MONITORING
+    name: Search-sensitive release monitoring
+    trigger: Release changes URLs, templates, metadata, canonicals, rendering, structured data, internal links, robots rules, sitemaps, or important content.
+    capabilities: [GSC-CAP-URL-INSPECT-INDEXED, GSC-CAP-URL-TEST-LIVE, GSC-CAP-PAGE-INDEXING, GSC-CAP-RICH-RESULTS, GSC-CAP-RICH-RESULT-VALIDATION, GSC-CAP-SITEMAPS-READ, GSC-CAP-PERFORMANCE-SEARCH, GSC-CAP-CRAWL-STATS]
+    steps:
+      - Record release time, affected URL patterns, expected Search effect, baseline, risk, and correction owner.
+      - Inspect representative success, redirect, canonical, excluded, structured-data, and failure states directly before using Search Console.
+      - Run live inspection on bounded representative URLs and preserve results tied to the released version.
+      - Observe indexed state and report groups after appropriate crawl and processing delays.
+      - Start a fix validation only for an exact approved issue and cohort after representative deployed fixes pass direct and live tests; do not restart an equivalent active validation.
+      - Compare affected cohorts with unaffected controls at defined short, medium, and long observation windows.
+      - Close only after final external and direct evidence is recorded, or document residual monitoring.
+    stop_conditions: ["Live pages contradict intended indexability", "Security or manual-action evidence appears", "A high-value cohort degrades past the release stop threshold"]
+    outputs: ["Release evidence record", "Representative inspection set", "Cohort comparisons", "Correction or continued-monitoring decision"]
+
+  - id: GSC-WF-TRAFFIC-DROP
+    name: Traffic-drop investigation
+    trigger: Material unexpected decline in qualified organic discovery or Search Console performance.
+    capabilities: [GSC-CAP-TRAFFIC-DROP-DIAGNOSE, GSC-CAP-PERFORMANCE-SEARCH, GSC-CAP-PERFORMANCE-DISCOVER, GSC-CAP-PERFORMANCE-NEWS, GSC-CAP-SEARCH-ANALYTICS-QUERY, GSC-CAP-PAGE-INDEXING, GSC-CAP-CRAWL-STATS, GSC-CAP-MANUAL-ACTIONS, GSC-CAP-SECURITY-ISSUES]
+    steps:
+      - Confirm property, surface, metric definition, maturity, anomaly status, baseline, seasonality, and materiality.
+      - Determine whether clicks, impressions, CTR, or position changed and separate Search, Discover, and News.
+      - Segment by page, query, country, device, appearance, directory, template, and release cohort.
+      - Check technical availability, page indexing, crawling, security, manual actions, migrations, and release history.
+      - Compare affected demand with Google Trends or another approved external demand signal.
+      - Rank hypotheses with supporting evidence, conflicting evidence, confidence, reversible checks, and an owner.
+    stop_conditions: ["Security issue or manual action is present", "The data window is immature or known to be anomalous", "A proposed remediation would be a broad content or URL change without causal evidence"]
+    outputs: ["Frozen evidence window", "Segmented loss decomposition", "Ranked hypothesis ledger", "Approved next checks and monitoring window"]
+
+  - id: GSC-WF-INDEXING-DIAGNOSIS
+    name: URL and cohort indexing diagnosis
+    trigger: Intended URL is missing, excluded, unexpectedly canonicalized, or changing indexing state.
+    capabilities: [GSC-CAP-PAGE-INDEXING, GSC-CAP-URL-INSPECT-API, GSC-CAP-URL-INSPECT-INDEXED, GSC-CAP-URL-TEST-LIVE, GSC-CAP-SITEMAPS-READ, GSC-CAP-REQUEST-INDEXING, GSC-CAP-MANUAL-ACTIONS, GSC-CAP-SECURITY-ISSUES]
+    steps:
+      - State whether the URL and its family are intended to be public, crawlable, canonical, and indexable.
+      - Inspect HTTP status, access, robots, noindex, declared canonical, sitemap membership, internal links, rendered content, and duplicate variants.
+      - Compare indexed and live URL Inspection observations with timestamps and Google-selected canonical.
+      - Sample the cohort to distinguish isolated delay from a template, discovery, rendering, duplication, or policy issue.
+      - Correct durable source signals first; request indexing only for an exact approved eligible URL after a successful live test and under a bounded retry policy.
+      - Reinspect after an appropriate delay without promising indexing or ranking.
+    stop_conditions: ["Intended indexability is undecided", "A manual action, security issue, or legal removal governs the URL", "The requested action is generic Indexing API submission"]
+    outputs: ["URL intent record", "Indexed-versus-live evidence", "Cohort cause classification", "Correction and reinspection plan"]
+
+  - id: GSC-WF-SITEMAP-AUDIT
+    name: Sitemap audit and bounded submission
+    trigger: New sitemap, sitemap failure, migration, material URL inventory change, or scheduled audit.
+    capabilities: [GSC-CAP-SITEMAPS-READ, GSC-CAP-SITEMAP-SUBMIT, GSC-CAP-SITEMAP-DELETE, GSC-CAP-URL-TEST-LIVE, GSC-CAP-PAGE-INDEXING]
+    steps:
+      - Inventory every intended sitemap, index, format, owner, generator, property, and URL family.
+      - Fetch and validate files; reconcile URLs with successful, canonical, indexable, preferred destinations.
+      - Remove redirected, blocked, duplicate, unauthorized, malformed, or stale URLs at the source generator.
+      - Submit or resubmit only within an approved property and bounded URL family.
+      - Read fetch and parse state, discovered counts, and page-indexing outcomes after appropriate delay.
+      - Treat deleting a submission as report cleanup, not URL removal or deindexing.
+    stop_conditions: ["Sitemap contents contradict canonical or indexability policy", "Property ownership or URL scope is unclear", "A request treats submission as guaranteed indexing"]
+    outputs: ["Sitemap inventory", "Source validation and URL reconciliation", "Approved mutation record", "Post-submission status and residual errors"]
+
+  - id: GSC-WF-SITE-MIGRATION
+    name: Site migration monitoring
+    trigger: Approved domain or subdomain migration with URL changes.
+    capabilities: [GSC-CAP-CHANGE-ADDRESS, GSC-CAP-SITEMAP-SUBMIT, GSC-CAP-PAGE-INDEXING, GSC-CAP-URL-INSPECT-INDEXED, GSC-CAP-PERFORMANCE-SEARCH, GSC-CAP-CRAWL-STATS]
+    steps:
+      - Freeze old and new URL inventories, one-to-one redirect map, canonicals, sitemaps, important content, links, baselines, and rollback authority.
+      - Verify ownership of every old and new property and classify whether Change of Address is applicable.
+      - Validate redirects, final responses, new canonicals, internal links, alternates, structured data, and sitemaps before submission.
+      - Obtain exact approval and submit Change of Address only for an eligible domain or subdomain move.
+      - Monitor old and new cohorts, crawl behavior, canonical selection, indexing, clicks, and impressions through the documented migration period.
+      - Retain redirects and domain control for the approved duration; use the documented cancellation route only through recovery authority.
+    stop_conditions: ["Move is HTTP-to-HTTPS, path-only, or hosting-only", "Critical redirect or ownership prechecks fail", "A chained or overlapping move is proposed"]
+    outputs: ["Migration inventory and preflight", "Exact approval and submission evidence", "Old/new cohort dashboard", "Recovery and retention record"]
+
+  - id: GSC-WF-BULK-RECONCILIATION
+    name: API and BigQuery reconciliation
+    trigger: Bulk export setup, data-quality alert, long-range analysis, or disagreement between Search Console and another system.
+    capabilities: [GSC-CAP-BULK-EXPORT-CONFIGURE, GSC-CAP-BULK-EXPORT-STATUS, GSC-CAP-BIGQUERY-QUERY, GSC-CAP-BIGQUERY-EXPORT-LOG, GSC-CAP-SEARCH-ANALYTICS-QUERY, GSC-CAP-API-QUOTAS]
+    steps:
+      - Approve property, Cloud project, dataset, region, IAM, billing, retention, downstream use, and query-cost controls before configuration.
+      - Verify the first scheduled export, expected partitions, ExportLog, latest settings status, and Cloud log evidence.
+      - Query partition-bounded tables with explicit grain and aggregate all measures.
+      - Compare mature dates and like-for-like dimensions with API and UI totals; preserve anonymization and truncation differences.
+      - Reconcile with analytics or commerce only after normalizing scope, time zone, identity, canonicalization, bots, and latency.
+      - Record SQL, bytes processed, gaps, explanations, owner, and next check.
+    stop_conditions: ["Billing, region, IAM, retention, or data authority is unapproved", "Schema was modified", "Missing dates are outside Google's retry window and cannot be reconstructed"]
+    outputs: ["Export configuration record", "Completeness ledger", "Versioned SQL and cost evidence", "Cross-system discrepancy explanation"]
+
+  - id: GSC-WF-CRITICAL-ESCALATION
+    name: Manual action, security issue, or emergency removal
+    trigger: Manual action, Search security issue, sensitive URL exposure, or approved emergency Search removal.
+    capabilities: [GSC-CAP-MANUAL-ACTIONS, GSC-CAP-RECONSIDERATION, GSC-CAP-SECURITY-ISSUES, GSC-CAP-SECURITY-REVIEW, GSC-CAP-REMOVALS-REVIEW, GSC-CAP-REMOVAL-REQUEST, GSC-CAP-REMOVAL-CANCEL]
+    steps:
+      - Preserve the exact notice, property, affected scope, timestamps, current URL behavior, and accountable incident owner.
+      - Route security issues through incident response and manual actions through qualified SEO, policy, legal, and security review as applicable.
+      - For urgent exposure, implement the durable access, status, deletion, or noindex change before or alongside an exactly approved temporary removal.
+      - Verify remediation across code, infrastructure, credentials, content, affected URL variants, logs, and the released artifact.
+      - Allow only a qualified human owner to submit security-review or reconsideration representations.
+      - Monitor the Google decision and independently close the underlying incident or policy finding.
+    stop_conditions: ["No qualified human owner is available for a representation", "Durable remediation is incomplete", "Affected URL or prefix scope is ambiguous"]
+    outputs: ["Preserved notice and incident record", "Durable remediation evidence", "Exact removal approval if used", "Human-submitted review record and outcome"]
+
+  - id: GSC-WF-COMMERCE-CONFIGURATION
+    name: Shopping and commerce configuration review
+    trigger: Merchant eligibility appears, Merchant opportunities change, or shipping and return settings require review or correction.
+    capabilities: [GSC-CAP-MERCHANT-OPPORTUNITIES, GSC-CAP-SHIPPING-RETURNS-REVIEW, GSC-CAP-SHIPPING-RETURNS-MANAGE, GSC-CAP-ASSOCIATIONS-REVIEW]
+    steps:
+      - Confirm that the property is an eligible merchant and identify the authoritative commerce, legal, support, localization, and policy owners.
+      - Reconcile Merchant opportunities, product and merchant rich-result reports, Merchant Center association, visible policies, structured data, feeds, and checkout behavior.
+      - Classify every recommendation as applicable, inapplicable, already satisfied, conflicting, or requiring a different system of record.
+      - Change shipping or return settings only after exact approval names market, policy, source of truth, precedence, user consequence, propagation window, and rollback configuration.
+      - Re-read the saved configuration and verify visible policy, structured data, Merchant Center state, and supported Search appearance after propagation.
+    stop_conditions: ["Merchant classification is wrong or unexplained", "Authoritative policy sources conflict", "Market, precedence, legal approval, or rollback state is unknown"]
+    outputs: ["Merchant evidence map", "Recommendation dispositions", "Exact approval record", "Reconciled final configuration and residual propagation"]

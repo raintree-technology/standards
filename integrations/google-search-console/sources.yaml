@@ -1,0 +1,439 @@
+version: 1
+integration: google-search-console
+reviewed_on: 2026-08-13
+scope: >-
+  Current official Google Search Console reports, settings, APIs, BigQuery export,
+  notifications, and directly adjacent Google tools required to interpret or act on
+  Search Console evidence. General Search Central guidance is included only when it
+  defines an operational boundary used by this bundle.
+freshness:
+  cadence_days: 31
+  next_review: 2026-09-13
+  event_triggers:
+    - Google changes the Reports at a glance, property settings, shopping, or platform-property inventories.
+    - An API discovery document, OAuth scope, permission matrix, quota, field, enum, or deprecation changes.
+    - A limited-rollout surface becomes general, changes eligibility, or disappears.
+    - BigQuery tables, retry behavior, export completeness, cost behavior, or Indexing API eligibility changes.
+
+sources:
+  - id: GSC-SRC-SEARCH-DOCS
+    title: Google Search documentation
+    url: https://developers.google.com/search/docs
+    topic: search-documentation-index
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-START
+    title: Get started with Search Console
+    url: https://developers.google.com/search/docs/monitor-debug/search-console-start
+    topic: operating-lifecycle
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-REPORTS
+    title: Reports at a glance
+    url: https://support.google.com/webmasters/answer/9133276
+    topic: report-inventory
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-RECOMMENDATIONS
+    title: Recommendations in Search Console
+    url: https://support.google.com/webmasters/answer/15107108
+    topic: overview-recommendations
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-ACHIEVEMENTS
+    title: Achievements in Search Console
+    url: https://support.google.com/webmasters/answer/16543604
+    topic: click-milestones
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-SETTINGS
+    title: Search Console Property Settings page
+    url: https://support.google.com/webmasters/answer/7687465
+    topic: setting-inventory
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-GENERATIVE-AI-CONTROL
+    title: Search generative AI control
+    url: https://support.google.com/webmasters/answer/16908024
+    topic: search-generative-ai-setting
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-GENERATIVE-AI-SEARCH
+    title: Generative AI performance report for Search
+    url: https://support.google.com/webmasters/answer/16984139
+    topic: generative-ai-search-performance
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-GENERATIVE-AI-DISCOVER
+    title: Generative AI performance report for Discover
+    url: https://support.google.com/webmasters/answer/16983858
+    topic: generative-ai-discover-performance
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-PLATFORM-PROPERTIES
+    title: About platform properties in Search Console
+    url: https://support.google.com/webmasters/answer/17148418
+    topic: platform-properties
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-PERMISSIONS
+    title: Managing owners, users, and permissions
+    url: https://support.google.com/webmasters/answer/7687615
+    topic: authorization
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-VERIFY
+    title: Verify your site ownership
+    url: https://support.google.com/webmasters/answer/9008080
+    topic: ownership
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-ASSOCIATIONS
+    title: Associations
+    url: https://support.google.com/webmasters/answer/9419894
+    topic: associations
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-API
+    title: Search Console API reference
+    url: https://developers.google.com/webmaster-tools/v1/api_reference_index
+    topic: api-surface
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-AUTH
+    title: Authorize Search Console API requests
+    url: https://developers.google.com/webmaster-tools/v1/how-tos/authorizing
+    topic: oauth
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-LIMITS
+    title: Search Console API usage limits
+    url: https://developers.google.com/webmaster-tools/limits
+    topic: api-quotas
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-ALL-DATA
+    title: Getting all Search Analytics data
+    url: https://developers.google.com/webmaster-tools/v1/how-tos/all-your-data
+    topic: api-data-completeness
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-SEARCH-ANALYTICS-METHOD
+    title: Search Analytics query method
+    url: https://developers.google.com/webmaster-tools/v1/searchanalytics/query
+    topic: search-analytics-request-response
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-DATA
+    title: About Search Console data
+    url: https://support.google.com/webmasters/answer/96568
+    topic: data-semantics
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-PERFORMANCE
+    title: How are you performing on Google
+    url: https://support.google.com/webmasters/answer/10268906
+    topic: performance-reports
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-TRAFFIC-DROPS
+    title: Debugging drops in Google Search traffic
+    url: https://developers.google.com/search/docs/monitor-debug/debugging-search-traffic-drops
+    topic: traffic-diagnosis
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-URL-INSPECTION
+    title: URL Inspection tool
+    url: https://support.google.com/webmasters/answer/9012289
+    topic: url-inspection
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-PAGE-INDEXING
+    title: Page indexing report
+    url: https://support.google.com/webmasters/answer/7440203
+    topic: page-indexing
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-VIDEO-INDEXING
+    title: Video indexing report
+    url: https://support.google.com/webmasters/answer/9495631
+    topic: video-indexing
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-SITEMAPS
+    title: Sitemaps report
+    url: https://support.google.com/webmasters/answer/7451001
+    topic: sitemaps
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-REMOVALS
+    title: Removals and SafeSearch reports tool
+    url: https://support.google.com/webmasters/answer/9689846
+    topic: removals
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-LINKS
+    title: Links report
+    url: https://support.google.com/webmasters/answer/9049606
+    topic: links
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-CRAWL-STATS
+    title: Crawl Stats report
+    url: https://support.google.com/webmasters/answer/9679690
+    topic: crawling
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-CWV
+    title: Core Web Vitals report
+    url: https://support.google.com/webmasters/answer/9205520
+    topic: page-experience
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-RICH-RESULTS
+    title: Rich result report overview
+    url: https://support.google.com/webmasters/answer/7552505
+    topic: search-appearance
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-RICH-RESULTS-TEST
+    title: Rich Results Test
+    url: https://support.google.com/webmasters/answer/7445569
+    topic: rich-results-live-test
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-AMP-REPORT
+    title: AMP status report
+    url: https://support.google.com/webmasters/answer/7450883
+    topic: amp-status
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-AMP-TEST
+    title: AMP Test
+    url: https://support.google.com/webmasters/answer/7320015
+    topic: amp-live-test
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-MANUAL-ACTIONS
+    title: Manual Actions report
+    url: https://support.google.com/webmasters/answer/9044175
+    topic: manual-actions
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-SECURITY-ISSUES
+    title: Security Issues report
+    url: https://support.google.com/webmasters/answer/9044101
+    topic: security-issues
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-CHANGE-ADDRESS
+    title: Change of Address tool
+    url: https://support.google.com/webmasters/answer/9370220
+    topic: site-migration
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-SHOPPING
+    title: Shopping reports and tools
+    url: https://support.google.com/webmasters/answer/12660034
+    topic: shopping-reports
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-MERCHANT-OPPORTUNITIES
+    title: Merchant opportunities report
+    url: https://support.google.com/webmasters/answer/12429106
+    topic: merchant-opportunities
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-BULK-OVERVIEW
+    title: About bulk data export to BigQuery
+    url: https://support.google.com/webmasters/answer/12918484
+    topic: bulk-export
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-BULK-START
+    title: Start a new bulk data export
+    url: https://support.google.com/webmasters/answer/12917675
+    topic: bulk-export-setup
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-BULK-MONITOR
+    title: Manage and monitor bulk data exports
+    url: https://support.google.com/webmasters/answer/12919198
+    topic: bulk-export-operations
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-BULK-TABLES
+    title: Bulk export table guidelines and reference
+    url: https://support.google.com/webmasters/answer/12917991
+    topic: bulk-export-schema
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-BULK-QUERIES
+    title: Bulk export query guidelines and samples
+    url: https://support.google.com/webmasters/answer/12917174
+    topic: bulk-export-queries
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-INDEXING-API
+    title: How to use the Indexing API
+    url: https://developers.google.com/search/apis/indexing-api/v3/using-api
+    topic: adjacent-indexing-api
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-INDEXING-AUTH
+    title: Authorize Indexing API requests
+    url: https://developers.google.com/search/apis/indexing-api/v3/authorizing
+    topic: adjacent-indexing-api-oauth
+    authority: provider_documentation
+    volatility: high
+  - id: GSC-SRC-INDEXING-QUOTA
+    title: Indexing API quota and approval
+    url: https://developers.google.com/search/apis/indexing-api/v3/quota-pricing
+    topic: adjacent-indexing-api-limits
+    authority: provider_documentation
+    volatility: high
+
+change_watch:
+  - id: GSC-WATCH-FAQ-APPEARANCE-DEPRECATION
+    status: announced_deprecation
+    effective: "2026-08"
+    affected_capabilities: [GSC-CAP-SEARCH-ANALYTICS-QUERY, GSC-CAP-RICH-RESULTS]
+    action: Stop depending on FAQ search-appearance output, confirm the field's current API behavior before querying it, and retain historical meaning in stored data.
+    sources: [GSC-SRC-SEARCH-ANALYTICS-METHOD]
+  - id: GSC-WATCH-GENERATIVE-AI-ROLLOUT
+    status: limited_rollout
+    effective: rolling
+    affected_capabilities: [GSC-CAP-GENERATIVE-AI-CONTROL-REVIEW, GSC-CAP-GENERATIVE-AI-CONTROL-MANAGE, GSC-CAP-GENERATIVE-AI-PERFORMANCE-SEARCH, GSC-CAP-GENERATIVE-AI-PERFORMANCE-DISCOVER]
+    action: Re-read the control and both report sources before use; record UI availability, included features, inherited state, and eligibility instead of treating absence as an error.
+    sources: [GSC-SRC-GENERATIVE-AI-CONTROL, GSC-SRC-GENERATIVE-AI-SEARCH, GSC-SRC-GENERATIVE-AI-DISCOVER]
+  - id: GSC-WATCH-PLATFORM-PROPERTY-ROLLOUT
+    status: limited_rollout
+    effective: rolling
+    affected_capabilities: [GSC-CAP-PLATFORM-PROPERTY-REVIEW, GSC-CAP-PLATFORM-PROPERTY-CONNECT]
+    action: Confirm the currently supported platforms, connection route, verification behavior, reports, and account eligibility before onboarding.
+    sources: [GSC-SRC-PLATFORM-PROPERTIES]
+
+coverage:
+  - surface: property-discovery-and-api-management
+    classification: mapped
+    capabilities: [GSC-CAP-PROPERTIES-LIST, GSC-CAP-PROPERTY-GET, GSC-CAP-PROPERTY-ADD, GSC-CAP-PROPERTY-DELETE]
+    sources: [GSC-SRC-API, GSC-SRC-AUTH]
+  - surface: ownership-verification
+    classification: mapped
+    capabilities: [GSC-CAP-OWNERSHIP-VERIFY]
+    sources: [GSC-SRC-VERIFY, GSC-SRC-PERMISSIONS]
+  - surface: users-and-permissions
+    classification: mapped
+    capabilities: [GSC-CAP-ACCESS-REVIEW, GSC-CAP-ACCESS-MANAGE]
+    sources: [GSC-SRC-PERMISSIONS, GSC-SRC-SETTINGS]
+  - surface: associations
+    classification: mapped
+    capabilities: [GSC-CAP-ASSOCIATIONS-REVIEW, GSC-CAP-ASSOCIATIONS-MANAGE]
+    sources: [GSC-SRC-ASSOCIATIONS, GSC-SRC-SETTINGS]
+  - surface: overview-insights-and-messages
+    classification: mapped
+    capabilities: [GSC-CAP-OVERVIEW, GSC-CAP-INSIGHTS, GSC-CAP-MESSAGES, GSC-CAP-EMAIL-ALERTS]
+    sources: [GSC-SRC-REPORTS, GSC-SRC-START]
+  - surface: overview-recommendations
+    classification: mapped
+    capabilities: [GSC-CAP-RECOMMENDATIONS]
+    sources: [GSC-SRC-RECOMMENDATIONS, GSC-SRC-REPORTS]
+  - surface: achievements
+    classification: mapped
+    capabilities: [GSC-CAP-ACHIEVEMENTS]
+    sources: [GSC-SRC-ACHIEVEMENTS, GSC-SRC-REPORTS]
+  - surface: search-generative-ai-control
+    classification: mapped
+    capabilities: [GSC-CAP-GENERATIVE-AI-CONTROL-REVIEW, GSC-CAP-GENERATIVE-AI-CONTROL-MANAGE]
+    sources: [GSC-SRC-GENERATIVE-AI-CONTROL, GSC-SRC-SETTINGS]
+  - surface: generative-ai-performance-search-and-discover
+    classification: mapped
+    capabilities: [GSC-CAP-GENERATIVE-AI-PERFORMANCE-SEARCH, GSC-CAP-GENERATIVE-AI-PERFORMANCE-DISCOVER]
+    sources: [GSC-SRC-GENERATIVE-AI-SEARCH, GSC-SRC-GENERATIVE-AI-DISCOVER]
+  - surface: platform-properties
+    classification: mapped
+    capabilities: [GSC-CAP-PLATFORM-PROPERTY-REVIEW, GSC-CAP-PLATFORM-PROPERTY-CONNECT]
+    sources: [GSC-SRC-PLATFORM-PROPERTIES]
+  - surface: performance-search-discover-news
+    classification: mapped
+    capabilities: [GSC-CAP-PERFORMANCE-SEARCH, GSC-CAP-PERFORMANCE-DISCOVER, GSC-CAP-PERFORMANCE-NEWS, GSC-CAP-SEARCH-ANALYTICS-QUERY]
+    sources: [GSC-SRC-PERFORMANCE, GSC-SRC-DATA, GSC-SRC-SEARCH-ANALYTICS-METHOD, GSC-SRC-ALL-DATA]
+  - surface: url-inspection-index-and-live
+    classification: mapped
+    capabilities: [GSC-CAP-URL-INSPECT-API, GSC-CAP-URL-INSPECT-INDEXED, GSC-CAP-URL-TEST-LIVE, GSC-CAP-REQUEST-INDEXING]
+    sources: [GSC-SRC-URL-INSPECTION, GSC-SRC-API, GSC-SRC-LIMITS]
+  - surface: page-and-video-indexing
+    classification: mapped
+    capabilities: [GSC-CAP-PAGE-INDEXING, GSC-CAP-VIDEO-INDEXING]
+    sources: [GSC-SRC-PAGE-INDEXING, GSC-SRC-VIDEO-INDEXING]
+  - surface: sitemaps-report-and-api
+    classification: mapped
+    capabilities: [GSC-CAP-SITEMAPS-READ, GSC-CAP-SITEMAP-SUBMIT, GSC-CAP-SITEMAP-DELETE]
+    sources: [GSC-SRC-SITEMAPS, GSC-SRC-API]
+  - surface: removals-and-safesearch
+    classification: mapped
+    capabilities: [GSC-CAP-REMOVALS-REVIEW, GSC-CAP-REMOVAL-REQUEST, GSC-CAP-REMOVAL-CANCEL]
+    sources: [GSC-SRC-REMOVALS]
+  - surface: links
+    classification: mapped
+    capabilities: [GSC-CAP-LINKS]
+    sources: [GSC-SRC-LINKS]
+  - surface: crawl-stats-and-robots-reporting
+    classification: mapped
+    capabilities: [GSC-CAP-CRAWL-STATS, GSC-CAP-ROBOTS-REPORT]
+    sources: [GSC-SRC-CRAWL-STATS, GSC-SRC-SETTINGS]
+  - surface: core-web-vitals-and-https
+    classification: mapped
+    capabilities: [GSC-CAP-CORE-WEB-VITALS, GSC-CAP-HTTPS-REPORT]
+    sources: [GSC-SRC-CWV, GSC-SRC-REPORTS]
+  - surface: rich-results-and-enhancements
+    classification: mapped
+    capabilities: [GSC-CAP-RICH-RESULTS, GSC-CAP-RICH-RESULT-VALIDATION, GSC-CAP-RICH-RESULTS-TEST, GSC-CAP-AMP-REPORT, GSC-CAP-AMP-TEST]
+    sources: [GSC-SRC-RICH-RESULTS, GSC-SRC-RICH-RESULTS-TEST, GSC-SRC-AMP-REPORT, GSC-SRC-AMP-TEST, GSC-SRC-REPORTS]
+  - surface: manual-actions
+    classification: mapped
+    capabilities: [GSC-CAP-MANUAL-ACTIONS, GSC-CAP-RECONSIDERATION]
+    sources: [GSC-SRC-MANUAL-ACTIONS]
+  - surface: security-issues
+    classification: mapped
+    capabilities: [GSC-CAP-SECURITY-ISSUES, GSC-CAP-SECURITY-REVIEW]
+    sources: [GSC-SRC-SECURITY-ISSUES]
+  - surface: change-of-address
+    classification: mapped
+    capabilities: [GSC-CAP-CHANGE-ADDRESS]
+    sources: [GSC-SRC-CHANGE-ADDRESS]
+  - surface: shipping-and-returns
+    classification: mapped
+    capabilities: [GSC-CAP-SHIPPING-RETURNS-REVIEW, GSC-CAP-SHIPPING-RETURNS-MANAGE]
+    sources: [GSC-SRC-SETTINGS]
+  - surface: shopping-rich-reports-and-merchant-opportunities
+    classification: mapped
+    capabilities: [GSC-CAP-RICH-RESULTS, GSC-CAP-MERCHANT-OPPORTUNITIES]
+    sources: [GSC-SRC-SHOPPING, GSC-SRC-MERCHANT-OPPORTUNITIES, GSC-SRC-RICH-RESULTS]
+  - surface: bulk-export-configuration-monitoring-and-querying
+    classification: mapped
+    capabilities: [GSC-CAP-BULK-EXPORT-CONFIGURE, GSC-CAP-BULK-EXPORT-STATUS, GSC-CAP-BIGQUERY-QUERY, GSC-CAP-BIGQUERY-EXPORT-LOG]
+    sources: [GSC-SRC-BULK-OVERVIEW, GSC-SRC-BULK-START, GSC-SRC-BULK-MONITOR, GSC-SRC-BULK-TABLES, GSC-SRC-BULK-QUERIES]
+  - surface: api-authorization-and-quota-observation
+    classification: mapped
+    capabilities: [GSC-CAP-API-QUOTAS]
+    sources: [GSC-SRC-AUTH, GSC-SRC-LIMITS]
+  - surface: traffic-drop-diagnosis
+    classification: mapped
+    capabilities: [GSC-CAP-TRAFFIC-DROP-DIAGNOSE]
+    sources: [GSC-SRC-TRAFFIC-DROPS, GSC-SRC-SEARCH-DOCS]
+  - surface: indexing-api-publish-and-metadata
+    classification: adjacent
+    capabilities: [GSC-CAP-INDEXING-PUBLISH, GSC-CAP-INDEXING-METADATA]
+    sources: [GSC-SRC-INDEXING-API, GSC-SRC-INDEXING-AUTH, GSC-SRC-INDEXING-QUOTA]
+    rationale: The Indexing API is a separate Google API restricted to eligible JobPosting and livestream pages, not a general Search Console submission API.
+  - surface: legacy-reports-and-tools
+    classification: legacy
+    capabilities: [GSC-CAP-LEGACY-SURFACES]
+    sources: [GSC-SRC-REPORTS]
+    rationale: Current official inventory retains Data Highlighter and Web Tools as legacy while other retired reports require replacement guidance.
+  - surface: full-google-search-central-corpus
+    classification: excluded
+    capabilities: []
+    sources: [GSC-SRC-SEARCH-DOCS]
+    rationale: General crawling, indexing, appearance, ecommerce, and content policy belong to SEO standards, not this product capability bundle.

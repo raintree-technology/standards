@@ -197,7 +197,7 @@ documents:
     next_review: 2026-11-13
   - id: PLAYBOOK-GSC
     owner: seo
-    source_version: current Google Search Central and Search Console documentation reviewed 2026-08-13
+    source_version: current Google Search Central, Search Console reports and settings, Search Console API, BigQuery bulk export, and eligible Indexing API boundaries reviewed 2026-08-13
     reviewed_on: 2026-08-13
     volatility: high
-    next_review: 2026-11-13
+    next_review: 2026-09-13

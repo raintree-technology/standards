@@ -18,6 +18,7 @@ okf_version: "0.2"
 * [Foundations](foundations/) - Cross-cutting evidence, trust, and safe-change requirements.
 * [Governance](governance/) - Authority, contribution, and exception rules.
 * [Growth](growth/) - Experimentation and durable growth standards.
+* [Integration capability maps](integrations/) - Validated vendor surfaces, authority boundaries, workflows, and offline evaluations that support governed playbooks.
 * [Marketing](marketing/) - Core lifecycle marketing standards and coverage maps.
 * [Media](media/) - Media production, accessibility, provenance, and rights standards.
 * [Operations](operations/) - Reliability, incidents, recovery, support, and vendor standards.
@@ -95,7 +96,7 @@ okf_version: "0.2"
 
 * [Apple HIG interface audit](playbooks/apple-hig-audit.md) - Current Apple guidance with optional versioned HIG Doctor evidence.
 * [Google Analytics 4 implementation](playbooks/google-analytics-4.md) - GA4 events, ecommerce, consent, identity, validation, and reconciliation.
-* [Google Search Console operations](playbooks/google-search-console.md) - Ownership, discovery, inspection, monitoring, and release evidence.
+* [Google Search Console operations](playbooks/google-search-console.md) - Ownership, discovery, inspection, monitoring, controlled action, and release evidence backed by a validated [capability map](integrations/google-search-console/).
 
 ## Maintenance
 

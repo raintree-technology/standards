@@ -18,5 +18,10 @@ jobs:
       - name: Validate OKF bundle and Raintree catalog
         run: ruby scripts/validate_catalog.rb
 
-      - name: Parse JSON Schema
-        run: ruby -rjson -e 'JSON.parse(File.read("schema/standard.schema.json"))'
+      - name: Validate integration capability bundles
+        run: |
+          ruby scripts/validate_integrations.rb
+          ruby scripts/test_validate_integrations.rb
+
+      - name: Parse JSON Schemas
+        run: ruby -rjson -e 'Dir["schema/*.json"].sort.each { |path| JSON.parse(File.read(path)) }'

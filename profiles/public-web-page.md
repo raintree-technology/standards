@@ -3,8 +3,8 @@ id: PROFILE-PUBLIC-WEB-PAGE
 title: Public web page profile
 description: Routes public web work to quality, search, trust, evidence, and verification requirements.
 type: profile
-status: stable
-governance_status: active
+status: draft
+governance_status: draft
 owners: [web, design, seo, content]
 last_reviewed: 2026-08-13
 review_by: 2027-02-13
@@ -12,7 +12,7 @@ stale_after: 2027-02-13
 applies_to: [public-web-page, landing-page, marketing-site]
 tags: [profile, web, seo]
 depends_on: [WEB-QUALITY, SEO-FOUNDATIONS, FND-ACCESSIBILITY, FND-TRUST, FND-EVIDENCE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
+generated: { by: codex/gpt-5, at: "2026-08-13T22:32:22Z" }
 ---
 
 # Public web page profile
@@ -60,5 +60,6 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - When `PRIVACY-DATA` is active, `PRIVACY-DATA-001`, `PRIVACY-DATA-003`, `PRIVACY-DATA-005`, `PRIVACY-DATA-006`, and `PRIVACY-DATA-015` — The processing map, minimization, rendered explanation, choice states, and observed network and storage behavior agree.
 - When `SECURITY-APPLICATION` is active, `SECURITY-APPLICATION-002`, `SECURITY-APPLICATION-005`, `SECURITY-APPLICATION-006`, `SECURITY-APPLICATION-010`, and `SECURITY-APPLICATION-015` — Authorization, untrusted input, uploaded content, deployment configuration, and integrated verification evidence cover the page's application behavior.
 - When `PROFILE-AGENTIC-SYSTEM` is active, its evidence covers model limits, user control, prompt injection, data paths, tools, repeated outcomes, refusals, escalation, and final-state verification.
+- When `PLAYBOOK-GSC` is active, record the exact property, workflow, capability and authority boundary, source and data dates, filters, affected URL cohort, Google-observed evidence, direct corroboration, approvals for mutations, residual uncertainty, and a passing integration-bundle validation result.
 - `AGENT-VERIFICATION-002` and `AGENT-VERIFICATION-005` — The final page was inspected in its intended medium and the handoff records checks, results, exceptions, and limitations.
 - When a conditional standard is active, include its rule-level completion evidence before declaring the page complete.

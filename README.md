@@ -3,7 +3,7 @@ type: Reference
 title: Raintree Standards
 description: Entry point for Raintree's governed, agent-readable quality standards.
 tags: [standards, governance, agents]
-generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
+generated: { by: codex/gpt-5, at: "2026-08-13T22:32:22Z" }
 sources:
   - id: okf-v02
     resource: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
@@ -45,6 +45,7 @@ Useful entry points:
 Markdown is the source of truth. The repository is an Open Knowledge Format (OKF) v0.2 bundle with a stricter Raintree application profile. Each concept document begins with YAML front matter for machine-readable metadata.
 
 - [`schema/standard.schema.json`](schema/standard.schema.json) defines the Raintree standard contract.
+- [`schema/integration-capability.schema.json`](schema/integration-capability.schema.json) defines supporting vendor capability maps used by governed playbooks.
 - [`catalog.yaml`](catalog.yaml) indexes governed documents for agents and other tools.
 - Markdown keeps the standards readable, reviewable, and easy to cite.
 
@@ -70,6 +71,8 @@ The `stale_after` date matches `review_by` when a review deadline exists. If a d
 ## Coverage
 
 The bounded v1 corpus covers agentic systems, APIs, engineering quality, database and data quality, product delivery, interaction design, accessibility, interface content, lifecycle marketing, analytics, experiments, privacy, application security, search, public web quality, functional writing, reliability, incidents, and cross-cutting foundations. Post-v1 drafts now cover specialist marketing channels, sales and revenue operations, app stores, and media production. The [coverage matrix](coverage.md) maps recurring work to standards and profiles. New documents plus agentic systems, privacy, and application security remain governed drafts pending the independent and qualified reviews listed in [version 1.0 readiness](governance/v1-readiness.md).
+
+Supporting [integration capability maps](integrations/) bind volatile vendor surfaces to access, risk, approval, data-semantics, workflow, and evaluation contracts without turning vendor documentation into universal policy.
 
 ## Agent access
 

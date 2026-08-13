@@ -1,0 +1,1539 @@
+version: 1
+integration: google-search-console
+reviewed_on: 2026-08-13
+capabilities:
+  - id: GSC-CAP-PROPERTIES-LIST
+    name: List accessible properties
+    interface: search_console_api
+    availability: current
+    access: { oauth_scopes: ["https://www.googleapis.com/auth/webmasters.readonly"], property_roles: [restricted_user, full_user, owner] }
+    effect: observe
+    approval: none
+    inputs: ["Authenticated Google user"]
+    outputs: ["Property URLs and permission levels"]
+    data_semantics: ["Returns the properties visible to the authenticated principal, not every organizational property"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Subject to non-Search-Analytics API quotas"]
+    limitations: ["Cannot prove organizational ownership completeness"]
+    verification: ["Compare returned properties with the approved property inventory"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-API, GSC-SRC-AUTH]
+
+  - id: GSC-CAP-PROPERTY-GET
+    name: Get a property and permission level
+    interface: search_console_api
+    availability: current
+    access: { oauth_scopes: ["https://www.googleapis.com/auth/webmasters.readonly"], property_roles: [restricted_user, full_user, owner] }
+    effect: observe
+    approval: none
+    inputs: ["Exact URL-prefix or domain property identifier"]
+    outputs: ["Property identifier and permission level"]
+    data_semantics: ["HTTP, HTTPS, www, non-www, domain, and URL-prefix properties have distinct scopes"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Subject to non-Search-Analytics API quotas"]
+    limitations: ["Does not enumerate verification tokens or all inherited access"]
+    verification: ["Confirm the identifier matches the intended production property"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-API, GSC-SRC-PERMISSIONS]
+
+  - id: GSC-CAP-PROPERTY-ADD
+    name: Add a property to the authenticated user's set
+    interface: search_console_api
+    availability: current
+    access: { oauth_scopes: ["https://www.googleapis.com/auth/webmasters"], property_roles: [none] }
+    effect: mutate_reversible
+    approval: exact
+    inputs: ["Exact property identifier", "Approved authenticated principal"]
+    outputs: ["Property added to the user's Search Console set"]
+    data_semantics: ["Adding a property does not verify ownership"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Subject to non-Search-Analytics API quotas"]
+    limitations: ["Cannot replace organization-controlled ownership verification"]
+    verification: ["Read the exact property and confirm the resulting permission level"]
+    idempotency: "Repeat-safe for the same principal and property"
+    rollback: "Delete the same property from the user's set; this does not remove verification tokens"
+    sources: [GSC-SRC-API, GSC-SRC-VERIFY]
+
+  - id: GSC-CAP-PROPERTY-DELETE
+    name: Remove a property from the authenticated user's set
+    interface: search_console_api
+    availability: current
+    access: { oauth_scopes: ["https://www.googleapis.com/auth/webmasters"], property_roles: [restricted_user, full_user, owner] }
+    effect: mutate_reversible
+    approval: exact
+    inputs: ["Exact property identifier", "Approved authenticated principal"]
+    outputs: ["Property removed from the user's Search Console set"]
+    data_semantics: ["Removal affects the principal's set and does not necessarily remove ownership verification"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Subject to non-Search-Analytics API quotas"]
+    limitations: ["A verified owner can regain access while a valid verification token remains"]
+    verification: ["List properties and inspect remaining owners and verification tokens in the UI"]
+    idempotency: "Repeat-safe once the property is absent"
+    rollback: "Add the property again and restore approved access as needed"
+    sources: [GSC-SRC-API, GSC-SRC-PERMISSIONS]
+
+  - id: GSC-CAP-OWNERSHIP-VERIFY
+    name: Establish or remove verified ownership
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [verified_owner] }
+    effect: human_only
+    approval: human_only
+    inputs: ["Exact property", "Organization-controlled verification method", "Named accountable owner"]
+    outputs: ["Verified ownership state and verification token inventory"]
+    data_semantics: ["Verified and delegated owners have broad control, but verification tokens are managed differently"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Property type determines eligible verification methods"]
+    limitations: ["Removing a UI user does not neutralize a surviving verification token"]
+    verification: ["Inspect the final owner list and unused ownership tokens from a second authorized account"]
+    idempotency: "Method-dependent; never assume token writes are repeat-safe"
+    rollback: "Remove the exact organization-controlled token only through the approved ownership process"
+    sources: [GSC-SRC-VERIFY, GSC-SRC-PERMISSIONS]
+
+  - id: GSC-CAP-ACCESS-REVIEW
+    name: Review owners, users, roles, and inherited access
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [owner] }
+    effect: observe
+    approval: none
+    inputs: ["Exact property", "Approved access inventory"]
+    outputs: ["Owners, full users, restricted users, and token-related access findings"]
+    data_semantics: ["Child properties can inherit access from containing properties"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Only owners can see and manage the complete user list"]
+    limitations: ["Review must include verification tokens outside the visible user row"]
+    verification: ["Reconcile the UI list with the approved owner and user inventory"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-PERMISSIONS, GSC-SRC-SETTINGS]
+
+  - id: GSC-CAP-ACCESS-MANAGE
+    name: Add, remove, or change property access
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [owner] }
+    effect: human_only
+    approval: human_only
+    inputs: ["Exact account", "Exact property", "Approved role", "Access owner and expiry or review date"]
+    outputs: ["Changed user or delegated-owner access"]
+    data_semantics: ["Owner, full-user, restricted-user, and associate capabilities differ"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Property role and inherited ownership constrain changes"]
+    limitations: ["Removing a verified owner requires removal of the verification token"]
+    verification: ["Re-read the user list and test the intended least-privilege access from the affected account"]
+    idempotency: "Repeat-safe only when desired final role is explicit"
+    rollback: "Restore the prior approved role or revoke the newly granted role and token"
+    sources: [GSC-SRC-PERMISSIONS]
+
+  - id: GSC-CAP-ASSOCIATIONS-REVIEW
+    name: Review associations with other Google services
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [owner] }
+    effect: observe
+    approval: none
+    inputs: ["Exact Search Console property"]
+    outputs: ["Current and requested service associations"]
+    data_semantics: ["Association effects depend on the connected Google service"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Only eligible services and properties appear"]
+    limitations: ["The downstream service can have separate permissions and data behavior"]
+    verification: ["Reconcile associations with the approved integration and recipient inventory"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-ASSOCIATIONS]
+
+  - id: GSC-CAP-ASSOCIATIONS-MANAGE
+    name: Approve, reject, or remove a service association
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [owner] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: ["Exact property", "Exact service entity", "Approved data-sharing purpose"]
+    outputs: ["Association accepted, rejected, or removed"]
+    data_semantics: ["Associations can share Search Console data or enable service-specific behavior"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Eligibility and effects vary by service"]
+    limitations: ["Removal may not delete data already received by another service"]
+    verification: ["Re-read both service configurations and verify the intended data flow"]
+    idempotency: "Repeat-safe only against an explicit desired association state"
+    rollback: "Restore or remove the association where supported; separately address retained downstream data"
+    sources: [GSC-SRC-ASSOCIATIONS, GSC-SRC-SETTINGS]
+
+  - id: GSC-CAP-OVERVIEW
+    name: Review the property overview
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: observe
+    approval: none
+    inputs: ["Exact property", "Review timestamp"]
+    outputs: ["High-level performance, indexing, enhancement, manual-action, and security signals"]
+    data_semantics: ["Overview cards summarize other reports and are not a complete diagnostic record"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Cards vary by property eligibility and detected features"]
+    limitations: ["Absence from a card is not proof that every underlying URL is healthy"]
+    verification: ["Open every material underlying report before closing a finding"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-REPORTS, GSC-SRC-START]
+
+  - id: GSC-CAP-RECOMMENDATIONS
+    name: Review Search Console recommendations
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Exact property", "Observation timestamp"]
+    outputs: ["Optional issue, opportunity, or configuration recommendations shown in Overview"]
+    data_semantics: ["Recommendations are generated from property data, change over time, can expire, and are not mandatory instructions"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["A property displays recommendations only when Google identifies something it considers interesting and actionable"]
+    limitations: ["Absence of a recommendation is not evidence that the property has no issue or opportunity", "A recommendation does not establish business priority or causal impact"]
+    verification: ["Open the linked underlying report or documentation and independently validate the premise, affected scope, risk, and expected outcome before acting"]
+    idempotency: "Repeat-safe read; recommendation availability can change between reads"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-RECOMMENDATIONS, GSC-SRC-REPORTS]
+
+  - id: GSC-CAP-GENERATIVE-AI-CONTROL-REVIEW
+    name: Review the Search generative AI control
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [owner] }
+    effect: observe
+    approval: none
+    inputs: ["Exact property", "Parent-property chain"]
+    outputs: ["Current include, exclude, or inherited selection and the applicable parent relationship"]
+    data_semantics: ["The property can inherit the closest manually configured parent value", "The control governs eligible links and content in named Google Search generative AI features, not AI training or ordinary Search inclusion"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Google is rolling the control out to a subset of website owners", "The named affected Search experiences can change"]
+    limitations: ["UI absence can mean rollout ineligibility rather than an authorization failure", "The setting does not replace Google-Extended, robots controls, or noindex"]
+    verification: ["Record the property, parent chain, visible selection, inheritance state, rollout availability, and observation timestamp"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-GENERATIVE-AI-CONTROL, GSC-SRC-SETTINGS]
+
+  - id: GSC-CAP-GENERATIVE-AI-CONTROL-MANAGE
+    name: Change the Search generative AI control
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [owner] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: ["Exact property", "Exact include, exclude, or inherit target", "Approved traffic and content-eligibility consequence", "Parent-property impact analysis"]
+    outputs: ["Persisted control selection and changed eligibility for named Search generative AI features"]
+    data_semantics: ["Exclusion affects links, grounding, impressions, and traffic from the documented Search generative AI features while leaving other Search participation distinct", "Child properties can inherit or override an applicable parent"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Google is rolling the control out to a subset of website owners", "Exclusion normally propagates after the setting goes live and caches can delay complete effect"]
+    limitations: ["This is not an AI-training control and does not override participation choices in other Google services", "A child override or parent change can make the effective state differ across related properties"]
+    verification: ["Re-read the persisted selection and inheritance state", "After the documented propagation window, review eligible performance and representative Search behavior without claiming exhaustive visibility"]
+    idempotency: "Repeat-safe only when setting the same approved target on the same exact property"
+    rollback: "Restore the recorded prior include, exclude, or inherit selection with exact approval; propagation and cache delay make rollback non-instantaneous"
+    sources: [GSC-SRC-GENERATIVE-AI-CONTROL, GSC-SRC-SETTINGS]
+
+  - id: GSC-CAP-INSIGHTS
+    name: Review Search Console Insights
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: observe
+    approval: none
+    inputs: ["Exact property", "Comparison window"]
+    outputs: ["Top and trending content, queries, countries, and traffic-source summaries"]
+    data_semantics: ["Insights is a simplified interpretation layer over performance data"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Availability and displayed classifications depend on property data volume"]
+    limitations: ["Do not treat trends or classifications as causal conclusions"]
+    verification: ["Reproduce material observations in the detailed performance report or export"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-REPORTS, GSC-SRC-PERFORMANCE]
+
+  - id: GSC-CAP-MESSAGES
+    name: Review Search Console messages
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: observe
+    approval: none
+    inputs: ["Exact property or user message panel"]
+    outputs: ["Google notices, detected issues, and status changes"]
+    data_semantics: ["Messages are alerts and do not replace current-state inspection"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Message visibility depends on role and affected property"]
+    limitations: ["A resolved or absent message does not prove the underlying condition is healthy"]
+    verification: ["Open the linked report and inspect current external state"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-START, GSC-SRC-REPORTS]
+
+  - id: GSC-CAP-EMAIL-ALERTS
+    name: Receive Search Console email alerts
+    interface: email_notification
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: observe
+    approval: none
+    inputs: ["Eligible Search Console account and notification settings"]
+    outputs: ["Issue, security, manual-action, or export-status alert"]
+    data_semantics: ["Email is a notification channel, not the authoritative issue record"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Google selects which events trigger alerts"]
+    limitations: ["Delivery, filtering, and recipient configuration can fail"]
+    verification: ["Open the property and linked report; record current status and timestamp"]
+    idempotency: "Repeat-safe observation"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-START, GSC-SRC-BULK-MONITOR]
+
+  - id: GSC-CAP-PERFORMANCE-SEARCH
+    name: Analyze Google Search performance
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Property", "Date range", "Search type", "Dimensions and filters"]
+    outputs: ["Clicks, impressions, CTR, position, and grouped rows"]
+    data_semantics: ["Most page data is assigned to canonical URLs", "Query data can be anonymized or truncated"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["UI history and row display are bounded", "Recent data can be preliminary"]
+    limitations: ["Performance is Google-observed discovery, not sessions, conversions, or causal impact"]
+    verification: ["Record filters and comparison windows; corroborate with API or export and product outcomes"]
+    idempotency: "Repeat-safe read for a fixed mature date range"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-PERFORMANCE, GSC-SRC-DATA]
+
+  - id: GSC-CAP-PERFORMANCE-DISCOVER
+    name: Analyze Discover performance
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Eligible property", "Date range", "Available dimensions"]
+    outputs: ["Discover clicks, impressions, CTR, and available breakdowns"]
+    data_semantics: ["Discover eligibility, impressions, and traffic behavior differ from Search results"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["The report appears only for properties meeting Google's data threshold"]
+    limitations: ["Absence of a report is not proof of technical ineligibility"]
+    verification: ["Record report eligibility and compare mature periods and content cohorts"]
+    idempotency: "Repeat-safe read for a fixed mature date range"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-PERFORMANCE, GSC-SRC-REPORTS]
+
+  - id: GSC-CAP-PERFORMANCE-NEWS
+    name: Analyze Google News performance
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Eligible property", "Date range", "Available dimensions"]
+    outputs: ["Google News clicks, impressions, CTR, and breakdowns"]
+    data_semantics: ["Google News reporting is distinct from the News search type in Search results"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["The report appears only for eligible properties with sufficient data"]
+    limitations: ["Do not combine News surfaces without preserving their definitions"]
+    verification: ["Record the exact report and search surface before comparison"]
+    idempotency: "Repeat-safe read for a fixed mature date range"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-PERFORMANCE, GSC-SRC-REPORTS]
+
+  - id: GSC-CAP-SEARCH-ANALYTICS-QUERY
+    name: Query Search Analytics through the API
+    interface: search_console_api
+    availability: current
+    access: { oauth_scopes: ["https://www.googleapis.com/auth/webmasters.readonly"], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Property", "Start and end dates", "Dimensions", "Filters", "Search type", "Row limit and start row"]
+    outputs: ["Grouped rows with clicks, impressions, CTR, and position"]
+    data_semantics: ["Days without data are omitted when date is a dimension", "Rows are ordered primarily by clicks"]
+    limits:
+      quotas: ["Per site and per user: 1,200 queries per minute", "Per project: 40,000 queries per minute and 30,000,000 queries per day", "Separate undocumented short-term 10-minute and long-term 1-day load quotas also apply"]
+      latency: ["Finalized performance data is typically available after 2-3 days", "Fresh or hourly data can be partial and must retain its dataState"]
+      sampling: ["Rows are top-data selections sorted primarily by clicks, not a random sample"]
+      privacy_suppression: ["Anonymized queries are omitted from rows and cannot be reconstructed", "Query-filtered totals can exclude anonymized-query contribution"]
+      aggregation: ["Aggregation can be by property or page and changes metric meaning", "Grouping or filtering by page prevents property aggregation", "Search appearance requires a discovery query followed by filtered detail queries"]
+      completeness: ["At most 50,000 rows per day per search type are exposed even after pagination", "Page or query dimensions can drop data", "Dates with no returned data are omitted rather than emitted as zero rows"]
+      operational: ["rowLimit is 1-25,000 and defaults to 1,000", "Page with startRow until an empty response", "Page/query groupings and long date ranges consume greater load quota"]
+    limitations: ["Top-row truncation and anonymized queries prevent complete query reconstruction"]
+    verification: ["Page until an empty result; reconcile totals with an unfiltered query and record truncation"]
+    idempotency: "Repeat-safe read for a fixed mature date range"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-API, GSC-SRC-SEARCH-ANALYTICS-METHOD, GSC-SRC-ALL-DATA, GSC-SRC-LIMITS, GSC-SRC-DATA]
+
+  - id: GSC-CAP-URL-INSPECT-API
+    name: Inspect indexed URL state through the API
+    interface: search_console_api
+    availability: current
+    access: { oauth_scopes: ["https://www.googleapis.com/auth/webmasters.readonly"], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Inspection URL", "Exact property URL", "Optional language code"]
+    outputs: ["Index status, coverage state, crawl information, canonicals, and eligible enhancements"]
+    data_semantics: ["Represents Google's indexed observation, not a live fetch"]
+    limits:
+      quotas: ["Per site: 600 queries per minute and 2,000 queries per day", "Per project: 15,000 queries per minute and 10,000,000 queries per day"]
+      latency: ["The result reflects Google's last indexed observation and has no guaranteed recrawl age"]
+      sampling: ["Each call inspects one exact URL; cohort conclusions require an explicitly selected sample"]
+      privacy_suppression: ["Inspection is property-scoped and can omit canonical details outside the authorized property"]
+      aggregation: ["No aggregation is performed; preserve the exact inspected URL and property pair"]
+      completeness: ["The API exposes indexed state only and does not run live tests or submit indexing requests"]
+      operational: ["Batching must remain within both per-site and per-project quotas", "Use representative URL cohorts rather than attempting a property-wide crawl"]
+    limitations: ["The API does not perform live testing or request indexing"]
+    verification: ["Compare with a direct fetch, delivered directives, sitemap policy, and UI live test when needed"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-API, GSC-SRC-URL-INSPECTION, GSC-SRC-LIMITS]
+
+  - id: GSC-CAP-URL-INSPECT-INDEXED
+    name: Inspect Google's indexed URL state in the UI
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Fully qualified URL within the current property"]
+    outputs: ["Indexed state, discovery, crawl, canonical, enhancement, video, and sitemap observations"]
+    data_semantics: ["Indexed state can lag the current page and can reflect Google's selected canonical"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Daily inspection limits apply"]
+    limitations: ["Not every exclusion is an error and not every issue is testable"]
+    verification: ["Record observation time and compare with current protocol and rendered evidence"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-URL-INSPECTION]
+
+  - id: GSC-CAP-URL-TEST-LIVE
+    name: Test a live URL as Google
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Fully qualified URL within the current property"]
+    outputs: ["Live fetch, crawl allowance, rendered resources, and testable enhancement results"]
+    data_semantics: ["A live test checks current fetchability but does not mean the URL is indexed or will be indexed"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Daily request limits and unsupported issue types apply"]
+    limitations: ["Live test conditions can differ from later production crawling and serving"]
+    verification: ["Compare the live result with a normal client fetch and the indexed observation"]
+    idempotency: "Repeat-safe diagnostic within quota"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-URL-INSPECTION]
+
+  - id: GSC-CAP-REQUEST-INDEXING
+    name: Request indexing for a URL
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [full_user, owner] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: ["Exact eligible URL", "Successful live test", "Approved URL family"]
+    outputs: ["Indexing request accepted for Google's queue"]
+    data_semantics: ["Acceptance is not a crawl, index, ranking, or timing guarantee"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Daily request limits apply"]
+    limitations: ["Cannot force indexing and cannot cancel a submitted request"]
+    verification: ["Reinspect after an appropriate delay and verify durable page signals independently"]
+    idempotency: "Repeat-safe only under a bounded retry policy; repeated requests do not accelerate processing"
+    rollback: "No direct cancellation; correct the live URL's durable status, access, canonical, or noindex signals"
+    sources: [GSC-SRC-URL-INSPECTION, GSC-SRC-START]
+
+  - id: GSC-CAP-PAGE-INDEXING
+    name: Review page indexing coverage
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Exact property", "Sitemap or reason filter", "URL-family inventory"]
+    outputs: ["Indexed and non-indexed totals, reason groups, trends, and example URLs"]
+    data_semantics: ["Totals can be comprehensive while example URL lists are bounded"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Example lists and report freshness are limited"]
+    limitations: ["Reason groups describe Google's observation and require representative URL inspection"]
+    verification: ["Reconcile by intended URL family and inspect representative examples from every material reason"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-PAGE-INDEXING, GSC-SRC-DATA]
+
+  - id: GSC-CAP-VIDEO-INDEXING
+    name: Review video indexing coverage
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Eligible property", "Video page inventory"]
+    outputs: ["Indexed video pages, non-indexed reason groups, and examples"]
+    data_semantics: ["A page can be indexed while its video is not eligible or selected for video features"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Examples and detected video coverage are bounded"]
+    limitations: ["Report absence or video nonselection is not a general page-indexing verdict"]
+    verification: ["Inspect representative pages, visible video content, metadata, and Google-selected video state"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-VIDEO-INDEXING, GSC-SRC-SITEMAPS]
+
+  - id: GSC-CAP-SITEMAPS-READ
+    name: List and inspect submitted sitemaps
+    interface: search_console_api
+    availability: current
+    access: { oauth_scopes: ["https://www.googleapis.com/auth/webmasters.readonly"], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Exact property", "Optional sitemap-index URL"]
+    outputs: ["Submitted sitemaps, types, last read, status, errors, and discovered counts"]
+    data_semantics: ["Only sitemaps submitted through Search Console or its API are listed"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["UI display and nested entries are bounded"]
+    limitations: ["Discovery, successful parsing, crawling, and indexing are distinct states"]
+    verification: ["Fetch the sitemap directly and reconcile canonical intended URLs with page indexing"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-SITEMAPS, GSC-SRC-API]
+
+  - id: GSC-CAP-SITEMAP-SUBMIT
+    name: Submit or resubmit a sitemap
+    interface: search_console_api
+    availability: current
+    access: { oauth_scopes: ["https://www.googleapis.com/auth/webmasters"], property_roles: [owner] }
+    effect: mutate_reversible
+    approval: bounded
+    inputs: ["Exact property", "Fetchable sitemap URL", "Validated canonical URL inventory"]
+    outputs: ["Sitemap submission recorded"]
+    data_semantics: ["Submission tells Google where the sitemap is; it does not upload content or guarantee indexing"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Format, size, URL-count, and property-scope limits apply"]
+    limitations: ["Resubmission does not guarantee immediate recrawl"]
+    verification: ["Read status, last read, errors, discovered counts, and representative page-indexing outcomes"]
+    idempotency: "Repeat-safe for the same sitemap URL under a bounded retry policy"
+    rollback: "Delete the submission record, while recognizing that Google can retain previously discovered URLs"
+    sources: [GSC-SRC-SITEMAPS, GSC-SRC-API]
+
+  - id: GSC-CAP-SITEMAP-DELETE
+    name: Delete a submitted sitemap record
+    interface: search_console_api
+    availability: current
+    access: { oauth_scopes: ["https://www.googleapis.com/auth/webmasters"], property_roles: [owner] }
+    effect: mutate_reversible
+    approval: exact
+    inputs: ["Exact property", "Exact sitemap URL"]
+    outputs: ["Sitemap removed from the submitted-sitemaps report"]
+    data_semantics: ["Deletion does not make Google forget the sitemap or its URLs"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Subject to non-Search-Analytics API quotas"]
+    limitations: ["Durable crawl or indexing changes require changes to the sitemap file and URL signals"]
+    verification: ["Confirm report removal and separately inspect the live sitemap and affected URL policy"]
+    idempotency: "Repeat-safe once the submission record is absent"
+    rollback: "Resubmit the exact sitemap after verifying it remains intended and valid"
+    sources: [GSC-SRC-SITEMAPS, GSC-SRC-API]
+
+  - id: GSC-CAP-REMOVALS-REVIEW
+    name: Review removals, outdated-content requests, and SafeSearch reports
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: observe
+    approval: none
+    inputs: ["Exact property", "Relevant URL or prefix"]
+    outputs: ["Temporary removals, request history, and SafeSearch classifications"]
+    data_semantics: ["Temporary Search removal differs from deleting, deindexing, or restricting the source URL"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Temporary removals expire and report visibility is property-scoped"]
+    limitations: ["The report does not implement the durable source-of-truth change"]
+    verification: ["Inspect the live URL, durable indexing controls, request state, and affected variants"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-REMOVALS]
+
+  - id: GSC-CAP-REMOVAL-REQUEST
+    name: Request temporary removal or snippet clearing
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [full_user, owner] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: ["Exact URL or prefix", "Removal type", "Approved durable disposition", "Impact owner"]
+    outputs: ["Temporary Search removal request"]
+    data_semantics: ["A successful request temporarily affects Search appearance and is not permanent deletion"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Temporary effect and property scope apply"]
+    limitations: ["Prefix requests can affect many URLs; canonical and protocol variants require explicit analysis"]
+    verification: ["Read request status, enumerate affected URLs, and verify the durable status, access, or noindex change"]
+    idempotency: "Not repeat-safe without exact request-state inspection"
+    rollback: "Cancel the exact request where supported and restore only the separately approved durable source state"
+    sources: [GSC-SRC-REMOVALS]
+
+  - id: GSC-CAP-REMOVAL-CANCEL
+    name: Cancel a temporary removal request
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [full_user, owner] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: ["Exact active removal request", "Approved restoration decision"]
+    outputs: ["Removal cancellation request"]
+    data_semantics: ["Cancellation does not guarantee immediate restoration or override durable page directives"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Only eligible active requests can be canceled"]
+    limitations: ["Restoration depends on crawl, indexing, serving, and the live URL state"]
+    verification: ["Confirm request state and recheck Search and URL Inspection after an appropriate delay"]
+    idempotency: "Repeat-safe only after confirming current request state"
+    rollback: "File a new exact removal request only through a new approved decision"
+    sources: [GSC-SRC-REMOVALS]
+
+  - id: GSC-CAP-LINKS
+    name: Review internal and external link samples
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Exact property", "Optional target URL"]
+    outputs: ["Top linked pages, linking sites, link text, internal links, and exports"]
+    data_semantics: ["Links are normalized and grouped by canonical URL"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Tables are bounded and the report is a sample, not a complete link graph"]
+    limitations: ["Absence of a link is not proof Google has never observed it"]
+    verification: ["Corroborate important internal links by crawling the site and external links with source inspection"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-LINKS]
+
+  - id: GSC-CAP-CRAWL-STATS
+    name: Review Crawl Stats
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Eligible root-level property", "Ninety-day comparison context"]
+    outputs: ["Request volume, download size, response time, host status, response, file, purpose, and Googlebot groups"]
+    data_semantics: ["Counts actual requested URLs rather than canonical aggregation; redirects count each request"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Root-level properties only", "Example URLs are representative, not complete"]
+    limitations: ["Search Console crawl samples do not replace origin or CDN logs"]
+    verification: ["Compare host, response, and timing changes with server logs and release events"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-CRAWL-STATS]
+
+  - id: GSC-CAP-ROBOTS-REPORT
+    name: Review detected robots.txt files and fetch issues
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Exact root-level property"]
+    outputs: ["Detected robots.txt files, last crawl, and reported issues"]
+    data_semantics: ["The report reflects Google's observed robots files and fetch state"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Only top hosts and observed files are represented"]
+    limitations: ["Robots rules control crawling by conforming clients, not authorization or guaranteed deindexing"]
+    verification: ["Fetch each intended robots file directly and test representative allow and disallow paths"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-SETTINGS, GSC-SRC-CRAWL-STATS]
+
+  - id: GSC-CAP-CORE-WEB-VITALS
+    name: Review Core Web Vitals groups
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Eligible property", "Device class", "URL-group context"]
+    outputs: ["Field-data status groups and representative URLs"]
+    data_semantics: ["Report groups URLs using real-user Chrome experience data rather than lab tests"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Low-traffic URLs can lack field data or inherit group evidence"]
+    limitations: ["Field groups do not identify every cause and do not replace page-level lab diagnosis"]
+    verification: ["Corroborate groups with current CrUX and representative lab traces tied to the release"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-CWV, GSC-SRC-REPORTS]
+
+  - id: GSC-CAP-HTTPS-REPORT
+    name: Review HTTPS serving status
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Eligible property", "Canonical HTTPS inventory"]
+    outputs: ["HTTPS and non-HTTPS status groups where the report is available"]
+    data_semantics: ["Report availability and grouping are Search Console observations, not transport security certification"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["May be absent for ineligible properties or as Google changes report availability"]
+    limitations: ["Does not replace direct TLS, redirect, mixed-content, or HSTS inspection"]
+    verification: ["Test representative URLs and certificate, redirect, resource, and browser behavior directly"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-REPORTS, GSC-SRC-SETTINGS]
+
+  - id: GSC-CAP-RICH-RESULTS
+    name: Review rich-result and enhancement reports
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Eligible property", "Detected structured-data feature"]
+    outputs: ["Valid, warning, and invalid item groups with examples"]
+    data_semantics: ["Reports appear only for supported features Google detects and do not guarantee rich-result display"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Examples are bounded and supported feature inventory changes"]
+    limitations: ["Validator success does not prove visible content accuracy or Search appearance eligibility"]
+    verification: ["Compare markup with visible content, source data, current feature guidance, and rendered output"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-RICH-RESULTS, GSC-SRC-REPORTS]
+
+  - id: GSC-CAP-RICH-RESULT-VALIDATION
+    name: Start and monitor rich-result fix validation
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [full_user, owner] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: ["Exact issue type", "Representative deployed fixes", "Approved affected cohort"]
+    outputs: ["Validation request and per-state progress"]
+    data_semantics: ["Validation asks Google to recheck a class of issues and is not release approval"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Processing depends on recrawl and can take time"]
+    limitations: ["A passed validation does not prove business accuracy or every page state"]
+    verification: ["Inspect final validation state and independently retest representative released pages"]
+    idempotency: "Do not restart while an equivalent validation is active"
+    rollback: "No direct rollback; correct the released markup and start a new bounded validation if needed"
+    sources: [GSC-SRC-RICH-RESULTS]
+
+  - id: GSC-CAP-MANUAL-ACTIONS
+    name: Review manual actions
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: observe
+    approval: none
+    inputs: ["Exact property"]
+    outputs: ["Manual-action type, affected scope, status, and history"]
+    data_semantics: ["Manual actions are explicit Google enforcement and differ from algorithmic ranking changes"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Property and role visibility apply"]
+    limitations: ["Absence of a manual action does not prove absence of algorithmic or technical issues"]
+    verification: ["Preserve the exact notice and route it to SEO, security, legal, and incident owners as applicable"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-MANUAL-ACTIONS, GSC-SRC-TRAFFIC-DROPS]
+
+  - id: GSC-CAP-RECONSIDERATION
+    name: Submit a manual-action reconsideration request
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [full_user, owner] }
+    effect: human_only
+    approval: human_only
+    inputs: ["Exact manual action", "Qualified remediation evidence", "Approved representation to Google"]
+    outputs: ["Reconsideration request and later decision"]
+    data_semantics: ["Submission asserts remediation to Google and must match the released site"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Only applicable manual actions can be reconsidered"]
+    limitations: ["Submission does not guarantee reversal or timing"]
+    verification: ["Qualified owner reviews the exact evidence, submitted text, released artifact, and resulting decision"]
+    idempotency: "Not repeat-safe; do not resubmit without a new reviewed basis"
+    rollback: "Irreversible communication; correct through an explicitly approved follow-up if Google permits"
+    sources: [GSC-SRC-MANUAL-ACTIONS]
+
+  - id: GSC-CAP-SECURITY-ISSUES
+    name: Review Search Console security issues
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: observe
+    approval: none
+    inputs: ["Exact property"]
+    outputs: ["Detected hacked-content, malware, social-engineering, or related issue evidence"]
+    data_semantics: ["Google's report is a security signal, not a complete incident scope"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Detection and reporting can lag or omit compromised behavior"]
+    limitations: ["Absence of an issue is not proof the property is uncompromised"]
+    verification: ["Activate incident response and inspect logs, code, infrastructure, credentials, and affected URLs"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-SECURITY-ISSUES, GSC-SRC-START]
+
+  - id: GSC-CAP-SECURITY-REVIEW
+    name: Request review after a Search security issue
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [owner] }
+    effect: human_only
+    approval: human_only
+    inputs: ["Contained incident", "Verified remediation", "Exact affected scope", "Qualified security approval"]
+    outputs: ["Security review request and later Google decision"]
+    data_semantics: ["Requesting review represents that the compromise and cause were addressed"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Review availability and processing depend on issue state"]
+    limitations: ["A successful review does not replace internal incident closure or monitoring"]
+    verification: ["Qualified security owner binds the request to incident evidence and the exact released state"]
+    idempotency: "Not repeat-safe; do not resubmit without new evidence"
+    rollback: "Irreversible communication; reopen incident response if evidence changes"
+    sources: [GSC-SRC-SECURITY-ISSUES]
+
+  - id: GSC-CAP-CHANGE-ADDRESS
+    name: Submit or cancel a Change of Address
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [owner] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: ["Verified old and new properties", "Domain or subdomain move", "One-to-one redirects", "Approved migration plan"]
+    outputs: ["Google site-move signal active for the documented period or canceled"]
+    data_semantics: ["The tool is for eligible domain or subdomain moves, not HTTP-to-HTTPS, path-only, or host-without-URL-change moves"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Ownership, property type, prechecks, and 180-day behavior apply"]
+    limitations: ["Tool use does not replace redirects, canonicals, sitemaps, content parity, or migration monitoring"]
+    verification: ["Run preflight, record exact submission, monitor old and new cohorts, and retain redirects for the required period"]
+    idempotency: "Not repeat-safe across overlapping or chained moves"
+    rollback: "Follow Google's cancellation sequence and the approved migration recovery plan; monitor both properties"
+    sources: [GSC-SRC-CHANGE-ADDRESS]
+
+  - id: GSC-CAP-SHIPPING-RETURNS-REVIEW
+    name: Review shipping and return settings
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [full_user, owner] }
+    effect: observe
+    approval: none
+    inputs: ["Eligible ecommerce property", "Authoritative commerce policies"]
+    outputs: ["Google-observed shipping and return settings"]
+    data_semantics: ["Settings can affect supported Search commerce appearances"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Eligibility, country, and feature availability vary"]
+    limitations: ["Search Console is not the authoritative legal or commerce policy source"]
+    verification: ["Reconcile every setting with visible policy and authoritative commerce configuration"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-SETTINGS, GSC-SRC-REPORTS]
+
+  - id: GSC-CAP-SHIPPING-RETURNS-MANAGE
+    name: Change shipping or return settings
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [full_user, owner] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: ["Exact market and policy", "Authoritative approved commerce terms", "Conflict resolution with other Google sources"]
+    outputs: ["Changed Search shipping or return configuration"]
+    data_semantics: ["Configuration must not contradict user-visible or legally operative terms"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Eligibility and precedence with other Google data sources vary"]
+    limitations: ["Propagation is not immediate and downstream appearance is not guaranteed"]
+    verification: ["Re-read settings and inspect supported Search appearance after propagation"]
+    idempotency: "Repeat-safe only against an explicit desired configuration"
+    rollback: "Restore the last approved configuration and reconcile every other policy source"
+    sources: [GSC-SRC-SETTINGS]
+
+  - id: GSC-CAP-BULK-EXPORT-CONFIGURE
+    name: Start, stop, or restart BigQuery bulk export
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [owner, google_cloud_role] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: ["Exact property", "Google Cloud project", "Dataset", "Region", "Billing and IAM approval", "Retention decision"]
+    outputs: ["Daily Search Console export configured, stopped, or restarted"]
+    data_semantics: ["Export starts prospectively and does not backfill history before setup"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["One property per destination dataset", "Region is difficult to change", "Storage and query costs apply"]
+    limitations: ["Stopping can allow one more export; existing tables remain"]
+    verification: ["Test configuration, inspect next scheduled export, IAM, billing, dataset location, and retention"]
+    idempotency: "Not repeat-safe without checking current property and destination state"
+    rollback: "Stop export, revoke exact writer permissions if urgent, and retain or delete existing data only under the approved lifecycle"
+    sources: [GSC-SRC-BULK-OVERVIEW, GSC-SRC-BULK-START, GSC-SRC-BULK-MONITOR]
+
+  - id: GSC-CAP-BULK-EXPORT-STATUS
+    name: Monitor BigQuery bulk export status
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [owner, google_cloud_role] }
+    effect: observe
+    approval: none
+    inputs: ["Exact property and destination dataset"]
+    outputs: ["Latest attempt status, error details, and email notifications"]
+    data_semantics: ["Search Console shows the latest failure; successful history is recorded separately in ExportLog"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Failed-date retries and eventual abandonment windows apply"]
+    limitations: ["A successful settings test does not prove the next scheduled export will succeed"]
+    verification: ["Inspect the next export partition, ExportLog, and Cloud logs after any fix"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-BULK-MONITOR]
+
+  - id: GSC-CAP-BIGQUERY-QUERY
+    name: Query Search Console bulk-export tables
+    interface: bigquery_export
+    availability: current
+    access: { oauth_scopes: [], property_roles: [google_cloud_role] }
+    effect: diagnose
+    approval: none
+    inputs: ["Approved dataset", "Partition-bounded SQL", "Defined metric grain and decision"]
+    outputs: ["Aggregated site-impression or URL-impression results"]
+    data_semantics: ["Rows are not guaranteed unique by date, URL, site, query, or combinations and must be aggregated"]
+    limits:
+      quotas: ["BigQuery project quotas, IAM, billing, storage, and bytes-scanned controls apply independently of Search Console"]
+      latency: ["Search Console exports once daily at a property-specific time", "Previously exported dates can be atomically revised later with a higher ExportLog epoch_version"]
+      sampling: ["Bulk export is not described as sampled; it contains the performance data available to Search Console except anonymized queries"]
+      privacy_suppression: ["Anonymized queries remain unavailable and must not be reconstructed"]
+      aggregation: ["Rows can repeat the same apparent keys and metrics must be aggregated", "Keep site-impression and URL-impression tables separate until an explicit compatible grain is defined", "Average position must be derived from sum_position and impressions"]
+      completeness: ["Export begins prospectively and does not backfill pre-configuration history", "Failed dates can be permanently absent after Google's retry window", "ExportLog records successful writes, not failed attempts"]
+      operational: ["Use data_date partition filters", "Record SQL, destination, table, epoch version, bytes processed, and cost", "Do not modify Google's table schema"]
+    limitations: ["Exports begin prospectively and schema meaning can change"]
+    verification: ["Use partition filters, aggregate measures, reconcile site and URL grains, and record query text and bytes processed"]
+    idempotency: "Repeat-safe read for fixed tables and SQL"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-BULK-TABLES, GSC-SRC-BULK-QUERIES, GSC-SRC-BULK-OVERVIEW]
+
+  - id: GSC-CAP-BIGQUERY-EXPORT-LOG
+    name: Review BigQuery ExportLog and Cloud export evidence
+    interface: bigquery_export
+    availability: current
+    access: { oauth_scopes: [], property_roles: [google_cloud_role] }
+    effect: diagnose
+    approval: none
+    inputs: ["Approved destination dataset", "Expected export dates"]
+    outputs: ["Successful export history, table completion, and related Cloud log evidence"]
+    data_semantics: ["ExportLog records successful exports; unsuccessful attempts require settings or Cloud log evidence"]
+    limits:
+      quotas: ["BigQuery query and project limits apply when reading ExportLog; Search Console documents no separate ExportLog read quota"]
+      latency: ["The two performance tables can complete separately each day", "Transient writes retry immediately; non-transient failures wait until the next scheduled export"]
+      sampling: ["ExportLog is an event record for successful table writes, not a sample of failures"]
+      privacy_suppression: ["ExportLog has no query text, but access still follows dataset IAM and organization data policy"]
+      aggregation: ["Reconcile by data_date, namespace, epoch_version, and publish_time rather than assuming one row per day"]
+      completeness: ["Unsuccessful export attempts are absent from ExportLog", "Search Console retries missed dates for about one week and can then abandon them"]
+      operational: ["Join expected calendar dates to both table partitions and ExportLog", "Use Search Console settings and Cloud logs to diagnose missing successes"]
+    limitations: ["Missing history may be unrecoverable after Google's retry window"]
+    verification: ["Compare expected dates with table partitions, ExportLog, latest settings status, and Cloud logs"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-BULK-MONITOR, GSC-SRC-BULK-TABLES]
+
+  - id: GSC-CAP-API-QUOTAS
+    name: Review Search Console API quota consumption
+    interface: external_google_tool
+    availability: adjacent
+    access: { oauth_scopes: [], property_roles: [google_cloud_role] }
+    effect: observe
+    approval: none
+    inputs: ["Exact Google Cloud project and API"]
+    outputs: ["Current quota usage and configured limits"]
+    data_semantics: ["Search Analytics load quota differs from request-rate quotas"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Per-site, per-user, per-project, short-term, and long-term limits differ by resource"]
+    limitations: ["A generic quota-exceeded error does not identify every load-limit cause"]
+    verification: ["Record project, principal, site, query shape, retry time, and observed quota panel"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-LIMITS, GSC-SRC-AUTH]
+
+  - id: GSC-CAP-TRAFFIC-DROP-DIAGNOSE
+    name: Diagnose a Search traffic drop
+    interface: external_google_tool
+    availability: adjacent
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Mature performance data", "Comparable periods", "Release history", "Demand and platform context"]
+    outputs: ["Ranked technical, security, enforcement, algorithmic, migration, demand, seasonality, and reporting hypotheses"]
+    data_semantics: ["Clicks, impressions, CTR, and position patterns support different hypotheses but do not prove causality"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Search changes can take days to months to settle"]
+    limitations: ["Small position changes and short windows can invite harmful overreaction"]
+    verification: ["Segment every material dimension, check data anomalies and Trends, and record supporting and conflicting evidence"]
+    idempotency: "Repeat-safe analysis for a frozen evidence window"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-TRAFFIC-DROPS, GSC-SRC-PERFORMANCE, GSC-SRC-DATA]
+
+  - id: GSC-CAP-INDEXING-PUBLISH
+    name: Publish an eligible Indexing API URL notification
+    interface: indexing_api
+    availability: adjacent
+    access: { oauth_scopes: ["https://www.googleapis.com/auth/indexing"], property_roles: [owner] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: ["Exact eligible JobPosting or BroadcastEvent URL", "URL_UPDATED or URL_DELETED", "Approved Google Cloud project"]
+    outputs: ["Indexing API notification acknowledgement"]
+    data_semantics: ["Notification is not an indexing guarantee and is restricted to Google's eligible content types"]
+    limits:
+      quotas: ["Default publish quota is 200 requests per day per project across URL_UPDATED and URL_DELETED", "Default all-endpoint quota is 380 requests per minute per project", "Higher production use requires Google's separate approval and quota review"]
+      latency: ["Daily quota resets at midnight Pacific Time and newly approved quota can take up to 24 hours to become effective", "Notification acceptance has no crawl or indexing SLA"]
+      sampling: ["Not applicable: each notification names one exact eligible URL"]
+      privacy_suppression: ["Not applicable to notification payloads; never include user data or secrets in the URL"]
+      aggregation: ["Count both update and delete notifications against the same daily publish quota"]
+      completeness: ["The API only accepts notifications and does not report complete crawl, index, or serving state"]
+      operational: ["Only JobPosting pages or livestream pages with BroadcastEvent in VideoObject are eligible", "Do not shard projects or accounts to evade quota"]
+    limitations: ["Generic page submission is prohibited; do not evade quotas with multiple accounts"]
+    verification: ["Validate visible structured data and eligibility, read notification metadata, and inspect later Search state"]
+    idempotency: "Repeat-safe only for the same current URL state under a bounded notification policy"
+    rollback: "Publish the correct eligible state through an exact approved notification; historical notifications cannot be canceled"
+    sources: [GSC-SRC-INDEXING-API, GSC-SRC-INDEXING-AUTH, GSC-SRC-INDEXING-QUOTA]
+
+  - id: GSC-CAP-INDEXING-METADATA
+    name: Read Indexing API notification metadata
+    interface: indexing_api
+    availability: adjacent
+    access: { oauth_scopes: ["https://www.googleapis.com/auth/indexing"], property_roles: [owner] }
+    effect: observe
+    approval: none
+    inputs: ["Exact eligible URL"]
+    outputs: ["Most recent URL_UPDATED and URL_DELETED notification metadata"]
+    data_semantics: ["Metadata describes notifications received, not the URL's current index status"]
+    limits:
+      quotas: ["Default metadata quota is 180 requests per minute per project", "Default all-endpoint quota is 380 requests per minute per project"]
+      latency: ["Metadata reflects the most recent received notifications and has no relationship to crawl or index processing latency"]
+      sampling: ["Not applicable: each request names one exact URL"]
+      privacy_suppression: ["Not applicable to notification metadata; authorization and property ownership still apply"]
+      aggregation: ["Preserve URL_UPDATED and URL_DELETED timestamps separately"]
+      completeness: ["Metadata reports notification history only, not current live, indexed, or serving state"]
+      operational: ["Use URL Inspection for indexed state and direct inspection for authoritative live state"]
+    limitations: ["Does not replace URL Inspection or Search-result observation"]
+    verification: ["Compare notification metadata with the intended publication event and later URL Inspection"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-INDEXING-API, GSC-SRC-INDEXING-AUTH, GSC-SRC-INDEXING-QUOTA]
+
+  - id: GSC-CAP-ACHIEVEMENTS
+    name: Review Search Console achievements
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: observe
+    approval: none
+    inputs: ["Exact property", "Observation timestamp"]
+    outputs: ["One in-progress click milestone and previously reached milestones where available"]
+    data_semantics: ["Achievements are based on click milestones and are not descriptions of Google's ranking systems"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["New properties can require about 28 days of data", "Only one achievement is shown as in progress"]
+    limitations: ["A badge is motivational context, not a health, quality, conversion, or causal signal"]
+    verification: ["Reconcile the milestone with the mature Search performance window and preserve the property's metric scope"]
+    idempotency: "Repeat-safe read; milestones can advance over time"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-ACHIEVEMENTS]
+
+  - id: GSC-CAP-GENERATIVE-AI-PERFORMANCE-SEARCH
+    name: Analyze generative AI performance on Search
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Eligible property", "Mature date range", "Page, country, date, or device dimension"]
+    outputs: ["Impressions from documented generative AI features on Google Search"]
+    data_semantics: ["Property and page aggregation differ", "Most page data is assigned to the canonical URL", "The report is a subset of Web search-type performance data"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Limited rollout and minimum impression eligibility apply", "The usual Search performance time and 1,000-row UI limits apply", "Search Labs experiments are excluded"]
+    limitations: ["The documented included feature list can change", "Impressions do not describe grounding use without a visible link or prove downstream value", "Downloaded values shown as unavailable or non-numeric in the UI can become zero and must not be treated as measured zero without preserved display state"]
+    verification: ["Record rollout eligibility, included feature definition, filters, grain, preliminary dates, and comparison with the corresponding Web performance scope"]
+    idempotency: "Repeat-safe read for a fixed mature date range"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-GENERATIVE-AI-SEARCH, GSC-SRC-PERFORMANCE]
+
+  - id: GSC-CAP-GENERATIVE-AI-PERFORMANCE-DISCOVER
+    name: Analyze generative AI performance on Discover
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Eligible property", "Mature date range", "Page, country, or date dimension"]
+    outputs: ["Impressions from documented generative AI features on Google Discover"]
+    data_semantics: ["Data is aggregated by source page", "Canonical URLs outside the property can suppress alternate-page rows", "Discover impression visibility rules differ from Search"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Limited rollout and minimum impression eligibility apply", "The usual Discover performance time and 1,000-row UI limits apply", "Search Labs experiments are excluded"]
+    limitations: ["Daily values below a threshold can be omitted while contributing to totals", "The documented included feature list can change", "Downloaded values shown as unavailable or non-numeric in the UI can become zero and must not be treated as measured zero without preserved display state"]
+    verification: ["Record rollout eligibility, property, filter, aggregation, threshold behavior, and corresponding Discover performance context"]
+    idempotency: "Repeat-safe read for a fixed mature date range"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-GENERATIVE-AI-DISCOVER, GSC-SRC-PERFORMANCE]
+
+  - id: GSC-CAP-PLATFORM-PROPERTY-REVIEW
+    name: Review a platform property
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Exact supported platform account or channel property", "Mature date range"]
+    outputs: ["Google Search, eligible Discover and News performance, Insights, achievements, and connection state"]
+    data_semantics: ["The property measures discovery of platform content on Google, not impressions or engagement inside the source platform"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Gradual rollout currently names Instagram, TikTok, X, and YouTube", "Data can take days to appear and reports depend on eligible traffic"]
+    limitations: ["Each account or channel is a separate property", "A lost external connection pauses access until re-verification"]
+    verification: ["Confirm the exact account identity, connection state, property scope, reporting start, and source-platform evidence separately"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-PLATFORM-PROPERTIES]
+
+  - id: GSC-CAP-PLATFORM-PROPERTY-CONNECT
+    name: Connect or re-verify a platform property
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [none] }
+    effect: human_only
+    approval: human_only
+    inputs: ["Exact supported platform account or channel", "Authorized external-platform principal", "Approved property purpose"]
+    outputs: ["Verified platform property connection"]
+    data_semantics: ["Connection enables Google performance reporting for the external account and is periodically re-verified"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Gradual rollout applies", "Verification uses an existing website relationship or direct external-platform login"]
+    limitations: ["This bundle does not automate external login, consent, or credential handling"]
+    verification: ["A qualified human confirms the external account identity, consent screen, resulting property, and organization inventory"]
+    idempotency: "Repeat only when the same exact account requires approved re-verification"
+    rollback: "A qualified human removes the property or disconnects access and verifies both Search Console and external-platform state"
+    sources: [GSC-SRC-PLATFORM-PROPERTIES]
+
+  - id: GSC-CAP-MERCHANT-OPPORTUNITIES
+    name: Review Merchant opportunities
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Eligible merchant property", "Associated Merchant Center state where applicable"]
+    outputs: ["Optional store-information and visibility opportunities with pending, approved, or issue states"]
+    data_semantics: ["Google determines merchant eligibility programmatically", "Recommendations can depend on Merchant Center association and detected entity data"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["The report appears only for eligible sites selling physical goods"]
+    limitations: ["A recommendation is not authorization to create an account, association, policy, payment configuration, or externally consequential change"]
+    verification: ["Validate merchant classification, visible site facts, structured data, source-of-truth commerce policy, and any associated Merchant Center state before action"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-MERCHANT-OPPORTUNITIES, GSC-SRC-SHOPPING]
+
+  - id: GSC-CAP-AMP-REPORT
+    name: Review the AMP status report
+    interface: search_console_ui
+    availability: current
+    access: { oauth_scopes: [], property_roles: [restricted_user, full_user, owner] }
+    effect: diagnose
+    approval: none
+    inputs: ["Eligible property", "Intended AMP inventory"]
+    outputs: ["Critical and non-critical AMP issue groups with bounded URL examples"]
+    data_semantics: ["Valid AMP means eligible for AMP-specific features, not guaranteed indexing or display"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["URL examples are sampled and limited to 1,000 per issue", "At most 200 issue types are shown"]
+    limitations: ["The report is not a comprehensive AMP inventory and URL Inspection remains the definitive per-URL indexed view"]
+    verification: ["Reconcile report totals with the intended AMP inventory, inspect representative canonical and AMP pairs, and test the deployed version"]
+    idempotency: "Repeat-safe read"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-AMP-REPORT, GSC-SRC-URL-INSPECTION]
+
+  - id: GSC-CAP-AMP-TEST
+    name: Run the public AMP Test
+    interface: external_google_tool
+    availability: current
+    access: { oauth_scopes: [], property_roles: [none] }
+    effect: diagnose
+    approval: none
+    inputs: ["Exact public URL"]
+    outputs: ["Live AMP validity, detected issues, and tested rendered evidence"]
+    data_semantics: ["The test evaluates the current reachable page, not Google's indexed version"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["The page and required resources must be anonymously reachable", "Host load and robots or certificate failures can prevent testing"]
+    limitations: ["Validity does not guarantee indexing or AMP-specific Search appearance"]
+    verification: ["Tie results to the exact URL, final redirect, response, deployed version, user agent, and test timestamp"]
+    idempotency: "Repeat-safe only while the live page and dependencies are unchanged"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-AMP-TEST]
+
+  - id: GSC-CAP-RICH-RESULTS-TEST
+    name: Run the public Rich Results Test
+    interface: external_google_tool
+    availability: current
+    access: { oauth_scopes: [], property_roles: [none] }
+    effect: diagnose
+    approval: none
+    inputs: ["Exact public URL or approved code snippet", "Mobile or desktop user agent"]
+    outputs: ["Live rendered structured-data findings and eligible rich-result previews where supported"]
+    data_semantics: ["The test evaluates supported rich-result markup in live or supplied code, not Google's indexed version or a display guarantee"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["URL resources must be anonymously reachable", "Only supported rich-result types and previews are represented"]
+    limitations: ["Passing syntax does not validate visible-content truth, policy compliance, indexing, quality, or actual Search appearance"]
+    verification: ["Compare tested render with visible content, authoritative source data, current feature policy, deployed version, and URL Inspection"]
+    idempotency: "Repeat-safe for the same input, user agent, and tool version"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-RICH-RESULTS-TEST, GSC-SRC-RICH-RESULTS]
+
+  - id: GSC-CAP-LEGACY-SURFACES
+    name: Classify legacy or removed Search Console surfaces
+    interface: search_console_ui
+    availability: legacy
+    access: { oauth_scopes: [], property_roles: [none] }
+    effect: observe
+    approval: none
+    inputs: ["Legacy report or tool name", "Current official report inventory"]
+    outputs: ["Legacy, removed, replaced, or unavailable classification with current route"]
+    data_semantics: ["The current official legacy inventory names Data Highlighter and Web Tools; removed Mobile Usability, Page Experience, URL Parameters, International Targeting, and older testing surfaces require current replacement guidance"]
+    limits:
+      quotas: ["Use the capability-specific operational constraints and current provider quota documentation; no additional quota is assumed"]
+      latency: ["No freshness or completion SLA is assumed beyond documented capability-specific behavior"]
+      sampling: ["No unsampled-completeness claim is allowed unless the official source explicitly supports it"]
+      privacy_suppression: ["No absence claim may override documented privacy suppression or property-boundary behavior"]
+      aggregation: ["Preserve the interface output grain and documented grouping semantics"]
+      completeness: ["Treat output as bounded by eligibility, availability, provider processing, and the declared limitations"]
+      operational: ["Availability changes by date and property"]
+    limitations: ["Do not invent access to a removed surface or treat stale screenshots as current product behavior"]
+    verification: ["Check current official Reports at a glance, settings, Search Central notices, and replacement guidance"]
+    idempotency: "Repeat-safe classification"
+    rollback: "Not applicable"
+    sources: [GSC-SRC-REPORTS, GSC-SRC-SEARCH-DOCS]
