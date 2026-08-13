@@ -12,7 +12,7 @@ stale_after: 2027-02-13
 applies_to: [database-change]
 tags: [profile, database]
 depends_on: [DATA-DATABASE, FND-CHANGE, FND-EVIDENCE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 ---
 
 # Database change profile
@@ -33,6 +33,9 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - Collection, deletion, retention, correction, transfer, or other processing of personal data → `PRIVACY-DATA`
 - New product behavior → `PROFILE-PRODUCT-FEATURE`
 - Analytics warehouse or event model → `ANALYTICS-MEASUREMENT`
+- Shared dataset, model, pipeline, lineage, reconciliation, or data-quality change → `DATA-QUALITY`
+- Service or API compatibility change → `PROFILE-SERVICE-API`
+- Production incident, restore, or recovery exercise → `PROFILE-RELIABILITY-INCIDENT`
 - Model-driven planning, SQL generation, migration execution, recovery, or data correction → `PROFILE-AGENTIC-SYSTEM`
 
 ## Completion evidence

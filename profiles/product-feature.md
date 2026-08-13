@@ -11,8 +11,8 @@ review_by: 2027-02-13
 stale_after: 2027-02-13
 applies_to: [product-feature]
 tags: [profile, product]
-depends_on: [FND-TRUST, FND-CHANGE, FND-EVIDENCE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
+depends_on: [PRODUCT-DELIVERY, ENGINEERING-QUALITY, FND-TRUST, FND-CHANGE, FND-EVIDENCE, AGENT-VERIFICATION]
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 ---
 
 # Product feature profile
@@ -23,6 +23,8 @@ Use for new or materially changed user-facing behavior.
 
 The front-matter `depends_on` list is the authoritative machine-readable route. This section explains why each dependency applies and must match that list.
 
+- `PRODUCT-DELIVERY` — evidenced need, complete requirements, launch readiness, onboarding, and outcome review
+- `ENGINEERING-QUALITY` — design, checks, dependencies, review, and released artifact integrity
 - `FND-TRUST` — informed, non-coercive user decisions
 - `FND-CHANGE` — rollout, observability, and recovery
 - `FND-EVIDENCE` — factual claims and validation evidence
@@ -30,16 +32,24 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 
 ## Conditional standards
 
+- User interface → `PROFILE-UI-FEATURE`
 - Browser interface → `WEB-QUALITY`
+- Apple-platform interface → `PROFILE-APPLE-INTERFACE`
 - Public discovery surface → `SEO-FOUNDATIONS`
 - New events or metrics → `ANALYTICS-MEASUREMENT`
+- Google Analytics 4 implementation → `PLAYBOOK-GA4`
 - Experiment or staged behavior comparison → `GROWTH-EXPERIMENTS`
 - Database or query change → `DATA-DATABASE`
+- Dataset, model, pipeline, lineage, or quality change → `DATA-QUALITY`
 - User-facing failure → `CONTENT-ERRORS`
 - Documentation, interface text, messages, or summaries → `PROFILE-FUNCTIONAL-WRITING`
 - Model-generated behavior, retrieval, memory, tool use, delegation, or autonomous action → `PROFILE-AGENTIC-SYSTEM`
 - Collection, inference, retention, deletion, disclosure, transfer, or other processing of personal data → `PRIVACY-DATA`
 - Authentication, authorization, tenancy, secrets, untrusted input, file handling, external callbacks, administrative actions, or other security-sensitive behavior → `SECURITY-APPLICATION`
+- Service or API change → `PROFILE-SERVICE-API`
+- New operational responsibility, reliability target, runbook, vendor dependency, or incident path → `OPERATIONS-RELIABILITY`
+- Positioning, conversion, onboarding, retention, or lifecycle messaging → `PROFILE-MARKETING-LIFECYCLE`
+- App-store listing, referral, incentive, lead asset, or externally distributed campaign → `PROFILE-SPECIALIST-MARKETING`
 
 ## Completion evidence
 

@@ -3,7 +3,7 @@ type: Template
 title: Task profile authoring template
 description: Starting structure for an OKF-compatible Raintree task profile.
 tags: [template, profiles, authoring]
-generated: { by: codex/gpt-5, at: "2026-08-12T00:00:00Z" }
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 ---
 
 # Task profile authoring template
@@ -29,6 +29,7 @@ tags: [profile, <domain>]
 depends_on:
   - <REQUIRED-STANDARD-ID>
 generated: { by: "human:<author-id>", at: "<ISO-8601 datetime>" }
+# Add only after an independent reviewer checks the exact artifact. Required for stable status.
 # verified: { by: "human:<reviewer-id>", at: "<ISO-8601 datetime>" }
 ---
 ```

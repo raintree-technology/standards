@@ -3,7 +3,7 @@ type: Template
 title: Standard authoring template
 description: Starting structure for an OKF-compatible governed Raintree standard.
 tags: [template, standards, authoring]
-generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 ---
 
 # Standard authoring template
@@ -29,6 +29,7 @@ tags:
   - <domain>
 depends_on: []
 generated: { by: "human:<author-id>", at: "<ISO-8601 datetime>" }
+# Add only after an independent reviewer checks the exact artifact. Required for stable status.
 # verified: { by: "human:<reviewer-id>", at: "<ISO-8601 datetime>" }
 # sources:
 #   - id: <stable-source-id>
@@ -69,3 +70,5 @@ Show a compliant and non-compliant application when interpretation is not obviou
 ## Sources
 
 Prefer primary, durable sources. Record access or review dates for volatile material.
+
+Add the document's source-set owner, reviewed version or publication date, volatility, and next review date to `source-register.yaml`. Keep the document `draft` until a different qualified actor records `verified`.

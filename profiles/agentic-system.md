@@ -11,8 +11,8 @@ review_by: 2027-02-13
 stale_after: 2027-02-13
 applies_to: [agentic-system]
 tags: [profile, ai, agents]
-depends_on: [AI-AGENTS, FND-EVIDENCE, FND-TRUST, FND-CHANGE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
+depends_on: [AI-AGENTS, ENGINEERING-QUALITY, FND-EVIDENCE, FND-TRUST, FND-CHANGE, AGENT-VERIFICATION]
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 ---
 
 # Agentic system profile
@@ -24,6 +24,7 @@ Use for model workflows or agents that select steps, invoke tools, use memory or
 The front-matter `depends_on` list is the authoritative machine-readable route. This section explains why each dependency applies and must match that list.
 
 - `AI-AGENTS` — architecture, context, tools, autonomy, evaluation, safety, and operation
+- `ENGINEERING-QUALITY` — design boundaries, dependencies, review, provenance, and release readiness
 - `FND-EVIDENCE` — grounded claims, evaluation validity, uncertainty, and reproducibility
 - `FND-TRUST` — informed choice, user control, and honest representation of automated behavior
 - `FND-CHANGE` — bounded rollout, stop conditions, recovery, and release evidence
@@ -34,7 +35,11 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - Personal, confidential, regulated, or proprietary data in prompts, context, traces, evaluation, feedback, or tools → `PRIVACY-DATA`
 - Untrusted content, code execution, network access, private data access, external communication, durable side effects, authentication, authorization, or privileged tools → `SECURITY-APPLICATION`
 - New events, traces, quality metrics, cost metrics, or dashboards → `ANALYTICS-MEASUREMENT`
+- Google Analytics 4 implementation → `PLAYBOOK-GA4`
+- User interface → `PROFILE-UI-FEATURE`; Apple-platform interface → `PROFILE-APPLE-INTERFACE`
 - Browser interface or public agent surface → `WEB-QUALITY`
+- Service or API boundary → `PROFILE-SERVICE-API`
+- Production operation, reliability exercise, or incident response → `PROFILE-RELIABILITY-INCIDENT`
 - Database access or mutation → `DATA-DATABASE`
 - User-facing failures, refusals, tool errors, or escalation messages → `CONTENT-ERRORS`
 - Instructions, explanations, interface text, reports, or handoffs → `PROFILE-FUNCTIONAL-WRITING`

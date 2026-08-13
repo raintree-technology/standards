@@ -6,7 +6,11 @@ require "yaml"
 
 ROOT = File.expand_path("..", __dir__)
 CATALOG = File.join(ROOT, "catalog.yaml")
+SOURCE_REGISTER = File.join(ROOT, "source-register.yaml")
+GOVERNED_KEYS = %w[foundations standards patterns playbooks profiles].freeze
+RELEASE_MODE = ARGV.include?("--release")
 errors = []
+release_blockers = []
 actor_pattern = /\A(?:human:[^\s]+|process:[^\s]+|[^\s:\/]+\/[^\s\/]+)\z/
 
 valid_date = lambda do |value|
@@ -22,13 +26,19 @@ rescue ArgumentError
 end
 
 catalog = YAML.safe_load(File.read(CATALOG), permitted_classes: [Date], aliases: false)
-entries = %w[foundations standards profiles].flat_map { |key| catalog.fetch(key, []) }
+entries = GOVERNED_KEYS.flat_map { |key| catalog.fetch(key, []) }
 ids = {}
+metadata_by_id = {}
+rule_ids = {}
 
 errors << "catalog.yaml: okf_version must be 0.2" unless catalog["okf_version"] == "0.2"
 errors << "catalog.yaml: bundle_index must be index.md" unless catalog["bundle_index"] == "index.md"
+if RELEASE_MODE
+  release_blockers << "catalog.yaml: release_status must be ready" unless catalog["release_status"] == "ready"
+  release_blockers << "README.md: remove the work-in-progress warning before release" if File.read(File.join(ROOT, "README.md")).match?(/\*\*Work in progress:\*\*/)
+end
 
-catalog_entries = %w[governance foundations standards profiles].flat_map { |key| catalog.fetch(key, []) }
+catalog_entries = (%w[governance] + GOVERNED_KEYS).flat_map { |key| catalog.fetch(key, []) }
 catalog_paths = catalog_entries.map { |entry| entry["path"] }
 catalog_paths.each do |relative|
   if relative.to_s.empty?
@@ -71,6 +81,7 @@ entries.each do |entry|
   errors << "#{entry['path']}: tags must be a unique list" unless metadata["tags"].is_a?(Array) && metadata["tags"].uniq.length == metadata["tags"].length
   errors << "#{entry['path']}: depends_on must be a unique list" unless metadata["depends_on"].nil? || (metadata["depends_on"].is_a?(Array) && metadata["depends_on"].uniq.length == metadata["depends_on"].length)
   errors << "#{entry['path']}: invalid last_reviewed date" unless valid_date.call(metadata["last_reviewed"])
+  errors << "#{entry['path']}: release_target must be a non-empty string" if metadata.key?("release_target") && (!metadata["release_target"].is_a?(String) || metadata["release_target"].empty?)
 
   lifecycle_map = {
     "draft" => "draft",
@@ -104,6 +115,24 @@ entries.each do |entry|
     errors << "Duplicate document ID #{document_id}: #{ids[document_id]} and #{entry['path']}"
   else
     ids[document_id] = entry["path"]
+    metadata_by_id[document_id] = metadata
+  end
+
+  expected_type = {
+    "foundations" => "foundation",
+    "standards" => "standard",
+    "patterns" => "pattern",
+    "playbooks" => "playbook",
+    "profiles" => "profile"
+  }.find { |key, _type| catalog.fetch(key, []).include?(entry) }&.last
+  if expected_type && metadata["type"] != expected_type
+    errors << "#{entry['path']}: catalog section requires type #{expected_type}"
+  end
+
+  in_release_scope = metadata.fetch("release_target", catalog["target_release"]) == catalog["target_release"]
+  if RELEASE_MODE && in_release_scope
+    release_blockers << "#{entry['path']}: remains draft" if metadata["status"] == "draft" || metadata["governance_status"] == "draft"
+    release_blockers << "#{entry['path']}: stable release document requires independent verified provenance" if metadata["status"] == "stable" && !metadata.key?("verified")
   end
 
 end
@@ -118,7 +147,97 @@ entries.each do |entry|
   metadata = YAML.safe_load(match[1], permitted_classes: [Date], aliases: false)
   Array(metadata["depends_on"]).each do |dependency|
     errors << "#{entry['path']}: unknown dependency #{dependency}" unless ids.key?(dependency)
+    in_release_scope = metadata.fetch("release_target", catalog["target_release"]) == catalog["target_release"]
+    if RELEASE_MODE && in_release_scope && metadata_by_id[dependency] && metadata_by_id[dependency]["status"] == "draft"
+      release_blockers << "#{entry['path']}: depends on draft #{dependency}"
+    end
   end
+end
+
+# Governed rules and profiles have semantic structure beyond front matter.
+entries.each do |entry|
+  relative = entry.fetch("path")
+  content = File.read(File.join(ROOT, relative))
+  metadata = metadata_by_id[entry["id"]]
+  next unless metadata
+
+  if %w[foundation standard].include?(metadata["type"])
+    %w[Guidance Examples Sources].each do |heading|
+      errors << "#{relative}: missing ## #{heading}" unless content.match?(/^## #{Regexp.escape(heading)}\s*$/)
+    end
+
+    headings = content.to_enum(:scan, /^### ((?:[A-Z][A-Z0-9]*-)+\d{3})\s+—\s+.+$/).map { Regexp.last_match }
+    errors << "#{relative}: no governed rules" if headings.empty?
+    headings.each_with_index do |heading, index|
+      rule_id = heading[1]
+      if rule_ids.key?(rule_id)
+        errors << "Duplicate rule ID #{rule_id}: #{rule_ids[rule_id]} and #{relative}"
+      else
+        rule_ids[rule_id] = relative
+      end
+      errors << "#{relative}: rule #{rule_id} does not match document ID #{metadata['id']}" unless rule_id.start_with?(metadata["id"] + "-")
+
+      block_start = heading.end(0)
+      block_end = index + 1 < headings.length ? headings[index + 1].begin(0) : content.index(/^## /, block_start) || content.length
+      block = content[block_start...block_end]
+      %w[Level Applies\ when Why Verify Exceptions].each do |label|
+        readable = label.tr("\\", "")
+        errors << "#{relative}: #{rule_id} missing #{readable}" unless block.match?(/\*\*#{label}:\*\*/)
+      end
+      level = block[/\*\*Level:\*\*\s*([^\n]+)/, 1]
+      errors << "#{relative}: #{rule_id} has invalid level #{level}" unless %w[required recommended contextual optional avoid prohibited].include?(level)
+    end
+  end
+
+  if metadata["type"] == "profile"
+    %w[Required\ standards Conditional\ standards Completion\ evidence].each do |heading|
+      errors << "#{relative}: missing ## #{heading.tr('\\', '')}" unless content.match?(/^## #{heading}\s*$/)
+    end
+    required_section = content[/^## Required standards\s*$\n(.*?)(?=^## )/m, 1].to_s
+    listed = required_section.scan(/^- `([A-Z][A-Z0-9-]+)`/).flatten
+    dependencies = Array(metadata["depends_on"])
+    errors << "#{relative}: Required standards must match depends_on" unless listed.sort == dependencies.sort
+  end
+end
+
+# Validate governed references after all rule IDs are known.
+entries.each do |entry|
+  content = File.read(File.join(ROOT, entry.fetch("path")))
+  content.scan(/`([A-Z][A-Z0-9]+(?:-[A-Z0-9]+)+(?:-\d{3})?)`/).flatten.uniq.each do |reference|
+    next if ids.key?(reference) || rule_ids.key?(reference)
+    errors << "#{entry['path']}: unknown governed reference #{reference}"
+  end
+end
+
+# Front-matter sources and the visible Sources section must agree.
+entries.each do |entry|
+  metadata = metadata_by_id[entry["id"]]
+  next unless metadata && metadata["sources"]
+
+  content = File.read(File.join(ROOT, entry.fetch("path")))
+  front_sources = Array(metadata["sources"]).map { |source| source["resource"] }
+  body_sources = content.split(/^## Sources\s*$/, 2)[1].to_s.scan(/\]\((https?:\/\/[^)]+)\)/).flatten
+  errors << "#{entry['path']}: front-matter and visible source URLs differ" unless front_sources.sort == body_sources.sort
+end
+
+# The source register controls review ownership and freshness by governed document.
+if File.file?(SOURCE_REGISTER)
+  register = YAML.safe_load(File.read(SOURCE_REGISTER), permitted_classes: [Date], aliases: false)
+  registered = Array(register["documents"]).to_h { |record| [record["id"], record] }
+  entries.each do |entry|
+    metadata = metadata_by_id[entry["id"]]
+    next unless metadata && metadata["sources"]
+    record = registered[entry["id"]]
+    if record.nil?
+      errors << "source-register.yaml: missing #{entry['id']}"
+      next
+    end
+    %w[owner source_version reviewed_on volatility next_review].each do |field|
+      errors << "source-register.yaml: #{entry['id']} missing #{field}" unless record[field]
+    end
+  end
+else
+  errors << "Missing source-register.yaml"
 end
 
 markdown_files = Dir.glob(File.join(ROOT, "**", "*.md"))
@@ -245,11 +364,13 @@ expected_root_targets.concat(
 missing_root_targets = expected_root_targets.uniq.sort - root_targets
 errors << "index.md: missing root entries for #{missing_root_targets.join(', ')}" unless missing_root_targets.empty?
 
-if errors.empty?
+if errors.empty? && (!RELEASE_MODE || release_blockers.empty?)
   puts "OKF v0.2 bundle valid: #{markdown_files.length} Markdown files"
   puts "Raintree catalog valid: #{entries.length} governed documents"
+  puts "Governed rule structure valid: #{rule_ids.length} unique rules"
   exit 0
 end
 
 warn errors.join("\n")
+warn release_blockers.uniq.join("\n") if RELEASE_MODE
 exit 1

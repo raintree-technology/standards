@@ -3,30 +3,49 @@ type: Roadmap
 title: Coverage roadmap
 description: Prioritized gaps and triggers for expanding the Raintree standards library.
 tags: [roadmap, coverage, governance]
-generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 ---
 
 # Coverage roadmap
 
-The library should grow when recurring work exposes a real decision, risk, or verification gap. Empty category files are intentionally avoided.
+The bounded v1 domain baseline is authored. Release remains blocked on independent and qualified review recorded in [version 1.0 readiness](governance/v1-readiness.md). The library should grow after v1 only when recurring work exposes a real decision, risk, or verification gap.
 
-## Priority domains
+## V1 baseline
 
-- APIs: contracts, errors, pagination, idempotency, versioning, rate limiting
-- Engineering: architecture, testing, dependencies, observability, incident readiness
-- Data: modeling, migrations, indexing, transactions, backup and recovery, data quality
-- Product: discovery, requirements, prioritization, launches, onboarding, metrics
-- Design: interaction patterns, forms, states, responsive behavior, design systems
-- Content: interface copy, empty states, confirmations, inclusive language
-- Growth: acquisition, activation, retention, lifecycle messaging, conversion, experimentation
-- SEO: technical SEO, structured data, content quality, internal linking, migrations
-- Operations: runbooks, incidents, support, vendor evaluation, postmortems
+- [x] APIs: contracts, errors, pagination, idempotency, versioning, rate limiting
+- [x] Engineering: architecture, testing, dependencies, observability, release readiness
+- [x] Data: modeling, migrations, lineage, validation, reconciliation, backup and recovery
+- [x] Product: discovery, requirements, prioritization, launches, onboarding, metrics
+- [x] Design: interaction patterns, forms, states, responsive behavior, design systems
+- [x] Content: interface copy, empty states, confirmations, inclusive language
+- [x] Growth and marketing: acquisition, conversion, onboarding, retention, lifecycle messaging, experimentation
+- [x] SEO: technical SEO, structured data, content quality, internal linking, migrations, Search Console operations
+- [x] Operations: objectives, runbooks, incidents, support, vendors, recovery, postmortems
+- [x] Universal accessibility plus an Apple-specific interface route
 
 ## Draft baselines awaiting qualified review
 
 - AI: `AI-AGENTS` covers architecture selection, task contracts, instruction trust, context, tools, authority, containment, data paths, environmental feedback, recovery, human judgment, versioning, evaluation validity, repeated trials, grading, red teaming, observability, parallelism, and governed knowledge.
 - Security: `SECURITY-APPLICATION` covers application threat modeling, access control, authentication, sessions, untrusted input, files, outbound requests, secrets, cryptography, configuration, dependencies, abuse limits, detection, high-impact actions, verification, and response.
 - Privacy: `PRIVACY-DATA` covers processing maps, authority, minimization, purpose, notice, consent, rights, retention, accuracy, de-identification, heightened harm, recipients, impact assessments, non-production data, and release verification.
+
+The nine new v1 standards, three playbooks, and five profiles also remain drafts until their listed owners complete independent review.
+
+## Post-v1 extensions authored as drafts
+
+- [x] Paid advertising and platform-specific campaign operations — `MARKETING-PAID-MEDIA`
+- [x] Cold outreach, prospecting, and jurisdiction-specific channel rules — `MARKETING-DIRECT-OUTREACH`
+- [x] Public relations, social publishing, communities, influencers, and partnerships — `MARKETING-PUBLIC-ENGAGEMENT`
+- [x] Sales enablement, competitive intelligence, and revenue operations — `SALES-REVENUE-OPERATIONS`
+- [x] App-store optimization and store policy — `DISCOVERY-APP-STORES`
+- [x] Image, video, ad creative, and other media production and rights — `MEDIA-PRODUCTION-RIGHTS`
+- [x] Directories, lead assets, referrals, incentives, contests, and distribution programs — `MARKETING-DISTRIBUTION`
+
+All seven extension standards and `PROFILE-SPECIALIST-MARKETING` remain drafts pending independent, domain-qualified review. New extensions should now be driven by recurring project evidence rather than category completeness.
+
+## Open extension queue
+
+- Deeper domain patterns that recurring project evidence shows cannot be handled by the authored standards
 
 ## Add a standard when
 

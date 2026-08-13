@@ -11,8 +11,8 @@ review_by: 2027-02-13
 stale_after: 2027-02-13
 applies_to: [product-feature, growth-experiment, public-web-page]
 tags: [analytics, events, metrics, privacy]
-depends_on: [FND-EVIDENCE, FND-TRUST]
-generated: { by: codex/gpt-5, at: "2026-08-13T18:58:53Z" }
+depends_on: [FND-EVIDENCE, FND-TRUST, DATA-QUALITY]
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 sources:
   - id: ico-purpose-limitation
     resource: https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-protection-principles/a-guide-to-the-data-protection-principles/purpose-limitation/

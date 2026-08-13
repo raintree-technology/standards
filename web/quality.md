@@ -11,8 +11,8 @@ review_by: 2026-11-13
 stale_after: 2026-11-13
 applies_to: [public-web-page, web-application]
 tags: [web, accessibility, performance, resilience, security, privacy]
-depends_on: [FND-CHANGE, FND-TRUST, SEO-FOUNDATIONS]
-generated: { by: codex/gpt-5, at: "2026-08-13T18:58:53Z" }
+depends_on: [FND-CHANGE, FND-TRUST, FND-ACCESSIBILITY, SEO-FOUNDATIONS]
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 sources:
   - id: wcag-22
     resource: https://www.w3.org/TR/WCAG22/

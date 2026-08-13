@@ -3,7 +3,7 @@ type: Reference
 title: Raintree Standards
 description: Entry point for Raintree's governed, agent-readable quality standards.
 tags: [standards, governance, agents]
-generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 sources:
   - id: okf-v02
     resource: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
@@ -38,6 +38,7 @@ Useful entry points:
 - [Growth experiment profile](profiles/growth-experiment.md)
 - [Product feature profile](profiles/product-feature.md)
 - [Public web page profile](profiles/public-web-page.md)
+- [Specialist marketing profile](profiles/specialist-marketing.md)
 
 ## Format
 
@@ -51,9 +52,9 @@ OKF supplies portable discovery, provenance, trust, and lifecycle conventions. R
 
 ## Lifecycle metadata
 
-The `status` field uses OKF's `draft`, `stable`, and `deprecated` values. The `governance_status` field uses Raintree's `draft`, `active`, `deprecated`, and `retired` values.
+The `status` field uses OKF's `draft`, `stable`, and `deprecated` values. The `governance_status` field uses Raintree's `draft`, `active`, `deprecated`, and `retired` values. A stable document requires `verified` provenance from an independent reviewer before a versioned release.
 
-The `stale_after` date matches `review_by` when a review deadline exists. If a document has no `verified` field, it has not been independently verified. Migration and structural validation do not count as content verification.
+The `stale_after` date matches `review_by` when a review deadline exists. If a document has no `verified` field, it has not been independently verified. Migration, source discovery, and structural validation do not count as content verification. [`source-register.yaml`](source-register.yaml) records the owner and freshness policy for each governed external source set.
 
 ## Library model
 
@@ -68,7 +69,7 @@ The `stale_after` date matches `review_by` when a review deadline exists. If a d
 
 ## Coverage
 
-The library covers agentic systems, database changes, product delivery, growth experiments, analytics, privacy, application security, search engine optimization, public web quality, functional writing, agent verification, and cross-cutting foundations. Agentic systems, privacy, and application security are governed drafts pending qualified owner review. The [coverage roadmap](roadmap.md) lists domains that still need standards.
+The bounded v1 corpus covers agentic systems, APIs, engineering quality, database and data quality, product delivery, interaction design, accessibility, interface content, lifecycle marketing, analytics, experiments, privacy, application security, search, public web quality, functional writing, reliability, incidents, and cross-cutting foundations. Post-v1 drafts now cover specialist marketing channels, sales and revenue operations, app stores, and media production. The [coverage matrix](coverage.md) maps recurring work to standards and profiles. New documents plus agentic systems, privacy, and application security remain governed drafts pending the independent and qualified reviews listed in [version 1.0 readiness](governance/v1-readiness.md).
 
 ## Agent access
 

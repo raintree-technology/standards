@@ -11,8 +11,8 @@ review_by: 2027-02-13
 stale_after: 2027-02-13
 applies_to: [product-feature, public-web-page, support-experience, functional-writing]
 tags: [content, errors, interface-copy]
-depends_on: [FND-TRUST, WRITING-FUNCTIONAL]
-generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
+depends_on: [FND-TRUST, FND-ACCESSIBILITY, WRITING-FUNCTIONAL, CONTENT-INTERFACE]
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 sources:
   - id: wcag-22
     resource: https://www.w3.org/TR/WCAG22/

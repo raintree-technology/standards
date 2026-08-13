@@ -12,7 +12,7 @@ stale_after: 2027-02-13
 applies_to: [functional-writing]
 tags: [profile, writing, content]
 depends_on: [WRITING-FUNCTIONAL, FND-EVIDENCE, FND-TRUST, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 ---
 
 # Functional writing profile
@@ -31,10 +31,12 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 ## Conditional standards
 
 - User-facing failure message → `CONTENT-ERRORS`
+- Interface label, guidance, state, confirmation, or localization unit → `CONTENT-INTERFACE`
 - Public documentation or indexable page → `PROFILE-PUBLIC-WEB-PAGE`
 - Personal data in documentation, reports, messages, examples, screenshots, or review evidence → `PRIVACY-DATA`
 - Repository instructions, prompts, tool descriptions, skills, playbooks, or durable knowledge for agents → `AI-AGENTS`
-- Functional writing that contains a marketing or conversion claim → `FND-EVIDENCE` and `FND-TRUST`; no marketing-specific standard exists, so escalate unresolved claim or tone questions to the content or product owner
+- Functional writing that contains a marketing or conversion claim → `PROFILE-MARKETING-LIFECYCLE`
+- Sales collateral, outreach, public relations, sponsored content, app-store copy, or partner material → `PROFILE-SPECIALIST-MARKETING`
 - Legal, regulatory, safety, or medical content → no domain standard exists in this library; escalate to a qualified reviewer and record the governing external policy before publication
 
 ## Completion evidence

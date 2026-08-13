@@ -11,8 +11,8 @@ review_by: 2027-02-13
 stale_after: 2027-02-13
 applies_to: [functional-writing]
 tags: [writing, documentation, communication, content]
-depends_on: [FND-EVIDENCE, FND-TRUST]
-generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
+depends_on: [FND-EVIDENCE, FND-TRUST, FND-ACCESSIBILITY]
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 sources:
   - id: asd-ste100
     resource: https://asd-ste100.org/

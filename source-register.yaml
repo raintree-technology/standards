@@ -1,0 +1,203 @@
+version: 1
+updated: 2026-08-13
+description: Review ownership and freshness controls for external source sets used by governed documents.
+
+documents:
+  - id: FND-ACCESSIBILITY
+    owner: accessibility
+    source_version: current W3C recommendations and platform guidance reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2026-11-13
+  - id: FND-EVIDENCE
+    owner: standards
+    source_version: document source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: FND-TRUST
+    owner: product
+    source_version: document source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: FND-CHANGE
+    owner: engineering
+    source_version: document source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: API-CONTRACTS
+    owner: engineering
+    source_version: RFC 9110, RFC 9457, RFC 6585, and OpenAPI 3.1.1 reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: AI-AGENTS
+    owner: ai
+    source_version: document source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2027-02-13
+  - id: DATA-DATABASE
+    owner: data
+    source_version: document source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: DATA-QUALITY
+    owner: data
+    source_version: UK Data Quality Framework, W3C PROV-O, and NIST SP 1800-25 reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: ENGINEERING-QUALITY
+    owner: engineering
+    source_version: NIST SSDF 1.1, SLSA 1.0, and CISA Secure by Design reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: ANALYTICS-MEASUREMENT
+    owner: analytics
+    source_version: document source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2027-02-13
+  - id: GROWTH-EXPERIMENTS
+    owner: growth
+    source_version: document source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: MARKETING-LIFECYCLE
+    owner: marketing
+    source_version: FTC and ICO guidance plus Marketing Skills coverage inventory reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2026-11-13
+  - id: MARKETING-PAID-MEDIA
+    owner: marketing
+    source_version: current FTC, European Commission DSA, and ICO guidance reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2026-11-13
+  - id: MARKETING-DIRECT-OUTREACH
+    owner: privacy
+    source_version: current FTC CAN-SPAM, ICO electronic-mail, and FCC consent guidance reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2026-11-13
+  - id: MARKETING-PUBLIC-ENGAGEMENT
+    owner: marketing
+    source_version: current FTC endorsement and review rules plus European Commission DSA guidance reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2026-11-13
+  - id: MARKETING-DISTRIBUTION
+    owner: marketing
+    source_version: current FTC advertising, endorsement, promotion, and lead-generation guidance reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2026-11-13
+  - id: SALES-REVENUE-OPERATIONS
+    owner: revenue-operations
+    source_version: current FTC comparative-advertising, DOJ antitrust, and SEC marketing guidance reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: DISCOVERY-APP-STORES
+    owner: product
+    source_version: current Apple App Store and Google Play listing, review, and privacy documentation reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2026-11-13
+  - id: MEDIA-PRODUCTION-RIGHTS
+    owner: content
+    source_version: US Copyright Office AI and permission guidance plus current W3C media accessibility guidance reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2026-11-13
+  - id: OPERATIONS-RELIABILITY
+    owner: operations
+    source_version: NIST CSF 2.0, SP 800-61r3, SP 800-161r1, and Google SRE reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: PRODUCT-DELIVERY
+    owner: product
+    source_version: UK Government Service Standard source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: SEO-FOUNDATIONS
+    owner: seo
+    source_version: document source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2026-11-13
+  - id: WEB-QUALITY
+    owner: web
+    source_version: document source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2026-11-13
+  - id: DESIGN-INTERACTION
+    owner: design
+    source_version: WCAG 2.2, USWDS, and Apple HIG reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: AGENT-VERIFICATION
+    owner: standards
+    source_version: document source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2027-02-13
+  - id: CONTENT-ERRORS
+    owner: content
+    source_version: document source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: CONTENT-INTERFACE
+    owner: content
+    source_version: Digital.gov and Federal Plain Language guidance plus W3C internationalization guidance reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: WRITING-FUNCTIONAL
+    owner: content
+    source_version: document source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: medium
+    next_review: 2027-02-13
+  - id: PRIVACY-DATA
+    owner: privacy
+    source_version: document source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2027-02-13
+  - id: SECURITY-APPLICATION
+    owner: security
+    source_version: document source set reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2027-02-13
+  - id: PLAYBOOK-APPLE-HIG
+    owner: design
+    source_version: current Apple HIG and documented HIG Doctor 2.0.0 / snapshot 2025-02-02 reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2026-11-13
+  - id: PLAYBOOK-GA4
+    owner: analytics
+    source_version: current Google Analytics 4 documentation reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2026-11-13
+  - id: PLAYBOOK-GSC
+    owner: seo
+    source_version: current Google Search Central and Search Console documentation reviewed 2026-08-13
+    reviewed_on: 2026-08-13
+    volatility: high
+    next_review: 2026-11-13

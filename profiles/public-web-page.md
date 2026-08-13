@@ -11,8 +11,8 @@ review_by: 2027-02-13
 stale_after: 2027-02-13
 applies_to: [public-web-page, landing-page, marketing-site]
 tags: [profile, web, seo]
-depends_on: [WEB-QUALITY, SEO-FOUNDATIONS, FND-TRUST, FND-EVIDENCE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
+depends_on: [WEB-QUALITY, SEO-FOUNDATIONS, FND-ACCESSIBILITY, FND-TRUST, FND-EVIDENCE, AGENT-VERIFICATION]
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 ---
 
 # Public web page profile
@@ -25,6 +25,7 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 
 - `WEB-QUALITY` — document, accessibility, performance, resilience, security, and privacy quality
 - `SEO-FOUNDATIONS` — crawling, indexing, canonicalization, and content purpose
+- `FND-ACCESSIBILITY` — declared accessibility target and cross-input verification
 - `FND-TRUST` — truthful claims and informed choices
 - `FND-EVIDENCE` — factual and comparative claims
 - `AGENT-VERIFICATION` — rendered inspection and handoff
@@ -32,11 +33,16 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 ## Conditional standards
 
 - Experiment or personalization → `GROWTH-EXPERIMENTS` and `ANALYTICS-MEASUREMENT`
+- Interactive flow, form, navigation, or state change → `PROFILE-UI-FEATURE`
 - Documentation, marketing claims, interface text, or explanatory content → `PROFILE-FUNCTIONAL-WRITING`
 - Form, upload, account, personalization, or other personal-data processing → `PRIVACY-DATA`
 - Form submission, upload, authentication, authorization, server-side fetch, or other application behavior beyond static delivery → `SECURITY-APPLICATION`
 - Public chat, model-generated content, retrieval, browser agent, or model-selected tool use → `PROFILE-AGENTIC-SYSTEM`
 - URL or platform migration → `SEO-FOUNDATIONS-007` plus a dedicated migration plan
+- Search Console ownership, inspection, or monitoring → `PLAYBOOK-GSC`
+- Google Analytics 4 implementation → `PLAYBOOK-GA4`
+- Core acquisition, conversion, or lifecycle marketing → `PROFILE-MARKETING-LIFECYCLE`
+- Paid placement destination, referral asset, syndicated listing, public engagement, or other specialist channel → `PROFILE-SPECIALIST-MARKETING`
 
 ## Completion evidence
 

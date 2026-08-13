@@ -12,7 +12,7 @@ stale_after: 2027-02-13
 applies_to: [growth-experiment]
 tags: [profile, growth, experiment]
 depends_on: [GROWTH-EXPERIMENTS, ANALYTICS-MEASUREMENT, FND-TRUST, FND-EVIDENCE, FND-CHANGE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 ---
 
 # Growth experiment profile
@@ -33,9 +33,12 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 ## Conditional standards
 
 - Public acquisition page → `PROFILE-PUBLIC-WEB-PAGE`
+- Positioning, acquisition, conversion, onboarding, retention, or lifecycle treatment → `PROFILE-MARKETING-LIFECYCLE`
 - Product behavior change → `PROFILE-PRODUCT-FEATURE`
+- User interface treatment → `PROFILE-UI-FEATURE`
 - Email, push, or lifecycle messaging → `PROFILE-FUNCTIONAL-WRITING` and `PRIVACY-DATA`; record the governing channel and communication policy because this library does not define channel-specific permission rules
 - Personal data, tracking, profiling, personalization, identity stitching, or audience transfer → `PRIVACY-DATA`
+- Google Analytics 4 implementation → `PLAYBOOK-GA4`
 - Model, prompt, retrieval, tool, memory, or agent behavior is the treatment or makes treatment decisions → `PROFILE-AGENTIC-SYSTEM`
 
 ## Completion evidence

@@ -3,7 +3,7 @@ type: Governance
 title: Authority and requirement levels
 description: Defines requirement strength, precedence, conflict handling, and freshness semantics.
 tags: [governance, authority, requirements]
-generated: { by: codex/gpt-5, at: "2026-08-12T00:00:00Z" }
+generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 ---
 
 # Authority and requirement levels
@@ -51,3 +51,9 @@ Use the precedence in `AGENTS.md`. When two repository rules at the same level c
 ## Freshness
 
 The `last_reviewed` date means the content was intentionally assessed on that date; it does not guarantee that a volatile external fact remains current. Revalidate claims involving laws, platform behavior, vendor limits, browser support, search engines, or active threats before relying on them.
+
+## Verification and release maturity
+
+`generated` identifies who created or materially changed an artifact. It is not approval. `verified` records an independent reviewer who checked the exact artifact and its material evidence. A stable document requires independent verification; high-impact security, legal, privacy, financial, accessibility, or regulatory content also requires a qualified human reviewer for that domain.
+
+The ordinary catalog check validates document and rule structure. The `--release` check applies the v1 maturity gate: no governed draft, no missing independent verification for a stable document, and no stable document that depends on a draft. Agents must report release blockers rather than creating or impersonating approval evidence.

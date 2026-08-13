@@ -2,13 +2,18 @@ version: 1
 okf_version: "0.2"
 bundle_index: index.md
 updated: 2026-08-13
+target_release: "1.0.0"
+release_status: approval-pending
 
 governance:
   - path: governance/authority.md
   - path: governance/contributing.md
   - path: governance/exceptions.md
+  - path: governance/v1-readiness.md
 
 foundations:
+  - id: FND-ACCESSIBILITY
+    path: foundations/accessibility.md
   - id: FND-EVIDENCE
     path: foundations/evidence.md
   - id: FND-TRUST
@@ -17,22 +22,52 @@ foundations:
     path: foundations/safe-change.md
 
 standards:
+  - id: API-CONTRACTS
+    path: api/contracts.md
   - id: AI-AGENTS
     path: ai/agentic-systems.md
   - id: DATA-DATABASE
     path: data/database-changes.md
+  - id: DATA-QUALITY
+    path: data/quality.md
+  - id: ENGINEERING-QUALITY
+    path: engineering/quality.md
   - id: ANALYTICS-MEASUREMENT
     path: analytics/measurement.md
   - id: GROWTH-EXPERIMENTS
     path: growth/experiments.md
+  - id: MARKETING-LIFECYCLE
+    path: marketing/lifecycle.md
+  - id: MARKETING-PAID-MEDIA
+    path: marketing/paid-media.md
+  - id: MARKETING-DIRECT-OUTREACH
+    path: marketing/direct-outreach.md
+  - id: MARKETING-PUBLIC-ENGAGEMENT
+    path: marketing/public-engagement.md
+  - id: MARKETING-DISTRIBUTION
+    path: marketing/distribution.md
+  - id: SALES-REVENUE-OPERATIONS
+    path: sales/revenue-operations.md
+  - id: DISCOVERY-APP-STORES
+    path: discovery/app-stores.md
+  - id: MEDIA-PRODUCTION-RIGHTS
+    path: media/production-rights.md
+  - id: OPERATIONS-RELIABILITY
+    path: operations/reliability.md
+  - id: PRODUCT-DELIVERY
+    path: product/delivery.md
   - id: SEO-FOUNDATIONS
     path: seo/foundations.md
   - id: WEB-QUALITY
     path: web/quality.md
+  - id: DESIGN-INTERACTION
+    path: design/interaction.md
   - id: AGENT-VERIFICATION
     path: agents/verification.md
   - id: CONTENT-ERRORS
     path: error-messages.md
+  - id: CONTENT-INTERFACE
+    path: content/interface.md
   - id: WRITING-FUNCTIONAL
     path: writing/functional.md
   - id: PRIVACY-DATA
@@ -40,7 +75,19 @@ standards:
   - id: SECURITY-APPLICATION
     path: security/application.md
 
+patterns: []
+
+playbooks:
+  - id: PLAYBOOK-APPLE-HIG
+    path: playbooks/apple-hig-audit.md
+  - id: PLAYBOOK-GA4
+    path: playbooks/google-analytics-4.md
+  - id: PLAYBOOK-GSC
+    path: playbooks/google-search-console.md
+
 profiles:
+  - id: PROFILE-APPLE-INTERFACE
+    path: profiles/apple-interface.md
   - id: PROFILE-AGENTIC-SYSTEM
     path: profiles/agentic-system.md
   - id: PROFILE-DATABASE-CHANGE
@@ -49,7 +96,17 @@ profiles:
     path: profiles/product-feature.md
   - id: PROFILE-GROWTH-EXPERIMENT
     path: profiles/growth-experiment.md
+  - id: PROFILE-MARKETING-LIFECYCLE
+    path: profiles/marketing-lifecycle.md
   - id: PROFILE-PUBLIC-WEB-PAGE
     path: profiles/public-web-page.md
+  - id: PROFILE-RELIABILITY-INCIDENT
+    path: profiles/reliability-incident.md
+  - id: PROFILE-SERVICE-API
+    path: profiles/service-api-change.md
+  - id: PROFILE-SPECIALIST-MARKETING
+    path: profiles/specialist-marketing.md
+  - id: PROFILE-UI-FEATURE
+    path: profiles/ui-feature.md
   - id: PROFILE-FUNCTIONAL-WRITING
     path: profiles/functional-writing.md
