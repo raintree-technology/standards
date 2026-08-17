@@ -76,6 +76,62 @@ Dir.mktmpdir("standards-paths-") do |root|
          Standards::Paths.glob(root, "**/*.md"), ["nested/file.md"])
 end
 
+# Containment resolves symlinks on both sides. Resolving only the candidate
+# would reject every path on macOS, where /tmp is itself a link to /private/tmp.
+Dir.mktmpdir("standards-symlink-") do |parent|
+  root = File.join(parent, "bundle")
+  outside = File.join(parent, "outside")
+  FileUtils.mkdir_p(root)
+  FileUtils.mkdir_p(outside)
+  File.write(File.join(outside, "secret.md"), "x")
+  File.write(File.join(root, "real.md"), "x")
+  File.symlink(File.join(outside, "secret.md"), File.join(root, "leak.md"))
+  File.symlink(File.join(root, "real.md"), File.join(root, "alias.md"))
+
+  checks += 1
+  expect(failures, "a symlink inside the bundle pointing outside is rejected",
+         Standards::Paths.resolve(root, "leak.md"), nil)
+
+  checks += 1
+  expect(failures, "a symlink inside the bundle pointing inside is accepted",
+         !Standards::Paths.resolve(root, "alias.md").nil?, true)
+
+  checks += 1
+  expect(failures, "a plain file inside the bundle is accepted",
+         !Standards::Paths.resolve(root, "real.md").nil?, true)
+
+  # The common macOS case: the bundle is reached through a symlinked parent.
+  linked_root = File.join(parent, "linked-bundle")
+  File.symlink(root, linked_root)
+  checks += 1
+  expect(failures, "a bundle reached through a symlinked root still resolves",
+         !Standards::Paths.resolve(linked_root, "real.md").nil?, true)
+
+  # Callers ask about files that do not exist yet, and those must not blow up.
+  checks += 1
+  expect(failures, "a missing file inside the bundle still resolves",
+         !Standards::Paths.resolve(root, "absent/deeper.md").nil?, true)
+
+  checks += 1
+  expect(failures, "a missing file outside the bundle resolves to nil",
+         Standards::Paths.resolve(root, "../absent.md"), nil)
+end
+
+# Every temporary root the harness creates must be removed, including when a
+# fixture raises partway through.
+checks += 1
+leaked = nil
+begin
+  Dir.mktmpdir("standards-cleanup-") do |root|
+    leaked = root
+    File.write(File.join(root, "file.md"), "x")
+    raise "fixture failure"
+  end
+rescue RuntimeError
+  # expected
+end
+expect(failures, "a temporary root is removed even when a fixture raises", File.exist?(leaked), false)
+
 # A checkout under a directory containing glob metacharacters used to match no
 # files at all, so the bundle validated as empty and still exited 0.
 Dir.mktmpdir("standards-glob-") do |parent|
