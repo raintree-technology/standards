@@ -4,6 +4,7 @@
 * [Agentic system](agentic-system.md) - Routes model workflows and agents to architecture, evidence, trust, safe-change, and verification requirements.
 * [Commercial evidence review](commercial-evidence-review.md) - Routes project, supplier, facility, and counterparty reviews to evidence, trust, writing, sales, and handoff requirements.
 * [Company brain](company-brain.md) - Routes organizational knowledge systems to source authority, evidence, data, security, privacy, engineering, and verification requirements.
+* [Code removal](code-removal.md) - Routes layered unused-code and dependency analysis to safe change and final verification.
 * [Database change](database-change.md) - Routes database changes to integrity, safety, evidence, and verification requirements.
 * [Functional writing](functional-writing.md) - Routes functional writing to clarity, evidence, trust, and final-artifact review requirements.
 * [Growth experiment](growth-experiment.md) - Routes growth experiments to evidence, measurement, trust, and safe-change requirements.

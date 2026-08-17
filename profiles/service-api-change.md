@@ -6,13 +6,13 @@ type: profile
 status: draft
 governance_status: draft
 owners: [engineering, platform, security, operations]
-last_reviewed: 2026-08-16
-review_by: 2027-02-16
-stale_after: 2027-02-16
+last_reviewed: 2026-08-17
+review_by: 2027-02-17
+stale_after: 2027-02-17
 applies_to: [service-change, api-change, library-api-change]
 tags: [profile, service, api, library, sdk]
 depends_on: [API-CONTRACTS, ENGINEERING-QUALITY, OPERATIONS-RELIABILITY, SECURITY-APPLICATION, FND-CHANGE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-16T23:36:18Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T08:25:04Z" }
 ---
 
 # Programmatic interface and service change profile
@@ -32,9 +32,11 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 
 ## Conditional standards
 
+- JavaScript or TypeScript implementation → `ENGINEERING-JS-QUALITY`
 - Personal, confidential, or regulated data → `PRIVACY-DATA`
 - Database, schema, query, or backfill change → `PROFILE-DATABASE-CHANGE`
 - New analytics events or service metrics → `ANALYTICS-MEASUREMENT`
+- Server-side TypeScript on Node.js or another Pino-supported runtime → `OPERATIONS-LOGGING`
 - Model-driven requests, tools, or autonomous operation → `PROFILE-AGENTIC-SYSTEM`
 - Public browser surface → `PROFILE-PUBLIC-WEB-PAGE`
 - User or agent-facing failures → `CONTENT-ERRORS`
@@ -57,4 +59,5 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - `API-CONTRACTS-032` — Raw protocol and supported SDK versions produce equivalent contract outcomes across installation, authentication, retries, pagination, errors, and upgrades.
 - `ENGINEERING-QUALITY-005` and `ENGINEERING-QUALITY-008` — Independent review and final-artifact approval bind to the released version.
 - `OPERATIONS-RELIABILITY-001` through `OPERATIONS-RELIABILITY-006` — Objectives, signals, alerts, runbooks, response, and recovery are exercised.
+- `OPERATIONS-LOGGING-001` through `OPERATIONS-LOGGING-014` when active — The built service emits protected, correlated Pino JSON with governed events, types, extensions, volume, lifecycle, storage, pipeline health, client boundaries, and audit claims.
 - `FND-CHANGE-008` and `AGENT-VERIFICATION-005` — The post-change state and handoff record checks, results, limitations, owners, and recovery.

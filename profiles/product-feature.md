@@ -12,7 +12,7 @@ stale_after: 2027-02-13
 applies_to: [product-feature]
 tags: [profile, product]
 depends_on: [PRODUCT-DELIVERY, ENGINEERING-QUALITY, FND-TRUST, FND-CHANGE, FND-EVIDENCE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-17T07:46:46Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T08:21:30Z" }
 ---
 
 # Product feature profile
@@ -32,6 +32,7 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 
 ## Conditional standards
 
+- JavaScript or TypeScript implementation → `ENGINEERING-JS-QUALITY`
 - User interface → `PROFILE-UI-FEATURE`
 - Browser interface → `WEB-QUALITY`
 - Apple-platform interface → `PROFILE-APPLE-INTERFACE`

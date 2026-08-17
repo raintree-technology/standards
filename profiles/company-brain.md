@@ -13,7 +13,7 @@ stale_after: 2027-02-16
 applies_to: [company-brain, enterprise-search, knowledge-base, retrieval-system, expertise-discovery]
 tags: [profile, knowledge, retrieval, audit]
 depends_on: [KNOWLEDGE-SYSTEMS, FND-EVIDENCE, FND-TRUST, FND-CHANGE, DATA-QUALITY, SECURITY-APPLICATION, PRIVACY-DATA, ENGINEERING-QUALITY, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-17T06:08:51Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T08:37:00Z" }
 ---
 
 # Company brain profile
@@ -38,6 +38,7 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 
 ## Conditional standards
 
+- JavaScript or TypeScript implementation → `ENGINEERING-JS-QUALITY`
 - Models, agents, generated summaries, embeddings, durable memory, model grading, or model-selected retrieval or actions → `AI-AGENTS`
 - Service, API, library, SDK, webhook, or event contract → `PROFILE-SERVICE-API`
 - Database schema, query, index, migration, backup, restore, retention, or data mutation → `PROFILE-DATABASE-CHANGE`

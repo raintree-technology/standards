@@ -50,6 +50,7 @@ okf_version: "0.2"
 * [Agentic system](profiles/agentic-system.md) - Standards activated by model workflows, tool use, memory, delegation, and autonomous action.
 * [Commercial evidence review](profiles/commercial-evidence-review.md) - Scope, provenance, claims, writing, trust, and handoff requirements for project and supplier evidence reviews.
 * [Company brain](profiles/company-brain.md) - Source authority, access, lifecycle, retrieval, evaluation, and audit requirements for organizational knowledge systems.
+* [Code removal](profiles/code-removal.md) - Reachability analysis, safe deletion, and final verification for unused code and dependencies.
 * [Database change](profiles/database-change.md) - Standards activated by schema, migration, query, indexing, and recovery work.
 * [Functional writing](profiles/functional-writing.md) - Clarity, evidence, trust, and review requirements for functional writing.
 * [Product feature](profiles/product-feature.md) - Cross-domain completion requirements for user-facing features.
@@ -79,6 +80,8 @@ okf_version: "0.2"
 * [Database changes](data/database-changes.md) - Integrity, migration safety, query performance, and recovery.
 * [Data quality and lifecycle](data/quality.md) - Meaning, ownership, lineage, validation, reconciliation, and lifecycle.
 * [Engineering quality](engineering/quality.md) - Architecture, testing, dependencies, review, provenance, and release readiness.
+* [Safe code removal](engineering/code-removal.md) - Knip, Ruff, deptry, contextual Vulture, analyzer canaries, bounded deletion, and final graph verification.
+* [JavaScript and TypeScript quality with Biome, Trellis, and anti-slop](engineering/javascript-quality.md) - Shared Biome, Trellis, Oxlint, and anti-slop policy for repository scope, type evidence, continuous integration, suppressions, and agent handoffs.
 * [Error messages](error-messages.md) - User-facing failure content and review criteria.
 * [Functional writing](writing/functional.md) - Clear, consistent, actionable documentation, explanations, summaries, interface text, reports, and messages.
 * [Growth experiments](growth/experiments.md) - Hypotheses, assignment, guardrails, stopping, and learning.
@@ -95,6 +98,7 @@ okf_version: "0.2"
 * [App-store discovery and submission](discovery/app-stores.md) - Store metadata, policy, privacy declarations, review readiness, localization, and release monitoring.
 * [Media production, accessibility, and rights](media/production-rights.md) - Source rights, releases, synthetic media, accessible alternatives, derivatives, and retention.
 * [Operations and reliability](operations/reliability.md) - Objectives, observability, runbooks, incidents, recovery, support, and vendors.
+* [TypeScript logging with Pino](operations/logging.md) - Pino-based structured logging, context, client observations, data protection, lifecycle, and delivery for TypeScript.
 * [Personal data handling](privacy/data-handling.md) - Purpose, minimization, choice, rights, retention, sharing, and privacy risk.
 * [Product delivery](product/delivery.md) - Discovery, requirements, prioritization, launch, onboarding, and outcome review.
 * [Search foundations](seo/foundations.md) - Indexability, canonicalization, structured data, and migrations.

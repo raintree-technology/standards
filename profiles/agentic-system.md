@@ -12,7 +12,7 @@ stale_after: 2027-02-13
 applies_to: [agentic-system]
 tags: [profile, ai, agents]
 depends_on: [AI-AGENTS, ENGINEERING-QUALITY, FND-EVIDENCE, FND-TRUST, FND-CHANGE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T08:21:30Z" }
 ---
 
 # Agentic system profile
@@ -32,6 +32,7 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 
 ## Conditional standards
 
+- JavaScript or TypeScript implementation → `ENGINEERING-JS-QUALITY`
 - Personal, confidential, regulated, or proprietary data in prompts, context, traces, evaluation, feedback, or tools → `PRIVACY-DATA`
 - Untrusted content, code execution, network access, private data access, external communication, durable side effects, authentication, authorization, or privileged tools → `SECURITY-APPLICATION`
 - New events, traces, quality metrics, cost metrics, or dashboards → `ANALYTICS-MEASUREMENT`

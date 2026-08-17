@@ -6,13 +6,13 @@ type: profile
 status: draft
 governance_status: draft
 owners: [web, design, seo, content]
-last_reviewed: 2026-08-13
-review_by: 2027-02-13
-stale_after: 2027-02-13
+last_reviewed: 2026-08-17
+review_by: 2027-02-17
+stale_after: 2027-02-17
 applies_to: [public-web-page, landing-page, marketing-site]
 tags: [profile, web, seo]
 depends_on: [WEB-QUALITY, SEO-FOUNDATIONS, FND-ACCESSIBILITY, FND-TRUST, FND-EVIDENCE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-17T07:38:31Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T08:30:41Z" }
 ---
 
 # Public web page profile
@@ -32,6 +32,8 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 
 ## Conditional standards
 
+- JavaScript or TypeScript implementation → `ENGINEERING-JS-QUALITY`
+- Browser logs, errors, or operational events sent off the device → `OPERATIONS-LOGGING`
 - Experiment or personalization → `GROWTH-EXPERIMENTS` and `ANALYTICS-MEASUREMENT`
 - Interactive flow, form, navigation, or state change → `PROFILE-UI-FEATURE`
 - Documentation, marketing claims, interface text, or explanatory content → `PROFILE-FUNCTIONAL-WRITING`
@@ -58,6 +60,7 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - When motion, timing, dragging, or gesture behavior exists, `WEB-QUALITY-016` — Reduced motion, control, time adjustment, and simpler input alternatives were exercised.
 - For consequential submissions, `WEB-QUALITY-017` and `CONTENT-ERRORS-012` — Reversal, validation and correction, or review and confirmation prevents material input errors.
 - When browser permissions are requested, `WEB-QUALITY-018` — Grant, denial, revocation, embedded capability, and fallback behavior were inspected.
+- When browser logs leave the device, `OPERATIONS-LOGGING-002`, `OPERATIONS-LOGGING-005`, `OPERATIONS-LOGGING-007`, and `OPERATIONS-LOGGING-011` through `OPERATIONS-LOGGING-014` — Events are typed, minimized, bounded, treated as untrusted, protected through deletion, and separated from authoritative audit evidence.
 - When `PRIVACY-DATA` is active, `PRIVACY-DATA-001`, `PRIVACY-DATA-003`, `PRIVACY-DATA-005`, `PRIVACY-DATA-006`, and `PRIVACY-DATA-015` — The processing map, minimization, rendered explanation, choice states, and observed network and storage behavior agree.
 - When `SECURITY-APPLICATION` is active, `SECURITY-APPLICATION-002`, `SECURITY-APPLICATION-005`, `SECURITY-APPLICATION-006`, `SECURITY-APPLICATION-010`, and `SECURITY-APPLICATION-015` — Authorization, untrusted input, uploaded content, deployment configuration, and integrated verification evidence cover the page's application behavior.
 - When `PROFILE-AGENTIC-SYSTEM` is active, its evidence covers model limits, user control, prompt injection, data paths, tools, repeated outcomes, refusals, escalation, and final-state verification.

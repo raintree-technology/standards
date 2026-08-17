@@ -1,5 +1,5 @@
 version: 1
-updated: 2026-08-16
+updated: 2026-08-17
 description: Review ownership and freshness controls for external source sets used by governed documents.
 
 documents:
@@ -57,6 +57,18 @@ documents:
     reviewed_on: 2026-08-13
     volatility: medium
     next_review: 2027-02-13
+  - id: ENGINEERING-CODE-REMOVAL
+    owner: engineering
+    source_version: Knip first-cleanup, project-file, production, workspace, issue-resolution, auto-fix, and CI guidance; Ruff configuration, linter, F401, and F841 documentation; deptry rules and configuration; Vulture 2.16; Python import reference; and PyPA entry-point specification reviewed 2026-08-17
+    reviewed_on: 2026-08-17
+    volatility: high
+    next_review: 2026-11-17
+  - id: ENGINEERING-JS-QUALITY
+    owner: engineering
+    source_version: Biome 2 configuration, monorepo, VCS, CI, CLI, formatter, linter, Assist, suppression, editor, and migration documentation at website commit 033bb7a1bc4d8f0623cc6e9bf72cde2ff7bdfb92; TypeScript noEmit documentation; Trellis 0.3.0 commit d2b0f37abce4319c329f363b4cdb541d83d18db9; anti-slop 0.1.0 commit 446268e5d15baa968eaec669ff65358d36ae6259; Oxlint JavaScript-plugin, configuration, ignore, CI, versioning, and automatic-fix documentation; and oxlint and @oxlint/plugins 1.78.0 reviewed 2026-08-17
+    reviewed_on: 2026-08-17
+    volatility: high
+    next_review: 2026-11-17
   - id: KNOWLEDGE-SYSTEMS
     owner: knowledge
     source_version: W3C PROV-O, NIST SP 800-53 Revision 5 Update 1, NIST AI RMF 1.0, and NIST AI 600-1 reviewed 2026-08-16
@@ -129,6 +141,12 @@ documents:
     reviewed_on: 2026-08-13
     volatility: medium
     next_review: 2027-02-13
+  - id: OPERATIONS-LOGGING
+    owner: engineering
+    source_version: Pino 10.3.1 API, asynchronous, browser, bundling, child logger, LTS, redaction, transport, and web framework documentation; current Node.js async context, process, and stream documentation; OpenTelemetry logs data model and service semantic conventions; OWASP Logging Cheat Sheet; and W3C Trace Context reviewed 2026-08-17
+    reviewed_on: 2026-08-17
+    volatility: high
+    next_review: 2026-11-17
   - id: PRODUCT-DELIVERY
     owner: product
     source_version: UK Government Service Standard source set reviewed 2026-08-13

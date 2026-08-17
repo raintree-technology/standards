@@ -3,7 +3,7 @@ type: Reference
 title: Version 1 coverage matrix
 description: Maps the bounded Raintree v1 task surface to governed standards, profiles, playbooks, and remaining approval work.
 tags: [coverage, v1, standards, profiles]
-generated: { by: codex/gpt-5, at: "2026-08-17T07:38:31Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T09:04:00Z" }
 ---
 
 # Version 1 coverage matrix
@@ -12,19 +12,20 @@ The bounded v1 baseline covers recurring product, engineering, service, data, we
 
 | Work area | Required standards and profiles | Vendor or platform playbook | V1 state |
 |---|---|---|---|
-| Agentic systems | `AI-AGENTS`, `ENGINEERING-QUALITY`, agentic profile | None | Authored; qualified review pending |
-| Programmatic interfaces and services | `API-CONTRACTS`, `ENGINEERING-QUALITY`, `OPERATIONS-RELIABILITY`, programmatic-interface/service profile | None | Authored; qualified review pending |
-| Database and data | `DATA-DATABASE`, `DATA-QUALITY`, database-change profile | GA4 when an analytics implementation | Authored; qualified review pending |
-| Product delivery | `PRODUCT-DELIVERY`, product-feature profile | None | Authored; qualified review pending |
-| Universal UI and content | `DESIGN-INTERACTION`, `FND-ACCESSIBILITY`, `CONTENT-INTERFACE`, UI-feature profile | None | Authored; accessibility review pending |
+| Agentic systems | `AI-AGENTS`, `ENGINEERING-QUALITY`, agentic profile; `ENGINEERING-JS-QUALITY` for JavaScript and TypeScript | Trellis for JavaScript and TypeScript; vendored anti-slop through Oxlint for TypeScript | Authored; qualified review pending |
+| Programmatic interfaces and services | `API-CONTRACTS`, `ENGINEERING-QUALITY`, `ENGINEERING-JS-QUALITY` for JavaScript and TypeScript, `OPERATIONS-RELIABILITY`, programmatic-interface/service profile | Trellis for JavaScript and TypeScript; vendored anti-slop through Oxlint for TypeScript | Authored; qualified review pending |
+| Database and data | `DATA-DATABASE`, `DATA-QUALITY`, database-change profile; `ENGINEERING-JS-QUALITY` for JavaScript and TypeScript tooling | Trellis for JavaScript and TypeScript; vendored anti-slop through Oxlint for TypeScript; GA4 when an analytics implementation | Authored; qualified review pending |
+| Product delivery | `PRODUCT-DELIVERY`, product-feature profile; `ENGINEERING-JS-QUALITY` for JavaScript and TypeScript | Trellis for JavaScript and TypeScript; vendored anti-slop through Oxlint for TypeScript | Authored; qualified review pending |
+| Universal UI and content | `DESIGN-INTERACTION`, `FND-ACCESSIBILITY`, `CONTENT-INTERFACE`, UI-feature profile; `ENGINEERING-JS-QUALITY` for JavaScript and TypeScript | Trellis for JavaScript and TypeScript; vendored anti-slop through Oxlint for TypeScript | Authored; accessibility review pending |
 | Apple interfaces | Universal UI corpus and Apple-interface profile | Apple HIG audit | Authored; platform review pending |
-| Public web and search | `WEB-QUALITY`, `SEO-FOUNDATIONS`, public-web profile | Search Console | Authored; source and accessibility review pending |
+| Public web and search | `WEB-QUALITY`, `SEO-FOUNDATIONS`, public-web profile; `ENGINEERING-JS-QUALITY` for JavaScript and TypeScript | Trellis for JavaScript and TypeScript; vendored anti-slop through Oxlint for TypeScript; Search Console | Authored; source and accessibility review pending |
 | Analytics and experiments | `ANALYTICS-MEASUREMENT`, `GROWTH-EXPERIMENTS`, growth-experiment profile | GA4 | Authored; analytics and privacy review pending |
 | Core lifecycle marketing | `MARKETING-LIFECYCLE`, marketing-lifecycle profile | GA4 and Search Console when applicable | Authored; marketing, privacy, and legal review pending |
 | Functional writing and errors | `WRITING-FUNCTIONAL`, `CONTENT-ERRORS`, functional-writing profile | None | Existing stable corpus; independent verification pending |
 | Commercial evidence reviews | Commercial-evidence-review profile, `FND-EVIDENCE`, `WRITING-FUNCTIONAL`, conditional sales, marketing, privacy, and security routes | None | Post-v1 draft; research, sales, and qualified domain review pending |
 | Public legal documents | `LEGAL-PUBLISHED-TERMS`, legal-document profile, `PRIVACY-DATA`, `FND-TRUST`, `WRITING-FUNCTIONAL` | None | Post-v1 draft; qualified legal and privacy review pending |
 | Organizational knowledge systems | `KNOWLEDGE-SYSTEMS`, company-brain profile, federated-knowledge pattern | Standards conformance audit | Post-v1 draft; knowledge, AI, data, security, privacy, product, and engineering review pending |
+| Code and dependency removal | `ENGINEERING-CODE-REMOVAL`, code-removal profile, `FND-CHANGE`, `AGENT-VERIFICATION` | Knip plus Biome/Trellis for TypeScript/JavaScript; Ruff, deptry, and contextual Vulture for Python | Post-v1 draft; engineering review pending |
 | Reliability and incidents | `OPERATIONS-RELIABILITY`, `FND-CHANGE`, reliability/incident profile | None | Authored; operations and security review pending |
 | Privacy and application security | `PRIVACY-DATA`, `SECURITY-APPLICATION` | None | Existing drafts; qualified review pending |
 | Secrets and credentials | `SECURITY-SECRETS`, secrets/Infisical profile | None; Infisical is required by the standard | Authored; qualified security and operations review pending |

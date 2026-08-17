@@ -6,13 +6,13 @@ type: profile
 status: draft
 governance_status: draft
 owners: [operations, engineering, security, support]
-last_reviewed: 2026-08-13
-review_by: 2027-02-13
-stale_after: 2027-02-13
+last_reviewed: 2026-08-17
+review_by: 2027-02-17
+stale_after: 2027-02-17
 applies_to: [service-operation, incident, recovery]
 tags: [profile, reliability, incident]
 depends_on: [OPERATIONS-RELIABILITY, FND-CHANGE, FND-EVIDENCE, SECURITY-APPLICATION, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T08:25:04Z" }
 ---
 
 # Reliability and incident profile
@@ -36,6 +36,7 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - API compatibility or dependency failure → `PROFILE-SERVICE-API`
 - User-facing status, workaround, or error content → `CONTENT-ERRORS` and `PROFILE-FUNCTIONAL-WRITING`
 - Model-driven diagnosis, remediation, or communication → `PROFILE-AGENTIC-SYSTEM`
+- Server-side TypeScript logging changes or incident evidence from a Pino-supported runtime → `OPERATIONS-LOGGING`
 - External provider involvement → `OPERATIONS-RELIABILITY-009` plus the governing vendor contract and contact process
 
 ## Completion evidence
@@ -45,5 +46,6 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - `FND-CHANGE-003`, `FND-CHANGE-005`, and `FND-CHANGE-007` — Containment, stop conditions, authority, and promotion decisions are explicit.
 - `OPERATIONS-RELIABILITY-006` and `FND-CHANGE-008` — Recovery meets measured objectives and the final state is reconciled.
 - `OPERATIONS-RELIABILITY-007` — The factual review produces owned corrective work and a later effectiveness check.
+- `OPERATIONS-LOGGING-002` through `OPERATIONS-LOGGING-014` when active — Collected Pino events preserve safe structure, context, errors, lifecycle evidence, pipeline health, protected storage, client trust boundaries, and supportable audit claims.
 - `OPERATIONS-RELIABILITY-008` and `CONTENT-ERRORS-001` when active — Affected users and support receive accurate impact, next actions, and resolution.
 - `AGENT-VERIFICATION-005` — The handoff records impact, timeline, actions, checks, remaining risk, owners, and follow-up dates.

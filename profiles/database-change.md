@@ -12,7 +12,7 @@ stale_after: 2027-02-13
 applies_to: [database-change]
 tags: [profile, database]
 depends_on: [DATA-DATABASE, FND-CHANGE, FND-EVIDENCE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T08:21:30Z" }
 ---
 
 # Database change profile
@@ -30,6 +30,7 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 
 ## Conditional standards
 
+- JavaScript or TypeScript migration or data tooling → `ENGINEERING-JS-QUALITY`
 - Collection, deletion, retention, correction, transfer, or other processing of personal data → `PRIVACY-DATA`
 - New product behavior → `PROFILE-PRODUCT-FEATURE`
 - Analytics warehouse or event model → `ANALYTICS-MEASUREMENT`

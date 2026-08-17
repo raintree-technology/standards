@@ -1,7 +1,7 @@
 version: 1
 okf_version: "0.2"
 bundle_index: index.md
-updated: 2026-08-16
+updated: 2026-08-17
 target_release: "1.0.0"
 release_status: approval-pending
 
@@ -32,6 +32,10 @@ standards:
     path: data/quality.md
   - id: ENGINEERING-QUALITY
     path: engineering/quality.md
+  - id: ENGINEERING-CODE-REMOVAL
+    path: engineering/code-removal.md
+  - id: ENGINEERING-JS-QUALITY
+    path: engineering/javascript-quality.md
   - id: KNOWLEDGE-SYSTEMS
     path: knowledge/organizational-knowledge.md
   - id: ANALYTICS-MEASUREMENT
@@ -56,6 +60,8 @@ standards:
     path: media/production-rights.md
   - id: OPERATIONS-RELIABILITY
     path: operations/reliability.md
+  - id: OPERATIONS-LOGGING
+    path: operations/logging.md
   - id: PRODUCT-DELIVERY
     path: product/delivery.md
   - id: SEO-FOUNDATIONS
@@ -132,3 +138,5 @@ profiles:
     path: profiles/functional-writing.md
   - id: PROFILE-LEGAL-DOCUMENT
     path: profiles/legal-document.md
+  - id: PROFILE-CODE-REMOVAL
+    path: profiles/code-removal.md

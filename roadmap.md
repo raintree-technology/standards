@@ -3,7 +3,7 @@ type: Roadmap
 title: Coverage roadmap
 description: Prioritized gaps and triggers for expanding the raintree.standards library.
 tags: [roadmap, coverage, governance]
-generated: { by: codex/gpt-5, at: "2026-08-17T07:38:31Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T09:04:00Z" }
 ---
 
 # Coverage roadmap
@@ -13,7 +13,7 @@ The bounded v1 domain baseline is authored. Release remains blocked on independe
 ## V1 baseline
 
 - [x] APIs: contracts, errors, pagination, idempotency, versioning, rate limiting
-- [x] Engineering: architecture, testing, dependencies, observability, release readiness
+- [x] Engineering: architecture, testing, dependencies, observability, release readiness, and shared JavaScript and TypeScript quality policy through Biome, Trellis, Oxlint, and vendored anti-slop
 - [x] Data: modeling, migrations, lineage, validation, reconciliation, backup and recovery
 - [x] Product: discovery, requirements, prioritization, launches, onboarding, metrics
 - [x] Design: interaction patterns, forms, states, responsive behavior, design systems
@@ -43,13 +43,17 @@ The draft standards, playbooks, profiles, and patterns listed in the catalog rem
 - [x] Project, supplier, facility, and counterparty evidence reviews — `PROFILE-COMMERCIAL-EVIDENCE-REVIEW`
 - [x] Organizational knowledge systems, federated retrieval guidance, and source-neutral conformance audits — `KNOWLEDGE-SYSTEMS`, `PROFILE-COMPANY-BRAIN`, `PATTERN-FEDERATED-KNOWLEDGE`, and `PLAYBOOK-STANDARDS-AUDIT`
 - [x] Public terms, privacy notices, legal centers, assent evidence, and legal-document change control — `LEGAL-PUBLISHED-TERMS` and `PROFILE-LEGAL-DOCUMENT`
+- [x] Server-side TypeScript structured logging with Pino — `OPERATIONS-LOGGING`
+- [x] Safe unused-code and dependency cleanup with TypeScript/JavaScript Knip plus Biome/Trellis, Python Ruff and deptry, contextual Vulture, and analyzer canaries — `ENGINEERING-CODE-REMOVAL` and `PROFILE-CODE-REMOVAL`
 
 All seven specialist extension standards, `PROFILE-SPECIALIST-MARKETING`, and
 `PROFILE-COMMERCIAL-EVIDENCE-REVIEW` remain drafts pending independent,
 domain-qualified review. The organizational-knowledge standard, company-brain
 profile, federated-knowledge pattern, and standards-audit playbook have the same
 draft and review boundary. The published-legal-terms standard and legal-document
-profile require qualified legal and privacy review. New extensions should now be driven by recurring
+profile require qualified legal and privacy review. The TypeScript logging standard
+requires independent engineering, operations, security, and privacy review. The code-removal standard
+requires independent engineering review. New extensions should now be driven by recurring
 project evidence rather than category completeness.
 
 ## Open extension queue

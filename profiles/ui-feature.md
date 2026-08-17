@@ -6,13 +6,13 @@ type: profile
 status: draft
 governance_status: draft
 owners: [design, product, engineering, accessibility, content]
-last_reviewed: 2026-08-13
-review_by: 2027-02-13
-stale_after: 2027-02-13
+last_reviewed: 2026-08-17
+review_by: 2027-02-17
+stale_after: 2027-02-17
 applies_to: [user-interface, product-feature]
 tags: [profile, ui, design, accessibility]
 depends_on: [DESIGN-INTERACTION, FND-ACCESSIBILITY, CONTENT-INTERFACE, PRODUCT-DELIVERY, FND-TRUST, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-17T07:46:46Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T08:30:41Z" }
 ---
 
 # User interface feature profile
@@ -32,6 +32,8 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 
 ## Conditional standards
 
+- JavaScript or TypeScript implementation → `ENGINEERING-JS-QUALITY`
+- Client logs, errors, or operational events sent off the device → `OPERATIONS-LOGGING`
 - Public or browser-delivered page → `PROFILE-PUBLIC-WEB-PAGE`
 - Apple platform → `PROFILE-APPLE-INTERFACE`
 - Personal-data processing → `PRIVACY-DATA`
@@ -49,3 +51,4 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - `CONTENT-INTERFACE-001` through `CONTENT-INTERFACE-008` — Rendered interface content matches behavior, consequence, accessibility, and locale conditions.
 - `PRODUCT-DELIVERY-006` and `AGENT-VERIFICATION-002` — Readiness and final-artifact inspection cover every active profile and material state.
 - `PRODUCT-DELIVERY-008` — The outcome review and temporary-work closure have an owner and review point.
+- When client logs leave the device, `OPERATIONS-LOGGING-013` — Shipped behavior minimizes data before logging, treats client claims as untrusted, bounds submission, and verifies device, network, and retained destinations.
