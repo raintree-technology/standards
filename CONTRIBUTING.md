@@ -28,12 +28,25 @@ The validators use only the Ruby standard library. There is no bundle to install
 ruby scripts/validate_catalog.rb
 ruby scripts/validate_integrations.rb
 ruby scripts/test_schema_drift.rb
+ruby scripts/test_workflows.rb
 ruby scripts/test_standards_lib.rb
 ruby scripts/test_validate_catalog.rb
 ruby scripts/test_validate_integrations.rb
 ```
 
 Continuous integration runs exactly this list, in this order. Each command exits 0 when it passes, 1 when it finds a problem, and 2 when it is invoked incorrectly. Unrecognised options are rejected rather than ignored.
+
+## Changing the workflow
+
+This repository restricts GitHub Actions to an allowlist and requires every action to be pinned to a full commit SHA. An action outside the allowlist does not fail a step: the whole run ends in `startup_failure` with no logs, which is easy to mistake for an unrelated outage. Local linting cannot detect it, because the policy lives on the repository rather than in the workflow file.
+
+Before adding an action, check the policy and add the action to `ALLOWED_NON_GITHUB_ACTIONS` in [`scripts/test_workflows.rb`](scripts/test_workflows.rb):
+
+```
+gh api repos/raintree-technology/raintree.standards/actions/permissions/selected-actions
+```
+
+`ruby scripts/test_workflows.rb` also checks that the commands listed above match the ones the workflow runs, so a new suite cannot be added to one without the other.
 
 ## Ruby version
 

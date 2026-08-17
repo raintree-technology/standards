@@ -56,6 +56,9 @@ jobs:
       - name: Check JSON Schemas against the handwritten validators
         run: ruby scripts/test_schema_drift.rb
 
+      - name: Check workflow pinning, permissions, and CI parity
+        run: ruby scripts/test_workflows.rb
+
       - name: Test the shared validator library
         run: ruby scripts/test_standards_lib.rb
 
