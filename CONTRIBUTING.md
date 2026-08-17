@@ -37,7 +37,9 @@ Continuous integration runs exactly this list, in this order. Each command exits
 
 ## Ruby version
 
-The supported interpreter is the version in [`.ruby-version`](.ruby-version), which is what CI installs. The validators require Ruby 3.1 or newer and refuse to run on anything older; the macOS system Ruby is too old. Install a supported version with a version manager, for example `mise use ruby@3.4` or `rbenv install`.
+The supported interpreter is pinned in [`.ruby-version`](.ruby-version) and [`.tool-versions`](.tool-versions). Both name the same version: `.ruby-version` for rbenv, chruby, and other tools following the Ruby convention, and `.tool-versions` for mise, which is what CI installs from. `ruby scripts/test_standards_lib.rb` fails if the two disagree.
+
+The validators require Ruby 3.1 or newer and refuse to run on anything older; the macOS system Ruby is too old. Install the pinned version with `mise install` from the repository root, or with the version manager you already use.
 
 Keep changes focused. Preserve existing rule IDs and unknown YAML front-matter fields. Do not include confidential information, personal data, credentials, or material that you do not have permission to publish.
 

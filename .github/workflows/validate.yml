@@ -20,7 +20,9 @@ jobs:
     # Pinned rather than ubuntu-latest so a runner-image rollover cannot change
     # the toolchain underneath a green build.
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    # Generous enough to cover a cold cache, where mise may fall back to
+    # building Ruby from source instead of fetching a precompiled build.
+    timeout-minutes: 20
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -30,15 +32,17 @@ jobs:
           persist-credentials: false
 
       # The runner image ships its own Ruby, which changes with the image and is
-      # currently an end-of-life release. Installing the version in
-      # .ruby-version keeps CI on the same supported interpreter contributors
-      # run locally. Pinned to a full commit SHA per GitHub's hardening
-      # guidance; ruby/setup-ruby's README prefers the moving v1 tag, so
-      # Dependabot keeps this pin current instead.
+      # currently an end-of-life release. Installing the pinned version keeps CI
+      # on the same supported interpreter contributors run locally.
+      #
+      # mise rather than ruby/setup-ruby because this repository restricts
+      # workflows to an allowlist of actions, and mise is on it while
+      # setup-ruby is not. Using it also means CI and a contributor's machine
+      # run the same tool against the same .tool-versions file. The SHA is the
+      # exact one the allowlist permits, which the repository's
+      # sha_pinning_required policy also demands.
       - name: Set up Ruby
-        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
-        with:
-          ruby-version-file: .ruby-version
+        uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3.6.3
 
       - name: Report Ruby version
         run: ruby -v

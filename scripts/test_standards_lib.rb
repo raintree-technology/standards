@@ -324,6 +324,28 @@ Dir.mktmpdir("standards-today-") do |root|
   expect(failures, "a review in the past is expired", expired_after.length, 1)
 end
 
+# -- pinned Ruby version -----------------------------------------------------
+
+# Two files name the interpreter: .ruby-version for rbenv, chruby, and anything
+# else following the Ruby convention, and .tool-versions for mise, which is what
+# CI installs from. They must not drift apart, and both must satisfy the floor
+# the library enforces at startup.
+repository_root = File.expand_path("..", __dir__)
+ruby_version = File.read(File.join(repository_root, ".ruby-version")).strip
+tool_versions = File.read(File.join(repository_root, ".tool-versions"))
+                    .lines
+                    .filter_map { |line| line.split[1] if line.split.first == "ruby" }
+
+checks += 1
+expect(failures, ".tool-versions pins exactly one Ruby", tool_versions.length, 1)
+
+checks += 1
+expect(failures, ".ruby-version and .tool-versions agree", tool_versions.first, ruby_version)
+
+checks += 1
+expect(failures, "the pinned Ruby satisfies the enforced minimum",
+       Gem::Version.new(ruby_version) >= Gem::Version.new(Standards::MINIMUM_RUBY), true)
+
 if failures.empty?
   puts "Validator library tests valid: #{checks} cases"
   exit Standards::EXIT_SUCCESS
