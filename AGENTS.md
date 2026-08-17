@@ -1,12 +1,12 @@
 ---
 type: Agent Instructions
-title: Standards Repository Instructions
-description: Binding instructions for agents reading or maintaining the Raintree standards library.
+title: raintree.standards Repository Instructions
+description: Binding instructions for agents reading or maintaining the raintree.standards library.
 tags: [agents, governance, read-only]
-generated: { by: codex/gpt-5, at: "2026-08-10T16:00:00Z" }
+generated: { by: codex/gpt-5, at: "2026-08-16T23:26:21Z" }
 ---
 
-# Standards Repository Instructions
+# raintree.standards Repository Instructions
 
 This repository is the authoritative, read-only standards library for agents working on Raintree projects.
 

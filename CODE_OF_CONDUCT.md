@@ -1,9 +1,9 @@
 ---
 type: Policy
 title: Code of Conduct
-description: Expected behavior and enforcement rules for Raintree Standards project spaces.
+description: Expected behavior and enforcement rules for raintree.standards project spaces.
 tags: [community, conduct]
-generated: { by: codex/gpt-5, at: "2026-08-12T00:00:00Z" }
+generated: { by: codex/gpt-5, at: "2026-08-16T23:26:21Z" }
 ---
 
 # Code of Conduct

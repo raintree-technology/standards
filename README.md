@@ -1,9 +1,9 @@
 ---
 type: Reference
-title: Raintree Standards
+title: raintree.standards
 description: Entry point for Raintree's governed, agent-readable quality standards.
 tags: [standards, governance, agents]
-generated: { by: codex/gpt-5, at: "2026-08-13T22:32:22Z" }
+generated: { by: codex/gpt-5, at: "2026-08-16T23:36:18Z" }
 sources:
   - id: okf-v02
     resource: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
@@ -11,12 +11,12 @@ sources:
     author: org:GoogleCloudPlatform
 ---
 
-# Raintree Standards
+# raintree.standards
 
 > [!WARNING]
 > **Work in progress:** Requirements and document structure may change before version 1.0.
 
-Raintree Standards defines acceptance criteria for people and agents working on Raintree projects. Use it to identify applicable requirements, collect evidence, and report exceptions or unresolved gaps.
+raintree.standards defines acceptance criteria for people and agents working on Raintree projects. Use it to identify applicable requirements, collect evidence, and report exceptions or unresolved gaps.
 
 This repository is a governed standards library, not a general collection of tips. Each standard states when its rules apply, their requirement levels, and the evidence needed to verify them.
 
@@ -33,11 +33,13 @@ Useful entry points:
 - [Authority and requirement levels](governance/authority.md)
 - [Contribution requirements](governance/contributing.md)
 - [Agentic system profile](profiles/agentic-system.md)
+- [Commercial evidence review profile](profiles/commercial-evidence-review.md)
 - [Database change profile](profiles/database-change.md)
 - [Functional writing profile](profiles/functional-writing.md)
 - [Growth experiment profile](profiles/growth-experiment.md)
 - [Product feature profile](profiles/product-feature.md)
 - [Public web page profile](profiles/public-web-page.md)
+- [Programmatic interface and service change profile](profiles/service-api-change.md)
 - [Specialist marketing profile](profiles/specialist-marketing.md)
 
 ## Format
@@ -70,7 +72,7 @@ The `stale_after` date matches `review_by` when a review deadline exists. If a d
 
 ## Coverage
 
-The bounded v1 corpus covers agentic systems, APIs, engineering quality, database and data quality, product delivery, interaction design, accessibility, interface content, lifecycle marketing, analytics, experiments, privacy, application security, search, public web quality, functional writing, reliability, incidents, and cross-cutting foundations. Post-v1 drafts now cover specialist marketing channels, sales and revenue operations, app stores, and media production. The [coverage matrix](coverage.md) maps recurring work to standards and profiles. New documents plus agentic systems, privacy, and application security remain governed drafts pending the independent and qualified reviews listed in [version 1.0 readiness](governance/v1-readiness.md).
+The bounded v1 corpus covers agentic systems, APIs, engineering quality, database and data quality, product delivery, interaction design, accessibility, interface content, lifecycle marketing, analytics, experiments, privacy, application security, search, public web quality, functional writing, reliability, incidents, and cross-cutting foundations. Post-v1 drafts now cover specialist marketing channels, sales and revenue operations, app stores, media production, and commercial evidence reviews. The [coverage matrix](coverage.md) maps recurring work to standards and profiles. New documents plus agentic systems, privacy, and application security remain governed drafts pending the independent and qualified reviews listed in [version 1.0 readiness](governance/v1-readiness.md).
 
 Supporting [integration capability maps](integrations/) bind volatile vendor surfaces to access, risk, approval, data-semantics, workflow, and evaluation contracts without turning vendor documentation into universal policy.
 

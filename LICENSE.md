@@ -1,9 +1,9 @@
 ---
 type: License
 title: Repository license
-description: License terms for Raintree Standards content and software.
+description: License terms for raintree.standards content and software.
 tags: [license, open-source]
-generated: { by: codex/gpt-5, at: "2026-08-12T00:00:00Z" }
+generated: { by: codex/gpt-5, at: "2026-08-16T23:26:21Z" }
 ---
 
 # License

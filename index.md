@@ -2,11 +2,11 @@
 okf_version: "0.2"
 ---
 
-# Raintree Standards
+# raintree.standards
 
 ## Browse by area
 
-* [API](api/) - Service interface contracts, compatibility, errors, bounds, and retries.
+* [API](api/) - Programmatic interface design, compatibility, errors, bounds, runtime behavior, and evolution.
 * [AI](ai/) - Agent architecture, context, tools, evaluation, safety, and operation standards.
 * [Agents](agents/) - Standards for agent verification and handoff.
 * [Analytics](analytics/) - Measurement and instrumentation standards.
@@ -45,6 +45,7 @@ okf_version: "0.2"
 
 * [Apple interface](profiles/apple-interface.md) - Universal and Apple-specific interface requirements.
 * [Agentic system](profiles/agentic-system.md) - Standards activated by model workflows, tool use, memory, delegation, and autonomous action.
+* [Commercial evidence review](profiles/commercial-evidence-review.md) - Scope, provenance, claims, writing, trust, and handoff requirements for project and supplier evidence reviews.
 * [Database change](profiles/database-change.md) - Standards activated by schema, migration, query, indexing, and recovery work.
 * [Functional writing](profiles/functional-writing.md) - Clarity, evidence, trust, and review requirements for functional writing.
 * [Product feature](profiles/product-feature.md) - Cross-domain completion requirements for user-facing features.
@@ -52,7 +53,7 @@ okf_version: "0.2"
 * [Marketing lifecycle](profiles/marketing-lifecycle.md) - Positioning, acquisition, conversion, onboarding, retention, and communication requirements.
 * [Public web page](profiles/public-web-page.md) - Web, SEO, accessibility, privacy, performance, and verification requirements.
 * [Reliability and incident](profiles/reliability-incident.md) - Service operation, incident response, recovery, and learning requirements.
-* [Service and API change](profiles/service-api-change.md) - Contract, security, reliability, and release requirements.
+* [Programmatic interface and service change](profiles/service-api-change.md) - Contract, security, reliability, and release requirements for APIs, libraries, SDKs, and services.
 * [Specialist marketing](profiles/specialist-marketing.md) - Paid media, outreach, public engagement, revenue operations, app-store, media, and distribution requirements.
 * [User interface feature](profiles/ui-feature.md) - Cross-platform interaction, accessibility, content, and product requirements.
 
@@ -65,7 +66,7 @@ okf_version: "0.2"
 
 ## Domain standards
 
-* [API contracts](api/contracts.md) - Compatible, bounded, observable, and recoverable service interfaces.
+* [API design and contracts](api/contracts.md) - Usable, compatible, bounded, observable, and recoverable programmatic interfaces.
 * [Agentic systems](ai/agentic-systems.md) - Architecture, context, tools, autonomy, evaluation, safety, and operation for model-driven systems.
 * [Agent verification and handoff](agents/verification.md) - Required verification and reproducible completion reporting.
 * [Product and growth measurement](analytics/measurement.md) - Event contracts, metric definitions, validation, and minimization.

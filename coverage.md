@@ -3,7 +3,7 @@ type: Reference
 title: Version 1 coverage matrix
 description: Maps the bounded Raintree v1 task surface to governed standards, profiles, playbooks, and remaining approval work.
 tags: [coverage, v1, standards, profiles]
-generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
+generated: { by: codex/gpt-5, at: "2026-08-16T23:36:18Z" }
 ---
 
 # Version 1 coverage matrix
@@ -13,7 +13,7 @@ The bounded v1 baseline covers recurring product, engineering, service, data, we
 | Work area | Required standards and profiles | Vendor or platform playbook | V1 state |
 |---|---|---|---|
 | Agentic systems | `AI-AGENTS`, `ENGINEERING-QUALITY`, agentic profile | None | Authored; qualified review pending |
-| APIs and services | `API-CONTRACTS`, `ENGINEERING-QUALITY`, `OPERATIONS-RELIABILITY`, service/API profile | None | Authored; qualified review pending |
+| Programmatic interfaces and services | `API-CONTRACTS`, `ENGINEERING-QUALITY`, `OPERATIONS-RELIABILITY`, programmatic-interface/service profile | None | Authored; qualified review pending |
 | Database and data | `DATA-DATABASE`, `DATA-QUALITY`, database-change profile | GA4 when an analytics implementation | Authored; qualified review pending |
 | Product delivery | `PRODUCT-DELIVERY`, product-feature profile | None | Authored; qualified review pending |
 | Universal UI and content | `DESIGN-INTERACTION`, `FND-ACCESSIBILITY`, `CONTENT-INTERFACE`, UI-feature profile | None | Authored; accessibility review pending |
@@ -22,6 +22,7 @@ The bounded v1 baseline covers recurring product, engineering, service, data, we
 | Analytics and experiments | `ANALYTICS-MEASUREMENT`, `GROWTH-EXPERIMENTS`, growth-experiment profile | GA4 | Authored; analytics and privacy review pending |
 | Core lifecycle marketing | `MARKETING-LIFECYCLE`, marketing-lifecycle profile | GA4 and Search Console when applicable | Authored; marketing, privacy, and legal review pending |
 | Functional writing and errors | `WRITING-FUNCTIONAL`, `CONTENT-ERRORS`, functional-writing profile | None | Existing stable corpus; independent verification pending |
+| Commercial evidence reviews | Commercial-evidence-review profile, `FND-EVIDENCE`, `WRITING-FUNCTIONAL`, conditional sales, marketing, privacy, and security routes | None | Post-v1 draft; research, sales, and qualified domain review pending |
 | Reliability and incidents | `OPERATIONS-RELIABILITY`, `FND-CHANGE`, reliability/incident profile | None | Authored; operations and security review pending |
 | Privacy and application security | `PRIVACY-DATA`, `SECURITY-APPLICATION` | None | Existing drafts; qualified review pending |
 

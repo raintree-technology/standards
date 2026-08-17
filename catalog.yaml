@@ -1,7 +1,7 @@
 version: 1
 okf_version: "0.2"
 bundle_index: index.md
-updated: 2026-08-13
+updated: 2026-08-16
 target_release: "1.0.0"
 release_status: approval-pending
 
@@ -88,6 +88,8 @@ playbooks:
 profiles:
   - id: PROFILE-APPLE-INTERFACE
     path: profiles/apple-interface.md
+  - id: PROFILE-COMMERCIAL-EVIDENCE-REVIEW
+    path: profiles/commercial-evidence-review.md
   - id: PROFILE-AGENTIC-SYSTEM
     path: profiles/agentic-system.md
   - id: PROFILE-DATABASE-CHANGE

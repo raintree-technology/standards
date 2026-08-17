@@ -3,6 +3,7 @@
 require "date"
 require "json"
 require "yaml"
+require_relative "yaml_validation"
 
 ROOT = if ENV["INTEGRATION_VALIDATION_ROOT"].to_s.empty?
          File.expand_path("..", __dir__)
@@ -22,21 +23,6 @@ FILES = {
 
 errors = []
 
-def find_duplicate_yaml_keys(node, path, errors)
-  case node
-  when Psych::Nodes::Mapping
-    seen = {}
-    node.children.each_slice(2) do |key_node, value_node|
-      key = key_node.respond_to?(:value) ? key_node.value : key_node.to_s
-      errors << "#{path}: duplicate YAML mapping key #{key.inspect}" if seen.key?(key)
-      seen[key] = true
-      find_duplicate_yaml_keys(value_node, "#{path}.#{key}", errors)
-    end
-  when Psych::Nodes::Sequence, Psych::Nodes::Document, Psych::Nodes::Stream
-    node.children.each_with_index { |child, index| find_duplicate_yaml_keys(child, "#{path}[#{index}]", errors) }
-  end
-end
-
 FILES.each_value do |path|
   errors << "Missing integration artifact: #{path.delete_prefix(ROOT + "/")}" unless File.file?(path)
 end
@@ -54,7 +40,7 @@ rescue JSON::ParserError => e
 end
 
 load_yaml = lambda do |path|
-  find_duplicate_yaml_keys(Psych.parse_stream(File.read(path)), path.delete_prefix(ROOT + "/"), errors)
+  YamlValidation.find_duplicate_keys(Psych.parse_stream(File.read(path)), path.delete_prefix(ROOT + "/"), errors)
   YAML.safe_load(File.read(path), permitted_classes: [Date], aliases: false)
 rescue Psych::Exception => e
   errors << "#{path.delete_prefix(ROOT + "/")}: invalid YAML: #{e.message}"

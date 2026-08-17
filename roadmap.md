@@ -1,9 +1,9 @@
 ---
 type: Roadmap
 title: Coverage roadmap
-description: Prioritized gaps and triggers for expanding the Raintree standards library.
+description: Prioritized gaps and triggers for expanding the raintree.standards library.
 tags: [roadmap, coverage, governance]
-generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
+generated: { by: codex/gpt-5, at: "2026-08-16T23:26:21Z" }
 ---
 
 # Coverage roadmap
@@ -40,8 +40,12 @@ The nine new v1 standards, three playbooks, and five profiles also remain drafts
 - [x] App-store optimization and store policy — `DISCOVERY-APP-STORES`
 - [x] Image, video, ad creative, and other media production and rights — `MEDIA-PRODUCTION-RIGHTS`
 - [x] Directories, lead assets, referrals, incentives, contests, and distribution programs — `MARKETING-DISTRIBUTION`
+- [x] Project, supplier, facility, and counterparty evidence reviews — `PROFILE-COMMERCIAL-EVIDENCE-REVIEW`
 
-All seven extension standards and `PROFILE-SPECIALIST-MARKETING` remain drafts pending independent, domain-qualified review. New extensions should now be driven by recurring project evidence rather than category completeness.
+All seven extension standards, `PROFILE-SPECIALIST-MARKETING`, and
+`PROFILE-COMMERCIAL-EVIDENCE-REVIEW` remain drafts pending independent,
+domain-qualified review. New extensions should now be driven by recurring
+project evidence rather than category completeness.
 
 ## Open extension queue
 

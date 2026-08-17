@@ -1,3 +1,3 @@
 # API standards
 
-* [API contracts](contracts.md) - Compatible, bounded, observable, and recoverable service interfaces.
+* [API design and contracts](contracts.md) - Usable, compatible, bounded, observable, and recoverable programmatic interfaces.

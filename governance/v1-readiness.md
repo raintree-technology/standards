@@ -1,9 +1,9 @@
 ---
 type: Governance
 title: Version 1.0 readiness
-description: Release gates, reviewer assignments, representative profile walkthroughs, and unresolved approval blockers for Raintree Standards v1.0.
+description: Release gates, reviewer assignments, representative profile walkthroughs, and unresolved approval blockers for raintree.standards v1.0.
 tags: [governance, v1, release, review]
-generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
+generated: { by: codex/gpt-5, at: "2026-08-16T23:26:21Z" }
 ---
 
 # Version 1.0 readiness
@@ -35,7 +35,7 @@ The bounded v1 corpus is authored and routed, but it is not approved for release
 | `PRIVACY-DATA`, marketing, GA4, and data quality | Privacy and qualified legal owner for applicable jurisdictions | Authority, consent, rights, direct marketing, recipients, retention, and claims |
 | Accessibility, UI, web, and Apple materials | Accessibility, design, and relevant platform engineering | Conformance target, assistive behavior, platform accuracy, and manual evidence |
 | Operations and engineering | Operations, support, security, and engineering | Objectives, incident authority, recovery, supply chain, and vendor risk |
-| Post-v1 specialist extensions | Marketing, sales/revenue operations, privacy, legal, accessibility, copyright/media, and Apple/Google platform owners as applicable | Channel law, platform policy, claims, data sourcing, incentives, rights, account authority, and operational feasibility |
+| Post-v1 specialist extensions and commercial evidence reviews | Marketing, research, sales/revenue operations, privacy, legal, accessibility, copyright/media, and Apple/Google platform owners as applicable | Channel law, platform policy, claim strength, source provenance, professional-assurance boundaries, data sourcing, incentives, rights, account authority, and operational feasibility |
 
 Reviewers must add their own `verified` event only after inspecting the final revision. Approval notes must identify findings, resolutions, exceptions, and the artifact revision.
 
@@ -53,6 +53,7 @@ These static walkthroughs confirm that routing reaches the intended governed doc
 | Lifecycle retention campaign | Marketing lifecycle, growth experiment when compared, writing, UI when in product, privacy | Complete; channel and jurisdiction review pending |
 | Service incident and restore | Reliability/incident, database change, security, privacy when affected, writing and error content | Complete; exercise evidence pending |
 | Tool-using agent release | Agentic system, service/API, engineering, security, privacy, reliability, UI when present | Complete; repeated evaluation and qualified review pending |
+| Buyer-facing supplier evidence sample | Commercial evidence review, functional writing, evidence, trust, specialist marketing, sales, privacy when prospect data is stored | Complete as a static route; independent research, sales, privacy, and legal review pending |
 
 ## Approval record template
 

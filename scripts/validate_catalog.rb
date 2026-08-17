@@ -3,8 +3,13 @@
 require "date"
 require "time"
 require "yaml"
+require_relative "yaml_validation"
 
-ROOT = File.expand_path("..", __dir__)
+ROOT = if ENV["CATALOG_VALIDATION_ROOT"].to_s.empty?
+         File.expand_path("..", __dir__)
+       else
+         File.expand_path(ENV.fetch("CATALOG_VALIDATION_ROOT"))
+       end
 CATALOG = File.join(ROOT, "catalog.yaml")
 SOURCE_REGISTER = File.join(ROOT, "source-register.yaml")
 GOVERNED_KEYS = %w[foundations standards patterns playbooks profiles].freeze
@@ -13,9 +18,26 @@ errors = []
 release_blockers = []
 actor_pattern = /\A(?:human:[^\s]+|process:[^\s]+|[^\s:\/]+\/[^\s\/]+)\z/
 
+def load_yaml(path, errors, permitted_classes: [])
+  relative = path.delete_prefix(ROOT + "/")
+  content = File.read(path)
+  YamlValidation.find_duplicate_keys(Psych.parse_stream(content), relative, errors)
+  document = YAML.safe_load(content, permitted_classes: permitted_classes, aliases: false)
+  return document if document.is_a?(Hash)
+
+  errors << "#{relative}: top level must be a mapping"
+  {}
+rescue Errno::ENOENT
+  errors << "Missing #{relative}"
+  {}
+rescue Psych::Exception => e
+  errors << "#{relative}: invalid YAML (#{e.message.lines.first.strip})"
+  {}
+end
+
 valid_date = lambda do |value|
   value.is_a?(Date) || (value.is_a?(String) && Date.iso8601(value))
-rescue Date::Error
+rescue ArgumentError
   false
 end
 
@@ -25,20 +47,46 @@ rescue ArgumentError
   false
 end
 
-catalog = YAML.safe_load(File.read(CATALOG), permitted_classes: [Date], aliases: false)
-entries = GOVERNED_KEYS.flat_map { |key| catalog.fetch(key, []) }
+catalog = load_yaml(CATALOG, errors, permitted_classes: [Date])
+catalog_sections = {}
+(%w[governance] + GOVERNED_KEYS).each do |key|
+  section = catalog.fetch(key, [])
+  unless section.is_a?(Array)
+    errors << "catalog.yaml: #{key} must be a list"
+    section = []
+  end
+  catalog_sections[key] = section.each_with_index.each_with_object([]) do |(entry, index), valid_entries|
+    unless entry.is_a?(Hash)
+      errors << "catalog.yaml: #{key}[#{index}] must be a mapping"
+      next
+    end
+    if entry["path"].to_s.empty?
+      errors << "catalog.yaml: #{key}[#{index}] requires a path"
+      next
+    end
+    valid_entries << entry
+  end
+end
+entries = GOVERNED_KEYS.flat_map { |key| catalog_sections.fetch(key) }
 ids = {}
 metadata_by_id = {}
+metadata_by_path = {}
 rule_ids = {}
 
 errors << "catalog.yaml: okf_version must be 0.2" unless catalog["okf_version"] == "0.2"
+errors << "catalog.yaml: version must be 1" unless catalog["version"] == 1
 errors << "catalog.yaml: bundle_index must be index.md" unless catalog["bundle_index"] == "index.md"
+errors << "catalog.yaml: updated must be an ISO 8601 date" unless valid_date.call(catalog["updated"])
+errors << "catalog.yaml: target_release must be a non-empty string" unless catalog["target_release"].is_a?(String) && !catalog["target_release"].empty?
+errors << "catalog.yaml: release_status must be a non-empty string" unless catalog["release_status"].is_a?(String) && !catalog["release_status"].empty?
 if RELEASE_MODE
   release_blockers << "catalog.yaml: release_status must be ready" unless catalog["release_status"] == "ready"
-  release_blockers << "README.md: remove the work-in-progress warning before release" if File.read(File.join(ROOT, "README.md")).match?(/\*\*Work in progress:\*\*/)
+  readme = File.join(ROOT, "README.md")
+  release_blockers << "README.md: missing release entry point" unless File.file?(readme)
+  release_blockers << "README.md: remove the work-in-progress warning before release" if File.file?(readme) && File.read(readme).match?(/\*\*Work in progress:\*\*/)
 end
 
-catalog_entries = (%w[governance] + GOVERNED_KEYS).flat_map { |key| catalog.fetch(key, []) }
+catalog_entries = (%w[governance] + GOVERNED_KEYS).flat_map { |key| catalog_sections.fetch(key) }
 catalog_paths = catalog_entries.map { |entry| entry["path"] }
 catalog_paths.each do |relative|
   if relative.to_s.empty?
@@ -54,6 +102,7 @@ path_counts.each do |path, count|
 end
 
 entries.each do |entry|
+  errors << "#{entry['path'] || 'catalog.yaml'}: every governed catalog entry requires an id" if entry["id"].to_s.empty?
   path = File.join(ROOT, entry.fetch("path"))
   unless File.file?(path)
     errors << "Missing catalog path: #{entry['path']}"
@@ -67,7 +116,17 @@ entries.each do |entry|
     next
   end
 
-  metadata = YAML.safe_load(match[1], permitted_classes: [Date], aliases: false)
+  begin
+    metadata = YAML.safe_load(match[1], permitted_classes: [Date], aliases: false)
+  rescue Psych::Exception => e
+    errors << "#{entry['path']}: invalid YAML front matter (#{e.message.lines.first.strip})"
+    next
+  end
+  unless metadata.is_a?(Hash)
+    errors << "#{entry['path']}: YAML front matter must be a mapping"
+    next
+  end
+  metadata_by_path[entry["path"]] = metadata
   %w[id title description type status governance_status owners last_reviewed applies_to tags generated].each do |field|
     errors << "#{entry['path']}: missing #{field}" unless metadata.key?(field)
   end
@@ -124,7 +183,7 @@ entries.each do |entry|
     "patterns" => "pattern",
     "playbooks" => "playbook",
     "profiles" => "profile"
-  }.find { |key, _type| catalog.fetch(key, []).include?(entry) }&.last
+  }.find { |key, _type| catalog_sections.fetch(key).include?(entry) }&.last
   if expected_type && metadata["type"] != expected_type
     errors << "#{entry['path']}: catalog section requires type #{expected_type}"
   end
@@ -141,10 +200,9 @@ entries.each do |entry|
   path = File.join(ROOT, entry.fetch("path"))
   next unless File.file?(path)
 
-  match = File.read(path).match(/\A---\s*\n(.*?)\n---\s*\n/m)
-  next unless match
+  metadata = metadata_by_path[entry["path"]]
+  next unless metadata
 
-  metadata = YAML.safe_load(match[1], permitted_classes: [Date], aliases: false)
   Array(metadata["depends_on"]).each do |dependency|
     errors << "#{entry['path']}: unknown dependency #{dependency}" unless ids.key?(dependency)
     in_release_scope = metadata.fetch("release_target", catalog["target_release"]) == catalog["target_release"]
@@ -157,8 +215,10 @@ end
 # Governed rules and profiles have semantic structure beyond front matter.
 entries.each do |entry|
   relative = entry.fetch("path")
+  next unless File.file?(File.join(ROOT, relative))
+
   content = File.read(File.join(ROOT, relative))
-  metadata = metadata_by_id[entry["id"]]
+  metadata = metadata_by_path[relative]
   next unless metadata
 
   if %w[foundation standard].include?(metadata["type"])
@@ -202,7 +262,10 @@ end
 
 # Validate governed references after all rule IDs are known.
 entries.each do |entry|
-  content = File.read(File.join(ROOT, entry.fetch("path")))
+  path = File.join(ROOT, entry.fetch("path"))
+  next unless File.file?(path)
+
+  content = File.read(path)
   content.scan(/`([A-Z][A-Z0-9]+(?:-[A-Z0-9]+)+(?:-\d{3})?)`/).flatten.uniq.each do |reference|
     next if ids.key?(reference) || rule_ids.key?(reference)
     errors << "#{entry['path']}: unknown governed reference #{reference}"
@@ -211,7 +274,7 @@ end
 
 # Front-matter sources and the visible Sources section must agree.
 entries.each do |entry|
-  metadata = metadata_by_id[entry["id"]]
+  metadata = metadata_by_path[entry["path"]]
   next unless metadata && metadata["sources"]
 
   content = File.read(File.join(ROOT, entry.fetch("path")))
@@ -222,18 +285,59 @@ end
 
 # The source register controls review ownership and freshness by governed document.
 if File.file?(SOURCE_REGISTER)
-  register = YAML.safe_load(File.read(SOURCE_REGISTER), permitted_classes: [Date], aliases: false)
-  registered = Array(register["documents"]).to_h { |record| [record["id"], record] }
+  register = load_yaml(SOURCE_REGISTER, errors, permitted_classes: [Date])
+  errors << "source-register.yaml: version must be 1" unless register["version"] == 1
+  errors << "source-register.yaml: updated must be an ISO 8601 date" unless valid_date.call(register["updated"])
+  errors << "source-register.yaml: description must be a non-empty string" unless register["description"].is_a?(String) && !register["description"].empty?
+  records = register.fetch("documents", [])
+  unless records.is_a?(Array)
+    errors << "source-register.yaml: documents must be a list"
+    records = []
+  end
+  records = records.each_with_index.each_with_object([]) do |(record, index), valid_records|
+    unless record.is_a?(Hash)
+      errors << "source-register.yaml: documents[#{index}] must be a mapping"
+      next
+    end
+    if record["id"].to_s.empty?
+      errors << "source-register.yaml: documents[#{index}] requires an id"
+      next
+    end
+    valid_records << record
+  end
+  record_ids = records.map { |record| record["id"] }
+  record_ids.group_by(&:itself).each do |id, duplicates|
+    errors << "source-register.yaml: duplicate document ID #{id}" if duplicates.length > 1
+  end
+  registered = records.to_h { |record| [record["id"], record] }
+  sourced_ids = entries.each_with_object([]) do |entry, result|
+    metadata = metadata_by_path[entry["path"]]
+    result << entry["id"] if metadata && metadata["sources"]
+  end
+  registered.each do |id, record|
+    if !ids.key?(id)
+      errors << "source-register.yaml: unknown document ID #{id}"
+    elsif !sourced_ids.include?(id)
+      errors << "source-register.yaml: #{id} has no front-matter sources"
+    end
+    %w[owner source_version].each do |field|
+      errors << "source-register.yaml: #{id} #{field} must be a non-empty string" unless record[field].is_a?(String) && !record[field].empty?
+    end
+    errors << "source-register.yaml: #{id} invalid reviewed_on date" unless valid_date.call(record["reviewed_on"])
+    errors << "source-register.yaml: #{id} invalid next_review date" unless valid_date.call(record["next_review"])
+    errors << "source-register.yaml: #{id} invalid volatility #{record['volatility']}" unless %w[low medium high].include?(record["volatility"])
+    if valid_date.call(record["reviewed_on"]) && valid_date.call(record["next_review"])
+      errors << "source-register.yaml: #{id} next_review must be after reviewed_on" unless record["next_review"] > record["reviewed_on"]
+      errors << "source-register.yaml: #{id} source review expired on #{record['next_review']}" if Date.today > record["next_review"]
+    end
+  end
   entries.each do |entry|
-    metadata = metadata_by_id[entry["id"]]
+    metadata = metadata_by_path[entry["path"]]
     next unless metadata && metadata["sources"]
     record = registered[entry["id"]]
     if record.nil?
       errors << "source-register.yaml: missing #{entry['id']}"
       next
-    end
-    %w[owner source_version reviewed_on volatility next_review].each do |field|
-      errors << "source-register.yaml: #{entry['id']} missing #{field}" unless record[field]
     end
   end
 else
@@ -249,8 +353,13 @@ markdown_files.each do |file|
   if %w[index.md log.md].include?(basename)
     if basename == "index.md" && file == File.join(ROOT, "index.md")
       match = content.match(/\A---\s*\n(.*?)\n---\s*\n/m)
-      metadata = match && YAML.safe_load(match[1], permitted_classes: [Date, Time], aliases: false)
-      errors << "index.md: root index must declare okf_version 0.2" unless metadata && metadata["okf_version"] == "0.2"
+      begin
+        metadata = match && YAML.safe_load(match[1], permitted_classes: [Date, Time], aliases: false)
+      rescue Psych::Exception => e
+        errors << "index.md: invalid YAML front matter (#{e.message.lines.first.strip})"
+        metadata = nil
+      end
+      errors << "index.md: root index must declare okf_version 0.2" unless metadata.is_a?(Hash) && metadata["okf_version"] == "0.2"
     elsif content.start_with?("---\n")
       errors << "#{relative}: reserved nested files must not contain front matter"
     end
@@ -262,7 +371,12 @@ markdown_files.each do |file|
     end
 
     begin
+      YamlValidation.find_duplicate_keys(Psych.parse_stream(match[1]), "#{relative}: front matter", errors)
       metadata = YAML.safe_load(match[1], permitted_classes: [Date, Time], aliases: false)
+      unless metadata.is_a?(Hash)
+        errors << "#{relative}: YAML front matter must be a mapping"
+        next
+      end
       errors << "#{relative}: missing non-empty OKF type" unless metadata["type"].is_a?(String) && !metadata["type"].strip.empty?
       errors << "#{relative}: missing OKF description" unless metadata["description"].is_a?(String) && !metadata["description"].strip.empty?
 
@@ -300,6 +414,9 @@ markdown_files.each do |file|
         end
         unless event.is_a?(Hash) && valid_datetime.call(event["at"])
           errors << "#{relative}: verified.at must be an ISO 8601 datetime"
+        end
+        if event.is_a?(Hash) && generated_by.is_a?(String) && event["by"] == generated_by
+          errors << "#{relative}: verified.by must differ from generated.by"
         end
       end
 
@@ -366,7 +483,7 @@ errors << "index.md: missing root entries for #{missing_root_targets.join(', ')}
 
 if errors.empty? && (!RELEASE_MODE || release_blockers.empty?)
   puts "OKF v0.2 bundle valid: #{markdown_files.length} Markdown files"
-  puts "Raintree catalog valid: #{entries.length} governed documents"
+  puts "raintree.standards catalog valid: #{entries.length} governed documents"
   puts "Governed rule structure valid: #{rule_ids.length} unique rules"
   exit 0
 end

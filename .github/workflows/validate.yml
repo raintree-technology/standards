@@ -15,8 +15,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - name: Validate OKF bundle and Raintree catalog
-        run: ruby scripts/validate_catalog.rb
+      - name: Validate OKF bundle and raintree.standards catalog
+        run: |
+          ruby scripts/validate_catalog.rb
+          ruby scripts/test_validate_catalog.rb
 
       - name: Validate integration capability bundles
         run: |

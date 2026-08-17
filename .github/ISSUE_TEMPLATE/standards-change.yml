@@ -1,0 +1,47 @@
+name: Standards change
+description: Propose a correction, clarification, or recurring governed requirement.
+title: "Standard: "
+labels: [documentation]
+body:
+  - type: textarea
+    id: decision_or_risk
+    attributes:
+      label: Recurring decision or risk
+      description: Describe the repeated situation and who is affected.
+    validations:
+      required: true
+  - type: textarea
+    id: current_guidance
+    attributes:
+      label: Current guidance
+      description: Link the relevant document and rule IDs, or state that the library has a gap.
+    validations:
+      required: true
+  - type: textarea
+    id: proposed_outcome
+    attributes:
+      label: Proposed outcome
+      description: State the result the change should make testable.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and sources
+      description: Cite primary sources where practical and note their review dates.
+    validations:
+      required: true
+  - type: textarea
+    id: routing
+    attributes:
+      label: Profiles and dependencies
+      description: List affected profiles, dependencies, catalog entries, and source-register records.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I searched for an existing issue or rule covering this concern.
+          required: true
+        - label: This proposal contains no confidential information, personal data, or credentials.
+          required: true

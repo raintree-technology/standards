@@ -1,5 +1,5 @@
 version: 1
-updated: 2026-08-13
+updated: 2026-08-16
 description: Review ownership and freshness controls for external source sets used by governed documents.
 
 documents:
@@ -29,10 +29,10 @@ documents:
     next_review: 2027-02-13
   - id: API-CONTRACTS
     owner: engineering
-    source_version: RFC 9110, RFC 9457, RFC 6585, and OpenAPI 3.1.1 reviewed 2026-08-13
-    reviewed_on: 2026-08-13
+    source_version: HTTP and lifecycle RFCs; OpenAPI 3.2.0; Google AIPs for operations, fields, collections, values, compatibility, and batches; CloudEvents 1.0.2; JSON Schema 2020-12; Proto3; W3C Trace Context; Microsoft and OWASP API guidance; and Goedecke and Bloch API design essays reviewed 2026-08-16
+    reviewed_on: 2026-08-16
     volatility: medium
-    next_review: 2027-02-13
+    next_review: 2027-02-16
   - id: AI-AGENTS
     owner: ai
     source_version: document source set reviewed 2026-08-13

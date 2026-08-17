@@ -1,14 +1,14 @@
 ---
 type: Guide
 title: Contributing
-description: Process and requirements for contributing to Raintree Standards.
+description: Process and requirements for contributing to raintree.standards.
 tags: [contributing, governance]
-generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
+generated: { by: codex/gpt-5, at: "2026-08-16T23:26:21Z" }
 ---
 
 # Contributing
 
-Raintree Standards accepts corrections, clarifications, and proposals for recurring requirements. Read the [standards contribution requirements](governance/contributing.md) before preparing a change.
+raintree.standards accepts corrections, clarifications, and proposals for recurring requirements. Read the [standards contribution requirements](governance/contributing.md) before preparing a change.
 
 ## Propose a change
 
@@ -16,7 +16,7 @@ Raintree Standards accepts corrections, clarifications, and proposals for recurr
 2. Open an issue that describes the recurring decision or risk, affected readers, and expected outcome.
 3. For a new standard, start with [`templates/standard.md`](templates/standard.md). For a new task profile, start with [`templates/profile.md`](templates/profile.md).
 4. Update [`catalog.yaml`](catalog.yaml) when you add, move, or retire a governed document or profile.
-5. Run `ruby scripts/validate_catalog.rb` from the repository root.
+5. Run `ruby scripts/validate_catalog.rb`, `ruby scripts/test_validate_catalog.rb`, `ruby scripts/validate_integrations.rb`, and `ruby scripts/test_validate_integrations.rb` from the repository root.
 6. Before a versioned release, run `ruby scripts/validate_catalog.rb --release` and resolve every draft, verification, and dependency blocker.
 7. Open a pull request that explains what changed, why it is needed, and what you verified.
 

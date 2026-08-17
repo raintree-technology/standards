@@ -1,9 +1,9 @@
 ---
 type: Notice
 title: Third-party notices
-description: Attribution and license notices for sources used by Raintree Standards.
+description: Attribution and license notices for sources used by raintree.standards.
 tags: [license, attribution, sources]
-generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
+generated: { by: codex/gpt-5, at: "2026-08-16T23:26:21Z" }
 ---
 
 # Third-party notices
