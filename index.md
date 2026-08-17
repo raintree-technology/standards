@@ -4,6 +4,10 @@ okf_version: "0.2"
 
 # raintree.standards
 
+Use this index to find the task profile, standard, pattern, or playbook that matches
+your work. If you are new to the library, read the [library overview](README.md), then
+choose a profile under **Task profiles**.
+
 ## Browse by area
 
 * [API](api/) - Programmatic interface design, compatibility, errors, bounds, runtime behavior, and evolution.
@@ -59,6 +63,7 @@ okf_version: "0.2"
 * [Marketing lifecycle](profiles/marketing-lifecycle.md) - Positioning, acquisition, conversion, onboarding, retention, and communication requirements.
 * [Public web page](profiles/public-web-page.md) - Web, SEO, accessibility, privacy, performance, and verification requirements.
 * [Reliability and incident](profiles/reliability-incident.md) - Service operation, incident response, recovery, and learning requirements.
+* [Redis change](profiles/redis-change.md) - Redis workload, memory, client, security, availability, recovery, and messaging requirements.
 * [Secrets and Infisical change](profiles/secrets-management.md) - Infisical adoption, access, delivery, precedence, rotation, exposure, operation, recovery, and migration requirements.
 * [Programmatic interface and service change](profiles/service-api-change.md) - Contract, security, reliability, and release requirements for APIs, libraries, SDKs, and services.
 * [Specialist marketing](profiles/specialist-marketing.md) - Paid media, outreach, public engagement, revenue operations, app-store, media, and distribution requirements.
@@ -79,6 +84,7 @@ okf_version: "0.2"
 * [Product and growth measurement](analytics/measurement.md) - Event contracts, metric definitions, validation, and minimization.
 * [Database changes](data/database-changes.md) - Integrity, migration safety, query performance, and recovery.
 * [Data quality and lifecycle](data/quality.md) - Meaning, ownership, lineage, validation, reconciliation, and lifecycle.
+* [Redis design and operation](data/redis.md) - Workload contracts, memory, data models, clients, security, availability, recovery, and messaging.
 * [Engineering quality](engineering/quality.md) - Architecture, testing, dependencies, review, provenance, and release readiness.
 * [Safe code removal](engineering/code-removal.md) - Knip, Ruff, deptry, contextual Vulture, analyzer canaries, bounded deletion, and final graph verification.
 * [JavaScript and TypeScript quality with Biome, Trellis, and anti-slop](engineering/javascript-quality.md) - Shared Biome, Trellis, Oxlint, and anti-slop policy for repository scope, type evidence, continuous integration, suppressions, and agent handoffs.
@@ -104,6 +110,7 @@ okf_version: "0.2"
 * [Search foundations](seo/foundations.md) - Indexability, canonicalization, structured data, and migrations.
 * [Application security](security/application.md) - Threat modeling, access control, input handling, secrets, dependencies, detection, and verification.
 * [Secrets management with Infisical](security/secrets-management.md) - Infisical authority, hierarchy, identity, delivery, rotation, detection, control-plane operation, recovery, and migration.
+* [External platform integrations](integrations/vendor-platforms.md) - Shared design, release, operation, recovery, and exit requirements for material providers.
 * [Public web quality](web/quality.md) - Accessibility, performance, resilience, security, and agent readiness.
 
 ## Patterns
@@ -117,6 +124,7 @@ okf_version: "0.2"
 * [Apple HIG interface audit](playbooks/apple-hig-audit.md) - Current Apple guidance with optional versioned HIG Doctor evidence.
 * [Google Analytics 4 implementation](playbooks/google-analytics-4.md) - GA4 events, ecommerce, consent, identity, validation, and reconciliation.
 * [Google Search Console operations](playbooks/google-search-console.md) - Ownership, discovery, inspection, monitoring, controlled action, and release evidence backed by a validated [capability map](integrations/google-search-console/).
+* [Stripe](playbooks/stripe.md), [Plaid](playbooks/plaid.md), [Vercel](playbooks/vercel.md), [Resend](playbooks/resend.md), [Neon](playbooks/neon.md), and [Cloudflare](playbooks/cloudflare.md) - Separate provider procedures backed by discoverable manifests, official sources, workflows, evaluations, and optional agent-skill routes.
 * [Standards conformance audit](playbooks/standards-audit.md) - Source-neutral profile routing, evidence inspection, rule findings, exceptions, and scoped conformance reporting.
 
 ## Maintenance
@@ -124,6 +132,7 @@ okf_version: "0.2"
 * [Code of Conduct](CODE_OF_CONDUCT.md) - Expected behavior and enforcement in project spaces.
 * [Contributing](CONTRIBUTING.md) - Process for proposing and validating changes.
 * [Contributing standards](governance/contributing.md) - Acceptance and review requirements.
+* [Documentation accessibility and reader review](governance/documentation-quality.md) - Accessibility target, supported environments, and evidence for public documentation.
 * [Exceptions](governance/exceptions.md) - Scoped deviation records and approval boundaries.
 * [Version 1.0 readiness](governance/v1-readiness.md) - Release gates, reviewer roles, walkthroughs, and unresolved blockers.
 * [Full-catalog agent review](governance/agent-review-2026-08-13.md) - Source, structure, routing, policy-scope findings, and review limitations.
@@ -131,6 +140,9 @@ okf_version: "0.2"
 * [Standard template](templates/standard.md) - Starting point for a governed standard.
 * [Profile template](templates/profile.md) - Starting point for a task-oriented bundle.
 * [Pattern template](templates/pattern.md) - Starting point for an optional architecture pattern.
+* [Comprehension review template](templates/comprehension-review.md) - Evidence for representative-reader understanding.
+* [Independent review template](templates/independent-review.md) - Evidence for qualified review independent of authorship.
+* [Security response exercise template](templates/security-response-exercise.md) - Evidence for vulnerability and incident response exercises.
 * [Security policy](SECURITY.md) - Private and public reporting paths for security concerns.
 * [Source register](source-register.yaml) - Review owners, source-set versions, volatility, and next review dates.
 * [Third-party notices](THIRD_PARTY_NOTICES.md) - Attribution and license notices for upstream sources.

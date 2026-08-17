@@ -3,12 +3,18 @@ type: Roadmap
 title: Coverage roadmap
 description: Prioritized gaps and triggers for expanding the raintree.standards library.
 tags: [roadmap, coverage, governance]
-generated: { by: codex/gpt-5, at: "2026-08-17T09:04:00Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T17:08:47Z" }
 ---
 
 # Coverage roadmap
 
-The bounded v1 domain baseline is authored. Release remains blocked on independent and qualified review recorded in [version 1.0 readiness](governance/v1-readiness.md). The library should grow after v1 only when recurring work exposes a real decision, risk, or verification gap.
+Use this roadmap to see what is authored, what still needs review, and when to propose a
+new standard. The bounded version 1 domain baseline is authored. Release remains
+blocked on the independent and qualified reviews recorded in
+[version 1.0 readiness](governance/v1-readiness.md).
+
+After version 1, add to the library only when recurring work exposes a decision, risk,
+or verification gap.
 
 ## V1 baseline
 
@@ -45,16 +51,21 @@ The draft standards, playbooks, profiles, and patterns listed in the catalog rem
 - [x] Public terms, privacy notices, legal centers, assent evidence, and legal-document change control — `LEGAL-PUBLISHED-TERMS` and `PROFILE-LEGAL-DOCUMENT`
 - [x] Server-side TypeScript structured logging with Pino — `OPERATIONS-LOGGING`
 - [x] Safe unused-code and dependency cleanup with TypeScript/JavaScript Knip plus Biome/Trellis, Python Ruff and deptry, contextual Vulture, and analyzer canaries — `ENGINEERING-CODE-REMOVAL` and `PROFILE-CODE-REMOVAL`
+- [x] Source-neutral external-platform requirements plus separate Stripe, Plaid, Vercel, Resend, Neon, and Cloudflare playbooks and manifest-backed review bundles — `INTEGRATIONS-VENDOR` and the six provider playbooks
 
 All seven specialist extension standards, `PROFILE-SPECIALIST-MARKETING`, and
 `PROFILE-COMMERCIAL-EVIDENCE-REVIEW` remain drafts pending independent,
 domain-qualified review. The organizational-knowledge standard, company-brain
-profile, federated-knowledge pattern, and standards-audit playbook have the same
-draft and review boundary. The published-legal-terms standard and legal-document
-profile require qualified legal and privacy review. The TypeScript logging standard
-requires independent engineering, operations, security, and privacy review. The code-removal standard
-requires independent engineering review. New extensions should now be driven by recurring
-project evidence rather than category completeness.
+profile, federated-knowledge pattern, and standards-audit playbook have the same draft
+and review boundary.
+
+The published-legal-terms standard and legal-document profile require qualified legal
+and privacy review. The TypeScript logging standard requires independent engineering,
+operations, security, and privacy review. The code-removal standard requires
+independent engineering review. The Redis standard and Redis-change profile require
+independent data, engineering, operations, and security review.
+The external-platform standard and provider playbooks require independent platform,
+security, privacy, operations, and provider-domain review as applicable.
 
 ## Open extension queue
 

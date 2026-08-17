@@ -35,6 +35,32 @@ Use with [`PLAYBOOK-STANDARDS-AUDIT`](../playbooks/standards-audit.md). Replace 
 
 Record library gaps and the external policy or qualified owner required to decide them.
 
+## Provider records
+
+Repeat this section for each material external platform. Use the exact named playbook when one exists. Use `not available` for a missing agent skill and keep the provider review in scope. Do not record secret values.
+
+### `<provider>`
+
+| Field | Record |
+|---|---|
+| Governed scope | `<account, project, environment, region, and products>` |
+| Playbook and bundle | `<PLAYBOOK-ID and integrations/<provider>/manifest.yaml, or recorded gap>` |
+| Selected capabilities | `<CAPABILITY-ID with applicability reason and authority class>` |
+| Executed workflows and evaluations | `<WORKFLOW-ID and EVALUATION-ID with result or justified deferral>` |
+| Agent review aid | `<skill package/version or not available>` |
+| Normative provider sources | `<official documentation URLs and review date>` |
+| Informative engineering sources | `<provider or third-party engineering URLs, source role, and review date>` |
+| Guidance conflicts | `<skill, sample, or source conflict; precedence decision; current provider evidence>` |
+| Negative and legacy paths | `<mapped, adjacent, legacy, excluded, deprecated, and prohibited surfaces>` |
+| Released state | `<artifact, configuration, and EVIDENCE-ID>` |
+| Boundaries | `<data, credentials, identities, roles, and environment isolation>` |
+| Asynchronous behavior | `<authenticity, duplicates, ordering, retry, and reconciliation>` |
+| Operations | `<limits, cost, quota, egress, signals, failure exercise, recovery, exit path, and owner>` |
+
+Provider exercises and findings:
+
+- `<scenario, evidence, result, limitation, and follow-up>`
+
 ## Rule findings
 
 Use only `pass`, `fail`, `unknown`, `not applicable`, `approved exception`, or `stale evidence`. Apply the requirement-level meanings and overall-result rules in the playbook. Do not use `partial pass`, and never record an approved exception for a prohibited rule.

@@ -1,0 +1,23 @@
+version: 1
+integration: vercel
+id_prefix: VERCEL
+playbook: PLAYBOOK-VERCEL
+reviewed_on: 2026-08-17
+official_domains: [vercel.com]
+artifacts: { sources: sources.yaml, capabilities: capabilities.yaml, semantics: data-semantics.yaml, workflows: workflows.yaml, evaluations: evaluations.yaml }
+features: [capabilities, coverage, semantics, source_usage]
+vocabulary:
+  interfaces: [vercel_cli, vercel_api, vercel_dashboard, vercel_runtime]
+  property_roles: [deployment_automation, project_operator, security_operator, telemetry_operator, runtime_service]
+  oauth_scopes: []
+skill_routes:
+  - { name: "vercel:deployments-cicd", availability: when_available, authority: review_aid }
+  - { name: "vercel:env-vars", availability: when_available, authority: review_aid }
+  - { name: "vercel:observability", availability: when_available, authority: review_aid }
+  - { name: "vercel:vercel-firewall", availability: when_available, authority: review_aid }
+  - { name: "vercel:vercel-functions", availability: when_available, authority: review_aid }
+  - { name: "vercel:routing-middleware", availability: when_available, authority: review_aid }
+  - { name: "vercel:cdn-caching", availability: when_available, authority: review_aid }
+  - { name: "vercel:cron-jobs", availability: when_available, authority: review_aid }
+  - { name: "vercel:vercel-storage", availability: when_available, authority: review_aid }
+  - { name: "vercel:marketplace", availability: when_available, authority: review_aid }

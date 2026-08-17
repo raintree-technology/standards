@@ -3,7 +3,7 @@ type: Governance
 title: Version 1.0 readiness
 description: Release gates, reviewer assignments, representative profile walkthroughs, and unresolved approval blockers for raintree.standards v1.0.
 tags: [governance, v1, release, review]
-generated: { by: codex/gpt-5, at: "2026-08-16T23:26:21Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T17:22:48Z" }
 ---
 
 # Version 1.0 readiness
@@ -21,6 +21,8 @@ The bounded v1 corpus is authored and routed, but it is not approved for release
 - [x] Post-v1 drafts are cataloged without becoming false v1 release blockers.
 - [ ] Every governed document has independent `verified` provenance against the final artifact.
 - [ ] AI, security, privacy, accessibility, and marketing/legal documents have qualified human approval.
+- [ ] A repository owner has approved vulnerability response timing and decision authority, and a representative response exercise has passed.
+- [ ] Material public documentation has representative-reader and assistive-technology evidence against the declared support target.
 - [ ] All review findings are resolved or covered by approved exceptions.
 - [ ] The release validation command passes with no blockers.
 - [ ] The work-in-progress warning is removed and the approved commit is tagged `v1.0.0`.
@@ -36,6 +38,7 @@ The bounded v1 corpus is authored and routed, but it is not approved for release
 | Accessibility, UI, web, and Apple materials | Accessibility, design, and relevant platform engineering | Conformance target, assistive behavior, platform accuracy, and manual evidence |
 | Operations and engineering | Operations, support, security, and engineering | Objectives, incident authority, recovery, supply chain, and vendor risk |
 | Post-v1 specialist extensions and commercial evidence reviews | Marketing, research, sales/revenue operations, privacy, legal, accessibility, copyright/media, and Apple/Google platform owners as applicable | Channel law, platform policy, claim strength, source provenance, professional-assurance boundaries, data sourcing, incentives, rights, account authority, and operational feasibility |
+| `INTEGRATIONS-VENDOR` and provider playbooks | Platform, security, privacy, operations, and payments, financial-data, lifecycle, data, or web owners as applicable | Provider contract accuracy, skill routing, source freshness, authority, callbacks, configuration, recovery, and exit |
 
 Reviewers must add their own `verified` event only after inspecting the final revision. Approval notes must identify findings, resolutions, exceptions, and the artifact revision.
 
@@ -70,4 +73,11 @@ For each document, record:
 
 ## Current blockers
 
-The [full-catalog agent review](agent-review-2026-08-13.md) has no unresolved agent-detectable finding, but it is not independent or qualified approval. The release gate is expected to fail until the listed human work is complete. Do not downgrade the gate, mark agent research as independent verification, or promote drafts to make the command pass.
+The [full-catalog agent review](agent-review-2026-08-13.md) has no unresolved agent-detectable finding, but it is not independent or qualified approval. The following evidence cannot be supplied by the authoring agent:
+
+- `WRITING-FUNCTIONAL-013`: representative intended readers must complete the comprehension review.
+- `FND-ACCESSIBILITY-001`, `WEB-QUALITY-005`, and `WEB-QUALITY-015`: a qualified accessibility reviewer must inspect the declared target and record representative browser, input, zoom, and assistive-technology results.
+- `SECURITY-APPLICATION-016`: the repository owner must approve response timing and authority, then an authorized reviewer must record a representative exercise.
+- `ENGINEERING-QUALITY-005` and `AGENT-VERIFICATION-007`: a qualified non-author must review the exact final revision.
+
+The release gate is expected to fail until this human work is complete. Use the linked templates to record real evidence. Do not downgrade the gate, mark agent research as independent verification, or promote drafts to make the command pass.

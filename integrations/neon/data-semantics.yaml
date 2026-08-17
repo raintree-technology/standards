@@ -1,0 +1,7 @@
+version: 1
+integration: neon
+reviewed_on: 2026-08-17
+concepts:
+  - { id: NEON-SEM-CONNECTION, name: Connection mode and compute state, definition: Direct pooled HTTP and WebSocket connections have different transaction concurrency and runtime behavior; compute suspension and autoscaling affect latency and capacity., cautions: [A successful single connection does not prove burst safety, pooling changes session semantics], sources: [NEON-SRC-CONNECT, NEON-SRC-POOL, NEON-SRC-AUTOSCALE] }
+  - { id: NEON-SEM-BRANCH, name: Branch isolation, definition: A Neon branch has its own compute and copy-on-write database state but can still contain sensitive inherited data and external side effects., cautions: [Branching does not anonymize data, external services are not cloned or rolled back], sources: [NEON-SRC-BRANCH] }
+  - { id: NEON-SEM-RECOVERY, name: Recovery boundary, definition: Point-in-time restore selects database state within an available history window and must be reconciled with application writes and external systems., cautions: [Restore windows depend on current plan and configuration, database recovery can replay or orphan external effects], sources: [NEON-SRC-RESTORE] }

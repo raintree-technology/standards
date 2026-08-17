@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/raintree-technology/raintree.standards/main/schema/integration-manifest.schema.json",
+  "title": "Integration bundle manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "integration", "id_prefix", "playbook", "reviewed_on", "official_domains", "artifacts", "skill_routes"],
+  "properties": {
+    "version": { "const": 1 },
+    "integration": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "id_prefix": { "type": "string", "pattern": "^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$" },
+    "playbook": { "type": "string", "pattern": "^PLAYBOOK-[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)*$" },
+    "reviewed_on": { "type": "string", "format": "date" },
+    "official_domains": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9.-]+$" } },
+    "informative_domains": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9.-]+$" } },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sources", "workflows", "evaluations"],
+      "properties": {
+        "sources": { "const": "sources.yaml" },
+        "capabilities": { "const": "capabilities.yaml" },
+        "semantics": { "const": "data-semantics.yaml" },
+        "workflows": { "const": "workflows.yaml" },
+        "evaluations": { "const": "evaluations.yaml" }
+      }
+    },
+    "vocabulary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["interfaces", "property_roles", "oauth_scopes"],
+      "properties": {
+        "interfaces": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "property_roles": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "oauth_scopes": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "features": { "type": "array", "uniqueItems": true, "items": { "enum": ["capabilities", "coverage", "semantics", "change_watch", "source_usage"] } },
+    "skill_routes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "availability", "authority"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "availability": { "enum": ["when_available", "not_available"] },
+          "authority": { "const": "review_aid" }
+        }
+      }
+    }
+  }
+}

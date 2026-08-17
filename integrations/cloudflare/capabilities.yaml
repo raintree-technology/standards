@@ -1,0 +1,180 @@
+version: 1
+integration: cloudflare
+reviewed_on: 2026-08-17
+capabilities:
+  - id: CLOUDFLARE-CAP-REQUEST
+    name: Process a Worker request safely
+    interface: workers_runtime
+    availability: current
+    access: { oauth_scopes: [], property_roles: [worker_service] }
+    effect: diagnose
+    approval: none
+    inputs: [request, generated Env bindings, execution context, route contract]
+    outputs: [bounded response, structured outcome and error evidence]
+    data_semantics: [CLOUDFLARE-SEM-RUNTIME, CLOUDFLARE-SEM-BINDING]
+    limits: { quotas: [Respect current CPU memory subrequest and body limits], latency: [Bound upstream and streaming operations], sampling: [Exercise representative regions methods sizes and errors], privacy_suppression: [Do not log secrets bodies or sensitive headers by default], aggregation: [Correlate one request across bindings and upstreams], completeness: [A local runtime test does not prove every edge condition], operational: [Await return or explicitly schedule every promise and use explicit error handling] }
+    limitations: [Exact runtime limits and APIs change with compatibility configuration]
+    verification: [Run type checks and runtime tests for success error timeout and large-body paths]
+    idempotency: Retried requests must not duplicate downstream effects.
+    rollback: Return a safe error and revert the Worker deployment when runtime behavior regresses.
+    sources: [CLOUDFLARE-SRC-WORKERS, CLOUDFLARE-SRC-BEST, CLOUDFLARE-SRC-BINDINGS]
+  - id: CLOUDFLARE-CAP-DEPLOY
+    name: Deploy Worker code and compatibility configuration
+    interface: wrangler_cli
+    availability: current
+    access: { oauth_scopes: [], property_roles: [deployment_automation] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: [source revision, pinned Wrangler, compatibility date and flags, routes and environment]
+    outputs: [deployment version, effective routes and configuration, rollout state]
+    data_semantics: [CLOUDFLARE-SEM-RUNTIME, CLOUDFLARE-SEM-EDGE-CONTROL]
+    limits: { quotas: [Respect script route and deployment limits], latency: [Edge propagation and gradual rollout take time], sampling: [Test representative regions and routes], privacy_suppression: [Keep tokens and secret values out of output], aggregation: [Bind version source routes environment and compatibility settings], completeness: [Deployment success does not prove application health], operational: [Review current types and configuration schema before changing compatibility] }
+    limitations: [Rollback cannot reverse database queue or external effects]
+    verification: [Inspect deployed version routes bindings logs and critical journeys]
+    idempotency: Reconcile the current deployed version before retrying publication.
+    rollback: Restore the prior tested Worker version and configuration and compensate stateful effects.
+    sources: [CLOUDFLARE-SRC-WORKERS, CLOUDFLARE-SRC-BEST]
+  - id: CLOUDFLARE-CAP-BINDING
+    name: Change a resource binding or secret
+    interface: wrangler_cli
+    availability: current
+    access: { oauth_scopes: [], property_roles: [platform_operator] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: [binding name and type, exact environment resource, generated type contract, rotation plan]
+    outputs: [effective binding metadata, updated generated types, runtime verification]
+    data_semantics: [CLOUDFLARE-SEM-BINDING, CLOUDFLARE-SEM-EDGE-CONTROL]
+    limits: { quotas: [Respect binding and resource limits], latency: [Secret and deployment propagation can differ], sampling: [Verify every environment], privacy_suppression: [Record names scopes and fingerprints not values], aggregation: [Map binding resource environment and code consumer], completeness: [Type generation does not prove runtime permission], operational: [Prefer bindings over REST calls from Workers and store secrets with secret commands] }
+    limitations: [A wrong binding can expose or mutate the wrong environment]
+    verification: [Generate types and exercise allowed and denied runtime operations]
+    idempotency: Reapplying configuration must not create a second unintended resource.
+    rollback: Restore the prior binding and rotate any credential whose boundary changed.
+    sources: [CLOUDFLARE-SRC-BINDINGS, CLOUDFLARE-SRC-BEST]
+  - id: CLOUDFLARE-CAP-CACHE
+    name: Read and write governed edge cache entries
+    interface: workers_runtime
+    availability: current
+    access: { oauth_scopes: [], property_roles: [worker_service] }
+    effect: mutate_reversible
+    approval: bounded
+    inputs: [cache eligibility, canonical key, tenant and authorization partition, freshness and invalidation policy]
+    outputs: [cache response, hit or miss and age evidence]
+    data_semantics: [CLOUDFLARE-SEM-CACHE]
+    limits: { quotas: [Respect cache object and operation limits], latency: [Entries and invalidation are regionally distributed], sampling: [Test hit miss stale purge and cross-user cases], privacy_suppression: [Do not cache private responses without explicit partitioning], aggregation: [Include every representation and authority dimension in the key], completeness: [One-region results do not prove global cache state], operational: [Honor status and cache-control behavior explicitly] }
+    limitations: [The Cache API is not a globally consistent database]
+    verification: [Inspect headers and bodies across users regions freshness and invalidation]
+    idempotency: Repeated writes for one canonical key converge on the intended representation.
+    rollback: Purge or version the affected key space and bypass cache until verified.
+    sources: [CLOUDFLARE-SRC-CACHE]
+  - id: CLOUDFLARE-CAP-BACKGROUND
+    name: Schedule post-response or queued work
+    interface: workers_runtime
+    availability: current
+    access: { oauth_scopes: [], property_roles: [worker_service] }
+    effect: mutate_reversible
+    approval: bounded
+    inputs: [durable operation identity, payload, retry and dead-letter policy, execution context]
+    outputs: [accepted work identity, completion retry or failure state]
+    data_semantics: [CLOUDFLARE-SEM-RUNTIME, CLOUDFLARE-SEM-BINDING]
+    limits: { quotas: [Bound queue depth retries duration and downstream concurrency], latency: [Post-response completion is asynchronous], sampling: [Exercise duplicate delay poison and outage cases], privacy_suppression: [Minimize queued data and logs], aggregation: [Correlate request work item attempt and downstream effect], completeness: [Scheduling does not prove completion], operational: [Use waitUntil queues or workflows instead of floating promises] }
+    limitations: [Background work may retry or outlive the originating request]
+    verification: [Observe durable completion and replay the same operation identity]
+    idempotency: Every handler detects prior completion before changing downstream state.
+    rollback: Cancel pending work where supported and compensate completed downstream effects.
+    sources: [CLOUDFLARE-SRC-BEST, CLOUDFLARE-SRC-BINDINGS]
+  - id: CLOUDFLARE-CAP-OBSERVE
+    name: Inspect Worker logs and traces
+    interface: cloudflare_dashboard
+    availability: current
+    access: { oauth_scopes: [], property_roles: [telemetry_operator] }
+    effect: observe
+    approval: none
+    inputs: [bounded account script environment route time and signal filters]
+    outputs: [redacted logs traces metrics and query boundary]
+    data_semantics: [CLOUDFLARE-SEM-RUNTIME, CLOUDFLARE-SEM-EDGE-CONTROL]
+    limits: { quotas: [Bound query and tail duration], latency: [Signals can be sampled delayed or retained briefly], sampling: [Declare head sampling and omitted regions], privacy_suppression: [Redact credentials personal data and request bodies], aggregation: [Correlate deployment request trace and route], completeness: [No observed error is not proof of no error], operational: [Enable governed observability and structured JSON fields] }
+    limitations: [Signal availability depends on product and configuration]
+    verification: [Record the query boundary and corroborate user-visible outcomes]
+    idempotency: Observation has no intended provider mutation.
+    rollback: Delete unsafe exported evidence under the data-handling process.
+    sources: [CLOUDFLARE-SRC-OBS]
+  - id: CLOUDFLARE-CAP-FIREWALL
+    name: Publish WAF or traffic-control changes
+    interface: cloudflare_dashboard
+    availability: current
+    access: { oauth_scopes: [], property_roles: [security_operator] }
+    effect: human_only
+    approval: human_only
+    inputs: [exact zone rules order scope action traffic evidence and rollback owner]
+    outputs: [effective rule version, matched and blocked traffic, user-impact evidence]
+    data_semantics: [CLOUDFLARE-SEM-EDGE-CONTROL]
+    limits: { quotas: [Respect plan rule and rate-limit limits], latency: [Rule propagation and cached state vary], sampling: [Review legitimate abusive crawler API and webhook traffic], privacy_suppression: [Protect bypass values and sensitive request attributes], aggregation: [Account for rule order host route method and geography], completeness: [An application test cannot prove every edge match], operational: [Stage or simulate before approved enforcement when the product supports it] }
+    limitations: [A broad rule can block customers search crawlers callbacks and internal tools]
+    verification: [Inspect exact effective rules and representative allowed challenged denied and bypassed paths]
+    idempotency: Reconcile existing rule identity and order before publication.
+    rollback: Disable or restore the exact prior rule set through the human incident owner.
+    sources: [CLOUDFLARE-SRC-WAF]
+  - id: CLOUDFLARE-CAP-CONFIG
+    name: Audit effective Wrangler configuration
+    interface: wrangler_cli
+    availability: current
+    access: { oauth_scopes: [], property_roles: [deployment_automation, platform_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [Wrangler version and schema, configuration, generated types, environment and deployed metadata]
+    outputs: [schema and binding drift findings, environment diff, dry-run evidence]
+    data_semantics: [CLOUDFLARE-SEM-BINDING, CLOUDFLARE-SEM-EDGE-CONTROL]
+    limits: { quotas: [Bound provisioned resources and environments], latency: [Configuration and deployment propagation differ], sampling: [Check every declared environment and binding type], privacy_suppression: [Exclude secret values and local variable files], aggregation: [Map config environment binding resource code reference and deployed version], completeness: [A valid file does not prove effective remote state], operational: [Validate against the installed schema generate types and compare deployed state] }
+    limitations: [Dashboard-only changes require separate drift evidence]
+    verification: [Run config validation type generation dry run and effective-state comparison]
+    idempotency: Audit operations have no intended provider mutation.
+    rollback: Restore the prior reviewed configuration and regenerate types.
+    sources: [CLOUDFLARE-SRC-WRANGLER, CLOUDFLARE-SRC-BINDINGS]
+  - id: CLOUDFLARE-CAP-DURABLE-OBJECT
+    name: Audit Durable Object state concurrency and alarms
+    interface: workers_runtime
+    availability: current
+    access: { oauth_scopes: [], property_roles: [worker_service, platform_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [coordination key class migration storage RPC alarm and external-I/O paths]
+    outputs: [sharding and migration findings, concurrency and alarm replay evidence, hot-key bounds]
+    data_semantics: [CLOUDFLARE-SEM-RUNTIME, CLOUDFLARE-SEM-BINDING]
+    limits: { quotas: [Bound per-object storage requests alarms and hot-key load], latency: [External I/O permits interleaving and alarms retry], sampling: [Exercise concurrent RPC eviction migration alarm replay and replacement], privacy_suppression: [Partition tenant state and minimize stored sensitive data], aggregation: [Correlate object key request storage transaction alarm and effect], completeness: [In-memory state is not durable state], operational: [Persist first keep concurrency blocks narrow and make alarms repeat-safe] }
+    limitations: [One object per global service can become a bottleneck]
+    verification: [Run Workers-runtime tests for storage eviction concurrency migrations and duplicate alarms]
+    idempotency: RPC and alarm handlers detect prior completion before external effects.
+    rollback: Restore a compatible class version and execute the governed storage migration recovery.
+    sources: [CLOUDFLARE-SRC-DO, CLOUDFLARE-SRC-BEST]
+  - id: CLOUDFLARE-CAP-QUEUE
+    name: Audit queue delivery and consumer recovery
+    interface: workers_runtime
+    availability: current
+    access: { oauth_scopes: [], property_roles: [worker_service, platform_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [producer message schema batch consumer retry acknowledgement and dead-letter configuration]
+    outputs: [delivery invariants, poison and retry results, backlog and recovery bounds]
+    data_semantics: [CLOUDFLARE-SEM-RUNTIME, CLOUDFLARE-SEM-BINDING]
+    limits: { quotas: [Bound message size batch backlog retry and consumer concurrency], latency: [Delivery is asynchronous and at least once], sampling: [Exercise duplicate partial batch poison delay outage and dead letter], privacy_suppression: [Minimize message data and protect dead-letter stores], aggregation: [Correlate operation message batch attempt consumer and effect], completeness: [Producer acceptance does not prove consumer completion], operational: [Acknowledge only completed work and reconcile retained failures] }
+    limitations: [Queue ordering and delivery guarantees must be read from the current product contract]
+    verification: [Replay messages and interrupt partial batches while checking final business invariants]
+    idempotency: Consumers use stable operation identities to suppress duplicate effects.
+    rollback: Pause producers or consumers within authority and replay or compensate retained work.
+    sources: [CLOUDFLARE-SRC-QUEUES]
+  - id: CLOUDFLARE-CAP-HYPERDRIVE
+    name: Audit Hyperdrive database connectivity
+    interface: workers_runtime
+    availability: current
+    access: { oauth_scopes: [], property_roles: [worker_service, platform_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [binding connection origin credential transaction and regional workload contract]
+    outputs: [connection and transaction findings, rotation evidence, load and failure results]
+    data_semantics: [CLOUDFLARE-SEM-BINDING, CLOUDFLARE-SEM-RUNTIME]
+    limits: { quotas: [Bound database connections queries retries and Worker concurrency], latency: [Pool region origin and cold paths affect latency], sampling: [Exercise burst transaction timeout reconnect rotation and origin outage], privacy_suppression: [Keep origin credentials and query values out of evidence], aggregation: [Correlate request binding pool origin transaction and query outcome], completeness: [A successful query does not prove transaction or burst safety], operational: [Use the binding and current driver contract rather than direct public connection strings] }
+    limitations: [Database semantics and recovery remain governed by the database provider too]
+    verification: [Load test bounded concurrency and exercise credential rotation and ambiguous write timeout]
+    idempotency: Retried writes use application operation identity and database constraints.
+    rollback: Restore the prior binding and credential then reconcile ambiguous writes.
+    sources: [CLOUDFLARE-SRC-HYPERDRIVE, CLOUDFLARE-SRC-BINDINGS]

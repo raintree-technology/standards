@@ -1,0 +1,14 @@
+version: 1
+integration: resend
+id_prefix: RESEND
+playbook: PLAYBOOK-RESEND
+reviewed_on: 2026-08-17
+official_domains: [resend.com]
+artifacts: { sources: sources.yaml, capabilities: capabilities.yaml, semantics: data-semantics.yaml, workflows: workflows.yaml, evaluations: evaluations.yaml }
+features: [capabilities, coverage, semantics, source_usage]
+vocabulary:
+  interfaces: [resend_api, resend_webhook, resend_dashboard, email_client]
+  property_roles: [sending_service, webhook_processor, lifecycle_operator, domain_operator, privacy_operator]
+  oauth_scopes: []
+skill_routes:
+  - { name: "vercel:email", availability: when_available, authority: review_aid }

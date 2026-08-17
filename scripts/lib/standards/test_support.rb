@@ -152,14 +152,16 @@ module Standards
 
     # Copies only what the integration validator reads.
     def self.copy_integration_bundle(target)
-      bundle = File.join(target, "integrations", "google-search-console")
-      FileUtils.mkdir_p(File.dirname(bundle))
+      integrations = File.join(target, "integrations")
+      FileUtils.mkdir_p(integrations)
       FileUtils.mkdir_p(File.join(target, "schema"))
-      FileUtils.cp_r(File.join(REPOSITORY_ROOT, "integrations", "google-search-console"), bundle)
-      FileUtils.cp(
-        File.join(REPOSITORY_ROOT, "schema", "integration-capability.schema.json"),
-        File.join(target, "schema")
-      )
+      Dir.glob(File.join(REPOSITORY_ROOT, "integrations", "*", "manifest.yaml")).sort.each do |manifest|
+        source = File.dirname(manifest)
+        FileUtils.cp_r(source, File.join(integrations, File.basename(source)))
+      end
+      %w[integration-capability.schema.json integration-manifest.schema.json].each do |name|
+        FileUtils.cp(File.join(REPOSITORY_ROOT, "schema", name), File.join(target, "schema"))
+      end
     end
 
     # -- fixture mutation ----------------------------------------------------

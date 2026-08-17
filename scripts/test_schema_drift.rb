@@ -19,8 +19,17 @@ ROOT = File.expand_path("..", __dir__)
 failures = []
 checks = 0
 
+input_findings = Standards::Findings.new
+unless Standards::InputLimits.validate(ROOT, input_findings)
+  input_findings.report
+  exit Standards::EXIT_INVALID
+end
+
 def load_schema(name)
   JSON.parse(File.read(File.join(ROOT, "schema", name)))
+rescue JSON::ParserError, SystemCallError => e
+  warn "schema/#{name}: cannot be parsed (#{e.message.lines.first.to_s.strip})"
+  exit Standards::EXIT_INVALID
 end
 
 def check(failures, description)
@@ -32,6 +41,7 @@ end
 
 standard = load_schema("standard.schema.json")
 integration = load_schema("integration-capability.schema.json")
+manifest = load_schema("integration-manifest.schema.json")
 capability = integration.fetch("$defs").fetch("capability")
 
 # -- standard.schema.json ----------------------------------------------------
@@ -76,19 +86,18 @@ end
 
 checks += 1
 check(failures, "integration schema required capability fields") do
-  [capability.fetch("required").sort, Standards::IntegrationValidator::CAPABILITY_FIELDS.sort]
+  [capability.fetch("required").sort, Standards::GoogleSearchConsoleValidator::CAPABILITY_FIELDS.sort]
 end
 
 checks += 1
 check(failures, "integration schema capability properties") do
-  [capability.fetch("properties").keys.sort, Standards::IntegrationValidator::CAPABILITY_FIELDS.sort]
+  [capability.fetch("properties").keys.sort, Standards::GoogleSearchConsoleValidator::CAPABILITY_FIELDS.sort]
 end
 
 {
-  "interface" => Standards::IntegrationValidator::INTERFACES,
-  "availability" => Standards::IntegrationValidator::AVAILABILITIES,
-  "effect" => Standards::IntegrationValidator::EFFECTS,
-  "approval" => Standards::IntegrationValidator::APPROVALS
+  "availability" => Standards::GoogleSearchConsoleValidator::AVAILABILITIES,
+  "effect" => Standards::GoogleSearchConsoleValidator::EFFECTS,
+  "approval" => Standards::GoogleSearchConsoleValidator::APPROVALS
 }.each do |field, constant|
   checks += 1
   check(failures, "integration schema #{field} enum") do
@@ -97,32 +106,21 @@ end
 end
 
 checks += 1
-check(failures, "integration schema OAuth scopes") do
-  [
-    integration.dig("$defs", "access", "properties", "oauth_scopes", "items", "enum").sort,
-    Standards::IntegrationValidator::OAUTH_SCOPES.sort
-  ]
-end
-
-checks += 1
-check(failures, "integration schema property roles") do
-  [
-    integration.dig("$defs", "access", "properties", "property_roles", "items", "enum").sort,
-    Standards::IntegrationValidator::ROLES.sort
-  ]
-end
-
-checks += 1
 check(failures, "integration schema limit dimensions") do
   [
     integration.dig("$defs", "limits", "required").sort,
-    Standards::IntegrationValidator::LIMIT_DIMENSIONS.sort
+    Standards::GoogleSearchConsoleValidator::LIMIT_DIMENSIONS.sort
   ]
 end
 
 checks += 1
 check(failures, "integration schema top-level required fields") do
-  [integration.fetch("required").sort, Standards::IntegrationValidator::TOP_LEVEL_KEYS.fetch(:capabilities).sort]
+  [integration.fetch("required").sort, Standards::GoogleSearchConsoleValidator::TOP_LEVEL_KEYS.fetch(:capabilities).sort]
+end
+
+checks += 1
+check(failures, "integration manifest required fields") do
+  [manifest.fetch("required").sort, (Standards::IntegrationValidator::MANIFEST_KEYS - Standards::IntegrationValidator::OPTIONAL_MANIFEST_KEYS).sort]
 end
 
 # -- every schema keyword must be one this repository can enforce -------------
@@ -144,7 +142,7 @@ def walk_keywords(node, seen)
 end
 
 known = Standards::JsonSchema::ANNOTATIONS + Standards::JsonSchema::ASSERTIONS
-[["standard.schema.json", standard], ["integration-capability.schema.json", integration]].each do |name, schema|
+[["standard.schema.json", standard], ["integration-capability.schema.json", integration], ["integration-manifest.schema.json", manifest]].each do |name, schema|
   checks += 1
   used = walk_keywords(schema, []).uniq.select { |key| key.start_with?("$") || known.include?(key) }
   unsupported = used - known

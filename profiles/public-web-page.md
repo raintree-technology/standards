@@ -46,6 +46,8 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - Google Analytics 4 implementation → `PLAYBOOK-GA4`
 - Core acquisition, conversion, or lifecycle marketing → `PROFILE-MARKETING-LIFECYCLE`
 - Paid placement destination, referral asset, syndicated listing, public engagement, or other specialist channel → `PROFILE-SPECIALIST-MARKETING`
+- Vercel → `PLAYBOOK-VERCEL`; Cloudflare → `PLAYBOOK-CLOUDFLARE`; Resend → `PLAYBOOK-RESEND`; Stripe → `PLAYBOOK-STRIPE`; Plaid → `PLAYBOOK-PLAID`; Neon → `PLAYBOOK-NEON`
+- Another material hosting or service platform without a named playbook → `INTEGRATIONS-VENDOR`, current official provider documentation, and a recorded library gap
 
 ## Completion evidence
 
@@ -65,5 +67,6 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - When `SECURITY-APPLICATION` is active, `SECURITY-APPLICATION-002`, `SECURITY-APPLICATION-005`, `SECURITY-APPLICATION-006`, `SECURITY-APPLICATION-010`, and `SECURITY-APPLICATION-015` — Authorization, untrusted input, uploaded content, deployment configuration, and integrated verification evidence cover the page's application behavior.
 - When `PROFILE-AGENTIC-SYSTEM` is active, its evidence covers model limits, user control, prompt injection, data paths, tools, repeated outcomes, refusals, escalation, and final-state verification.
 - When `PLAYBOOK-GSC` is active, record the exact property, workflow, capability and authority boundary, source and data dates, filters, affected URL cohort, Google-observed evidence, direct corroboration, approvals for mutations, residual uncertainty, and a passing integration-bundle validation result.
+- When a provider playbook is active, include its manifest, zero-gap surface classification, selected capability IDs and authority classes, exact skill route or gap, dated official-source review, workflow and evaluation results, released configuration, browser and callback boundaries, privacy-safe telemetry, failure behavior, recovery, and exit evidence.
 - `AGENT-VERIFICATION-002` and `AGENT-VERIFICATION-005` — The final page was inspected in its intended medium and the handoff records checks, results, exceptions, and limitations.
 - When a conditional standard is active, include its rule-level completion evidence before declaring the page complete.

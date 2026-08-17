@@ -17,6 +17,12 @@ require_relative "lib/standards"
 ROOT = File.expand_path("..", __dir__)
 WORKFLOW_DIR = File.join(ROOT, ".github", "workflows")
 
+input_findings = Standards::Findings.new
+unless Standards::InputLimits.validate(ROOT, input_findings)
+  input_findings.report
+  exit Standards::EXIT_INVALID
+end
+
 # The repository sets allowed_actions to "selected" with github_owned_allowed
 # true, so actions/* are permitted and everything else must appear in the
 # allowlist. Mirroring the non-GitHub entries here means adding an action is a
@@ -37,6 +43,14 @@ def check(failures, condition, message)
   failures << message unless condition
 end
 
+def no_more_than_contents_read?(permissions)
+  return false unless permissions.is_a?(Hash)
+
+  permissions.all? do |scope, access|
+    scope == "contents" && %w[none read].include?(access)
+  end
+end
+
 workflows = Dir.glob(File.join(WORKFLOW_DIR, "*.yml")).sort
 if workflows.empty?
   warn "No workflows found in .github/workflows"
@@ -47,18 +61,16 @@ workflows.each do |path|
   relative = path.delete_prefix("#{ROOT}/")
 
   checks += 1
-  document = begin
-    YAML.safe_load(File.read(path), aliases: false)
-  rescue Psych::Exception => e
-    failures << "#{relative}: does not parse (#{e.message.lines.first.to_s.strip})"
-    nil
-  end
-  next if document.nil?
+  parse_findings = Standards::Findings.new
+  document = Standards::YamlSource.load_mapping(File.read(path), relative, parse_findings, permitted_classes: [])
+  failures.concat(parse_findings.to_a)
+  next unless parse_findings.empty?
 
-  # Least privilege has to be stated; an unset permissions block inherits
-  # whatever the organization default happens to be.
+  # Least privilege has to be stated and enforced. Merely requiring a
+  # permissions key would allow `write-all` or a write-scoped mapping to pass.
   checks += 1
-  check(failures, document.key?("permissions"), "#{relative}: does not declare a permissions block")
+  check(failures, no_more_than_contents_read?(document["permissions"]),
+        "#{relative}: workflow permissions must grant no more than contents: read")
 
   jobs = document["jobs"] || {}
   jobs.each do |name, job|
@@ -68,6 +80,20 @@ workflows.each do |path|
 
     checks += 1
     check(failures, job.key?("timeout-minutes"), "#{relative}: job #{name} declares no timeout-minutes")
+
+    if job.key?("permissions")
+      checks += 1
+      check(failures, no_more_than_contents_read?(job["permissions"]),
+            "#{relative}: job #{name} raises permissions above contents: read")
+    end
+
+    Array(job["steps"]).each_with_index do |step, index|
+      next unless step["uses"].to_s.start_with?("actions/checkout@")
+
+      checks += 1
+      check(failures, step.fetch("with", {})["persist-credentials"] == false,
+            "#{relative}: job #{name} checkout step #{index + 1} must set persist-credentials: false")
+    end
   end
 
   # Every `uses:` must be SHA-pinned, carry a readable version comment, and be

@@ -15,6 +15,12 @@ require_relative "lib/standards/test_support"
 # Brings Findings, TestSupport, and the exit statuses into scope for this script.
 include Standards
 
+input_findings = Findings.new
+unless InputLimits.validate(TestSupport::REPOSITORY_ROOT, input_findings)
+  input_findings.report
+  exit EXIT_INVALID
+end
+
 suite = TestSupport::Suite.new(
   "Integration validator",
   validator: "validate_integrations.rb",
@@ -48,6 +54,10 @@ def semantics(root)
   bundle_file(root, "data-semantics.yaml")
 end
 
+def provider_file(root, provider, name)
+  File.join(root, "integrations", provider, name)
+end
+
 # Finds a capability by the role it plays, not by its identifier.
 def capability_where(root, &predicate)
   TestSupport.find_row(capabilities(root), "capabilities", &predicate)
@@ -64,6 +74,10 @@ end
 # -- accepted input ----------------------------------------------------------
 
 suite.accepts("clean bundle", "Integration bundle valid")
+
+suite.rejects("oversized YAML input", "per-file limit is #{InputLimits::MAX_FILE_BYTES} bytes") do |root|
+  File.write(capabilities(root), "x" * (InputLimits::MAX_FILE_BYTES + 1))
+end
 
 # -- usage -------------------------------------------------------------------
 
@@ -97,6 +111,122 @@ end
 
 suite.rejects("missing schema", "Missing integration schema") do |root|
   FileUtils.rm(File.join(root, "schema", "integration-capability.schema.json"))
+end
+
+suite.rejects("manifest integration differs from directory", "integration must match directory stripe") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "manifest.yaml")) { |document| document["integration"] = "payments" }
+end
+
+suite.rejects("skill route claims authority", "skills are review aids, not authority") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "manifest.yaml")) do |document|
+    document["skill_routes"][0]["authority"] = "policy"
+  end
+end
+
+suite.rejects("skill route name is duplicated", "duplicate skill route stripe:stripe-best-practices") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "manifest.yaml")) do |document|
+    document["skill_routes"] << {
+      "name" => "stripe:stripe-best-practices", "availability" => "not_available", "authority" => "review_aid"
+    }
+  end
+end
+
+suite.rejects("provider source leaves official domain", "URL must use an official HTTPS domain") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "sources.yaml")) do |document|
+    document["sources"][0]["url"] = "https://example.com/payments"
+  end
+end
+
+suite.rejects("engineering article is sole authority for a mapped surface", "requires provider documentation; engineering sources are informative") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "sources.yaml")) do |document|
+    source = document["sources"].find { |row| row["id"] == "STRIPE-SRC-PAYMENTS" }
+    source["authority"] = "provider_engineering"
+    document["coverage"].find { |row| row["surface"] == "checkout-and-payment-creation" }["sources"] = ["STRIPE-SRC-PAYMENTS"]
+  end
+end
+
+suite.rejects("engineering article is sole authority for a capability", "requires provider documentation; engineering sources are informative") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "sources.yaml")) do |document|
+    document["sources"] << {
+      "id" => "STRIPE-SRC-ENG-ONLY", "title" => "Engineering article", "url" => "https://stripe.com/blog/idempotency",
+      "topic" => "design rationale", "authority" => "provider_engineering", "volatility" => "low"
+    }
+    document["coverage"][0]["sources"] << "STRIPE-SRC-ENG-ONLY"
+  end
+  TestSupport.edit_yaml(provider_file(root, "stripe", "capabilities.yaml")) do |document|
+    document["capabilities"][0]["sources"] = ["STRIPE-SRC-ENG-ONLY"]
+  end
+end
+
+suite.rejects("provider source uses an unknown source role", "invalid authority vendor_marketing") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "sources.yaml")) do |document|
+    document["sources"][0]["authority"] = "vendor_marketing"
+  end
+end
+
+suite.rejects("independent engineering source leaves its allowlist", "URL must use an allowlisted informative HTTPS domain") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "sources.yaml")) do |document|
+    source = document["sources"].find { |row| row["authority"] == "independent_engineering" }
+    source["url"] = "https://example.com/idempotency"
+  end
+end
+
+suite.rejects("provider capability uses an undeclared interface", "invalid interface unknown_surface") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "capabilities.yaml")) do |document|
+    document["capabilities"][0]["interface"] = "unknown_surface"
+  end
+end
+
+suite.rejects("capability manifest omits its vocabulary", "capability bundles require vocabulary") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "manifest.yaml")) { |document| document.delete("vocabulary") }
+end
+
+suite.rejects("provider ID crosses artifact namespaces", "Duplicate integration ID STRIPE-CAP-CHECKOUT") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "evaluations.yaml")) do |document|
+    document["evaluations"][0]["id"] = "STRIPE-CAP-CHECKOUT"
+  end
+end
+
+suite.rejects("provider coverage omits source evidence", "coverage checkout-and-payment-creation: sources must be non-empty") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "sources.yaml")) do |document|
+    document["coverage"][0]["sources"] = []
+  end
+end
+
+suite.rejects("provider capability is absent from zero-gap ledger", "zero-gap ledger does not classify capability STRIPE-CAP-REFUND") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "sources.yaml")) do |document|
+    document["coverage"].each { |row| row["capabilities"] = Array(row["capabilities"]) - ["STRIPE-CAP-REFUND"] }
+  end
+end
+
+suite.rejects("provider capability references an unknown semantic", "unknown semantic STRIPE-SEM-UNKNOWN") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "capabilities.yaml")) do |document|
+    document["capabilities"][0]["data_semantics"] = ["STRIPE-SEM-UNKNOWN"]
+  end
+end
+
+suite.rejects("provider mutation is not routed", "mutation STRIPE-CAP-REFUND is not routed") do |root|
+  %w[workflows.yaml evaluations.yaml].each do |name|
+    field = name == "workflows.yaml" ? "workflows" : "evaluations"
+    TestSupport.edit_yaml(provider_file(root, "stripe", name)) do |document|
+      document[field].each { |row| row["capabilities"] = Array(row["capabilities"]) - ["STRIPE-CAP-REFUND"] }
+    end
+  end
+end
+
+suite.rejects("provider capability lacks an evaluation route", "capability STRIPE-CAP-API-UPGRADE is not routed through an evaluation") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "evaluations.yaml")) do |document|
+    document["evaluations"].each { |row| row["capabilities"] = Array(row["capabilities"]) - ["STRIPE-CAP-API-UPGRADE"] }
+  end
+end
+
+suite.rejects("provider official source is declared but unused", "source STRIPE-SRC-UNUSED is not used") do |root|
+  TestSupport.edit_yaml(provider_file(root, "stripe", "sources.yaml")) do |document|
+    document["sources"] << {
+      "id" => "STRIPE-SRC-UNUSED", "title" => "Unused", "url" => "https://docs.stripe.com/",
+      "topic" => "unused test source", "authority" => "provider_documentation", "volatility" => "low"
+    }
+  end
 end
 
 # -- identity and references -------------------------------------------------

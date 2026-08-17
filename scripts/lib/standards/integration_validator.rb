@@ -2,8 +2,10 @@
 
 require "date"
 require "json"
+require "uri"
 
 require_relative "findings"
+require_relative "input_limits"
 require_relative "json_schema"
 require_relative "paths"
 require_relative "yaml_source"
@@ -16,7 +18,7 @@ module Standards
   # so a malformed document produces validation messages instead of the
   # TypeError and NoMethodError backtraces the previous version raised on a
   # top-level sequence, an empty file, or a scalar list entry.
-  class IntegrationValidator
+  class GoogleSearchConsoleValidator
     INTEGRATION = "google-search-console"
 
     FILES = {
@@ -99,6 +101,8 @@ module Standards
     end
 
     def run
+      return self unless InputLimits.validate(@root, @findings)
+
       load_documents
       check_top_level
       index_rows
@@ -479,5 +483,399 @@ module Standards
         value.uniq.length == value.length &&
         value.all? { |item| item.is_a?(String) && !item.empty? }
     end
+  end
+
+  # Discovers every manifest-backed integration and applies the common bundle
+  # contract. Google Search Console keeps its deeper capability-map checks;
+  # provider bundles can add the same artifacts later without
+  # changing discovery or audit routing.
+  class IntegrationValidator
+    MANIFEST_KEYS = %w[version integration id_prefix playbook reviewed_on official_domains informative_domains artifacts features vocabulary skill_routes].freeze
+    OPTIONAL_MANIFEST_KEYS = %w[features vocabulary informative_domains].freeze
+    REQUIRED_ARTIFACTS = %w[sources workflows evaluations].freeze
+    ARTIFACT_NAMES = {
+      "sources" => "sources.yaml", "capabilities" => "capabilities.yaml",
+      "semantics" => "data-semantics.yaml", "workflows" => "workflows.yaml",
+      "evaluations" => "evaluations.yaml"
+    }.freeze
+    SOURCE_FIELDS = %w[id title url topic authority volatility].freeze
+    WORKFLOW_FIELDS = %w[id name trigger sources capabilities steps stop_conditions outputs].freeze
+    EVALUATION_FIELDS = %w[id workflow sources capabilities scenario evidence expected prohibited].freeze
+    AUTHORITIES = %w[provider_documentation provider_engineering independent_engineering].freeze
+    VOLATILITIES = %w[low medium high].freeze
+    SKILL_AVAILABILITIES = %w[when_available not_available].freeze
+
+    attr_reader :findings
+
+    def initialize(root, today: Date.today)
+      @root = File.expand_path(root)
+      @today = today
+      @findings = Findings.new
+      @manifests = {}
+      @summaries = []
+      @provider_capabilities = {}
+      @provider_mutations = {}
+      @provider_routed = Hash.new { |hash, key| hash[key] = [] }
+      @provider_workflow_routed = Hash.new { |hash, key| hash[key] = [] }
+      @provider_evaluation_routed = Hash.new { |hash, key| hash[key] = [] }
+      @provider_used_sources = Hash.new { |hash, key| hash[key] = [] }
+    end
+
+    def valid? = @findings.empty?
+    def summary_lines = ["Integration bundle valid: #{@summaries.join('; ')}"]
+
+    def artifacts_present?
+      manifests = Paths.glob_absolute(@root, File.join("integrations", "*", "manifest.yaml"))
+      @findings.add("Missing integration manifests under integrations/") if manifests.empty?
+      %w[integration-manifest.schema.json integration-capability.schema.json].each do |name|
+        @findings.add("Missing integration schema: schema/#{name}") unless File.file?(File.join(@root, "schema", name))
+      end
+      manifests.each { |path| load_manifest(path) }
+      @manifests.each_value { |entry| check_declared_artifacts(entry) }
+      @findings.empty?
+    end
+
+    def run
+      return self unless InputLimits.validate(@root, @findings)
+      artifacts_present? if @manifests.empty?
+      return self unless @findings.empty?
+
+      @manifests.each_value do |entry|
+        validate_manifest(entry)
+        validate_bundle(entry)
+        next unless entry[:integration] == GoogleSearchConsoleValidator::INTEGRATION
+
+        deep = GoogleSearchConsoleValidator.new(@root, today: @today)
+        if deep.artifacts_present?
+          deep.run
+          deep.findings.each { |message| @findings.add("google-search-console: #{message}") }
+        else
+          deep.findings.each { |message| @findings.add("google-search-console: #{message}") }
+        end
+      end
+      self
+    end
+
+    private
+
+    def load_manifest(path)
+      label = Paths.relative(@root, path)
+      document = YamlSource.load_file(path, label, @findings, permitted_classes: [Date])
+      integration = document["integration"]
+      directory = File.basename(File.dirname(path))
+      @findings.add("#{label}: integration must match directory #{directory}") unless integration == directory
+      @findings.add("Duplicate integration manifest #{integration}") if @manifests.key?(integration)
+      @manifests[integration] = { path: path, dir: File.dirname(path), label: label, document: document, integration: integration }
+    end
+
+    def check_declared_artifacts(entry)
+      artifacts = entry[:document]["artifacts"]
+      unless artifacts.is_a?(Hash)
+        @findings.add("#{entry[:label]}: artifacts must be a mapping")
+        return
+      end
+      REQUIRED_ARTIFACTS.each { |kind| @findings.add("#{entry[:label]}: artifacts must declare #{kind}") unless artifacts.key?(kind) }
+      artifacts.each do |kind, name|
+        @findings.add("#{entry[:label]}: unsupported artifact #{kind}") unless ARTIFACT_NAMES[kind] == name
+        path = File.join(entry[:dir], name.to_s)
+        @findings.add("Missing integration artifact: #{Paths.relative(@root, path)}") unless File.file?(path)
+      end
+      if artifacts.key?("capabilities") && !entry[:document]["vocabulary"].is_a?(Hash)
+        @findings.add("#{entry[:label]}: capability bundles require vocabulary")
+      end
+      feature_artifacts = { "capabilities" => "capabilities", "semantics" => "semantics" }
+      Array(entry[:document]["features"]).each do |feature|
+        artifact = feature_artifacts[feature]
+        @findings.add("#{entry[:label]}: feature #{feature} requires artifact #{artifact}") if artifact && !artifacts.key?(artifact)
+      end
+    end
+
+    def validate_manifest(entry)
+      document = entry[:document]
+      unknown = document.keys - MANIFEST_KEYS
+      required = MANIFEST_KEYS - OPTIONAL_MANIFEST_KEYS
+      @findings.add("#{entry[:label]}: unknown fields #{unknown.join(', ')}") unless unknown.empty?
+      @findings.add("#{entry[:label]}: missing fields #{(required - document.keys).join(', ')}") unless (required - document.keys).empty?
+      schema = JSON.parse(File.read(File.join(@root, "schema", "integration-manifest.schema.json")))
+      JsonSchema.validate(document, schema, label: "").each { |message| @findings.add("#{entry[:label]}: #{message}") }
+      Array(document["skill_routes"]).each_with_index do |route, index|
+        prefix = "#{entry[:label]}: skill_routes[#{index}]"
+        next unless route.is_a?(Hash)
+        @findings.add("#{prefix}: invalid availability #{route['availability']}") unless SKILL_AVAILABILITIES.include?(route["availability"])
+        @findings.add("#{prefix}: skills are review aids, not authority") unless route["authority"] == "review_aid"
+      end
+      route_names = Array(document["skill_routes"]).filter_map { |route| route["name"] if route.is_a?(Hash) }
+      route_names.tally.each { |name, count| @findings.add("#{entry[:label]}: duplicate skill route #{name}") if count > 1 }
+    rescue JSON::ParserError => e
+      @findings.add("schema/integration-manifest.schema.json: invalid JSON (#{e.message.lines.first.to_s.strip})")
+    rescue JsonSchema::UnsupportedKeyword => e
+      @findings.add("schema/integration-manifest.schema.json: #{e.message}")
+    end
+
+    def validate_bundle(entry)
+      docs = {}
+      entry[:document].fetch("artifacts", {}).each do |kind, name|
+        next unless %w[sources capabilities semantics workflows evaluations].include?(kind)
+        docs[kind] = YamlSource.load_file(File.join(entry[:dir], name), name, @findings, permitted_classes: [Date])
+        @findings.add("#{entry[:integration]}/#{name}: integration must be #{entry[:integration]}") unless docs[kind]["integration"] == entry[:integration]
+      end
+      return unless REQUIRED_ARTIFACTS.all? { |kind| docs.key?(kind) }
+
+      unless entry[:integration] == GoogleSearchConsoleValidator::INTEGRATION
+        check_provider_top_level(entry, docs)
+        check_provider_identity_graph(entry, docs)
+      end
+
+      sources = collect_rows(docs["sources"]["sources"], "#{entry[:integration]}/sources.yaml: sources", "id")
+      workflows = collect_rows(docs["workflows"]["workflows"], "#{entry[:integration]}/workflows.yaml: workflows", "id")
+      evaluations = collect_rows(docs["evaluations"]["evaluations"], "#{entry[:integration]}/evaluations.yaml: evaluations", "id")
+      check_provider_sources(entry, docs["sources"], sources)
+      if docs.key?("capabilities") && entry[:integration] != GoogleSearchConsoleValidator::INTEGRATION
+        check_provider_capabilities(entry, docs, sources)
+      end
+      check_provider_workflows(entry, workflows, sources)
+      check_provider_evaluations(entry, evaluations, workflows, sources)
+      capability_count = docs.key?("capabilities") ? Array(docs["capabilities"]["capabilities"]).length : 0
+      @summaries << "#{entry[:integration]} (#{sources.length} sources, #{capability_count} capabilities, #{workflows.length} workflows, #{evaluations.length} evaluations)"
+    end
+
+    def collect_rows(value, label, key)
+      rows = YamlSource.mapping_rows(value, label, @findings)
+      rows.each_with_index.each_with_object({}) do |(row, index), result|
+        id = row[key]
+        @findings.add("#{label}[#{index}]: missing #{key}") if id.to_s.empty?
+        @findings.add("#{label}: duplicate #{key} #{id}") if result.key?(id)
+        result[id] = row unless id.to_s.empty?
+      end
+    end
+
+    def check_provider_identity_graph(entry, docs)
+      prefix = entry[:document]["id_prefix"].to_s
+      sets = {
+        "sources" => ["sources", "SRC"], "capabilities" => ["capabilities", "CAP"],
+        "semantics" => ["concepts", "SEM"], "workflows" => ["workflows", "WF"],
+        "evaluations" => ["evaluations", "EVAL"]
+      }
+      seen = {}
+      sets.each do |kind, (field, segment)|
+        next unless docs.key?(kind)
+        YamlSource.mapping_rows(docs[kind][field], "#{entry[:integration]}/#{kind}", @findings).each do |row|
+          id = row["id"].to_s
+          @findings.add("#{entry[:integration]}/#{kind}: ID #{id} must use #{prefix}-#{segment}- prefix") unless id.match?(/\A#{Regexp.escape(prefix)}-#{segment}-[A-Z0-9]+(?:-[A-Z0-9]+)*\z/)
+          @findings.add("Duplicate integration ID #{id} across #{seen[id]} and #{kind}") if seen.key?(id)
+          seen[id] = kind
+        end
+      end
+    end
+
+    def check_provider_top_level(entry, docs)
+      expected = {
+        "sources" => %w[version integration reviewed_on scope freshness sources coverage],
+        "capabilities" => %w[version integration reviewed_on capabilities],
+        "semantics" => %w[version integration reviewed_on concepts],
+        "workflows" => %w[version integration workflows],
+        "evaluations" => %w[version integration evaluations]
+      }
+      docs.each do |kind, document|
+        next unless expected.key?(kind)
+        label = "#{entry[:integration]}/#{entry[:document]['artifacts'][kind]}"
+        unknown = document.keys - expected[kind]
+        missing = expected[kind] - document.keys
+        @findings.add("#{label}: unknown top-level fields #{unknown.join(', ')}") unless unknown.empty?
+        @findings.add("#{label}: missing top-level fields #{missing.join(', ')}") unless missing.empty?
+        @findings.add("#{label}: version must be 1") unless document["version"] == 1
+      end
+    end
+
+    def check_provider_sources(entry, document, sources)
+      domains = Array(entry[:document]["official_domains"])
+      informative_domains = Array(entry[:document]["informative_domains"])
+      sources.each_value do |row|
+        prefix = "#{entry[:integration]}/sources.yaml: #{row['id']}"
+        unknown = row.keys - SOURCE_FIELDS
+        @findings.add("#{prefix}: unknown fields #{unknown.join(', ')}") unless unknown.empty?
+        missing = SOURCE_FIELDS.select { |field| row[field].to_s.empty? }
+        @findings.add("#{prefix}: missing #{missing.join(', ')}") unless missing.empty?
+        @findings.add("#{prefix}: invalid authority #{row['authority']}") unless AUTHORITIES.include?(row["authority"])
+        @findings.add("#{prefix}: invalid volatility #{row['volatility']}") unless VOLATILITIES.include?(row["volatility"])
+        begin
+          uri = URI.parse(row["url"].to_s)
+          allowed_domains = row["authority"] == "independent_engineering" ? informative_domains : domains
+          allowed = uri.scheme == "https" && allowed_domains.any? { |domain| uri.host == domain || uri.host&.end_with?(".#{domain}") }
+          message = row["authority"] == "independent_engineering" ? "URL must use an allowlisted informative HTTPS domain" : "URL must use an official HTTPS domain"
+          @findings.add("#{prefix}: #{message}") unless allowed
+        rescue URI::InvalidURIError
+          @findings.add("#{prefix}: URL must use a valid allowlisted HTTPS domain")
+        end
+      end
+
+      Array(document["coverage"]).each do |row|
+        next unless row.is_a?(Hash) && row["classification"] == "mapped"
+
+        refs = Array(row["sources"])
+        next if refs.any? { |id| sources[id]&.fetch("authority", nil) == "provider_documentation" }
+
+        @findings.add("#{entry[:integration]}/sources.yaml: coverage #{row['surface']} requires provider documentation; engineering sources are informative")
+      end
+      freshness = document["freshness"]
+      valid = freshness.is_a?(Hash) && freshness["cadence_days"].is_a?(Integer) && freshness["cadence_days"].positive? && freshness["next_review"].is_a?(Date) && non_empty_array?(freshness["event_triggers"])
+      @findings.add("#{entry[:integration]}/sources.yaml: invalid freshness contract") unless valid
+      return unless valid
+      reviewed = document["reviewed_on"]
+      @findings.add("#{entry[:integration]}/sources.yaml: next_review must be after reviewed_on") unless reviewed.is_a?(Date) && freshness["next_review"] > reviewed
+      @findings.add("#{entry[:integration]}/sources.yaml: official-source review expired on #{freshness['next_review']}") if @today > freshness["next_review"]
+    end
+
+    def check_provider_capabilities(entry, docs, sources)
+      integration = entry[:integration]
+      capabilities = collect_rows(docs["capabilities"]["capabilities"], "#{integration}/capabilities.yaml: capabilities", "id")
+      semantics = docs.key?("semantics") ? collect_rows(docs["semantics"]["concepts"], "#{integration}/data-semantics.yaml: concepts", "id") : {}
+      coverage = collect_rows(docs["sources"]["coverage"], "#{integration}/sources.yaml: coverage", "surface")
+      vocabulary = entry[:document]["vocabulary"] || {}
+      interfaces = Array(vocabulary["interfaces"])
+      roles = Array(vocabulary["property_roles"])
+      scopes = Array(vocabulary["oauth_scopes"])
+      prefix_pattern = /\A#{Regexp.escape(entry[:document]['id_prefix'].to_s)}-CAP-[A-Z0-9]+(?:-[A-Z0-9]+)*\z/
+
+      schema = JSON.parse(File.read(File.join(@root, "schema", "integration-capability.schema.json")))
+      JsonSchema.validate(docs["capabilities"], schema, label: "").each { |message| @findings.add("#{integration}/capabilities.yaml: #{message}") }
+
+      capabilities.each_value do |row|
+        label = "#{integration}/capabilities.yaml: #{row['id']}"
+        @findings.add("#{label}: ID must use #{entry[:document]['id_prefix']}-CAP- prefix") unless row["id"].to_s.match?(prefix_pattern)
+        @findings.add("#{label}: invalid interface #{row['interface']}") unless interfaces.include?(row["interface"])
+        @findings.add("#{label}: invalid availability #{row['availability']}") unless GoogleSearchConsoleValidator::AVAILABILITIES.include?(row["availability"])
+        @findings.add("#{label}: invalid effect #{row['effect']}") unless GoogleSearchConsoleValidator::EFFECTS.include?(row["effect"])
+        @findings.add("#{label}: invalid approval #{row['approval']}") unless GoogleSearchConsoleValidator::APPROVALS.include?(row["approval"])
+        access = row["access"]
+        if access.is_a?(Hash)
+          invalid_roles = Array(access["property_roles"]) - roles
+          invalid_scopes = Array(access["oauth_scopes"]) - scopes
+          @findings.add("#{label}: invalid property roles #{invalid_roles.join(', ')}") unless invalid_roles.empty?
+          @findings.add("#{label}: invalid OAuth scopes #{invalid_scopes.join(', ')}") unless invalid_scopes.empty?
+        end
+        Array(row["data_semantics"]).each { |id| @findings.add("#{label}: unknown semantic #{id}") unless semantics.key?(id) }
+        Array(row["sources"]).each do |id|
+          @findings.add("#{label}: unknown source #{id}") unless sources.key?(id)
+          @provider_used_sources[integration] << id
+        end
+        unless Array(row["sources"]).any? { |id| sources[id]&.fetch("authority", nil) == "provider_documentation" }
+          @findings.add("#{label}: requires provider documentation; engineering sources are informative")
+        end
+        if GoogleSearchConsoleValidator::MUTATING_EFFECTS.include?(row["effect"])
+          @findings.add("#{label}: mutation cannot use approval none") if row["approval"] == "none"
+          @findings.add("#{label}: mutation requires rollback or irreversibility text") if row["rollback"].to_s.empty? || row["rollback"] == "Not applicable"
+        end
+        if row["effect"] == "mutate_high_impact" && !%w[exact human_only].include?(row["approval"])
+          @findings.add("#{label}: high-impact mutation requires exact or human_only approval")
+        end
+      end
+
+      semantics.each_value do |row|
+        label = "#{integration}/data-semantics.yaml: #{row['id']}"
+        unknown = row.keys - %w[id name definition cautions sources]
+        @findings.add("#{label}: unknown fields #{unknown.join(', ')}") unless unknown.empty?
+        %w[name definition].each { |field| @findings.add("#{label}: missing #{field}") if row[field].to_s.empty? }
+        @findings.add("#{label}: cautions must be non-empty") unless non_empty_array?(row["cautions"])
+        @findings.add("#{label}: sources must be non-empty") unless non_empty_array?(row["sources"])
+        Array(row["sources"]).each do |id|
+          @findings.add("#{label}: unknown source #{id}") unless sources.key?(id)
+          @provider_used_sources[integration] << id
+        end
+      end
+
+      covered = []
+      coverage.each_value do |row|
+        label = "#{integration}/sources.yaml: coverage #{row['surface']}"
+        unknown = row.keys - %w[surface classification capabilities sources rationale]
+        @findings.add("#{label}: unknown fields #{unknown.join(', ')}") unless unknown.empty?
+        @findings.add("#{label}: invalid classification #{row['classification']}") unless GoogleSearchConsoleValidator::CLASSIFICATIONS.include?(row["classification"])
+        @findings.add("#{label}: sources must be non-empty") unless non_empty_array?(row["sources"])
+        if %w[adjacent legacy excluded].include?(row["classification"]) && row["rationale"].to_s.empty?
+          @findings.add("#{label}: #{row['classification']} surface requires rationale")
+        elsif row["classification"] == "mapped" && !non_empty_array?(row["capabilities"])
+          @findings.add("#{label}: mapped surface requires capabilities")
+        end
+        Array(row["capabilities"]).each do |id|
+          @findings.add("#{label}: unknown capability #{id}") unless capabilities.key?(id)
+          covered << id
+        end
+        Array(row["sources"]).each do |id|
+          @findings.add("#{label}: unknown source #{id}") unless sources.key?(id)
+          @provider_used_sources[integration] << id
+        end
+      end
+      (capabilities.keys - covered.uniq).each { |id| @findings.add("#{integration}/sources.yaml: zero-gap ledger does not classify capability #{id}") }
+      @provider_capabilities[integration] = capabilities
+      @provider_mutations[integration] = capabilities.values.select { |row| GoogleSearchConsoleValidator::ROUTED_EFFECTS.include?(row["effect"]) }.map { |row| row["id"] }
+    rescue JSON::ParserError => e
+      @findings.add("schema/integration-capability.schema.json: invalid JSON (#{e.message.lines.first.to_s.strip})")
+    rescue JsonSchema::UnsupportedKeyword => e
+      @findings.add("schema/integration-capability.schema.json: #{e.message}")
+    end
+
+    def check_provider_workflows(entry, workflows, sources)
+      workflows.each_value do |row|
+        prefix = "#{entry[:integration]}/workflows.yaml: #{row['id']}"
+        unknown = row.keys - WORKFLOW_FIELDS
+        @findings.add("#{prefix}: unknown fields #{unknown.join(', ')}") unless unknown.empty?
+        %w[name trigger].each { |field| @findings.add("#{prefix}: missing #{field}") if row[field].to_s.empty? }
+        required_lists = %w[steps stop_conditions outputs]
+        required_lists << "sources" unless entry[:integration] == GoogleSearchConsoleValidator::INTEGRATION
+        required_lists << "capabilities" if @provider_capabilities.key?(entry[:integration])
+        required_lists.each { |field| @findings.add("#{prefix}: #{field} must be non-empty") unless non_empty_array?(row[field]) }
+        Array(row["sources"]).each { |id| @findings.add("#{prefix}: unknown source #{id}") unless sources.key?(id) }
+        Array(row["sources"]).each { |id| @provider_used_sources[entry[:integration]] << id }
+        unless entry[:integration] == GoogleSearchConsoleValidator::INTEGRATION
+          Array(row["capabilities"]).each do |id|
+            @findings.add("#{prefix}: unknown capability #{id}") unless @provider_capabilities.fetch(entry[:integration], {}).key?(id)
+            @provider_routed[entry[:integration]] << id
+            @provider_workflow_routed[entry[:integration]] << id
+          end
+        end
+      end
+    end
+
+    def check_provider_evaluations(entry, evaluations, workflows, sources)
+      evaluations.each_value do |row|
+        prefix = "#{entry[:integration]}/evaluations.yaml: #{row['id']}"
+        unknown = row.keys - EVALUATION_FIELDS
+        @findings.add("#{prefix}: unknown fields #{unknown.join(', ')}") unless unknown.empty?
+        %w[scenario expected prohibited].each { |field| @findings.add("#{prefix}: missing #{field}") if row[field].to_s.empty? }
+        @findings.add("#{prefix}: evidence must be non-empty") unless non_empty_array?(row["evidence"])
+        unless entry[:integration] == GoogleSearchConsoleValidator::INTEGRATION
+          @findings.add("#{prefix}: sources must be non-empty") unless non_empty_array?(row["sources"])
+        end
+        if @provider_capabilities.key?(entry[:integration]) && !non_empty_array?(row["capabilities"])
+          @findings.add("#{prefix}: capabilities must be non-empty")
+        end
+        @findings.add("#{prefix}: unknown workflow #{row['workflow']}") unless workflows.key?(row["workflow"])
+        Array(row["sources"]).each { |id| @findings.add("#{prefix}: unknown source #{id}") unless sources.key?(id) }
+        Array(row["sources"]).each { |id| @provider_used_sources[entry[:integration]] << id }
+        unless entry[:integration] == GoogleSearchConsoleValidator::INTEGRATION
+          Array(row["capabilities"]).each do |id|
+            @findings.add("#{prefix}: unknown capability #{id}") unless @provider_capabilities.fetch(entry[:integration], {}).key?(id)
+            @provider_routed[entry[:integration]] << id
+            @provider_evaluation_routed[entry[:integration]] << id
+          end
+        end
+      end
+      return if entry[:integration] == GoogleSearchConsoleValidator::INTEGRATION
+
+      integration = entry[:integration]
+      @provider_capabilities.fetch(integration, {}).each_key do |id|
+        @findings.add("#{integration}/capabilities.yaml: capability #{id} is not routed through a workflow") unless @provider_workflow_routed[integration].include?(id)
+        @findings.add("#{integration}/capabilities.yaml: capability #{id} is not routed through an evaluation") unless @provider_evaluation_routed[integration].include?(id)
+      end
+      Array(@provider_mutations[integration]).each do |id|
+        @findings.add("#{integration}/capabilities.yaml: mutation #{id} is not routed through a workflow or evaluation") unless @provider_routed[integration].include?(id)
+      end
+      if Array(entry[:document]["features"]).include?("source_usage")
+        unused = sources.keys - @provider_used_sources[integration].uniq
+        unused.each { |id| @findings.add("#{integration}/sources.yaml: source #{id} is not used") }
+      end
+    end
+
+    def non_empty_array?(value) = value.is_a?(Array) && !value.empty?
   end
 end

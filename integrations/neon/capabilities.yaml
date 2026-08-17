@@ -1,0 +1,132 @@
+version: 1
+integration: neon
+reviewed_on: 2026-08-17
+capabilities:
+  - id: NEON-CAP-CONNECT
+    name: Establish bounded application connections
+    interface: postgres_protocol
+    availability: current
+    access: { oauth_scopes: [], property_roles: [application_role] }
+    effect: diagnose
+    approval: none
+    inputs: [runtime type, pooled or direct endpoint, least-privilege role, concurrency and transaction needs]
+    outputs: [connection strategy, verified query and transaction behavior, capacity evidence]
+    data_semantics: [NEON-SEM-CONNECTION]
+    limits: { quotas: [Bound application and database connection concurrency], latency: [Account for scale-to-zero and transaction duration], sampling: [Load-test representative burst and transaction paths], privacy_suppression: [Keep connection strings and query values out of logs], aggregation: [Separate pool process application and database counts], completeness: [A health query does not prove workload capacity], operational: [Use pooled connections for bursty serverless workloads unless session semantics require direct access] }
+    limitations: [Workload and driver behavior determine the correct transport]
+    verification: [Exercise concurrency timeout transaction and reconnect paths]
+    idempotency: Connection retries must not replay non-idempotent transactions.
+    rollback: Revert the endpoint and pool configuration and terminate stale credentials.
+    sources: [NEON-SRC-CONNECT, NEON-SRC-POOL, NEON-SRC-AUTOSCALE]
+  - id: NEON-CAP-BRANCH
+    name: Create and retire an isolated database branch
+    interface: neon_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [branch_operator] }
+    effect: mutate_reversible
+    approval: bounded
+    inputs: [source branch or timestamp, purpose, data classification, owner and expiry]
+    outputs: [branch and endpoint IDs, inherited-data classification, expiry record]
+    data_semantics: [NEON-SEM-BRANCH, NEON-SEM-RECOVERY]
+    limits: { quotas: [Respect branch compute and storage limits], latency: [Branch creation is fast but endpoint readiness is asynchronous], sampling: [Verify each branch purpose and expiry], privacy_suppression: [Do not expose connection strings], aggregation: [Bind branch to preview environment and owner], completeness: [Branch deletion does not erase exported data], operational: [Prevent preview services from reaching production external systems] }
+    limitations: [Inherits source data unless created from an empty or sanitized source]
+    verification: [Inspect source lineage role boundaries environment bindings and expiry]
+    idempotency: Reconcile branch identity by purpose and environment before creating another.
+    rollback: Delete the branch and revoke its credentials after confirming required evidence retention.
+    sources: [NEON-SRC-BRANCH, NEON-SRC-RESTORE]
+  - id: NEON-CAP-MIGRATION
+    name: Apply a schema or data migration
+    interface: postgres_protocol
+    availability: current
+    access: { oauth_scopes: [], property_roles: [migration_role] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: [exact migration set, target branch and database, compatibility and rollback plan]
+    outputs: [migration version, affected objects and rows, verification and timing evidence]
+    data_semantics: [NEON-SEM-CONNECTION, NEON-SEM-BRANCH]
+    limits: { quotas: [Bound locks rows duration and concurrent connections], latency: [Long locks and backfills can exceed runtime limits], sampling: [Test representative data volume and query plans], privacy_suppression: [Exclude row values from general evidence], aggregation: [Bind schema version application version and branch], completeness: [Successful DDL does not prove application compatibility], operational: [Use expand migrate contract and resumable backfills where required] }
+    limitations: [Some schema and data effects are not transactionally reversible]
+    verification: [Inspect schema constraints query plans application compatibility and representative data]
+    idempotency: Migrations and backfills must detect prior progress and converge safely.
+    rollback: Execute the tested reversal or forward repair without dropping data needed by the prior application.
+    sources: [NEON-SRC-BRANCH, NEON-SRC-CONNECT]
+  - id: NEON-CAP-RESTORE
+    name: Restore database state from history
+    interface: neon_console
+    availability: current
+    access: { oauth_scopes: [], property_roles: [recovery_operator] }
+    effect: human_only
+    approval: human_only
+    inputs: [exact project branch timestamp scope, incident authority, external reconciliation plan]
+    outputs: [restored branch or state, lost-write boundary, reconciliation record]
+    data_semantics: [NEON-SEM-BRANCH, NEON-SEM-RECOVERY]
+    limits: { quotas: [Confirm current restore window and plan limits], latency: [Recovery and application reconciliation take separate time], sampling: [Verify critical tables constraints and journeys], privacy_suppression: [Protect restored sensitive data and credentials], aggregation: [Align database time with queues caches payments and downstream systems], completeness: [Database restore does not restore external systems], operational: [Preserve the damaged state when needed for investigation] }
+    limitations: [Can discard valid writes and create conflicts with external effects]
+    verification: [Verify selected timestamp data integrity application behavior and external reconciliation]
+    idempotency: Repeated recovery attempts require distinct recorded targets and must not overwrite evidence.
+    rollback: Preserve or recreate the pre-restore branch when possible and follow the incident decision.
+    sources: [NEON-SRC-RESTORE, NEON-SRC-BRANCH]
+  - id: NEON-CAP-NETWORK
+    name: Change database network access restrictions
+    interface: neon_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [database_operator] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: [exact project and branch, trusted CIDRs, runtime egress inventory, break-glass path]
+    outputs: [effective allow policy, accepted and denied connectivity evidence]
+    data_semantics: [NEON-SEM-CONNECTION]
+    limits: { quotas: [Keep allow entries minimal], latency: [Network changes can interrupt active clients], sampling: [Test every authorized runtime and representative denied source], privacy_suppression: [Do not disclose sensitive network topology broadly], aggregation: [Map allow entries to owners and consumers], completeness: [Network restriction does not replace database authentication], operational: [Coordinate dynamic egress and emergency access before enforcement] }
+    limitations: [Incorrect policy can cause an outage or leave unintended access]
+    verification: [Test allowed and denied paths and inspect effective policy]
+    idempotency: Reconcile policy as a set and avoid accumulating stale entries.
+    rollback: Restore the prior exact policy through an authenticated break-glass route.
+    sources: [NEON-SRC-IP, NEON-SRC-CONNECT]
+  - id: NEON-CAP-EGRESS
+    name: Audit query egress and overfetch
+    interface: postgres_protocol
+    availability: current
+    access: { oauth_scopes: [], property_roles: [application_role, database_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [query statistics, schema widths, selected columns, pagination and response contracts]
+    outputs: [ranked transfer drivers, bounded query findings, before and after measurements]
+    data_semantics: [NEON-SEM-CONNECTION]
+    limits: { quotas: [Bound diagnostic queries and result rows], latency: [Collect over a representative window], sampling: [Include high-row wide-row and high-frequency queries], privacy_suppression: [Do not export query parameters or row contents], aggregation: [Attribute transfer by normalized query and consumer], completeness: [Row count alone does not measure byte width], operational: [Select required columns paginate and aggregate safely in Postgres] }
+    limitations: [Application response changes require consumer compatibility review]
+    verification: [Reset or bound statistics then compare representative transfer and response shape]
+    idempotency: Diagnostic reads have no intended data mutation.
+    rollback: Restore the prior query shape if a consumer contract regresses.
+    sources: [NEON-SRC-EGRESS]
+  - id: NEON-CAP-READ-REPLICA
+    name: Audit read-replica routing and freshness
+    interface: postgres_protocol
+    availability: current
+    access: { oauth_scopes: [], property_roles: [application_role, database_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [query consistency requirement, endpoint mapping, replica freshness and failover behavior]
+    outputs: [routing decision, stale-read tests, primary fallback bounds]
+    data_semantics: [NEON-SEM-CONNECTION, NEON-SEM-BRANCH]
+    limits: { quotas: [Bound replica and primary load], latency: [Replica freshness and wake time vary], sampling: [Exercise read-after-write stale and unavailable replica paths], privacy_suppression: [Keep connection credentials out of evidence], aggregation: [Attribute queries by endpoint role and consistency class], completeness: [A successful replica query does not prove freshness], operational: [Keep writes and consistency-sensitive reads on an authorized primary path] }
+    limitations: [Read replicas do not replace application consistency decisions]
+    verification: [Run timestamped write and read probes through every intended route]
+    idempotency: Read probes use isolated test records and repeat safely.
+    rollback: Route affected reads to the primary within its capacity bound.
+    sources: [NEON-SRC-REPLICAS]
+  - id: NEON-CAP-LOGICAL-REPLICATION
+    name: Audit logical replication and CDC lifecycle
+    interface: postgres_protocol
+    availability: current
+    access: { oauth_scopes: [], property_roles: [database_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [publication slot subscriber credential table and retention inventory]
+    outputs: [replication completeness, lag and slot-retention findings, deletion and exit evidence]
+    data_semantics: [NEON-SEM-CONNECTION, NEON-SEM-RECOVERY]
+    limits: { quotas: [Bound slots retained WAL and subscriber throughput], latency: [Lag can grow during consumer failure], sampling: [Exercise insert update delete schema and outage cases], privacy_suppression: [Protect replicated data and credentials], aggregation: [Track source LSN slot subscriber and destination checkpoint], completeness: [Connected status does not prove every change applied], operational: [Monitor lag slot growth schema compatibility and credential rotation] }
+    limitations: [Destination correctness and deletion remain cross-system responsibilities]
+    verification: [Compare source changes checkpoint and destination state across an interrupted consumer]
+    idempotency: Restarting from a checkpoint must not duplicate destination effects.
+    rollback: Stop the subscriber safely and remove slots only after retained-change and recovery review.
+    sources: [NEON-SRC-REPLICATION]

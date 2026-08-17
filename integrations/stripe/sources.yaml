@@ -1,0 +1,28 @@
+version: 1
+integration: stripe
+reviewed_on: 2026-08-17
+scope: Payment creation, webhooks, idempotency, and API lifecycle.
+freshness:
+  cadence_days: 92
+  next_review: 2026-11-17
+  event_triggers: [Stripe API version change, payment flow change, webhook delivery incident]
+sources:
+  - { id: STRIPE-SRC-PAYMENTS, title: Payment Intents API, url: "https://docs.stripe.com/payments/payment-intents", topic: payment lifecycle, authority: provider_documentation, volatility: medium }
+  - { id: STRIPE-SRC-WEBHOOKS, title: Webhooks, url: "https://docs.stripe.com/webhooks", topic: webhook verification and delivery, authority: provider_documentation, volatility: medium }
+  - { id: STRIPE-SRC-IDEMPOTENCY, title: Idempotent requests, url: "https://docs.stripe.com/api/idempotent_requests", topic: repeat-safe writes, authority: provider_documentation, volatility: low }
+  - { id: STRIPE-SRC-CONNECT, title: Design a Connect integration, url: "https://docs.stripe.com/connect/design-an-integration", topic: platform responsibilities and money movement, authority: provider_documentation, volatility: high }
+  - { id: STRIPE-SRC-TAX, title: Set up Stripe Tax, url: "https://docs.stripe.com/tax/set-up", topic: registrations and automatic tax, authority: provider_documentation, volatility: high }
+  - { id: STRIPE-SRC-VERSIONING, title: API upgrades, url: "https://docs.stripe.com/upgrades", topic: API and SDK version lifecycle, authority: provider_documentation, volatility: high }
+  - { id: STRIPE-SRC-KEYS, title: API keys, url: "https://docs.stripe.com/keys", topic: credential scope rotation and restriction, authority: provider_documentation, volatility: high }
+  - { id: STRIPE-SRC-BILLING, title: Billing integration, url: "https://docs.stripe.com/billing", topic: subscriptions invoices and entitlements, authority: provider_documentation, volatility: high }
+  - { id: STRIPE-SRC-ENG-IDEMPOTENCY, title: Designing predictable APIs with idempotency, url: "https://stripe.com/blog/idempotency", topic: ambiguous outcomes backoff and jitter, authority: provider_engineering, volatility: low }
+  - { id: STRIPE-SRC-INDEPENDENT-IDEMPOTENCY, title: Building resilient APIs with idempotency, url: "https://shopify.engineering/building-resilient-graphql-apis-using-idempotency/", topic: concurrent attempts recovery points and side-effect partitioning, authority: independent_engineering, volatility: low }
+coverage:
+  - { surface: checkout-and-payment-creation, classification: mapped, capabilities: [STRIPE-CAP-CHECKOUT], sources: [STRIPE-SRC-PAYMENTS, STRIPE-SRC-IDEMPOTENCY, STRIPE-SRC-ENG-IDEMPOTENCY, STRIPE-SRC-INDEPENDENT-IDEMPOTENCY] }
+  - { surface: asynchronous-payment-state, classification: mapped, capabilities: [STRIPE-CAP-WEBHOOK], sources: [STRIPE-SRC-WEBHOOKS] }
+  - { surface: refunds, classification: mapped, capabilities: [STRIPE-CAP-REFUND], sources: [STRIPE-SRC-PAYMENTS, STRIPE-SRC-IDEMPOTENCY] }
+  - { surface: connected-account-money-movement, classification: mapped, capabilities: [STRIPE-CAP-CONNECT-TRANSFER], sources: [STRIPE-SRC-CONNECT, STRIPE-SRC-WEBHOOKS] }
+  - { surface: tax-registration-state, classification: mapped, capabilities: [STRIPE-CAP-TAX-REGISTRATION], sources: [STRIPE-SRC-TAX] }
+  - { surface: api-and-sdk-upgrades, classification: mapped, capabilities: [STRIPE-CAP-API-UPGRADE], sources: [STRIPE-SRC-VERSIONING, STRIPE-SRC-WEBHOOKS] }
+  - { surface: credential-restriction-and-rotation, classification: mapped, capabilities: [STRIPE-CAP-CREDENTIAL], sources: [STRIPE-SRC-KEYS] }
+  - { surface: subscriptions-invoices-and-entitlements, classification: mapped, capabilities: [STRIPE-CAP-BILLING], sources: [STRIPE-SRC-BILLING, STRIPE-SRC-WEBHOOKS] }

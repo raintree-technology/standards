@@ -67,8 +67,3 @@ jobs:
 
       - name: Test integration validator behaviour
         run: ruby scripts/test_validate_integrations.rb
-
-      - name: Parse JSON Schemas and workflow definitions
-        run: |
-          ruby -rjson -e 'Dir["schema/*.json"].sort.each { |path| JSON.parse(File.read(path)) }'
-          ruby -ryaml -e 'Dir[".github/workflows/*.yml"].sort.each { |path| YAML.safe_load(File.read(path), aliases: false) }'

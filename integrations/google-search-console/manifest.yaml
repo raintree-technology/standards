@@ -1,0 +1,21 @@
+version: 1
+integration: google-search-console
+id_prefix: GSC
+playbook: PLAYBOOK-GSC
+reviewed_on: 2026-08-17
+official_domains: [developers.google.com, support.google.com, status.search.google.com, trends.google.com]
+artifacts:
+  sources: sources.yaml
+  capabilities: capabilities.yaml
+  semantics: data-semantics.yaml
+  workflows: workflows.yaml
+  evaluations: evaluations.yaml
+features: [capabilities, coverage, semantics, change_watch, source_usage]
+vocabulary:
+  interfaces: [search_console_api, search_console_ui, bigquery_export, email_notification, indexing_api, external_google_tool]
+  property_roles: [none, restricted_user, full_user, owner, verified_owner, google_cloud_role]
+  oauth_scopes:
+    - https://www.googleapis.com/auth/webmasters.readonly
+    - https://www.googleapis.com/auth/webmasters
+    - https://www.googleapis.com/auth/indexing
+skill_routes: []

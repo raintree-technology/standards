@@ -30,6 +30,8 @@ standards:
     path: data/database-changes.md
   - id: DATA-QUALITY
     path: data/quality.md
+  - id: DATA-REDIS
+    path: data/redis.md
   - id: ENGINEERING-QUALITY
     path: engineering/quality.md
   - id: ENGINEERING-CODE-REMOVAL
@@ -84,6 +86,8 @@ standards:
     path: security/application.md
   - id: SECURITY-SECRETS
     path: security/secrets-management.md
+  - id: INTEGRATIONS-VENDOR
+    path: integrations/vendor-platforms.md
   - id: LEGAL-PUBLISHED-TERMS
     path: legal/published-terms-and-notices.md
 
@@ -102,6 +106,18 @@ playbooks:
     path: playbooks/google-analytics-4.md
   - id: PLAYBOOK-GSC
     path: playbooks/google-search-console.md
+  - id: PLAYBOOK-STRIPE
+    path: playbooks/stripe.md
+  - id: PLAYBOOK-PLAID
+    path: playbooks/plaid.md
+  - id: PLAYBOOK-VERCEL
+    path: playbooks/vercel.md
+  - id: PLAYBOOK-RESEND
+    path: playbooks/resend.md
+  - id: PLAYBOOK-NEON
+    path: playbooks/neon.md
+  - id: PLAYBOOK-CLOUDFLARE
+    path: playbooks/cloudflare.md
   - id: PLAYBOOK-STANDARDS-AUDIT
     path: playbooks/standards-audit.md
 
@@ -126,6 +142,8 @@ profiles:
     path: profiles/public-web-page.md
   - id: PROFILE-RELIABILITY-INCIDENT
     path: profiles/reliability-incident.md
+  - id: PROFILE-REDIS-CHANGE
+    path: profiles/redis-change.md
   - id: PROFILE-SECRETS-MANAGEMENT
     path: profiles/secrets-management.md
   - id: PROFILE-SERVICE-API

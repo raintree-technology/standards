@@ -1,0 +1,19 @@
+version: 1
+integration: plaid
+reviewed_on: 2026-08-17
+concepts:
+  - id: PLAID-SEM-TOKEN-BOUNDARY
+    name: Token boundary
+    definition: A link token is short-lived client input, a public token is exchanged once on the server, and an access token remains server-only.
+    cautions: [Do not log tokens, do not expose access tokens to browsers or mobile clients]
+    sources: [PLAID-SRC-LINK, PLAID-SRC-TOKENS, PLAID-SRC-SECURITY]
+  - id: PLAID-SEM-ITEM-STATE
+    name: Item and product state
+    definition: Item health, consent, institution state, product readiness, and webhook delivery are distinct and may change asynchronously.
+    cautions: [A successful Link flow does not prove current data availability, webhook order and delivery may not match local assumptions]
+    sources: [PLAID-SRC-LINK, PLAID-SRC-WEBHOOKS]
+  - id: PLAID-SEM-DATA-SCOPE
+    name: Financial data scope
+    definition: Product selection, account selection, user permission, retention, and downstream use jointly bound the allowed data flow.
+    cautions: [Do not request products speculatively, removal must address derived copies and downstream recipients]
+    sources: [PLAID-SRC-TOKENS, PLAID-SRC-SECURITY]

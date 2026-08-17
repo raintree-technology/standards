@@ -62,7 +62,8 @@ module Standards
       return nil unless front_matter?
 
       label = "#{@relative}: front matter"
-      YamlSource.duplicate_keys(Psych.parse_stream(@raw_front_matter), label, @findings)
+      tree = Psych.parse_stream(@raw_front_matter)
+      return nil unless YamlSource.duplicate_keys(tree, label, @findings)
       parsed = YAML.safe_load(@raw_front_matter, permitted_classes: permitted_classes, aliases: false)
       return parsed if parsed.is_a?(Hash)
 

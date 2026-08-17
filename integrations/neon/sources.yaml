@@ -1,0 +1,28 @@
+version: 1
+integration: neon
+reviewed_on: 2026-08-17
+scope: Connection strategy, pooling, branches, migrations, and recovery for Neon Postgres.
+freshness:
+  cadence_days: 92
+  next_review: 2026-11-17
+  event_triggers: [Neon platform change, database driver change, migration or recovery incident]
+sources:
+  - { id: NEON-SRC-CONNECT, title: Connect from any application, url: "https://neon.com/docs/connect/connect-from-any-app", topic: connection strings and drivers, authority: provider_documentation, volatility: medium }
+  - { id: NEON-SRC-POOL, title: Connection pooling, url: "https://neon.com/docs/connect/connection-pooling", topic: pooled connections, authority: provider_documentation, volatility: medium }
+  - { id: NEON-SRC-BRANCH, title: Branching, url: "https://neon.com/docs/introduction/branching", topic: isolated database branches, authority: provider_documentation, volatility: medium }
+  - { id: NEON-SRC-RESTORE, title: Branch restore, url: "https://neon.com/docs/introduction/branch-restore", topic: point-in-time recovery, authority: provider_documentation, volatility: high }
+  - { id: NEON-SRC-AUTOSCALE, title: Autoscaling, url: "https://neon.com/docs/introduction/autoscaling", topic: compute bounds and scaling, authority: provider_documentation, volatility: high }
+  - { id: NEON-SRC-IP, title: IP Allow, url: "https://neon.com/docs/introduction/ip-allow", topic: network access restrictions, authority: provider_documentation, volatility: high }
+  - { id: NEON-SRC-EGRESS, title: Network transfer, url: "https://neon.com/docs/introduction/network-transfer", topic: database egress measurement and cost, authority: provider_documentation, volatility: high }
+  - { id: NEON-SRC-REPLICAS, title: Read replicas, url: "https://neon.com/docs/introduction/read-replicas", topic: read scaling and freshness, authority: provider_documentation, volatility: high }
+  - { id: NEON-SRC-REPLICATION, title: Logical replication, url: "https://neon.com/docs/guides/logical-replication-guide", topic: CDC slots publications and external data movement, authority: provider_documentation, volatility: high }
+  - { id: NEON-SRC-ENG-CONNECTIONS, title: Quicker serverless Postgres connections, url: "https://neon.com/blog/quicker-serverless-postgres", topic: serverless connection round trips and transport tradeoffs, authority: provider_engineering, volatility: medium }
+coverage:
+  - { surface: runtime-connections-and-pooling, classification: mapped, capabilities: [NEON-CAP-CONNECT], sources: [NEON-SRC-CONNECT, NEON-SRC-POOL, NEON-SRC-AUTOSCALE, NEON-SRC-ENG-CONNECTIONS] }
+  - { surface: branch-lifecycle, classification: mapped, capabilities: [NEON-CAP-BRANCH], sources: [NEON-SRC-BRANCH] }
+  - { surface: schema-and-data-migrations, classification: mapped, capabilities: [NEON-CAP-MIGRATION], sources: [NEON-SRC-BRANCH, NEON-SRC-CONNECT] }
+  - { surface: point-in-time-recovery, classification: mapped, capabilities: [NEON-CAP-RESTORE], sources: [NEON-SRC-RESTORE] }
+  - { surface: network-access-policy, classification: mapped, capabilities: [NEON-CAP-NETWORK], sources: [NEON-SRC-IP] }
+  - { surface: query-egress-and-overfetch, classification: mapped, capabilities: [NEON-CAP-EGRESS], sources: [NEON-SRC-EGRESS] }
+  - { surface: read-replica-routing, classification: mapped, capabilities: [NEON-CAP-READ-REPLICA], sources: [NEON-SRC-REPLICAS] }
+  - { surface: logical-replication-and-cdc, classification: mapped, capabilities: [NEON-CAP-LOGICAL-REPLICATION], sources: [NEON-SRC-REPLICATION] }

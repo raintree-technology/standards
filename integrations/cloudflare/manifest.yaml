@@ -1,0 +1,17 @@
+version: 1
+integration: cloudflare
+id_prefix: CLOUDFLARE
+playbook: PLAYBOOK-CLOUDFLARE
+reviewed_on: 2026-08-17
+official_domains: [developers.cloudflare.com, cloudflare.com]
+artifacts: { sources: sources.yaml, capabilities: capabilities.yaml, semantics: data-semantics.yaml, workflows: workflows.yaml, evaluations: evaluations.yaml }
+features: [capabilities, coverage, semantics, source_usage]
+vocabulary:
+  interfaces: [workers_runtime, wrangler_cli, cloudflare_api, cloudflare_dashboard]
+  property_roles: [worker_service, deployment_automation, platform_operator, security_operator, telemetry_operator]
+  oauth_scopes: []
+skill_routes:
+  - { name: "cloudflare:cloudflare", availability: when_available, authority: review_aid }
+  - { name: "cloudflare:workers-best-practices", availability: when_available, authority: review_aid }
+  - { name: "cloudflare:wrangler", availability: when_available, authority: review_aid }
+  - { name: "cloudflare:durable-objects", availability: when_available, authority: review_aid }

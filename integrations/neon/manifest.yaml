@@ -1,0 +1,15 @@
+version: 1
+integration: neon
+id_prefix: NEON
+playbook: PLAYBOOK-NEON
+reviewed_on: 2026-08-17
+official_domains: [neon.com]
+artifacts: { sources: sources.yaml, capabilities: capabilities.yaml, semantics: data-semantics.yaml, workflows: workflows.yaml, evaluations: evaluations.yaml }
+features: [capabilities, coverage, semantics, source_usage]
+vocabulary:
+  interfaces: [postgres_protocol, neon_api, neon_cli, neon_console]
+  property_roles: [application_role, migration_role, branch_operator, database_operator, recovery_operator]
+  oauth_scopes: []
+skill_routes:
+  - { name: "neon-postgres:neon-postgres", availability: when_available, authority: review_aid }
+  - { name: "neon-postgres:neon-postgres-egress-optimizer", availability: when_available, authority: review_aid }

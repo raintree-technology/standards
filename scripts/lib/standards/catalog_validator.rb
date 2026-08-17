@@ -5,6 +5,7 @@ require "time"
 
 require_relative "document"
 require_relative "findings"
+require_relative "input_limits"
 require_relative "json_schema"
 require_relative "paths"
 require_relative "yaml_source"
@@ -81,6 +82,8 @@ module Standards
     end
 
     def run
+      return self unless InputLimits.validate(@root, @findings)
+
       @catalog = YamlSource.load_file(File.join(@root, "catalog.yaml"), "catalog.yaml", @findings, permitted_classes: [Date])
       @sections = catalog_sections
       @entries = GOVERNED_KEYS.flat_map { |key| @sections.fetch(key) }

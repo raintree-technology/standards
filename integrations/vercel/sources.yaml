@@ -1,0 +1,32 @@
+version: 1
+integration: vercel
+reviewed_on: 2026-08-17
+scope: Deployments, environment variables, observability, and firewall controls.
+freshness:
+  cadence_days: 92
+  next_review: 2026-11-17
+  event_triggers: [Vercel platform change, deployment pipeline change, security incident]
+sources:
+  - { id: VERCEL-SRC-DEPLOY, title: Deployments, url: "https://vercel.com/docs/deployments", topic: build and promotion lifecycle, authority: provider_documentation, volatility: medium }
+  - { id: VERCEL-SRC-ENV, title: Environment variables, url: "https://vercel.com/docs/environment-variables", topic: scoped configuration, authority: provider_documentation, volatility: medium }
+  - { id: VERCEL-SRC-OBS, title: Observability, url: "https://vercel.com/docs/observability", topic: logs metrics and traces, authority: provider_documentation, volatility: medium }
+  - { id: VERCEL-SRC-FW, title: Firewall, url: "https://vercel.com/docs/vercel-firewall", topic: traffic controls, authority: provider_documentation, volatility: medium }
+  - { id: VERCEL-SRC-FUNCTIONS, title: Vercel Functions, url: "https://vercel.com/docs/functions", topic: runtime region duration and background work, authority: provider_documentation, volatility: high }
+  - { id: VERCEL-SRC-ROUTING, title: Routing middleware, url: "https://vercel.com/docs/routing-middleware", topic: interception rewrite and authorization boundaries, authority: provider_documentation, volatility: high }
+  - { id: VERCEL-SRC-CACHE, title: Caching, url: "https://vercel.com/docs/caching", topic: CDN ISR and invalidation behavior, authority: provider_documentation, volatility: high }
+  - { id: VERCEL-SRC-CRON, title: Cron jobs, url: "https://vercel.com/docs/cron-jobs", topic: scheduled invocation and security, authority: provider_documentation, volatility: high }
+  - { id: VERCEL-SRC-STORAGE, title: Storage, url: "https://vercel.com/docs/storage", topic: Blob Edge Config and marketplace storage routing, authority: provider_documentation, volatility: high }
+  - { id: VERCEL-SRC-SKEW, title: Skew Protection, url: "https://vercel.com/docs/skew-protection", topic: client and server deployment version alignment, authority: provider_documentation, volatility: high }
+  - { id: VERCEL-SRC-ENG-REQUEST, title: Life of a Vercel request, url: "https://vercel.com/blog/life-of-a-request-application-aware-routing", topic: immutable deployment routing and rollback design, authority: provider_engineering, volatility: medium }
+coverage:
+  - { surface: build-and-deployment, classification: mapped, capabilities: [VERCEL-CAP-DEPLOY], sources: [VERCEL-SRC-DEPLOY, VERCEL-SRC-ENV] }
+  - { surface: production-promotion-and-rollback, classification: mapped, capabilities: [VERCEL-CAP-PROMOTE], sources: [VERCEL-SRC-DEPLOY, VERCEL-SRC-SKEW, VERCEL-SRC-ENG-REQUEST] }
+  - { surface: environment-configuration, classification: mapped, capabilities: [VERCEL-CAP-ENV], sources: [VERCEL-SRC-ENV] }
+  - { surface: runtime-observation, classification: mapped, capabilities: [VERCEL-CAP-OBSERVE], sources: [VERCEL-SRC-OBS] }
+  - { surface: telemetry-drains, classification: mapped, capabilities: [VERCEL-CAP-DRAIN], sources: [VERCEL-SRC-OBS] }
+  - { surface: firewall-rules-and-emergency-controls, classification: mapped, capabilities: [VERCEL-CAP-FIREWALL], sources: [VERCEL-SRC-FW] }
+  - { surface: function-runtime-and-background-work, classification: mapped, capabilities: [VERCEL-CAP-FUNCTION], sources: [VERCEL-SRC-FUNCTIONS, VERCEL-SRC-DEPLOY] }
+  - { surface: routing-middleware-and-version-skew, classification: mapped, capabilities: [VERCEL-CAP-ROUTING], sources: [VERCEL-SRC-ROUTING, VERCEL-SRC-SKEW] }
+  - { surface: cdn-isr-and-runtime-caching, classification: mapped, capabilities: [VERCEL-CAP-CACHE], sources: [VERCEL-SRC-CACHE] }
+  - { surface: cron-and-scheduled-invocation, classification: mapped, capabilities: [VERCEL-CAP-CRON], sources: [VERCEL-SRC-CRON] }
+  - { surface: blob-edge-config-and-marketplace-storage, classification: mapped, capabilities: [VERCEL-CAP-STORAGE], sources: [VERCEL-SRC-STORAGE, VERCEL-SRC-ENV] }

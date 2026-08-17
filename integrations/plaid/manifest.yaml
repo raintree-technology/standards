@@ -1,0 +1,14 @@
+version: 1
+integration: plaid
+id_prefix: PLAID
+playbook: PLAYBOOK-PLAID
+reviewed_on: 2026-08-17
+official_domains: [plaid.com]
+artifacts: { sources: sources.yaml, capabilities: capabilities.yaml, semantics: data-semantics.yaml, workflows: workflows.yaml, evaluations: evaluations.yaml }
+features: [capabilities, coverage, semantics, source_usage]
+vocabulary:
+  interfaces: [plaid_api, plaid_link, plaid_webhook, plaid_dashboard]
+  property_roles: [backend_service, link_client, webhook_processor, data_operator, security_operator]
+  oauth_scopes: []
+skill_routes:
+  - { name: plaid, availability: not_available, authority: review_aid }

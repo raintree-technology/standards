@@ -1,0 +1,100 @@
+version: 1
+integration: plaid
+reviewed_on: 2026-08-17
+capabilities:
+  - id: PLAID-CAP-LINK
+    name: Create and complete a Link session
+    interface: plaid_link
+    availability: current
+    access: { oauth_scopes: [], property_roles: [backend_service, link_client] }
+    effect: mutate_reversible
+    approval: bounded
+    inputs: [user binding, exact products, country and language, redirect and webhook locations]
+    outputs: [link token, public token, selected institution and account metadata]
+    data_semantics: [PLAID-SEM-TOKEN-BOUNDARY, PLAID-SEM-ITEM-STATE, PLAID-SEM-DATA-SCOPE]
+    limits: { quotas: [Respect current Link and API limits], latency: [Link tokens expire and sessions can be interrupted], sampling: [Exercise every enabled product path], privacy_suppression: [Minimize client-visible metadata], aggregation: [Bind Link results to one internal user], completeness: [Link completion does not prove product readiness], operational: [Use redirect and update-mode behavior required by the selected products] }
+    limitations: [Client success is not durable access or fresh data]
+    verification: [Verify the user binding and exchange the returned public token once on the server]
+    idempotency: Create a new Link token for a new session and prevent one public token from driving multiple Items.
+    rollback: Expire the local session and discard unexchanged public-token material.
+    sources: [PLAID-SRC-LINK, PLAID-SRC-TOKENS]
+  - id: PLAID-CAP-TOKEN-EXCHANGE
+    name: Exchange a public token for server credentials
+    interface: plaid_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [backend_service] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: [public token, internal user and consent record]
+    outputs: [access token, item ID, governed credential record]
+    data_semantics: [PLAID-SEM-TOKEN-BOUNDARY, PLAID-SEM-DATA-SCOPE]
+    limits: { quotas: [Exchange each public token once], latency: [Treat ambiguous exchange failures as unknown], sampling: [No sampling], privacy_suppression: [Never log or return access tokens], aggregation: [Bind one Item to the correct user and environment], completeness: [Exchange does not prove all products are ready], operational: [Persist credentials only in the approved secret boundary] }
+    limitations: [Creates durable authority to financial data]
+    verification: [Read the resulting Item using server-only credentials, inspect secret placement]
+    idempotency: Persist exchange state by public-token operation and reconcile ambiguous outcomes.
+    rollback: Remove the Item and delete retained credentials under the governed revocation path.
+    sources: [PLAID-SRC-TOKENS, PLAID-SRC-SECURITY]
+  - id: PLAID-CAP-DATA-READ
+    name: Read enabled product data
+    interface: plaid_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [backend_service, data_operator] }
+    effect: observe
+    approval: none
+    inputs: [server-held access token, enabled product, bounded account and time scope]
+    outputs: [provider data, request ID, freshness and pagination state]
+    data_semantics: [PLAID-SEM-ITEM-STATE, PLAID-SEM-DATA-SCOPE]
+    limits: { quotas: [Honor product-specific request limits], latency: [Data freshness varies by institution and product], sampling: [Declare pagination and selected accounts], privacy_suppression: [Return and retain only approved fields], aggregation: [Preserve institution account item and user boundaries], completeness: [Absence may mean delay error consent or true absence], operational: [Handle product-specific error and update states] }
+    limitations: [Provider data can be delayed corrected or incomplete]
+    verification: [Record request IDs freshness pagination and reconciliation with the product state]
+    idempotency: Reads must not create duplicate downstream records.
+    rollback: Remove incorrectly retained or derived data through the data lifecycle process.
+    sources: [PLAID-SRC-TOKENS, PLAID-SRC-WEBHOOKS, PLAID-SRC-SECURITY]
+  - id: PLAID-CAP-WEBHOOK
+    name: Verify and process Plaid webhooks
+    interface: plaid_webhook
+    availability: current
+    access: { oauth_scopes: [], property_roles: [webhook_processor] }
+    effect: diagnose
+    approval: none
+    inputs: [raw webhook, verification material, item and product state]
+    outputs: [authenticity decision, persisted event, reconciled product state]
+    data_semantics: [PLAID-SEM-ITEM-STATE]
+    limits: { quotas: [Bound redelivery and downstream work], latency: [Events can be delayed], sampling: [Process every relevant event], privacy_suppression: [Do not log sensitive payload fields], aggregation: [Deduplicate by stable event facts and resulting state], completeness: [Webhook delivery is a signal rather than the complete data record], operational: [Fetch authoritative state before consequential downstream changes] }
+    limitations: [Not every product event contains complete state]
+    verification: [Reject invalid authenticity evidence, replay duplicates, reconcile from the API]
+    idempotency: Persist the event and resulting transition before acknowledging.
+    rollback: Recompute local state from the authoritative Item and product state.
+    sources: [PLAID-SRC-WEBHOOKS]
+  - id: PLAID-CAP-ITEM-REMOVE
+    name: Remove a Plaid Item and revoke access
+    interface: plaid_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [security_operator, data_operator] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: [exact Item and user, revocation reason, data disposition decision]
+    outputs: [provider removal result, credential deletion, downstream cleanup state]
+    data_semantics: [PLAID-SEM-TOKEN-BOUNDARY, PLAID-SEM-DATA-SCOPE]
+    limits: { quotas: [One removal decision per Item], latency: [Downstream deletion may be asynchronous], sampling: [Verify every requested Item], privacy_suppression: [Keep tokens out of evidence], aggregation: [Trace raw derived cached exported and backup copies], completeness: [Provider removal does not delete every local or recipient copy], operational: [Coordinate revocation with retention and legal-hold rules] }
+    limitations: [Removal is consequential and may be irreversible]
+    verification: [Confirm provider access fails and every governed local copy reaches its required disposition]
+    idempotency: Repeated removal requests must converge on removed state.
+    rollback: Reconnection requires a new user-approved Link flow.
+    sources: [PLAID-SRC-TOKENS, PLAID-SRC-WEBHOOKS, PLAID-SRC-SECURITY]
+  - id: PLAID-CAP-TRANSACTIONS-SYNC
+    name: Audit a cursor-based Transactions projection
+    interface: plaid_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [backend_service, data_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [Item identity, committed cursor, page responses, local transaction projection]
+    outputs: [cursor and projection consistency result, restart evidence, reconciliation gaps]
+    data_semantics: [PLAID-SEM-ITEM-STATE, PLAID-SEM-DATA-SCOPE]
+    limits: { quotas: [Bound page and catch-up requests], latency: [Updates and webhooks can be delayed], sampling: [Exercise add modify remove and mutation-during-pagination], privacy_suppression: [Minimize transaction data in audit evidence], aggregation: [Commit page changes and cursor atomically per Item], completeness: [A webhook is only a wake-up signal], operational: [Continue until has_more is false and use the documented restart path] }
+    limitations: [Applies only when the Transactions Sync product is enabled]
+    verification: [Replay from a prior cursor and compare the converged local projection with Plaid]
+    idempotency: Reprocessing the same cursor page must not duplicate or regress transactions.
+    rollback: Restore the last consistent projection and cursor then resume the documented sync path.
+    sources: [PLAID-SRC-TRANSACTIONS-SYNC, PLAID-SRC-WEBHOOKS]

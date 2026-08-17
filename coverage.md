@@ -3,18 +3,21 @@ type: Reference
 title: Version 1 coverage matrix
 description: Maps the bounded Raintree v1 task surface to governed standards, profiles, playbooks, and remaining approval work.
 tags: [coverage, v1, standards, profiles]
-generated: { by: codex/gpt-5, at: "2026-08-17T09:04:00Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T17:08:47Z" }
 ---
 
 # Version 1 coverage matrix
 
-The bounded v1 baseline covers recurring product, engineering, service, data, web, UI, marketing-lifecycle, AI, and operational work. “Authored” means the rules and routes exist; it does not mean independent or qualified approval is complete.
+Use this matrix to find the governed route and approval state for a recurring work
+area. The bounded version 1 baseline covers product, engineering, services, data, web,
+interfaces, lifecycle marketing, AI, and operations. “Authored” means that rules and
+routes exist; it does not mean that independent or qualified approval is complete.
 
 | Work area | Required standards and profiles | Vendor or platform playbook | V1 state |
 |---|---|---|---|
 | Agentic systems | `AI-AGENTS`, `ENGINEERING-QUALITY`, agentic profile; `ENGINEERING-JS-QUALITY` for JavaScript and TypeScript | Trellis for JavaScript and TypeScript; vendored anti-slop through Oxlint for TypeScript | Authored; qualified review pending |
 | Programmatic interfaces and services | `API-CONTRACTS`, `ENGINEERING-QUALITY`, `ENGINEERING-JS-QUALITY` for JavaScript and TypeScript, `OPERATIONS-RELIABILITY`, programmatic-interface/service profile | Trellis for JavaScript and TypeScript; vendored anti-slop through Oxlint for TypeScript | Authored; qualified review pending |
-| Database and data | `DATA-DATABASE`, `DATA-QUALITY`, database-change profile; `ENGINEERING-JS-QUALITY` for JavaScript and TypeScript tooling | Trellis for JavaScript and TypeScript; vendored anti-slop through Oxlint for TypeScript; GA4 when an analytics implementation | Authored; qualified review pending |
+| Database and data | `DATA-DATABASE`, `DATA-QUALITY`, `DATA-REDIS`, database-change and Redis-change profiles; `ENGINEERING-JS-QUALITY` for JavaScript and TypeScript tooling | Trellis for JavaScript and TypeScript; vendored anti-slop through Oxlint for TypeScript; GA4 when an analytics implementation | Authored; Redis draft and qualified review pending |
 | Product delivery | `PRODUCT-DELIVERY`, product-feature profile; `ENGINEERING-JS-QUALITY` for JavaScript and TypeScript | Trellis for JavaScript and TypeScript; vendored anti-slop through Oxlint for TypeScript | Authored; qualified review pending |
 | Universal UI and content | `DESIGN-INTERACTION`, `FND-ACCESSIBILITY`, `CONTENT-INTERFACE`, UI-feature profile; `ENGINEERING-JS-QUALITY` for JavaScript and TypeScript | Trellis for JavaScript and TypeScript; vendored anti-slop through Oxlint for TypeScript | Authored; accessibility review pending |
 | Apple interfaces | Universal UI corpus and Apple-interface profile | Apple HIG audit | Authored; platform review pending |
@@ -29,6 +32,7 @@ The bounded v1 baseline covers recurring product, engineering, service, data, we
 | Reliability and incidents | `OPERATIONS-RELIABILITY`, `FND-CHANGE`, reliability/incident profile | None | Authored; operations and security review pending |
 | Privacy and application security | `PRIVACY-DATA`, `SECURITY-APPLICATION` | None | Existing drafts; qualified review pending |
 | Secrets and credentials | `SECURITY-SECRETS`, secrets/Infisical profile | None; Infisical is required by the standard | Authored; qualified security and operations review pending |
+| External platforms | `INTEGRATIONS-VENDOR` plus the closest task profile | Separate Stripe, Plaid, Vercel, Resend, Neon, and Cloudflare playbooks with manifest-backed review bundles | Post-v1 drafts; provider-domain review pending |
 
 ## Cross-cutting foundations
 

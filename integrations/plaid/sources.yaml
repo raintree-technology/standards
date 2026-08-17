@@ -1,0 +1,21 @@
+version: 1
+integration: plaid
+reviewed_on: 2026-08-17
+scope: Link tokens, public-token exchange, webhooks, environments, and data access.
+freshness:
+  cadence_days: 92
+  next_review: 2026-11-17
+  event_triggers: [Plaid API or Link change, product-scope change, webhook incident]
+sources:
+  - { id: PLAID-SRC-LINK, title: Link, url: "https://plaid.com/docs/link/", topic: Link token and client flow, authority: provider_documentation, volatility: medium }
+  - { id: PLAID-SRC-TOKENS, title: API access, url: "https://plaid.com/docs/api/", topic: token exchange and server calls, authority: provider_documentation, volatility: medium }
+  - { id: PLAID-SRC-WEBHOOKS, title: Webhooks, url: "https://plaid.com/docs/api/webhooks/", topic: asynchronous updates, authority: provider_documentation, volatility: medium }
+  - { id: PLAID-SRC-SECURITY, title: Plaid security guidance, url: "https://plaid.com/docs/account/security/", topic: credentials and data protection, authority: provider_documentation, volatility: medium }
+  - { id: PLAID-SRC-TRANSACTIONS-SYNC, title: Transactions Sync, url: "https://plaid.com/docs/transactions/sync-migration/", topic: cursor pagination and mutation recovery, authority: provider_documentation, volatility: high }
+coverage:
+  - { surface: link-token-and-client-flow, classification: mapped, capabilities: [PLAID-CAP-LINK], sources: [PLAID-SRC-LINK] }
+  - { surface: public-token-exchange, classification: mapped, capabilities: [PLAID-CAP-TOKEN-EXCHANGE], sources: [PLAID-SRC-TOKENS, PLAID-SRC-SECURITY] }
+  - { surface: product-data-access, classification: mapped, capabilities: [PLAID-CAP-DATA-READ], sources: [PLAID-SRC-TOKENS, PLAID-SRC-SECURITY] }
+  - { surface: item-and-product-webhooks, classification: mapped, capabilities: [PLAID-CAP-WEBHOOK], sources: [PLAID-SRC-WEBHOOKS] }
+  - { surface: item-removal-and-revocation, classification: mapped, capabilities: [PLAID-CAP-ITEM-REMOVE], sources: [PLAID-SRC-TOKENS, PLAID-SRC-WEBHOOKS] }
+  - { surface: transactions-cursor-sync, classification: mapped, capabilities: [PLAID-CAP-TRANSACTIONS-SYNC], sources: [PLAID-SRC-TRANSACTIONS-SYNC, PLAID-SRC-WEBHOOKS] }

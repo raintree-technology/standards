@@ -1,0 +1,84 @@
+version: 1
+integration: resend
+reviewed_on: 2026-08-17
+capabilities:
+  - id: RESEND-CAP-DOMAIN
+    name: Configure an authenticated sending domain
+    interface: resend_dashboard
+    availability: current
+    access: { oauth_scopes: [], property_roles: [domain_operator] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: [exact domain and sender purpose, DNS records, ownership and rotation plan]
+    outputs: [provider domain state, DNS authentication evidence]
+    data_semantics: [RESEND-SEM-MESSAGE-CLASS]
+    limits: { quotas: [Respect domain and account limits], latency: [DNS propagation and verification are asynchronous], sampling: [Verify every sending domain], privacy_suppression: [Do not expose DNS control credentials], aggregation: [Bind domain sender and message classes], completeness: [Provider verification does not prove inbox placement], operational: [Separate test and production senders where practical] }
+    limitations: [Requires control of external DNS and reputation management]
+    verification: [Inspect provider verification and public DNS records]
+    idempotency: Reconcile existing domain state before adding records.
+    rollback: Remove sending authorization and provider domain configuration after confirming dependent senders.
+    sources: [RESEND-SRC-DOMAINS]
+  - id: RESEND-CAP-SEND
+    name: Send a transactional message
+    interface: resend_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [sending_service] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: [message class, recipient, authenticated sender, template version, business operation ID]
+    outputs: [email ID, accepted or rejected state, operation record]
+    data_semantics: [RESEND-SEM-MESSAGE-CLASS, RESEND-SEM-DELIVERY, RESEND-SEM-REPLAY]
+    limits: { quotas: [Respect sending and rate limits], latency: [Acceptance and delivery are asynchronous], sampling: [Render and test representative clients], privacy_suppression: [Minimize message and recipient data in logs], aggregation: [Bind one message identity to one intended recipient and purpose], completeness: [Accepted does not mean delivered], operational: [Use server-only credentials and an authenticated sender] }
+    limitations: [Email cannot generally be recalled after acceptance]
+    verification: [Inspect provider message state and relevant signed events]
+    idempotency: Use a deterministic key and local send record for the intended message.
+    rollback: Suppress follow-up sends and issue a correction when appropriate; sent mail is irreversible.
+    sources: [RESEND-SRC-SEND, RESEND-SRC-IDEMPOTENCY, RESEND-SRC-WEBHOOKS]
+  - id: RESEND-CAP-WEBHOOK
+    name: Verify and process delivery events
+    interface: resend_webhook
+    availability: current
+    access: { oauth_scopes: [], property_roles: [webhook_processor] }
+    effect: diagnose
+    approval: none
+    inputs: [raw request, authenticity headers, signing secret, persisted event identity]
+    outputs: [authenticity decision, repeat-safe delivery transition]
+    data_semantics: [RESEND-SEM-DELIVERY, RESEND-SEM-REPLAY]
+    limits: { quotas: [Bound retries and downstream work], latency: [Events can be delayed or reordered], sampling: [Process every subscribed event], privacy_suppression: [Do not log signing material or full message content], aggregation: [Deduplicate before changing recipient state], completeness: [Events do not prove reading or business outcome], operational: [Verify the provider contract before parsing consequential fields] }
+    limitations: [A delivery event is provider-observed transport state]
+    verification: [Reject invalid signatures and replay valid events]
+    idempotency: Persist event identity and transition before acknowledging.
+    rollback: Recompute derived delivery state from provider records and event history.
+    sources: [RESEND-SRC-WEBHOOKS, RESEND-SRC-VERIFY]
+  - id: RESEND-CAP-BROADCAST
+    name: Send a marketing broadcast
+    interface: resend_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [lifecycle_operator, privacy_operator] }
+    effect: human_only
+    approval: human_only
+    inputs: [approved audience snapshot, purpose and consent evidence, suppression set, exact content and schedule]
+    outputs: [broadcast identity, audience and send-state evidence]
+    data_semantics: [RESEND-SEM-MESSAGE-CLASS, RESEND-SEM-DELIVERY, RESEND-SEM-REPLAY]
+    limits: { quotas: [Respect audience and sending limits], latency: [Scheduled sends and suppression changes race], sampling: [Inspect representative rendered recipients and clients], privacy_suppression: [Do not expose audience addresses in general evidence], aggregation: [Freeze and reconcile the approved audience snapshot], completeness: [Provider audience membership does not prove lawful permission], operational: [Recheck suppression and approval immediately before send] }
+    limitations: [Bulk send is difficult to reverse and has legal and reputation consequences]
+    verification: [Inspect exact content audience schedule suppression and early delivery signals]
+    idempotency: One approved campaign version maps to one broadcast operation.
+    rollback: Cancel before dispatch when supported; otherwise stop remaining sends and execute correction and suppression plans.
+    sources: [RESEND-SRC-SEND, RESEND-SRC-IDEMPOTENCY]
+  - id: RESEND-CAP-SUPPRESSION
+    name: Apply bounce complaint and suppression state
+    interface: resend_webhook
+    availability: current
+    access: { oauth_scopes: [], property_roles: [webhook_processor, privacy_operator] }
+    effect: mutate_reversible
+    approval: bounded
+    inputs: [authenticated bounce complaint or suppression event, recipient identity, message class]
+    outputs: [updated contact eligibility, reason and provenance]
+    data_semantics: [RESEND-SEM-MESSAGE-CLASS, RESEND-SEM-DELIVERY]
+    limits: { quotas: [Process every material negative event], latency: [Apply before the next eligible send], sampling: [No sampling for complaints and hard suppressions], privacy_suppression: [Restrict recipient and reason visibility], aggregation: [Propagate across every sender and campaign under the applicable scope], completeness: [Local suppression may need to cover other sending systems], operational: [Do not automatically override provider suppression] }
+    limitations: [Unsuppression may require a separate lawful and provider-supported decision]
+    verification: [Attempt an eligible test path and confirm the recipient remains blocked]
+    idempotency: Repeated events converge on the same or stricter eligibility state.
+    rollback: Only an authorized privacy or deliverability owner may reverse local state with current evidence.
+    sources: [RESEND-SRC-WEBHOOKS]

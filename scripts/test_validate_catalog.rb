@@ -14,6 +14,12 @@ require_relative "lib/standards/test_support"
 # Brings Findings, TestSupport, and the exit statuses into scope for this script.
 include Standards
 
+input_findings = Findings.new
+unless InputLimits.validate(TestSupport::REPOSITORY_ROOT, input_findings)
+  input_findings.report
+  exit EXIT_INVALID
+end
+
 suite = TestSupport::Suite.new(
   "Catalog validator",
   validator: "validate_catalog.rb",
@@ -48,6 +54,10 @@ suite.accepts("a document may opt out of the current release scope") do |root|
   TestSupport.edit_front_matter(sample_document(root)) do |metadata|
     metadata["release_target"] = "v2"
   end
+end
+
+suite.rejects("oversized Markdown input", "per-file limit is #{InputLimits::MAX_FILE_BYTES} bytes") do |root|
+  File.write(File.join(root, "oversized.md"), "x" * (InputLimits::MAX_FILE_BYTES + 1))
 end
 
 # -- usage -------------------------------------------------------------------
@@ -304,6 +314,12 @@ suite.rejects("release gate reports draft documents", "remains draft", argv: ["-
 suite.rejects(
   "release gate reports unverified stable documents",
   "stable release document requires independent verified provenance",
+  argv: ["--release"]
+)
+
+suite.rejects(
+  "release gate reports the work-in-progress warning",
+  "remove the work-in-progress warning before release",
   argv: ["--release"]
 )
 

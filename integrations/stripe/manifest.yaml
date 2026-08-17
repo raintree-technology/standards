@@ -1,0 +1,18 @@
+version: 1
+integration: stripe
+id_prefix: STRIPE
+playbook: PLAYBOOK-STRIPE
+reviewed_on: 2026-08-17
+official_domains: [docs.stripe.com, stripe.com]
+informative_domains: [shopify.engineering]
+artifacts: { sources: sources.yaml, capabilities: capabilities.yaml, semantics: data-semantics.yaml, workflows: workflows.yaml, evaluations: evaluations.yaml }
+features: [capabilities, coverage, semantics, source_usage]
+vocabulary:
+  interfaces: [stripe_api, stripe_webhook, stripe_dashboard]
+  property_roles: [backend_service, webhook_processor, finance_operator, platform_operator, tax_owner]
+  oauth_scopes: []
+skill_routes:
+  - { name: "stripe:stripe-best-practices", availability: when_available, authority: review_aid }
+  - { name: "stripe:connect-recommend", availability: when_available, authority: review_aid }
+  - { name: "stripe:upgrade-stripe", availability: when_available, authority: review_aid }
+  - { name: "vercel:payments", availability: when_available, authority: review_aid }

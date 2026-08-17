@@ -1,0 +1,132 @@
+version: 1
+integration: stripe
+reviewed_on: 2026-08-17
+capabilities:
+  - id: STRIPE-CAP-CHECKOUT
+    name: Create a governed checkout or payment operation
+    interface: stripe_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [backend_service] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: [business operation ID, amount and currency, customer and price references, return locations]
+    outputs: [Stripe object ID, provider request ID, initial state]
+    data_semantics: [STRIPE-SEM-PAYMENT-STATE, STRIPE-SEM-REPLAY]
+    limits: { quotas: [Respect current API limits], latency: [Treat timeouts as ambiguous], sampling: [No sampling for financial state], privacy_suppression: [Exclude payment credentials from logs], aggregation: [Reconcile by business operation and Stripe object], completeness: [Initial response is not final state], operational: [Use a current supported integration surface and dynamic payment methods] }
+    limitations: [Does not decide merchant or tax responsibility]
+    verification: [Re-read the resulting Stripe object, reconcile the corresponding event]
+    idempotency: Reuse one deterministic key for the same business operation and new keys for different operations.
+    rollback: Cancel before completion when supported; otherwise use the governed refund or compensation path.
+    sources: [STRIPE-SRC-PAYMENTS, STRIPE-SRC-IDEMPOTENCY, STRIPE-SRC-WEBHOOKS]
+  - id: STRIPE-CAP-WEBHOOK
+    name: Verify and reconcile Stripe events
+    interface: stripe_webhook
+    availability: current
+    access: { oauth_scopes: [], property_roles: [webhook_processor] }
+    effect: diagnose
+    approval: none
+    inputs: [raw request body, signature header, endpoint secret, persisted event identity]
+    outputs: [authenticity decision, repeat-safe state transition, reconciliation result]
+    data_semantics: [STRIPE-SEM-PAYMENT-STATE, STRIPE-SEM-REPLAY]
+    limits: { quotas: [Bound retries and downstream work], latency: [Acknowledge after durable receipt], sampling: [Process every relevant event], privacy_suppression: [Do not log secrets or full sensitive payloads], aggregation: [Deduplicate by event identity], completeness: [Events may be duplicated delayed or reordered], operational: [Retrieve authoritative objects when event state is insufficient] }
+    limitations: [Event receipt does not prove every downstream effect completed]
+    verification: [Replay a signed event, reconcile from the authoritative object]
+    idempotency: Persist the event identity and resulting transition before acknowledging.
+    rollback: Reverse local derived state from the authoritative Stripe object.
+    sources: [STRIPE-SRC-WEBHOOKS]
+  - id: STRIPE-CAP-REFUND
+    name: Create a refund
+    interface: stripe_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [finance_operator] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: [charge or payment reference, exact amount, reason, business operation ID]
+    outputs: [refund ID, refund state, provider request ID]
+    data_semantics: [STRIPE-SEM-PAYMENT-STATE, STRIPE-SEM-REPLAY]
+    limits: { quotas: [Bound automated attempts], latency: [Settlement and bank timing vary], sampling: [No sampling], privacy_suppression: [Keep payment details out of evidence], aggregation: [Reconcile refund and original payment], completeness: [A created refund may still fail], operational: [Require exact target and amount immediately before execution] }
+    limitations: [Refunds may be irreversible and do not cancel every external obligation]
+    verification: [Re-read refund and payment state, verify downstream ledger state]
+    idempotency: Use a deterministic refund-operation key.
+    rollback: No general reversal; escalate mistaken refunds and record compensation.
+    sources: [STRIPE-SRC-PAYMENTS, STRIPE-SRC-IDEMPOTENCY, STRIPE-SRC-WEBHOOKS]
+  - id: STRIPE-CAP-CONNECT-TRANSFER
+    name: Move funds through Connect
+    interface: stripe_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [platform_operator, finance_operator] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: [connected account, capability state, charge pattern, amount, responsibility decision]
+    outputs: [transfer or charge reference, balance effect, reconciliation state]
+    data_semantics: [STRIPE-SEM-PAYMENT-STATE, STRIPE-SEM-RESPONSIBILITY, STRIPE-SEM-REPLAY]
+    limits: { quotas: [Bound operation volume and value], latency: [Capability and balance state can change], sampling: [No sampling], privacy_suppression: [Minimize connected-account data], aggregation: [Reconcile charge fee transfer reversal and payout], completeness: [Dashboard availability is not capability readiness], operational: [Check current capability path and compatible charge pattern] }
+    limitations: [Cannot decide merchant-of-record liability or regulatory duties]
+    verification: [Re-read capability and transfer state, reconcile balances and events]
+    idempotency: Key each intended money-movement operation independently.
+    rollback: Use supported reversal or compensation and preserve financial records.
+    sources: [STRIPE-SRC-CONNECT, STRIPE-SRC-WEBHOOKS, STRIPE-SRC-IDEMPOTENCY]
+  - id: STRIPE-CAP-TAX-REGISTRATION
+    name: Create or expire a tax registration record
+    interface: stripe_dashboard
+    availability: current
+    access: { oauth_scopes: [], property_roles: [tax_owner] }
+    effect: human_only
+    approval: human_only
+    inputs: [qualified tax decision, jurisdiction, effective date, current registration state]
+    outputs: [Stripe registration state, collection behavior evidence]
+    data_semantics: [STRIPE-SEM-RESPONSIBILITY]
+    limits: { quotas: [One governed decision per jurisdiction], latency: [Effective dates control collection], sampling: [Verify every active jurisdiction], privacy_suppression: [Do not expose tax account credentials], aggregation: [Reconcile registrations with enabled automatic tax flows], completeness: [Stripe registration records do not register with a tax authority], operational: [An effective expiration may be irreversible] }
+    limitations: [Requires a qualified tax owner and external registration action]
+    verification: [Inspect registration state and a representative calculation]
+    idempotency: Re-read current registration state before any human action.
+    rollback: Follow qualified tax direction; an effective expiration may require a new registration.
+    sources: [STRIPE-SRC-TAX]
+  - id: STRIPE-CAP-API-UPGRADE
+    name: Audit a Stripe API or SDK upgrade
+    interface: stripe_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [platform_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [account API version, webhook endpoint versions, SDK version, changed request and response fields]
+    outputs: [version compatibility matrix, deprecated-path findings, rollout and rollback evidence]
+    data_semantics: [STRIPE-SEM-PAYMENT-STATE, STRIPE-SEM-REPLAY]
+    limits: { quotas: [Use bounded test-mode fixtures], latency: [Webhook and account upgrades can be applied at different times], sampling: [Cover every enabled product and event consumer], privacy_suppression: [Use test data and redact credentials], aggregation: [Map account endpoint SDK and event versions], completeness: [A compiling SDK does not prove semantic compatibility], operational: [Test old and new event shapes and rollback before account-wide change] }
+    limitations: [Does not authorize an account-wide version change]
+    verification: [Run contract fixtures for requests responses errors and webhook events on the intended versions]
+    idempotency: Repeating the audit has no intended provider mutation.
+    rollback: Retain the prior SDK and compatible event consumers until the governed rollout completes.
+    sources: [STRIPE-SRC-VERSIONING, STRIPE-SRC-WEBHOOKS]
+  - id: STRIPE-CAP-CREDENTIAL
+    name: Audit Stripe credential restriction and rotation
+    interface: stripe_dashboard
+    availability: current
+    access: { oauth_scopes: [], property_roles: [platform_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [key inventory without values, environment, service consumer, permissions and last use]
+    outputs: [least-authority findings, rotation and revocation evidence, orphaned-key findings]
+    data_semantics: [STRIPE-SEM-RESPONSIBILITY]
+    limits: { quotas: [Bound key count and rotation attempts], latency: [Propagation and cached credentials can delay revocation], sampling: [Exercise each credential class and environment], privacy_suppression: [Never record secret values], aggregation: [Map each key fingerprint to one owner service and environment], completeness: [Dashboard presence does not prove active use], operational: [Prefer restricted keys and overlap rotation only for a bounded period] }
+    limitations: [Some integration surfaces require provider-defined credential classes]
+    verification: [Exercise allowed and denied calls before revoking the old credential]
+    idempotency: Observation and negative access tests create no durable Stripe object.
+    rollback: Restore service through the approved emergency credential path without re-enabling broad stale keys.
+    sources: [STRIPE-SRC-KEYS]
+  - id: STRIPE-CAP-BILLING
+    name: Audit subscription invoice and entitlement convergence
+    interface: stripe_webhook
+    availability: current
+    access: { oauth_scopes: [], property_roles: [backend_service, webhook_processor, finance_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [customer subscription invoice payment and entitlement identities, event history, local projection]
+    outputs: [billing state reconciliation, entitlement timing result, unresolved financial states]
+    data_semantics: [STRIPE-SEM-PAYMENT-STATE, STRIPE-SEM-REPLAY]
+    limits: { quotas: [Bound reconciliation and event retrieval], latency: [Invoices and payment methods can remain asynchronous], sampling: [Cover trial renewal failure recovery cancellation and proration], privacy_suppression: [Exclude payment details and invoice contents from logs], aggregation: [Reconcile customer subscription invoice payment and entitlement together], completeness: [Subscription status alone does not prove paid access], operational: [Grant and revoke access from governed final states and recover missed events] }
+    limitations: [Product pricing and accounting decisions remain owner responsibilities]
+    verification: [Rebuild a representative local projection from authoritative objects and events]
+    idempotency: Replayed events must converge without duplicate access or ledger effects.
+    rollback: Correct local access from authoritative billing state and use governed financial compensation separately.
+    sources: [STRIPE-SRC-BILLING, STRIPE-SRC-WEBHOOKS]

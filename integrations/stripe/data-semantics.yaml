@@ -1,0 +1,19 @@
+version: 1
+integration: stripe
+reviewed_on: 2026-08-17
+concepts:
+  - id: STRIPE-SEM-PAYMENT-STATE
+    name: Payment state
+    definition: A client redirect or accepted API request is not final financial state; reconcile the Stripe object and relevant events.
+    cautions: [Do not fulfill from a success URL alone, distinguish authorization capture refund dispute payout and transfer state]
+    sources: [STRIPE-SRC-PAYMENTS, STRIPE-SRC-WEBHOOKS]
+  - id: STRIPE-SEM-REPLAY
+    name: Financial replay boundary
+    definition: A business operation has one stable key across ambiguous timeouts and retries, while event delivery has its own persisted deduplication identity.
+    cautions: [Provider idempotency does not replace local reconciliation, event order is not guaranteed]
+    sources: [STRIPE-SRC-IDEMPOTENCY, STRIPE-SRC-WEBHOOKS]
+  - id: STRIPE-SEM-RESPONSIBILITY
+    name: Financial and tax responsibility
+    definition: Merchant, fee, loss, dispute, payout, and tax responsibility are explicit business decisions outside an API default.
+    cautions: [Do not infer legal tax obligations, verify connected-account capability state before money movement]
+    sources: [STRIPE-SRC-CONNECT, STRIPE-SRC-TAX]

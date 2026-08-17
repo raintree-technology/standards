@@ -51,6 +51,12 @@ documents:
     reviewed_on: 2026-08-13
     volatility: medium
     next_review: 2027-02-13
+  - id: DATA-REDIS
+    owner: data
+    source_version: Current Redis documentation for memory, eviction, keyspace, cache-aside, clients, commands, clustering, replication, persistence, security, observability, Pub/Sub, Streams, and distributed locks reviewed 2026-08-17
+    reviewed_on: 2026-08-17
+    volatility: high
+    next_review: 2026-11-17
   - id: ENGINEERING-QUALITY
     owner: engineering
     source_version: NIST SSDF 1.1, SLSA 1.0, and CISA Secure by Design reviewed 2026-08-13
@@ -219,6 +225,42 @@ documents:
     reviewed_on: 2026-08-16
     volatility: high
     next_review: 2026-11-16
+  - id: PLAYBOOK-STRIPE
+    owner: payments
+    source_version: Stripe payment, key, idempotency, webhook, Connect, Billing, Tax, and launch guidance plus stripe:stripe-best-practices reviewed 2026-08-17
+    reviewed_on: 2026-08-17
+    volatility: high
+    next_review: 2026-11-17
+  - id: PLAYBOOK-PLAID
+    owner: financial-data
+    source_version: Plaid launch, Link, token, webhook, environment, and security guidance reviewed 2026-08-17; provider skill not available
+    reviewed_on: 2026-08-17
+    volatility: high
+    next_review: 2026-11-17
+  - id: PLAYBOOK-VERCEL
+    owner: platform
+    source_version: Vercel deployment, environment, observability, drain, and firewall guidance plus routed Vercel skills reviewed 2026-08-17
+    reviewed_on: 2026-08-17
+    volatility: high
+    next_review: 2026-11-17
+  - id: PLAYBOOK-RESEND
+    owner: lifecycle
+    source_version: Resend sending, domains, idempotency, and webhook guidance plus vercel:email reviewed 2026-08-17
+    reviewed_on: 2026-08-17
+    volatility: high
+    next_review: 2026-11-17
+  - id: PLAYBOOK-NEON
+    owner: data
+    source_version: Neon connection, pooling, branch, network, and recovery guidance plus neon-postgres:neon-postgres reviewed 2026-08-17
+    reviewed_on: 2026-08-17
+    volatility: high
+    next_review: 2026-11-17
+  - id: PLAYBOOK-CLOUDFLARE
+    owner: platform
+    source_version: Cloudflare platform, Workers, bindings, caching, and security guidance plus cloudflare skills reviewed 2026-08-17
+    reviewed_on: 2026-08-17
+    volatility: high
+    next_review: 2026-11-17
   - id: PATTERN-FEDERATED-KNOWLEDGE
     owner: knowledge
     source_version: Cerebras knowledge-base article capture dated 2026-07-16, SIGIR 2009 reciprocal rank fusion paper, and W3C PROV-O reviewed 2026-08-16

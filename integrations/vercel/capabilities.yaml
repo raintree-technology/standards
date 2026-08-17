@@ -1,0 +1,180 @@
+version: 1
+integration: vercel
+reviewed_on: 2026-08-17
+capabilities:
+  - id: VERCEL-CAP-DEPLOY
+    name: Build and deploy an immutable artifact
+    interface: vercel_cli
+    availability: current
+    access: { oauth_scopes: [], property_roles: [deployment_automation] }
+    effect: mutate_reversible
+    approval: bounded
+    inputs: [source revision, pinned CLI and dependencies, target project and environment, effective variable names]
+    outputs: [deployment ID and URL, build result, source and environment binding]
+    data_semantics: [VERCEL-SEM-ARTIFACT, VERCEL-SEM-ENVIRONMENT]
+    limits: { quotas: [Respect build deployment and function limits], latency: [Build and propagation are asynchronous], sampling: [Test representative routes and runtimes], privacy_suppression: [Do not print variable values or tokens], aggregation: [Bind evidence to project deployment and source revision], completeness: [READY does not prove application health], operational: [Separate build test and deploy and pin the CLI] }
+    limitations: [Does not apply database or external-service rollback]
+    verification: [Inspect deployment identity and run post-deploy application checks]
+    idempotency: Re-deploy only when a new artifact is intended; preserve one identity for the tested artifact.
+    rollback: Remove or supersede the deployment and retain its diagnostic record.
+    sources: [VERCEL-SRC-DEPLOY, VERCEL-SRC-ENV]
+  - id: VERCEL-CAP-PROMOTE
+    name: Promote or roll back production traffic
+    interface: vercel_cli
+    availability: current
+    access: { oauth_scopes: [], property_roles: [project_operator] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: [exact deployment ID, domain and environment, test evidence, stateful-change assessment]
+    outputs: [production alias state, promotion record, post-release observations]
+    data_semantics: [VERCEL-SEM-ARTIFACT, VERCEL-SEM-CONTROL-PLANE]
+    limits: { quotas: [Bound promotion attempts], latency: [Alias propagation and runtime warming vary], sampling: [Verify critical production journeys], privacy_suppression: [Keep credentials out of release evidence], aggregation: [Correlate deployment domain source and telemetry], completeness: [Alias rollback does not reverse migrations or external effects], operational: [Promote the tested artifact without rebuilding] }
+    limitations: [Cannot by itself reverse data or provider mutations]
+    verification: [Inspect the current production deployment and scan governed health signals]
+    idempotency: Repeating promotion of the same deployment must not create a different artifact.
+    rollback: Repoint traffic to an identified prior deployment and execute separate state compensation.
+    sources: [VERCEL-SRC-DEPLOY, VERCEL-SRC-OBS]
+  - id: VERCEL-CAP-ENV
+    name: Change environment-scoped configuration
+    interface: vercel_dashboard
+    availability: current
+    access: { oauth_scopes: [], property_roles: [project_operator] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: [variable name, target environments and branches, sensitivity, consumer contract]
+    outputs: [versioned configuration metadata, affected deployment set]
+    data_semantics: [VERCEL-SEM-ENVIRONMENT, VERCEL-SEM-CONTROL-PLANE]
+    limits: { quotas: [Respect project variable limits], latency: [Existing deployments may retain old values], sampling: [Check every intended environment], privacy_suppression: [Evidence records names scopes and fingerprints not values], aggregation: [Map one variable to every consumer and environment], completeness: [Dashboard presence does not prove runtime availability], operational: [Redeploy or promote as required for the new value] }
+    limitations: [Configuration changes may require application and provider coordination]
+    verification: [Inspect effective runtime behavior without exposing the value]
+    idempotency: Reapplying the same scoped value should not broaden its environments.
+    rollback: Restore the prior governed value and redeploy affected artifacts.
+    sources: [VERCEL-SRC-ENV, VERCEL-SRC-DEPLOY]
+  - id: VERCEL-CAP-OBSERVE
+    name: Inspect runtime logs metrics and traces
+    interface: vercel_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [telemetry_operator] }
+    effect: observe
+    approval: none
+    inputs: [bounded project deployment environment time window and signal filter]
+    outputs: [redacted logs metrics traces and query boundaries]
+    data_semantics: [VERCEL-SEM-ARTIFACT, VERCEL-SEM-ENVIRONMENT]
+    limits: { quotas: [Bound streaming queries and time windows], latency: [Signals can be delayed or retained for plan-specific periods], sampling: [Declare sampling and omitted signals], privacy_suppression: [Redact tokens personal data and request bodies], aggregation: [Correlate by deployment request and trace identity], completeness: [No observed error is not proof of no error], operational: [Use timeouts for streaming log APIs] }
+    limitations: [Available signals and retention depend on plan and configuration]
+    verification: [Record query boundary and corroborate critical outcomes directly]
+    idempotency: Observation has no intended provider mutation.
+    rollback: Delete unsafe exported evidence under the data-handling process.
+    sources: [VERCEL-SRC-OBS]
+  - id: VERCEL-CAP-DRAIN
+    name: Configure an external telemetry drain
+    interface: vercel_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [telemetry_operator, project_operator] }
+    effect: mutate_high_impact
+    approval: exact
+    inputs: [destination, environments, signal types, authentication and privacy contract]
+    outputs: [drain identity, tested delivery, receiving-system evidence]
+    data_semantics: [VERCEL-SEM-ENVIRONMENT, VERCEL-SEM-CONTROL-PLANE]
+    limits: { quotas: [Respect plan and delivery limits], latency: [Delivery is asynchronous and can fail], sampling: [Declare exported sampling], privacy_suppression: [Minimize fields and verify receiving retention], aggregation: [Correlate provider and receiver delivery], completeness: [A configured drain may be errored], operational: [Verify signed raw-body delivery when the drain contract supplies signatures] }
+    limitations: [Exports data to another processor and requires recipient governance]
+    verification: [Test the drain and inspect authenticated receipt and failure alerts]
+    idempotency: Reconcile existing drains before creating or replacing one.
+    rollback: Disable or delete the drain and revoke its receiving credentials.
+    sources: [VERCEL-SRC-OBS]
+  - id: VERCEL-CAP-FIREWALL
+    name: Stage and publish firewall controls
+    interface: vercel_cli
+    availability: current
+    access: { oauth_scopes: [], property_roles: [security_operator] }
+    effect: human_only
+    approval: human_only
+    inputs: [exact rule diff, traffic evidence, environment stage, rollback owner]
+    outputs: [draft or published rule state, matched traffic, enforcement result]
+    data_semantics: [VERCEL-SEM-CONTROL-PLANE]
+    limits: { quotas: [Respect rule and rate-limit plan limits], latency: [Persistent actions can outlive rule removal], sampling: [Review representative legitimate and abusive traffic], privacy_suppression: [Do not expose bypass secrets or sensitive request fields], aggregation: [Account for per-region rate-limit counters], completeness: [Fingerprints and user agents can match legitimate cohorts], operational: [Move from log to preview enforcement to approved production publication] }
+    limitations: [Emergency controls and production publication require human authority]
+    verification: [Inspect the exact diff and post-publication traffic and user journeys]
+    idempotency: Reconcile staged and active rules by stable rule identity before changing them.
+    rollback: Return enforcement to log or disable the exact rule; restore emergency controls promptly.
+    sources: [VERCEL-SRC-FW]
+  - id: VERCEL-CAP-FUNCTION
+    name: Audit function runtime and background completion
+    interface: vercel_runtime
+    availability: current
+    access: { oauth_scopes: [], property_roles: [runtime_service, project_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [route runtime region duration concurrency streaming and background-work configuration]
+    outputs: [runtime-fit findings, timeout and abandonment tests, cost and concurrency bounds]
+    data_semantics: [VERCEL-SEM-ARTIFACT, VERCEL-SEM-ENVIRONMENT]
+    limits: { quotas: [Bound duration memory concurrency and invocations], latency: [Cold starts regions and upstreams affect deadlines], sampling: [Exercise streaming timeout cancellation and post-response work], privacy_suppression: [Keep request bodies and secrets out of logs], aggregation: [Attribute use by deployment route runtime and region], completeness: [A READY deployment does not prove function completion], operational: [Use durable work for effects that must survive request termination] }
+    limitations: [Exact limits and available runtimes depend on current platform and plan]
+    verification: [Run bounded runtime tests against the released deployment and inspect completion signals]
+    idempotency: Retried invocations must not duplicate downstream effects.
+    rollback: Revert to the prior runtime configuration and reconcile abandoned work.
+    sources: [VERCEL-SRC-FUNCTIONS, VERCEL-SRC-DEPLOY]
+  - id: VERCEL-CAP-ROUTING
+    name: Audit routing middleware and version skew
+    interface: vercel_runtime
+    availability: current
+    access: { oauth_scopes: [], property_roles: [runtime_service, security_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [matchers rewrites redirects authorization checks deployment IDs and old-client contract]
+    outputs: [routing matrix, authorization-boundary findings, old-client compatibility evidence]
+    data_semantics: [VERCEL-SEM-ARTIFACT, VERCEL-SEM-CONTROL-PLANE]
+    limits: { quotas: [Bound middleware invocation and variant counts], latency: [Routing executes before application handlers], sampling: [Cover methods hosts paths prefetches bots and old clients], privacy_suppression: [Do not log authorization tokens or sensitive cookies], aggregation: [Map original path target route deployment and decision], completeness: [Middleware authentication does not replace handler authorization], operational: [Keep protected-handler authorization and test skew across active deployments] }
+    limitations: [Platform skew protection does not remove compatibility needs behind the frontend]
+    verification: [Exercise direct protected-handler access and requests from retained old clients]
+    idempotency: Routing observation creates no intended provider mutation.
+    rollback: Restore the prior matcher and routing configuration with an identified deployment.
+    sources: [VERCEL-SRC-ROUTING, VERCEL-SRC-SKEW]
+  - id: VERCEL-CAP-CACHE
+    name: Audit CDN ISR and runtime caching
+    interface: vercel_runtime
+    availability: current
+    access: { oauth_scopes: [], property_roles: [runtime_service, telemetry_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [cache layer key authorization partition freshness tags invalidation and route behavior]
+    outputs: [hit and miss evidence, partition findings, invalidation and stampede results]
+    data_semantics: [VERCEL-SEM-ARTIFACT, VERCEL-SEM-ENVIRONMENT]
+    limits: { quotas: [Bound ISR writes runtime storage and origin load], latency: [Stale and revalidation paths differ], sampling: [Exercise hit miss stale error invalidate delete and cold burst], privacy_suppression: [Do not cache private responses without an explicit authority partition], aggregation: [Attribute result by layer route tag variant and deployment], completeness: [One cache status does not explain all layers], operational: [Keep tags granular and model cold-origin capacity] }
+    limitations: [Framework caching semantics remain additive]
+    verification: [Inspect cache outcomes and origin load across users deployments and invalidation paths]
+    idempotency: Repeated invalidation converges without corrupting authoritative state.
+    rollback: Bypass or version the affected cache space and restore prior invalidation behavior.
+    sources: [VERCEL-SRC-CACHE]
+  - id: VERCEL-CAP-CRON
+    name: Audit scheduled invocation
+    interface: vercel_runtime
+    availability: current
+    access: { oauth_scopes: [], property_roles: [runtime_service, project_operator] }
+    effect: diagnose
+    approval: none
+    inputs: [schedule endpoint environment authentication operation key and overlap policy]
+    outputs: [schedule and environment match, replay and overlap results, missed-run recovery evidence]
+    data_semantics: [VERCEL-SEM-ENVIRONMENT, VERCEL-SEM-CONTROL-PLANE]
+    limits: { quotas: [Bound run frequency duration retries and downstream concurrency], latency: [Scheduling and execution are not exact-time guarantees], sampling: [Exercise duplicate overlap delay missed run and manual replay], privacy_suppression: [Protect cron authentication material], aggregation: [Correlate scheduled time invocation operation and final effect], completeness: [Invocation does not prove job completion], operational: [Authenticate the endpoint and make each logical run repeat-safe] }
+    limitations: [Schedule availability and frequency depend on the current plan]
+    verification: [Trigger a bounded duplicate and delayed run and inspect converged state]
+    idempotency: Use one deterministic operation identity per logical schedule interval.
+    rollback: Disable the schedule and reconcile incomplete or repeated downstream effects.
+    sources: [VERCEL-SRC-CRON]
+  - id: VERCEL-CAP-STORAGE
+    name: Audit Vercel storage product selection and lifecycle
+    interface: vercel_api
+    availability: current
+    access: { oauth_scopes: [], property_roles: [project_operator, runtime_service] }
+    effect: diagnose
+    approval: none
+    inputs: [storage product consistency authority retention environment binding and exit requirements]
+    outputs: [product-fit decision, environment and lifecycle findings, export and deletion evidence]
+    data_semantics: [VERCEL-SEM-ENVIRONMENT, VERCEL-SEM-CONTROL-PLANE]
+    limits: { quotas: [Bound bytes operations objects and fan-out], latency: [Propagation and consistency differ by product], sampling: [Exercise stale concurrent missing oversized and deleted objects], privacy_suppression: [Minimize stored personal data and signed URL exposure], aggregation: [Attribute use by store environment tenant and deployment], completeness: [Marketplace attachment does not prove lifecycle governance], operational: [Verify backup export deletion and provider replacement for the selected product] }
+    limitations: [Blob Edge Config and Marketplace products have different contracts]
+    verification: [Exercise representative consistency retention access export and deletion behavior]
+    idempotency: Repeated writes and deletes follow the selected product conflict contract.
+    rollback: Restore the prior binding or data version and execute the product-specific recovery plan.
+    sources: [VERCEL-SRC-STORAGE, VERCEL-SRC-ENV]

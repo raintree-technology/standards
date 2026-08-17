@@ -37,6 +37,7 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - Interface or product-flow change → `PROFILE-UI-FEATURE`
 - Google Analytics 4 implementation → `PLAYBOOK-GA4`
 - Search Console operation → `PLAYBOOK-GSC`
+- Resend email delivery, sender, domain, or webhook change → `PLAYBOOK-RESEND`
 - Database or audience pipeline change → `DATA-DATABASE` and `DATA-QUALITY`
 - Model-generated content, targeting, or agent execution → `PROFILE-AGENTIC-SYSTEM`
 - Paid media, outreach, public engagement, sales operations, app-store, media-production, referral, or distribution work → `PROFILE-SPECIALIST-MARKETING`
@@ -49,3 +50,4 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - `PRIVACY-DATA-002`, `PRIVACY-DATA-006`, and `PRIVACY-DATA-012` — Authority, choice, suppression, vendors, and recipients are approved for the actual audience and jurisdiction.
 - `MARKETING-LIFECYCLE-009` — Active material and automation have owners, evidence, review dates, and retirement behavior.
 - `AGENT-VERIFICATION-002` and `AGENT-VERIFICATION-005` — The final journey and handoff cover every active channel, state, and unresolved limitation.
+- When `PLAYBOOK-RESEND` is active, include its manifest, zero-gap surface classification, selected capability IDs and authority classes, email skill route, dated official sources, workflow and evaluation results, sender and consent boundaries, suppression behavior, delivery-event replay, telemetry, recovery, and exit evidence.

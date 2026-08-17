@@ -17,30 +17,51 @@ module Standards
     # Front matter and data files legitimately carry ISO dates and timestamps.
     # Psych builds Date for `2026-08-16` and Time for `2026-08-16T23:26:21Z`.
     PERMITTED_CLASSES = [Date, Time].freeze
+    MAX_DEPTH = 100
+    MAX_NODES = 100_000
 
     # Reports every duplicate mapping key in a parsed node tree.
     #
     # YAML itself allows duplicate keys and Psych silently keeps the last one,
     # so a typo can drop a rule without any parser complaint. This walks the
     # node tree, which is the only place the duplicates are still visible.
-    def self.duplicate_keys(node, path, findings)
-      case node
-      when Psych::Nodes::Mapping
-        seen = {}
-        node.children.each_slice(2) do |key_node, value_node|
-          key = key_node.respond_to?(:value) ? key_node.value : key_node.to_s
-          findings.add("#{path}: duplicate YAML mapping key #{key.inspect}") if seen.key?(key)
-          seen[key] = true
-          duplicate_keys(value_node, "#{path}.#{key}", findings)
+    def self.duplicate_keys(node, path, findings, max_depth: MAX_DEPTH, max_nodes: MAX_NODES)
+      stack = [[node, path, 0]]
+      nodes = 0
+
+      until stack.empty?
+        current, current_path, depth = stack.pop
+        nodes += 1
+        if nodes > max_nodes
+          findings.add("#{path}: YAML structure exceeds the #{max_nodes}-node limit")
+          return false
         end
-      when Psych::Nodes::Sequence
-        node.children.each_with_index { |child, index| duplicate_keys(child, "#{path}[#{index}]", findings) }
-      when Psych::Nodes::Document, Psych::Nodes::Stream
-        # Stream and document nodes are parser structure, not addressable data.
-        # Numbering them turned every message into "file.yaml[0][0]: ..." and
-        # pushed the part a reader needs off to the right.
-        node.children.each { |child| duplicate_keys(child, path, findings) }
+        if depth > max_depth
+          findings.add("#{path}: YAML structure exceeds the maximum depth of #{max_depth}")
+          return false
+        end
+
+        case current
+        when Psych::Nodes::Mapping
+          seen = {}
+          current.children.each_slice(2).reverse_each do |key_node, value_node|
+            key = key_node.respond_to?(:value) ? key_node.value : key_node.to_s
+            findings.add("#{current_path}: duplicate YAML mapping key #{key.inspect}") if seen.key?(key)
+            seen[key] = true
+            stack << [value_node, "#{current_path}.#{key}", depth + 1]
+            stack << [key_node, current_path, depth + 1]
+          end
+        when Psych::Nodes::Sequence
+          current.children.each_with_index.reverse_each do |child, index|
+            stack << [child, "#{current_path}[#{index}]", depth + 1]
+          end
+        when Psych::Nodes::Document, Psych::Nodes::Stream
+          # Stream and document nodes are parser structure, not addressable data.
+          current.children.reverse_each { |child| stack << [child, current_path, depth] }
+        end
       end
+
+      true
     end
 
     # Parses +content+ and always returns a Hash.
@@ -50,7 +71,10 @@ module Standards
     # callers can index the result without a nil or TypeError check at every
     # use site.
     def self.load_mapping(content, label, findings, permitted_classes: PERMITTED_CLASSES, check_duplicates: true)
-      duplicate_keys(Psych.parse_stream(content), label, findings) if check_duplicates
+      if check_duplicates
+        tree = Psych.parse_stream(content)
+        return {} unless duplicate_keys(tree, label, findings)
+      end
       document = YAML.safe_load(content, permitted_classes: permitted_classes, aliases: false)
       return document if document.is_a?(Hash)
 

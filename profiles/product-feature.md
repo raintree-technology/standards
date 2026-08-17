@@ -52,6 +52,8 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - New operational responsibility, reliability target, runbook, vendor dependency, or incident path → `OPERATIONS-RELIABILITY`
 - Positioning, conversion, onboarding, retention, or lifecycle messaging → `PROFILE-MARKETING-LIFECYCLE`
 - App-store listing, referral, incentive, lead asset, or externally distributed campaign → `PROFILE-SPECIALIST-MARKETING`
+- Stripe → `PLAYBOOK-STRIPE`; Plaid → `PLAYBOOK-PLAID`; Vercel → `PLAYBOOK-VERCEL`; Resend → `PLAYBOOK-RESEND`; Neon → `PLAYBOOK-NEON`; Cloudflare → `PLAYBOOK-CLOUDFLARE`
+- Another material external platform without a named playbook → `INTEGRATIONS-VENDOR`, current official provider documentation, and a recorded library gap
 
 ## Completion evidence
 
@@ -65,4 +67,5 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - When `PRIVACY-DATA` is active, `PRIVACY-DATA-001`, `PRIVACY-DATA-002`, `PRIVACY-DATA-003`, `PRIVACY-DATA-013`, and `PRIVACY-DATA-015` — The processing map, authority, minimization decision, risk review, and released-system evidence cover the actual feature.
 - When `SECURITY-APPLICATION` is active, `SECURITY-APPLICATION-001`, `SECURITY-APPLICATION-002`, `SECURITY-APPLICATION-015`, and relevant control rules — The threat model, authorization negatives, version-qualified verification plan, findings, retests, and residual-risk decisions cover the integrated feature.
 - When `PROFILE-AGENTIC-SYSTEM` is active, include its architecture decision, task contract, authority boundary, evaluation suite, repeated-trial results, adversarial evidence, operational limits, and qualified review.
+- When a provider playbook is active, include its manifest, zero-gap surface classification, selected capability IDs and authority classes, skill-route or gap, dated official-source review, workflow and evaluation results, released-configuration evidence, recovery, and exit evidence. When only `INTEGRATIONS-VENDOR` applies, record the missing provider playbook as a library gap.
 - When a conditional standard is active, include its rule-level completion evidence before declaring the feature complete.

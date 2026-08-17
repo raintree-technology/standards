@@ -1,0 +1,7 @@
+version: 1
+integration: vercel
+reviewed_on: 2026-08-17
+concepts:
+  - { id: VERCEL-SEM-ARTIFACT, name: Deployment identity, definition: A deployment is an immutable built artifact with source and configuration context; promotion should identify the exact tested deployment rather than silently rebuild it., cautions: [A preview and production deployment can differ in configuration, database effects can outlive alias rollback], sources: [VERCEL-SRC-DEPLOY, VERCEL-SRC-ENV] }
+  - { id: VERCEL-SEM-ENVIRONMENT, name: Environment scope, definition: Production preview development custom environments and branch overrides are distinct authority boundaries., cautions: [A variable name does not prove correct scope, client-prefixed values are public], sources: [VERCEL-SRC-ENV] }
+  - { id: VERCEL-SEM-CONTROL-PLANE, name: Control-plane effect, definition: Staged firewall rules deployment aliases environment values and drains have different publication timing blast radius and rollback behavior., cautions: [Some severe firewall controls take effect immediately, a rollback does not reverse external state changes], sources: [VERCEL-SRC-DEPLOY, VERCEL-SRC-OBS, VERCEL-SRC-FW] }

@@ -1,16 +1,17 @@
 ---
 type: Policy
-title: Code of Conduct
+title: Code of conduct
 description: Expected behavior and enforcement rules for raintree.standards project spaces.
 tags: [community, conduct]
-generated: { by: codex/gpt-5, at: "2026-08-16T23:26:21Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T17:08:47Z" }
 ---
 
-# Code of Conduct
+# Code of conduct
 
 ## Our commitment
 
-We are committed to a respectful, harassment-free project for everyone, regardless of identity, background, experience, or ability.
+We are committed to a respectful, harassment-free project for everyone, regardless of
+identity, background, experience, or ability.
 
 ## Expected behavior
 
@@ -20,14 +21,22 @@ We are committed to a respectful, harassment-free project for everyone, regardle
 - Accept correction and take responsibility for harm.
 - Stop behavior that a maintainer identifies as disruptive or unsafe.
 
-Harassment, threats, discrimination, sexualized attention, deliberate intimidation, sustained disruption, and retaliation are not acceptable in project spaces.
+Harassment, threats, discrimination, sexualized attention, deliberate intimidation,
+sustained disruption, and retaliation are not acceptable in project spaces.
 
 ## Scope
 
-This policy applies to repository issues, pull requests, discussions, reviews, and other spaces used to represent this project.
+This policy applies to repository issues, pull requests, discussions, reviews, and
+other spaces used to represent this project.
 
 ## Reporting and enforcement
 
-For immediate threats or violations of GitHub's policies, use GitHub's **Report abuse** feature. For other conduct concerns, email [hello@raintree.technology](mailto:hello@raintree.technology) with the subject `Standards conduct report`. Do not publish sensitive details in an issue.
+For immediate threats or violations of GitHub's policies, use GitHub's **Report abuse**
+feature. For other conduct concerns, email
+[hello@raintree.technology](mailto:hello@raintree.technology) with the subject
+`Standards conduct report`. Do not publish sensitive details in an issue.
 
-Maintainers may edit or remove contributions and may temporarily or permanently restrict participation. They will consider context, severity, prior behavior, and the safety of affected people. Maintainers should protect the privacy of reporters and subjects as far as practical.
+Maintainers may edit or remove contributions and may temporarily or permanently
+restrict participation. They will consider context, severity, prior behavior, and the
+safety of affected people. Maintainers should protect the privacy of reporters and
+subjects as far as practical.

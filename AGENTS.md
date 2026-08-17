@@ -1,12 +1,12 @@
 ---
 type: Agent Instructions
-title: raintree.standards Repository Instructions
+title: raintree.standards repository instructions
 description: Binding instructions for agents reading or maintaining the raintree.standards library.
 tags: [agents, governance, read-only]
-generated: { by: codex/gpt-5, at: "2026-08-16T23:26:21Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T17:16:31Z" }
 ---
 
-# raintree.standards Repository Instructions
+# raintree.standards repository instructions
 
 This repository is the authoritative, read-only standards library for agents working on Raintree projects.
 
@@ -46,8 +46,19 @@ An instruction at a higher level may authorize a scoped exception, but it does n
 When explicitly asked to maintain this repository:
 
 - Follow `governance/contributing.md`.
+- Use `playbooks/standards-audit.md` and `templates/audit-report.md` for a repository-wide conformance review.
 - Start new standards from `templates/standard.md`.
 - Use stable IDs and valid YAML front matter.
 - Prefer testable rules over general advice.
 - Preserve existing IDs; never reuse a retired ID.
 - Update `catalog.yaml` when adding, moving, or retiring a standard or profile.
+
+## Completion and escalation
+
+- Inspect the final artifact in its intended form and run every check listed in `CONTRIBUTING.md`.
+- Report changed files, check results, limitations, and unresolved rules by stable ID.
+- Do not record `verified` provenance or qualified approval for your own work.
+- Stop and ask the accountable owner when a change needs a new policy choice, external authority, qualified review, production access, or an approval that the task does not provide.
+
+The standards owners maintain these instructions. Review them after a recurring agent
+failure, a change to repository governance, or a change to the standards-audit process.

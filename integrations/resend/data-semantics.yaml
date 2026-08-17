@@ -1,0 +1,7 @@
+version: 1
+integration: resend
+reviewed_on: 2026-08-17
+concepts:
+  - { id: RESEND-SEM-MESSAGE-CLASS, name: Message class, definition: Transactional operational and marketing messages have different purpose consent suppression and unsubscribe obligations., cautions: [Do not relabel promotional content as transactional, one consent does not authorize every audience or purpose], sources: [RESEND-SRC-SEND] }
+  - { id: RESEND-SEM-DELIVERY, name: Delivery state, definition: API acceptance delivery bounce complaint suppression and recipient reading are distinct states., cautions: [Accepted is not delivered, delivered is not read or acted upon], sources: [RESEND-SRC-WEBHOOKS] }
+  - { id: RESEND-SEM-REPLAY, name: Send and event replay, definition: Each intended message has a stable business identity while delivery events are independently authenticated and deduplicated., cautions: [Provider idempotency has a bounded window, retries after the window require local state reconciliation], sources: [RESEND-SRC-IDEMPOTENCY, RESEND-SRC-VERIFY] }

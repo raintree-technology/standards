@@ -38,6 +38,8 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - Service or API compatibility change → `PROFILE-SERVICE-API`
 - Production incident, restore, or recovery exercise → `PROFILE-RELIABILITY-INCIDENT`
 - Model-driven planning, SQL generation, migration execution, recovery, or data correction → `PROFILE-AGENTIC-SYSTEM`
+- Neon → `PLAYBOOK-NEON`
+- Another managed database platform without a named playbook → `INTEGRATIONS-VENDOR`, current official provider documentation, and a recorded library gap
 
 ## Completion evidence
 
@@ -53,3 +55,4 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - `AGENT-VERIFICATION-002` and `AGENT-VERIFICATION-005` — The final database state or closest safe representation was inspected and the handoff records checks, outcomes, and limitations.
 - When `PRIVACY-DATA` is active, `PRIVACY-DATA-001`, `PRIVACY-DATA-008`, `PRIVACY-DATA-009`, `PRIVACY-DATA-014`, and `PRIVACY-DATA-015` — The processing map, retention or deletion exercise, correction behavior, non-production controls, and released data flow cover every material copy.
 - When `PROFILE-AGENTIC-SYSTEM` is active, the agent has bounded database authority, exact approvals, dry-run or preview evidence, repeat-safe operations, environmental checks, stop conditions, and human review before destructive or production effects.
+- When `PLAYBOOK-NEON` is active, include its manifest, zero-gap surface classification, selected capability IDs and authority classes, Neon skill route, dated official-source review, workflow and evaluation results, environment and branch isolation, connection and concurrency evidence, live configuration, restore exercise, observability, and exit evidence. For another managed provider, record the missing playbook as a library gap.

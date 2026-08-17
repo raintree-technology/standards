@@ -27,6 +27,7 @@ end
 
 require_relative "standards/findings"
 require_relative "standards/paths"
+require_relative "standards/input_limits"
 require_relative "standards/yaml_source"
 require_relative "standards/document"
 require_relative "standards/json_schema"

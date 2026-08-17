@@ -1,0 +1,8 @@
+version: 1
+integration: cloudflare
+reviewed_on: 2026-08-17
+concepts:
+  - { id: CLOUDFLARE-SEM-RUNTIME, name: Isolate runtime boundary, definition: A Worker isolate can reuse module state across requests while request bodies streams and execution lifetime remain bounded., cautions: [Never store request-specific state globally, consuming a body or unbounded response can break later processing or exhaust memory], sources: [CLOUDFLARE-SRC-WORKERS, CLOUDFLARE-SRC-BEST] }
+  - { id: CLOUDFLARE-SEM-BINDING, name: Binding authority, definition: Bindings define in-process access to platform resources and secrets and must match generated types and environment-specific configuration., cautions: [A binding name can refer to different resources by environment, secret values do not belong in ordinary configuration], sources: [CLOUDFLARE-SRC-BINDINGS, CLOUDFLARE-SRC-BEST] }
+  - { id: CLOUDFLARE-SEM-CACHE, name: Cache partition and freshness, definition: Cache keys status headers authorization cookies region and invalidation determine who can receive a stored response and for how long., cautions: [The Cache API is data-center local, personalized or authorized content can cross users when keys are incomplete], sources: [CLOUDFLARE-SRC-CACHE] }
+  - { id: CLOUDFLARE-SEM-EDGE-CONTROL, name: Edge control-plane effect, definition: Deployment compatibility bindings routes and firewall rules jointly determine behavior before application code runs., cautions: [Application tests alone cannot prove WAF behavior, rollback must include configuration and routes], sources: [CLOUDFLARE-SRC-WORKERS, CLOUDFLARE-SRC-WAF] }

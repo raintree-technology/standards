@@ -40,6 +40,8 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - Model-driven requests, tools, or autonomous operation → `PROFILE-AGENTIC-SYSTEM`
 - Public browser surface → `PROFILE-PUBLIC-WEB-PAGE`
 - User or agent-facing failures → `CONTENT-ERRORS`
+- Stripe → `PLAYBOOK-STRIPE`; Plaid → `PLAYBOOK-PLAID`; Vercel → `PLAYBOOK-VERCEL`; Resend → `PLAYBOOK-RESEND`; Neon → `PLAYBOOK-NEON`; Cloudflare → `PLAYBOOK-CLOUDFLARE`
+- Another material external platform without a named playbook → `INTEGRATIONS-VENDOR`, current official provider documentation, and a recorded library gap
 
 ## Completion evidence
 
@@ -61,3 +63,4 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - `OPERATIONS-RELIABILITY-001` through `OPERATIONS-RELIABILITY-006` — Objectives, signals, alerts, runbooks, response, and recovery are exercised.
 - `OPERATIONS-LOGGING-001` through `OPERATIONS-LOGGING-014` when active — The built service emits protected, correlated Pino JSON with governed events, types, extensions, volume, lifecycle, storage, pipeline health, client boundaries, and audit claims.
 - `FND-CHANGE-008` and `AGENT-VERIFICATION-005` — The post-change state and handoff record checks, results, limitations, owners, and recovery.
+- When a provider playbook is active, the final evidence covers its manifest, zero-gap surface classification, selected capability IDs and authority classes, exact skill route or gap, dated official sources, workflow and evaluation results, effective contract, callbacks, repeat-safe effects, released configuration, telemetry, recovery, and exit. When only `INTEGRATIONS-VENDOR` applies, record the missing provider playbook as a library gap.

@@ -19,6 +19,13 @@ require_relative "lib/standards/test_support"
 
 failures = []
 checks = 0
+REPOSITORY_ROOT = File.expand_path("..", __dir__)
+
+input_findings = Standards::Findings.new
+unless Standards::InputLimits.validate(REPOSITORY_ROOT, input_findings)
+  input_findings.report
+  exit Standards::EXIT_INVALID
+end
 
 def expect(failures, description, actual, expected)
   return if actual == expected
@@ -145,6 +152,47 @@ Dir.mktmpdir("standards-glob-") do |parent|
          Standards::Paths.glob(root, "*.md"), ["index.md", "other.md"])
 end
 
+# -- InputLimits -------------------------------------------------------------
+
+Dir.mktmpdir("standards-input-limits-") do |root|
+  File.write(File.join(root, "one.md"), "1234")
+  File.write(File.join(root, "two.yaml"), "a: 1\n")
+
+  checks += 1
+  findings = Standards::Findings.new
+  accepted = Standards::InputLimits.validate(root, findings, max_files: 2, max_file_bytes: 8, max_total_bytes: 16)
+  expect(failures, "bounded validator input is accepted", [accepted, findings.to_a], [true, []])
+
+  checks += 1
+  findings = Standards::Findings.new
+  Standards::InputLimits.validate(root, findings, max_files: 2, max_file_bytes: 3, max_total_bytes: 16)
+  expect(failures, "an oversized file is reported", findings.to_a.any? { |message| message.include?("per-file limit") }, true)
+
+  checks += 1
+  findings = Standards::Findings.new
+  Standards::InputLimits.validate(root, findings, max_files: 1, max_file_bytes: 8, max_total_bytes: 16)
+  expect(failures, "too many files are reported", findings.to_a.any? { |message| message.include?("files; limit") }, true)
+
+  checks += 1
+  findings = Standards::Findings.new
+  Standards::InputLimits.validate(root, findings, max_files: 2, max_file_bytes: 8, max_total_bytes: 5)
+  expect(failures, "excess total input is reported", findings.to_a.any? { |message| message.include?("total limit") }, true)
+end
+
+Dir.mktmpdir("standards-input-symlink-") do |parent|
+  root = File.join(parent, "bundle")
+  FileUtils.mkdir_p(root)
+  outside = File.join(parent, "outside.md")
+  File.write(outside, "secret")
+  File.symlink(outside, File.join(root, "leak.md"))
+
+  checks += 1
+  findings = Standards::Findings.new
+  Standards::InputLimits.validate(root, findings)
+  expect(failures, "an outward input symlink is rejected",
+         findings.to_a, ["leak.md: input path escapes the bundle root"])
+end
+
 # -- YamlSource --------------------------------------------------------------
 
 checks += 1
@@ -174,6 +222,20 @@ checks += 1
 findings = Standards::Findings.new
 Standards::YamlSource.load_mapping("a: 1\na: 2\n", "x.yaml", findings)
 expect(failures, "duplicate keys are reported", findings.to_a, ['x.yaml: duplicate YAML mapping key "a"'])
+
+checks += 1
+findings = Standards::Findings.new
+tree = Psych.parse_stream("a:\n  b:\n    c: 1\n")
+accepted = Standards::YamlSource.duplicate_keys(tree, "x.yaml", findings, max_depth: 1)
+expect(failures, "deep YAML is rejected before safe loading", accepted, false)
+expect(failures, "deep YAML reports its limit", findings.to_a, ["x.yaml: YAML structure exceeds the maximum depth of 1"])
+
+checks += 1
+findings = Standards::Findings.new
+tree = Psych.parse_stream("a: 1\nb: 2\n")
+accepted = Standards::YamlSource.duplicate_keys(tree, "x.yaml", findings, max_nodes: 3)
+expect(failures, "large YAML trees are rejected before safe loading", accepted, false)
+expect(failures, "large YAML trees report their limit", findings.to_a, ["x.yaml: YAML structure exceeds the 3-node limit"])
 
 checks += 1
 findings = Standards::Findings.new
@@ -330,9 +392,8 @@ end
 # else following the Ruby convention, and .tool-versions for mise, which is what
 # CI installs from. They must not drift apart, and both must satisfy the floor
 # the library enforces at startup.
-repository_root = File.expand_path("..", __dir__)
-ruby_version = File.read(File.join(repository_root, ".ruby-version")).strip
-tool_versions = File.read(File.join(repository_root, ".tool-versions"))
+ruby_version = File.read(File.join(REPOSITORY_ROOT, ".ruby-version")).strip
+tool_versions = File.read(File.join(REPOSITORY_ROOT, ".tool-versions"))
                     .lines
                     .filter_map { |line| line.split[1] if line.split.first == "ruby" }
 

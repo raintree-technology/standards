@@ -1,0 +1,33 @@
+version: 1
+integration: cloudflare
+reviewed_on: 2026-08-17
+scope: Workers runtime, bindings, secrets, deployment, caching, and traffic controls.
+freshness:
+  cadence_days: 92
+  next_review: 2026-11-17
+  event_triggers: [Workers compatibility change, binding or deployment change, traffic incident]
+sources:
+  - { id: CLOUDFLARE-SRC-WORKERS, title: Workers, url: "https://developers.cloudflare.com/workers/", topic: runtime and deployment model, authority: provider_documentation, volatility: medium }
+  - { id: CLOUDFLARE-SRC-BINDINGS, title: Bindings, url: "https://developers.cloudflare.com/workers/runtime-apis/bindings/", topic: resource and secret bindings, authority: provider_documentation, volatility: medium }
+  - { id: CLOUDFLARE-SRC-CACHE, title: Cache, url: "https://developers.cloudflare.com/workers/runtime-apis/cache/", topic: cache behavior, authority: provider_documentation, volatility: medium }
+  - { id: CLOUDFLARE-SRC-BEST, title: Workers best practices, url: "https://developers.cloudflare.com/workers/best-practices/workers-best-practices/", topic: runtime patterns and anti-patterns, authority: provider_documentation, volatility: high }
+  - { id: CLOUDFLARE-SRC-OBS, title: Workers observability, url: "https://developers.cloudflare.com/workers/observability/", topic: logs and traces, authority: provider_documentation, volatility: high }
+  - { id: CLOUDFLARE-SRC-WAF, title: Web Application Firewall, url: "https://developers.cloudflare.com/waf/", topic: traffic security controls, authority: provider_documentation, volatility: high }
+  - { id: CLOUDFLARE-SRC-GRADUAL, title: Gradual deployments, url: "https://developers.cloudflare.com/workers/configuration/versions-and-deployments/gradual-deployments/", topic: staged Worker release, authority: provider_documentation, volatility: high }
+  - { id: CLOUDFLARE-SRC-WRANGLER, title: Wrangler configuration, url: "https://developers.cloudflare.com/workers/wrangler/configuration/", topic: effective Worker configuration and environments, authority: provider_documentation, volatility: high }
+  - { id: CLOUDFLARE-SRC-DO, title: Durable Objects best practices, url: "https://developers.cloudflare.com/durable-objects/best-practices/", topic: stateful coordination storage concurrency and alarms, authority: provider_documentation, volatility: high }
+  - { id: CLOUDFLARE-SRC-QUEUES, title: Cloudflare Queues, url: "https://developers.cloudflare.com/queues/", topic: at-least-once background delivery, authority: provider_documentation, volatility: high }
+  - { id: CLOUDFLARE-SRC-HYPERDRIVE, title: Hyperdrive, url: "https://developers.cloudflare.com/hyperdrive/", topic: external database connection pooling, authority: provider_documentation, volatility: high }
+  - { id: CLOUDFLARE-SRC-ENG-SAFETY, title: Workers production safety, url: "https://blog.cloudflare.com/workers-production-safety/", topic: gradual rollout failure containment, authority: provider_engineering, volatility: medium }
+coverage:
+  - { surface: worker-request-runtime, classification: mapped, capabilities: [CLOUDFLARE-CAP-REQUEST], sources: [CLOUDFLARE-SRC-WORKERS, CLOUDFLARE-SRC-BEST] }
+  - { surface: worker-deployment-and-compatibility, classification: mapped, capabilities: [CLOUDFLARE-CAP-DEPLOY], sources: [CLOUDFLARE-SRC-WORKERS, CLOUDFLARE-SRC-BEST, CLOUDFLARE-SRC-GRADUAL, CLOUDFLARE-SRC-ENG-SAFETY] }
+  - { surface: bindings-and-secrets, classification: mapped, capabilities: [CLOUDFLARE-CAP-BINDING], sources: [CLOUDFLARE-SRC-BINDINGS, CLOUDFLARE-SRC-BEST] }
+  - { surface: edge-cache, classification: mapped, capabilities: [CLOUDFLARE-CAP-CACHE], sources: [CLOUDFLARE-SRC-CACHE] }
+  - { surface: background-work, classification: mapped, capabilities: [CLOUDFLARE-CAP-BACKGROUND], sources: [CLOUDFLARE-SRC-BEST] }
+  - { surface: logs-and-traces, classification: mapped, capabilities: [CLOUDFLARE-CAP-OBSERVE], sources: [CLOUDFLARE-SRC-OBS] }
+  - { surface: waf-and-traffic-controls, classification: mapped, capabilities: [CLOUDFLARE-CAP-FIREWALL], sources: [CLOUDFLARE-SRC-WAF] }
+  - { surface: wrangler-effective-configuration, classification: mapped, capabilities: [CLOUDFLARE-CAP-CONFIG], sources: [CLOUDFLARE-SRC-WRANGLER, CLOUDFLARE-SRC-BINDINGS] }
+  - { surface: durable-objects-state-and-alarms, classification: mapped, capabilities: [CLOUDFLARE-CAP-DURABLE-OBJECT], sources: [CLOUDFLARE-SRC-DO, CLOUDFLARE-SRC-BEST] }
+  - { surface: queue-delivery-and-consumers, classification: mapped, capabilities: [CLOUDFLARE-CAP-QUEUE], sources: [CLOUDFLARE-SRC-QUEUES] }
+  - { surface: external-database-hyperdrive, classification: mapped, capabilities: [CLOUDFLARE-CAP-HYPERDRIVE], sources: [CLOUDFLARE-SRC-HYPERDRIVE, CLOUDFLARE-SRC-BINDINGS] }

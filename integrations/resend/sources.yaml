@@ -1,0 +1,21 @@
+version: 1
+integration: resend
+reviewed_on: 2026-08-17
+scope: Transactional email, domain authentication, delivery events, and suppression handling.
+freshness:
+  cadence_days: 92
+  next_review: 2026-11-17
+  event_triggers: [Resend API change, domain or sender change, deliverability incident]
+sources:
+  - { id: RESEND-SRC-SEND, title: Send email, url: "https://resend.com/docs/send-with-nextjs", topic: server-side sending, authority: provider_documentation, volatility: medium }
+  - { id: RESEND-SRC-DOMAINS, title: Domains, url: "https://resend.com/docs/dashboard/domains/introduction", topic: sender authentication, authority: provider_documentation, volatility: medium }
+  - { id: RESEND-SRC-WEBHOOKS, title: Webhooks, url: "https://resend.com/docs/dashboard/webhooks/introduction", topic: delivery events, authority: provider_documentation, volatility: medium }
+  - { id: RESEND-SRC-IDEMPOTENCY, title: Idempotency keys, url: "https://resend.com/docs/dashboard/emails/idempotency-keys", topic: duplicate-send prevention, authority: provider_documentation, volatility: high }
+  - { id: RESEND-SRC-VERIFY, title: Verify webhook requests, url: "https://resend.com/docs/dashboard/webhooks/verify-webhooks-requests", topic: webhook authenticity, authority: provider_documentation, volatility: high }
+  - { id: RESEND-SRC-ENG-WEBHOOKS, title: Capture email events with webhooks, url: "https://resend.com/blog/webhooks", topic: delivery event workflows and retention needs, authority: provider_engineering, volatility: low }
+coverage:
+  - { surface: domain-and-sender-authentication, classification: mapped, capabilities: [RESEND-CAP-DOMAIN], sources: [RESEND-SRC-DOMAINS] }
+  - { surface: transactional-send, classification: mapped, capabilities: [RESEND-CAP-SEND], sources: [RESEND-SRC-SEND, RESEND-SRC-IDEMPOTENCY] }
+  - { surface: delivery-events, classification: mapped, capabilities: [RESEND-CAP-WEBHOOK], sources: [RESEND-SRC-WEBHOOKS, RESEND-SRC-VERIFY, RESEND-SRC-ENG-WEBHOOKS] }
+  - { surface: audience-broadcast, classification: mapped, capabilities: [RESEND-CAP-BROADCAST], sources: [RESEND-SRC-SEND, RESEND-SRC-IDEMPOTENCY] }
+  - { surface: suppression-and-complaints, classification: mapped, capabilities: [RESEND-CAP-SUPPRESSION], sources: [RESEND-SRC-WEBHOOKS] }

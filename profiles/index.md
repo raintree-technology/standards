@@ -13,6 +13,7 @@
 * [Product feature](product-feature.md) - Routes user-facing feature work to trust, safe-change, evidence, and verification requirements.
 * [Public web page](public-web-page.md) - Routes public web work to quality, search, trust, evidence, and verification requirements.
 * [Reliability and incident](reliability-incident.md) - Routes service operation and incidents to response, recovery, and learning requirements.
+* [Redis change](redis-change.md) - Routes Redis design, configuration, client, cache, stream, and operational changes.
 * [Secrets and Infisical change](secrets-management.md) - Routes Infisical adoption, access, delivery, precedence, rotation, exposure, operation, recovery, and migration.
 * [Programmatic interface and service change](service-api-change.md) - Routes APIs, libraries, SDKs, and services to contract, security, reliability, and release requirements.
 * [Specialist marketing](specialist-marketing.md) - Routes channel, sales, app-store, media, referral, and distribution work to specialist standards.
