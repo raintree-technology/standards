@@ -32,6 +32,8 @@ standards:
     path: data/quality.md
   - id: ENGINEERING-QUALITY
     path: engineering/quality.md
+  - id: KNOWLEDGE-SYSTEMS
+    path: knowledge/organizational-knowledge.md
   - id: ANALYTICS-MEASUREMENT
     path: analytics/measurement.md
   - id: GROWTH-EXPERIMENTS
@@ -74,8 +76,16 @@ standards:
     path: privacy/data-handling.md
   - id: SECURITY-APPLICATION
     path: security/application.md
+  - id: SECURITY-SECRETS
+    path: security/secrets-management.md
 
-patterns: []
+patterns:
+  - id: PATTERN-FEDERATED-KNOWLEDGE
+    path: patterns/federated-knowledge.md
+  - id: PATTERN-CROSS-LAYER-POLICY-CONFORMANCE
+    path: patterns/cross-layer-policy-conformance.md
+  - id: PATTERN-VERIFIED-AGENT-WORKFLOW
+    path: patterns/verified-agent-workflow.md
 
 playbooks:
   - id: PLAYBOOK-APPLE-HIG
@@ -84,12 +94,16 @@ playbooks:
     path: playbooks/google-analytics-4.md
   - id: PLAYBOOK-GSC
     path: playbooks/google-search-console.md
+  - id: PLAYBOOK-STANDARDS-AUDIT
+    path: playbooks/standards-audit.md
 
 profiles:
   - id: PROFILE-APPLE-INTERFACE
     path: profiles/apple-interface.md
   - id: PROFILE-COMMERCIAL-EVIDENCE-REVIEW
     path: profiles/commercial-evidence-review.md
+  - id: PROFILE-COMPANY-BRAIN
+    path: profiles/company-brain.md
   - id: PROFILE-AGENTIC-SYSTEM
     path: profiles/agentic-system.md
   - id: PROFILE-DATABASE-CHANGE
@@ -104,6 +118,8 @@ profiles:
     path: profiles/public-web-page.md
   - id: PROFILE-RELIABILITY-INCIDENT
     path: profiles/reliability-incident.md
+  - id: PROFILE-SECRETS-MANAGEMENT
+    path: profiles/secrets-management.md
   - id: PROFILE-SERVICE-API
     path: profiles/service-api-change.md
   - id: PROFILE-SPECIALIST-MARKETING

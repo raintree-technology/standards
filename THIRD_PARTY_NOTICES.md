@@ -3,7 +3,7 @@ type: Notice
 title: Third-party notices
 description: Attribution and license notices for sources used by raintree.standards.
 tags: [license, attribution, sources]
-generated: { by: codex/gpt-5, at: "2026-08-16T23:26:21Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T06:25:28Z" }
 ---
 
 # Third-party notices
@@ -25,6 +25,10 @@ The task taxonomy in [`marketing/coverage.md`](marketing/coverage.md) is adapted
 ## HIG Doctor and Apple guidance
 
 [`playbooks/apple-hig-audit.md`](playbooks/apple-hig-audit.md) references [HIG Doctor](https://github.com/raintree-technology/hig-doctor), whose structure and tooling are MIT-licensed. Apple Human Interface Guidelines content remains © Apple Inc. and is referenced from Apple's canonical documentation rather than redistributed here.
+
+## Anthropic Claude Cookbooks
+
+[`patterns/verified-agent-workflow.md`](patterns/verified-agent-workflow.md) adapts architecture ideas from Anthropic's [Claude Cookbooks content-moderation example at commit 35f2eec](https://github.com/anthropics/claude-cookbooks/tree/35f2eec7e44897c537e44441b7dff2f0ecbfb804/capabilities/content_moderation), published under the [MIT License](https://github.com/anthropics/claude-cookbooks/blob/35f2eec7e44897c537e44441b7dff2f0ecbfb804/LICENSE). The pattern does not copy the example code or make its vendor-specific model choices normative.
 
 ## Research references
 

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://standards.raintree.dev/schema/standard.schema.json",
+  "$id": "https://raw.githubusercontent.com/raintree-technology/raintree.standards/main/schema/standard.schema.json",
   "title": "Raintree standard front matter",
   "description": "OKF v0.2-compatible Raintree standard front matter. This schema states what must be true of every governed document at all times, and scripts/validate_catalog.rb applies it to each one. Rules that only apply at a versioned release live in $defs/releaseGate, which scripts/validate_catalog.rb --release applies separately; they are not part of the always-on contract because the library holds drafts and unverified stable documents before v1 by design.",
   "type": "object",

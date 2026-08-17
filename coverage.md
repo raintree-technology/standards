@@ -3,7 +3,7 @@ type: Reference
 title: Version 1 coverage matrix
 description: Maps the bounded Raintree v1 task surface to governed standards, profiles, playbooks, and remaining approval work.
 tags: [coverage, v1, standards, profiles]
-generated: { by: codex/gpt-5, at: "2026-08-16T23:36:18Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T05:51:59Z" }
 ---
 
 # Version 1 coverage matrix
@@ -23,8 +23,10 @@ The bounded v1 baseline covers recurring product, engineering, service, data, we
 | Core lifecycle marketing | `MARKETING-LIFECYCLE`, marketing-lifecycle profile | GA4 and Search Console when applicable | Authored; marketing, privacy, and legal review pending |
 | Functional writing and errors | `WRITING-FUNCTIONAL`, `CONTENT-ERRORS`, functional-writing profile | None | Existing stable corpus; independent verification pending |
 | Commercial evidence reviews | Commercial-evidence-review profile, `FND-EVIDENCE`, `WRITING-FUNCTIONAL`, conditional sales, marketing, privacy, and security routes | None | Post-v1 draft; research, sales, and qualified domain review pending |
+| Organizational knowledge systems | `KNOWLEDGE-SYSTEMS`, company-brain profile, federated-knowledge pattern | Standards conformance audit | Post-v1 draft; knowledge, AI, data, security, privacy, product, and engineering review pending |
 | Reliability and incidents | `OPERATIONS-RELIABILITY`, `FND-CHANGE`, reliability/incident profile | None | Authored; operations and security review pending |
 | Privacy and application security | `PRIVACY-DATA`, `SECURITY-APPLICATION` | None | Existing drafts; qualified review pending |
+| Secrets and credentials | `SECURITY-SECRETS`, secrets/Infisical profile | None; Infisical is required by the standard | Authored; qualified security and operations review pending |
 
 ## Cross-cutting foundations
 

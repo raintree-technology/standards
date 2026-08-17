@@ -3,7 +3,7 @@ type: Roadmap
 title: Coverage roadmap
 description: Prioritized gaps and triggers for expanding the raintree.standards library.
 tags: [roadmap, coverage, governance]
-generated: { by: codex/gpt-5, at: "2026-08-16T23:26:21Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T06:11:16Z" }
 ---
 
 # Coverage roadmap
@@ -26,10 +26,10 @@ The bounded v1 domain baseline is authored. Release remains blocked on independe
 ## Draft baselines awaiting qualified review
 
 - AI: `AI-AGENTS` covers architecture selection, task contracts, instruction trust, context, tools, authority, containment, data paths, environmental feedback, recovery, human judgment, versioning, evaluation validity, repeated trials, grading, red teaming, observability, parallelism, and governed knowledge.
-- Security: `SECURITY-APPLICATION` covers application threat modeling, access control, authentication, sessions, untrusted input, files, outbound requests, secrets, cryptography, configuration, dependencies, abuse limits, detection, high-impact actions, verification, and response.
+- Security: `SECURITY-APPLICATION` covers application threat modeling, access control, authentication, sessions, untrusted input, files, outbound requests, cryptography, configuration, dependencies, abuse limits, detection, high-impact actions, verification, and response. `SECURITY-SECRETS` defines Infisical as the sole product-secret system of record and governs hierarchy, human and workload identity, delivery, precedence, rotation, exposure, availability, audit, control-plane operation, recovery, and migration.
 - Privacy: `PRIVACY-DATA` covers processing maps, authority, minimization, purpose, notice, consent, rights, retention, accuracy, de-identification, heightened harm, recipients, impact assessments, non-production data, and release verification.
 
-The nine new v1 standards, three playbooks, and five profiles also remain drafts until their listed owners complete independent review.
+The draft standards, playbooks, profiles, and patterns listed in the catalog remain pending until their owners complete the required independent and domain-qualified reviews.
 
 ## Post-v1 extensions authored as drafts
 
@@ -41,10 +41,13 @@ The nine new v1 standards, three playbooks, and five profiles also remain drafts
 - [x] Image, video, ad creative, and other media production and rights — `MEDIA-PRODUCTION-RIGHTS`
 - [x] Directories, lead assets, referrals, incentives, contests, and distribution programs — `MARKETING-DISTRIBUTION`
 - [x] Project, supplier, facility, and counterparty evidence reviews — `PROFILE-COMMERCIAL-EVIDENCE-REVIEW`
+- [x] Organizational knowledge systems, federated retrieval guidance, and source-neutral conformance audits — `KNOWLEDGE-SYSTEMS`, `PROFILE-COMPANY-BRAIN`, `PATTERN-FEDERATED-KNOWLEDGE`, and `PLAYBOOK-STANDARDS-AUDIT`
 
-All seven extension standards, `PROFILE-SPECIALIST-MARKETING`, and
+All seven specialist extension standards, `PROFILE-SPECIALIST-MARKETING`, and
 `PROFILE-COMMERCIAL-EVIDENCE-REVIEW` remain drafts pending independent,
-domain-qualified review. New extensions should now be driven by recurring
+domain-qualified review. The organizational-knowledge standard, company-brain
+profile, federated-knowledge pattern, and standards-audit playbook have the same
+draft and review boundary. New extensions should now be driven by recurring
 project evidence rather than category completeness.
 
 ## Open extension queue

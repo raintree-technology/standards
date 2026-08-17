@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://standards.raintree.dev/schema/integration-capability.schema.json",
+  "$id": "https://raw.githubusercontent.com/raintree-technology/raintree.standards/main/schema/integration-capability.schema.json",
   "title": "Raintree integration capability bundle",
   "description": "Machine-readable contract for a governed vendor integration capability map.",
   "type": "object",

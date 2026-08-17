@@ -11,8 +11,8 @@ review_by: 2027-02-13
 stale_after: 2027-02-13
 applies_to: [product-feature, public-web-page]
 tags: [security, application, authentication, authorization, secrets, verification]
-depends_on: [FND-CHANGE, FND-EVIDENCE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
+depends_on: [SECURITY-SECRETS, FND-CHANGE, FND-EVIDENCE, AGENT-VERIFICATION]
+generated: { by: codex/gpt-5, at: "2026-08-17T05:26:55Z" }
 sources:
   - id: owasp-asvs-5
     resource: https://owasp.org/www-project-application-security-verification-standard/

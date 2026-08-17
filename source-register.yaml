@@ -57,6 +57,12 @@ documents:
     reviewed_on: 2026-08-13
     volatility: medium
     next_review: 2027-02-13
+  - id: KNOWLEDGE-SYSTEMS
+    owner: knowledge
+    source_version: W3C PROV-O, NIST SP 800-53 Revision 5 Update 1, NIST AI RMF 1.0, and NIST AI 600-1 reviewed 2026-08-16
+    reviewed_on: 2026-08-16
+    volatility: medium
+    next_review: 2027-02-16
   - id: ANALYTICS-MEASUREMENT
     owner: analytics
     source_version: document source set reviewed 2026-08-13
@@ -183,6 +189,30 @@ documents:
     reviewed_on: 2026-08-13
     volatility: high
     next_review: 2027-02-13
+  - id: SECURITY-SECRETS
+    owner: security
+    source_version: current Infisical organization, identities, RBAC, privileges, approvals, workload authentication, delivery, local development, project configuration, references, imports, syncs, rotation, dynamic secrets, version recovery, scanning, SSO, audit, and production-hardening documentation reviewed 2026-08-16
+    reviewed_on: 2026-08-16
+    volatility: high
+    next_review: 2026-11-16
+  - id: PATTERN-FEDERATED-KNOWLEDGE
+    owner: knowledge
+    source_version: Cerebras knowledge-base article capture dated 2026-07-16, SIGIR 2009 reciprocal rank fusion paper, and W3C PROV-O reviewed 2026-08-16
+    reviewed_on: 2026-08-16
+    volatility: medium
+    next_review: 2027-02-16
+  - id: PATTERN-CROSS-LAYER-POLICY-CONFORMANCE
+    owner: engineering
+    source_version: PolicyStrata commit e316ac8460f13b2960834342d4a0cdd2b6a3b1a2 reviewed 2026-08-16
+    reviewed_on: 2026-08-16
+    volatility: medium
+    next_review: 2027-02-16
+  - id: PATTERN-VERIFIED-AGENT-WORKFLOW
+    owner: ai
+    source_version: PolicyStrata commit e316ac8460f13b2960834342d4a0cdd2b6a3b1a2 and Anthropic Claude Cookbooks commit 35f2eec7e44897c537e44441b7dff2f0ecbfb804 reviewed 2026-08-16
+    reviewed_on: 2026-08-16
+    volatility: high
+    next_review: 2026-11-16
   - id: PLAYBOOK-APPLE-HIG
     owner: design
     source_version: current Apple HIG and documented HIG Doctor 2.0.0 / snapshot 2025-02-02 reviewed 2026-08-13

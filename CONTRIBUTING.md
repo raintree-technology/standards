@@ -3,7 +3,7 @@ type: Guide
 title: Contributing
 description: Process and requirements for contributing to raintree.standards.
 tags: [contributing, governance]
-generated: { by: codex/gpt-5, at: "2026-08-16T23:26:21Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T06:26:26Z" }
 ---
 
 # Contributing
@@ -56,7 +56,7 @@ The validators require Ruby 3.1 or newer and refuse to run on anything older; th
 
 Keep changes focused. Preserve existing rule IDs and unknown YAML front-matter fields. Do not include confidential information, personal data, credentials, or material that you do not have permission to publish.
 
-By contributing, you agree that your contribution may be distributed under the licenses described in [LICENSE.md](LICENSE.md).
+By contributing, you represent that you created the contribution or otherwise have the right to submit it. You agree that it may be distributed under the licenses described in [LICENSE.md](LICENSE.md).
 
 ## Review
 

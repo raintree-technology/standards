@@ -12,7 +12,7 @@ stale_after: 2027-02-13
 applies_to: [software-change, service-change]
 tags: [engineering, architecture, testing, dependencies]
 depends_on: [FND-EVIDENCE, FND-CHANGE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T06:11:16Z" }
 sources:
   - id: nist-ssdf-11
     resource: https://csrc.nist.gov/pubs/sp/800/218/final

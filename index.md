@@ -19,10 +19,12 @@ okf_version: "0.2"
 * [Governance](governance/) - Authority, contribution, and exception rules.
 * [Growth](growth/) - Experimentation and durable growth standards.
 * [Integration capability maps](integrations/) - Validated vendor surfaces, authority boundaries, workflows, and offline evaluations that support governed playbooks.
+* [Knowledge](knowledge/) - Organizational source authority, provenance, access, lifecycle, retrieval, and answer standards.
 * [Marketing](marketing/) - Core lifecycle marketing standards and coverage maps.
 * [Media](media/) - Media production, accessibility, provenance, and rights standards.
 * [Operations](operations/) - Reliability, incidents, recovery, support, and vendor standards.
 * [Playbooks](playbooks/) - Versioned vendor and platform operating procedures.
+* [Patterns](patterns/) - Preferred implementation approaches with explicit scope and tradeoffs.
 * [Privacy](privacy/) - Personal-data purpose, choice, rights, retention, and sharing standards.
 * [Product](product/) - Discovery, requirements, launch, onboarding, and outcome standards.
 * [Sales](sales/) - Sales enablement, revenue operations, and pipeline-governance standards.
@@ -46,6 +48,7 @@ okf_version: "0.2"
 * [Apple interface](profiles/apple-interface.md) - Universal and Apple-specific interface requirements.
 * [Agentic system](profiles/agentic-system.md) - Standards activated by model workflows, tool use, memory, delegation, and autonomous action.
 * [Commercial evidence review](profiles/commercial-evidence-review.md) - Scope, provenance, claims, writing, trust, and handoff requirements for project and supplier evidence reviews.
+* [Company brain](profiles/company-brain.md) - Source authority, access, lifecycle, retrieval, evaluation, and audit requirements for organizational knowledge systems.
 * [Database change](profiles/database-change.md) - Standards activated by schema, migration, query, indexing, and recovery work.
 * [Functional writing](profiles/functional-writing.md) - Clarity, evidence, trust, and review requirements for functional writing.
 * [Product feature](profiles/product-feature.md) - Cross-domain completion requirements for user-facing features.
@@ -53,6 +56,7 @@ okf_version: "0.2"
 * [Marketing lifecycle](profiles/marketing-lifecycle.md) - Positioning, acquisition, conversion, onboarding, retention, and communication requirements.
 * [Public web page](profiles/public-web-page.md) - Web, SEO, accessibility, privacy, performance, and verification requirements.
 * [Reliability and incident](profiles/reliability-incident.md) - Service operation, incident response, recovery, and learning requirements.
+* [Secrets and Infisical change](profiles/secrets-management.md) - Infisical adoption, access, delivery, precedence, rotation, exposure, operation, recovery, and migration requirements.
 * [Programmatic interface and service change](profiles/service-api-change.md) - Contract, security, reliability, and release requirements for APIs, libraries, SDKs, and services.
 * [Specialist marketing](profiles/specialist-marketing.md) - Paid media, outreach, public engagement, revenue operations, app-store, media, and distribution requirements.
 * [User interface feature](profiles/ui-feature.md) - Cross-platform interaction, accessibility, content, and product requirements.
@@ -78,6 +82,7 @@ okf_version: "0.2"
 * [Growth experiments](growth/experiments.md) - Hypotheses, assignment, guardrails, stopping, and learning.
 * [Interaction design](design/interaction.md) - Complete flows, forms, states, responsive behavior, and design systems.
 * [Interface content](content/interface.md) - Labels, guidance, states, confirmations, inclusive language, and localization.
+* [Organizational knowledge systems](knowledge/organizational-knowledge.md) - Source authority, provenance, authorization, lifecycle, retrieval, answers, evaluation, and operation for company-brain systems.
 * [Marketing lifecycle](marketing/lifecycle.md) - Positioning, research, acquisition, conversion, onboarding, retention, and communication.
 * [Paid media and advertising operations](marketing/paid-media.md) - Campaign contracts, disclosures, targeting, account authority, spend, measurement, and closure.
 * [Direct outreach and prospecting](marketing/direct-outreach.md) - Contact sourcing, channel authority, identity, suppression, vendors, and measurement.
@@ -91,13 +96,21 @@ okf_version: "0.2"
 * [Product delivery](product/delivery.md) - Discovery, requirements, prioritization, launch, onboarding, and outcome review.
 * [Search foundations](seo/foundations.md) - Indexability, canonicalization, structured data, and migrations.
 * [Application security](security/application.md) - Threat modeling, access control, input handling, secrets, dependencies, detection, and verification.
+* [Secrets management with Infisical](security/secrets-management.md) - Infisical authority, hierarchy, identity, delivery, rotation, detection, control-plane operation, recovery, and migration.
 * [Public web quality](web/quality.md) - Accessibility, performance, resilience, security, and agent readiness.
+
+## Patterns
+
+* [Federated organizational knowledge](patterns/federated-knowledge.md) - Keep native sources authoritative while adapters produce governed evidence for shared retrieval.
+* [Cross-layer policy conformance](patterns/cross-layer-policy-conformance.md) - Preserve policy obligations across policy-bearing transitions and distinguish first failure, containment, and release.
+* [Verified agent workflow](patterns/verified-agent-workflow.md) - Separate model proposals from independent validation, bounded execution, and release decisions.
 
 ## Vendor and platform playbooks
 
 * [Apple HIG interface audit](playbooks/apple-hig-audit.md) - Current Apple guidance with optional versioned HIG Doctor evidence.
 * [Google Analytics 4 implementation](playbooks/google-analytics-4.md) - GA4 events, ecommerce, consent, identity, validation, and reconciliation.
 * [Google Search Console operations](playbooks/google-search-console.md) - Ownership, discovery, inspection, monitoring, controlled action, and release evidence backed by a validated [capability map](integrations/google-search-console/).
+* [Standards conformance audit](playbooks/standards-audit.md) - Source-neutral profile routing, evidence inspection, rule findings, exceptions, and scoped conformance reporting.
 
 ## Maintenance
 
@@ -110,6 +123,7 @@ okf_version: "0.2"
 * [License](LICENSE.md) - Reuse terms for standards content and repository software.
 * [Standard template](templates/standard.md) - Starting point for a governed standard.
 * [Profile template](templates/profile.md) - Starting point for a task-oriented bundle.
+* [Pattern template](templates/pattern.md) - Starting point for an optional architecture pattern.
 * [Security policy](SECURITY.md) - Private and public reporting paths for security concerns.
 * [Source register](source-register.yaml) - Review owners, source-set versions, volatility, and next review dates.
 * [Third-party notices](THIRD_PARTY_NOTICES.md) - Attribution and license notices for upstream sources.

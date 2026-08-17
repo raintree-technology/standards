@@ -3,7 +3,7 @@ type: Reference
 title: raintree.standards
 description: Entry point for Raintree's governed, agent-readable quality standards.
 tags: [standards, governance, agents]
-generated: { by: codex/gpt-5, at: "2026-08-16T23:36:18Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T06:28:40Z" }
 sources:
   - id: okf-v02
     resource: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
@@ -34,6 +34,7 @@ Useful entry points:
 - [Contribution requirements](governance/contributing.md)
 - [Agentic system profile](profiles/agentic-system.md)
 - [Commercial evidence review profile](profiles/commercial-evidence-review.md)
+- [Company brain profile](profiles/company-brain.md)
 - [Database change profile](profiles/database-change.md)
 - [Functional writing profile](profiles/functional-writing.md)
 - [Growth experiment profile](profiles/growth-experiment.md)
@@ -41,6 +42,7 @@ Useful entry points:
 - [Public web page profile](profiles/public-web-page.md)
 - [Programmatic interface and service change profile](profiles/service-api-change.md)
 - [Specialist marketing profile](profiles/specialist-marketing.md)
+- [Standards conformance audit](playbooks/standards-audit.md)
 
 ## Format
 
@@ -72,7 +74,7 @@ The `stale_after` date matches `review_by` when a review deadline exists. If a d
 
 ## Coverage
 
-The bounded v1 corpus covers agentic systems, APIs, engineering quality, database and data quality, product delivery, interaction design, accessibility, interface content, lifecycle marketing, analytics, experiments, privacy, application security, search, public web quality, functional writing, reliability, incidents, and cross-cutting foundations. Post-v1 drafts now cover specialist marketing channels, sales and revenue operations, app stores, media production, and commercial evidence reviews. The [coverage matrix](coverage.md) maps recurring work to standards and profiles. New documents plus agentic systems, privacy, and application security remain governed drafts pending the independent and qualified reviews listed in [version 1.0 readiness](governance/v1-readiness.md).
+The bounded v1 corpus covers agentic systems, APIs, engineering quality, database and data quality, product delivery, interaction design, accessibility, interface content, lifecycle marketing, analytics, experiments, privacy, application security, search, public web quality, functional writing, reliability, incidents, and cross-cutting foundations. Post-v1 drafts now cover organizational knowledge systems, standards audits, specialist marketing channels, sales and revenue operations, app stores, media production, and commercial evidence reviews. The [coverage matrix](coverage.md) maps recurring work to standards and profiles. New documents plus agentic systems, privacy, and application security remain governed drafts pending the independent and qualified reviews listed in [version 1.0 readiness](governance/v1-readiness.md).
 
 Supporting [integration capability maps](integrations/) bind volatile vendor surfaces to access, risk, approval, data-semantics, workflow, and evaluation contracts without turning vendor documentation into universal policy.
 
@@ -88,4 +90,4 @@ Agents may read, search, cite, and apply this library. They must not change it u
 
 ## License
 
-Standards and documentation are available under [CC BY 4.0](LICENSE.md). Code in `scripts/` and `schema/` is available under the MIT License. See [LICENSE.md](LICENSE.md) for the complete scope and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for source attribution.
+Standards and documentation are available under [CC BY 4.0](LICENSE.md). Software, schemas, workflows, and executable configuration are available under the MIT License. See [LICENSE.md](LICENSE.md) for the complete scope and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for source attribution.

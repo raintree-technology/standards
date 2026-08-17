@@ -3,7 +3,7 @@ type: License
 title: Repository license
 description: License terms for raintree.standards content and software.
 tags: [license, open-source]
-generated: { by: codex/gpt-5, at: "2026-08-16T23:26:21Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T06:26:26Z" }
 ---
 
 # License
@@ -14,9 +14,9 @@ Copyright © 2026 Raintree Technology contributors.
 
 When you share or adapt this material, credit Raintree Technology contributors, link to this repository and the CC BY 4.0 license, and indicate whether you made changes. Third-party material remains subject to the attribution and license terms in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and the relevant source document.
 
-## Software license
+## Software and automation license
 
-Files in `scripts/` and `schema/` are licensed under the MIT License:
+Software, schemas, automation, and executable configuration in this repository are licensed under the MIT License. This includes `scripts/`, `schema/`, `.github/workflows/`, and `.github/dependabot.yml`. Issue templates and other non-software project documentation remain covered by CC BY 4.0 under the rule above.
 
 Copyright © 2026 Raintree Technology contributors
 
