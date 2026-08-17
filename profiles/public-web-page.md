@@ -12,7 +12,7 @@ stale_after: 2027-02-13
 applies_to: [public-web-page, landing-page, marketing-site]
 tags: [profile, web, seo]
 depends_on: [WEB-QUALITY, SEO-FOUNDATIONS, FND-ACCESSIBILITY, FND-TRUST, FND-EVIDENCE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T22:32:22Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T07:38:31Z" }
 ---
 
 # Public web page profile
@@ -35,6 +35,7 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - Experiment or personalization → `GROWTH-EXPERIMENTS` and `ANALYTICS-MEASUREMENT`
 - Interactive flow, form, navigation, or state change → `PROFILE-UI-FEATURE`
 - Documentation, marketing claims, interface text, or explanatory content → `PROFILE-FUNCTIONAL-WRITING`
+- Terms, privacy or cookie notice, acceptable-use policy, legal addendum, or legal center → `PROFILE-LEGAL-DOCUMENT`
 - Form, upload, account, personalization, or other personal-data processing → `PRIVACY-DATA`
 - Form submission, upload, authentication, authorization, server-side fetch, or other application behavior beyond static delivery → `SECURITY-APPLICATION`
 - Public chat, model-generated content, retrieval, browser agent, or model-selected tool use → `PROFILE-AGENTIC-SYSTEM`

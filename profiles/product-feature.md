@@ -12,7 +12,7 @@ stale_after: 2027-02-13
 applies_to: [product-feature]
 tags: [profile, product]
 depends_on: [PRODUCT-DELIVERY, ENGINEERING-QUALITY, FND-TRUST, FND-CHANGE, FND-EVIDENCE, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T07:46:46Z" }
 ---
 
 # Product feature profile
@@ -43,6 +43,7 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - Dataset, model, pipeline, lineage, or quality change → `DATA-QUALITY`
 - User-facing failure → `CONTENT-ERRORS`
 - Documentation, interface text, messages, or summaries → `PROFILE-FUNCTIONAL-WRITING`
+- New or changed public terms, privacy or cookie notice, assent, recurring offer, cancellation term, acceptable-use rule, age boundary, or legal commitment → `PROFILE-LEGAL-DOCUMENT`
 - Model-generated behavior, retrieval, memory, tool use, delegation, or autonomous action → `PROFILE-AGENTIC-SYSTEM`
 - Collection, inference, retention, deletion, disclosure, transfer, or other processing of personal data → `PRIVACY-DATA`
 - Authentication, authorization, tenancy, secrets, untrusted input, file handling, external callbacks, administrative actions, or other security-sensitive behavior → `SECURITY-APPLICATION`

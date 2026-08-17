@@ -12,7 +12,7 @@ stale_after: 2027-02-13
 applies_to: [user-interface, product-feature]
 tags: [profile, ui, design, accessibility]
 depends_on: [DESIGN-INTERACTION, FND-ACCESSIBILITY, CONTENT-INTERFACE, PRODUCT-DELIVERY, FND-TRUST, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T07:46:46Z" }
 ---
 
 # User interface feature profile
@@ -39,6 +39,7 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - Analytics, experimentation, or personalization → `ANALYTICS-MEASUREMENT` and, when compared, `PROFILE-GROWTH-EXPERIMENT`
 - User-facing failure → `CONTENT-ERRORS`
 - Model-generated or agentic behavior → `PROFILE-AGENTIC-SYSTEM`
+- Contract assent, privacy or cookie choice, recurring enrollment or cancellation, age assurance, policy enforcement, or another legal-document interaction → `PROFILE-LEGAL-DOCUMENT`
 
 ## Completion evidence
 

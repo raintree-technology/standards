@@ -183,6 +183,12 @@ documents:
     reviewed_on: 2026-08-13
     volatility: high
     next_review: 2027-02-13
+  - id: LEGAL-PUBLISHED-TERMS
+    owner: legal
+    source_version: Harvey legal architecture plus current US court, US Code, FTC, California, CPPA, EU, EDPB, UK, and ICO sources for assent, fairness, delivery, subscriptions, tracking, minors, enforcement, and transfers reviewed 2026-08-17
+    reviewed_on: 2026-08-17
+    volatility: high
+    next_review: 2026-11-17
   - id: SECURITY-APPLICATION
     owner: security
     source_version: document source set reviewed 2026-08-13

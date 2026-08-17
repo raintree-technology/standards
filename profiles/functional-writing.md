@@ -12,7 +12,7 @@ stale_after: 2027-02-13
 applies_to: [functional-writing]
 tags: [profile, writing, content]
 depends_on: [WRITING-FUNCTIONAL, FND-EVIDENCE, FND-TRUST, AGENT-VERIFICATION]
-generated: { by: codex/gpt-5, at: "2026-08-14T03:10:36Z" }
+generated: { by: codex/gpt-5, at: "2026-08-17T07:38:31Z" }
 ---
 
 # Functional writing profile
@@ -38,7 +38,8 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - Functional writing that contains a marketing or conversion claim → `PROFILE-MARKETING-LIFECYCLE`
 - Sales collateral, outreach, public relations, sponsored content, app-store copy, or partner material → `PROFILE-SPECIALIST-MARKETING`
 - Project, supplier, facility, counterparty, or diligence evidence review → `PROFILE-COMMERCIAL-EVIDENCE-REVIEW`
-- Legal, regulatory, safety, or medical content → no domain standard exists in this library; escalate to a qualified reviewer and record the governing external policy before publication
+- Public terms, privacy or cookie notice, acceptable-use policy, legal addendum, or legal center → `PROFILE-LEGAL-DOCUMENT`
+- Other legal, regulatory, safety, or medical content → no complete domain standard exists in this library; escalate to a qualified reviewer and record the governing external policy before publication
 
 ## Completion evidence
 

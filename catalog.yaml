@@ -78,6 +78,8 @@ standards:
     path: security/application.md
   - id: SECURITY-SECRETS
     path: security/secrets-management.md
+  - id: LEGAL-PUBLISHED-TERMS
+    path: legal/published-terms-and-notices.md
 
 patterns:
   - id: PATTERN-FEDERATED-KNOWLEDGE
@@ -128,3 +130,5 @@ profiles:
     path: profiles/ui-feature.md
   - id: PROFILE-FUNCTIONAL-WRITING
     path: profiles/functional-writing.md
+  - id: PROFILE-LEGAL-DOCUMENT
+    path: profiles/legal-document.md

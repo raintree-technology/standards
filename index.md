@@ -20,6 +20,7 @@ okf_version: "0.2"
 * [Growth](growth/) - Experimentation and durable growth standards.
 * [Integration capability maps](integrations/) - Validated vendor surfaces, authority boundaries, workflows, and offline evaluations that support governed playbooks.
 * [Knowledge](knowledge/) - Organizational source authority, provenance, access, lifecycle, retrieval, and answer standards.
+* [Legal](legal/) - Published terms, notices, policies, assent, and legal-document change control.
 * [Marketing](marketing/) - Core lifecycle marketing standards and coverage maps.
 * [Media](media/) - Media production, accessibility, provenance, and rights standards.
 * [Operations](operations/) - Reliability, incidents, recovery, support, and vendor standards.
@@ -53,6 +54,7 @@ okf_version: "0.2"
 * [Functional writing](profiles/functional-writing.md) - Clarity, evidence, trust, and review requirements for functional writing.
 * [Product feature](profiles/product-feature.md) - Cross-domain completion requirements for user-facing features.
 * [Growth experiment](profiles/growth-experiment.md) - Evidence, measurement, trust, and rollout requirements for experiments.
+* [Public legal document](profiles/legal-document.md) - Scope, accuracy, presentation, assent, change control, and qualified review for public legal documents.
 * [Marketing lifecycle](profiles/marketing-lifecycle.md) - Positioning, acquisition, conversion, onboarding, retention, and communication requirements.
 * [Public web page](profiles/public-web-page.md) - Web, SEO, accessibility, privacy, performance, and verification requirements.
 * [Reliability and incident](profiles/reliability-incident.md) - Service operation, incident response, recovery, and learning requirements.
@@ -83,6 +85,7 @@ okf_version: "0.2"
 * [Interaction design](design/interaction.md) - Complete flows, forms, states, responsive behavior, and design systems.
 * [Interface content](content/interface.md) - Labels, guidance, states, confirmations, inclusive language, and localization.
 * [Organizational knowledge systems](knowledge/organizational-knowledge.md) - Source authority, provenance, authorization, lifecycle, retrieval, answers, evaluation, and operation for company-brain systems.
+* [Published legal terms and notices](legal/published-terms-and-notices.md) - Scope, accuracy, presentation, assent, versioning, change control, and operation of public legal documents.
 * [Marketing lifecycle](marketing/lifecycle.md) - Positioning, research, acquisition, conversion, onboarding, retention, and communication.
 * [Paid media and advertising operations](marketing/paid-media.md) - Campaign contracts, disclosures, targeting, account authority, spend, measurement, and closure.
 * [Direct outreach and prospecting](marketing/direct-outreach.md) - Contact sourcing, channel authority, identity, suppression, vendors, and measurement.
