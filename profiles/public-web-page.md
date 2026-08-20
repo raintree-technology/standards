@@ -45,6 +45,7 @@ The front-matter `depends_on` list is the authoritative machine-readable route. 
 - Search Console ownership, inspection, or monitoring → `PLAYBOOK-GSC`
 - Google Analytics 4 implementation → `PLAYBOOK-GA4`
 - Core acquisition, conversion, or lifecycle marketing → `PROFILE-MARKETING-LIFECYCLE`
+- Product portfolio, open-source index, repository landing page, or public project profile → `MARKETING-PROJECT-SHOWCASE`
 - Paid placement destination, referral asset, syndicated listing, public engagement, or other specialist channel → `PROFILE-SPECIALIST-MARKETING`
 - Vercel → `PLAYBOOK-VERCEL`; Cloudflare → `PLAYBOOK-CLOUDFLARE`; Resend → `PLAYBOOK-RESEND`; Stripe → `PLAYBOOK-STRIPE`; Plaid → `PLAYBOOK-PLAID`; Neon → `PLAYBOOK-NEON`
 - Another material hosting or service platform without a named playbook → `INTEGRATIONS-VENDOR`, current official provider documentation, and a recorded library gap

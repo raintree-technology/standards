@@ -1,7 +1,7 @@
 version: 1
 okf_version: "0.2"
 bundle_index: index.md
-updated: 2026-08-17
+updated: 2026-08-20
 target_release: "1.0.0"
 release_status: approval-pending
 
@@ -54,6 +54,8 @@ standards:
     path: marketing/public-engagement.md
   - id: MARKETING-DISTRIBUTION
     path: marketing/distribution.md
+  - id: MARKETING-PROJECT-SHOWCASE
+    path: marketing/project-showcase.md
   - id: SALES-REVENUE-OPERATIONS
     path: sales/revenue-operations.md
   - id: DISCOVERY-APP-STORES

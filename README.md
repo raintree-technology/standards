@@ -1,150 +1,139 @@
----
-type: Reference
-title: raintree.standards
-description: Entry point for Raintree's governed, agent-readable quality standards.
-tags: [standards, governance, agents]
-generated: { by: codex/gpt-5, at: "2026-08-17T17:16:31Z" }
-sources:
-  - id: okf-v02
-    resource: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
-    title: Open Knowledge Format v0.2
-    author: org:GoogleCloudPlatform
----
+# Raintree Standards
 
-# raintree.standards
+<!-- project-record: raintree-standards -->
+
+**Pre-1.0 open-source standards library · CC BY 4.0 and MIT**
+
+Raintree Standards helps practitioners and agents turn a product, engineering,
+security, data, content, or marketing task into testable requirements and evidence.
+Use it when a checklist is too vague and a task needs explicit applicability,
+verification, exceptions, and accountable review.
 
 > [!WARNING]
 > **Work in progress:** Before version 1.0, requirements and document structure can
-> change. Check the document status and review metadata before relying on a rule for
-> release approval.
+> change. Check document status and review metadata before using a rule for release
+> approval.
 
-Use raintree.standards to find acceptance criteria for work on Raintree projects. The
-library helps practitioners and agents identify requirements, collect evidence, and
-report exceptions or unresolved gaps.
+## Start with a task
 
-This repository is a governed standards library, not a general collection of tips.
-Each standard states when its rules apply, how strongly they apply, and what evidence
-verifies them.
-
-## Use the library
-
-Start with a defined task and its intended outcome.
-
-1. Choose the profile in [`profiles/`](profiles/) that most closely matches the task.
-2. Read every standard listed in that profile's `depends_on` field.
-3. Determine which rules apply to the task's context and risks.
-4. Collect the evidence required by each applicable rule.
+1. Choose the closest task profile in [`profiles/`](profiles/).
+2. Read every standard named by the profile’s `depends_on` field.
+3. Decide which conditional rules apply to the task and its risks.
+4. Collect the verification evidence required by each applicable rule.
 5. Report satisfied rules, approved exceptions, and unresolved gaps by stable rule ID.
 
-The result should be a task record that connects each applicable rule to evidence, an
-approved exception, or an unresolved gap.
+```mermaid
+flowchart LR
+  T[Task and outcome] --> P[Profile]
+  P --> R[Applicable rules]
+  R --> E[Evidence or exception]
+  E --> D[Review decision]
+```
 
-Useful entry points:
+## Worked example: improve a public README
 
-- [Authority and requirement levels](governance/authority.md)
-- [Contribution requirements](governance/contributing.md)
-- [Agentic system profile](profiles/agentic-system.md)
-- [Commercial evidence review profile](profiles/commercial-evidence-review.md)
-- [Company brain profile](profiles/company-brain.md)
-- [Database change profile](profiles/database-change.md)
-- [Redis change profile](profiles/redis-change.md)
+Suppose the task is “make an open-source repository easier to evaluate and install.”
+
+| Step | Result |
+| --- | --- |
+| Select a route | `PROFILE-PUBLIC-WEB-PAGE` because a repository landing page is public and indexable |
+| Activate writing | `PROFILE-FUNCTIONAL-WRITING` for clarity, actions, links, and reader review |
+| Activate showcase rules | `MARKETING-PROJECT-SHOWCASE` for audience, lifecycle, evidence, install path, and ecosystem context |
+| Collect evidence | Rendered README, working quickstart, link report, package metadata, accessibility inspection, and representative-reader notes |
+| Report the outcome | Passing rule IDs, any approved exception, and unresolved evidence such as an untested screen reader |
+
+The resulting task record connects each applicable rule to evidence instead of saying
+the README “looks good.” Use the
+[open-source documentation patterns](templates/open-source-documentation.md) for the
+repository, package, example, evidence, or maintainer-guide structure.
+
+## Common entry points
+
 - [Functional writing profile](profiles/functional-writing.md)
-- [Growth experiment profile](profiles/growth-experiment.md)
-- [Product feature profile](profiles/product-feature.md)
 - [Public web page profile](profiles/public-web-page.md)
+- [Product feature profile](profiles/product-feature.md)
+- [Agentic system profile](profiles/agentic-system.md)
 - [Programmatic interface and service change profile](profiles/service-api-change.md)
-- [Specialist marketing profile](profiles/specialist-marketing.md)
+- [Database change profile](profiles/database-change.md)
+- [Growth experiment profile](profiles/growth-experiment.md)
 - [Standards conformance audit](playbooks/standards-audit.md)
+- [Complete coverage matrix](coverage.md)
 
-## Format
+## How the library works
 
-Markdown is the source of truth. The repository uses Open Knowledge Format (OKF) v0.2
-with a stricter Raintree application profile. Each concept document begins with YAML
-front matter for machine-readable metadata.
+This is a governed standards library, not a general collection of tips. Each standard
+states when its rules apply, how strongly they apply, why they exist, how to verify
+them, and when an exception is allowed.
 
-- [`schema/standard.schema.json`](schema/standard.schema.json) defines the Raintree standard contract.
-- [`schema/integration-capability.schema.json`](schema/integration-capability.schema.json) defines supporting vendor capability maps used by governed playbooks.
-- [`schema/integration-manifest.schema.json`](schema/integration-manifest.schema.json) defines discovery, official-domain, artifact, and agent-skill routing for each provider bundle.
-- [`catalog.yaml`](catalog.yaml) indexes governed documents for agents and other tools.
-- Markdown keeps the standards readable, reviewable, and easy to cite.
-
-OKF supplies portable discovery, provenance, trust, and lifecycle conventions.
-Raintree adds stable IDs, controlled document types, ownership, applicability,
-dependencies, rule levels, exceptions, and verification requirements. Tools that
-read and write these documents must preserve unknown front-matter fields because the
-Raintree profile does not define the complete OKF vocabulary.
-
-## Lifecycle metadata
-
-The `status` field uses OKF's `draft`, `stable`, and `deprecated` values. The
-`governance_status` field uses Raintree's `draft`, `active`, `deprecated`, and
-`retired` values. A stable document requires `verified` provenance from an independent
-reviewer before a versioned release.
-
-The `stale_after` date matches `review_by` when a review deadline exists. A document
-without a `verified` field has not received independent verification. Migration,
-source discovery, and structural validation do not count as content verification.
-[`source-register.yaml`](source-register.yaml) records the owner and freshness policy
-for each governed external source set.
-
-## Library model
+Markdown is the source of truth. Governed concept documents use Open Knowledge Format
+v0.2 frontmatter with a stricter Raintree application profile.
 
 | Type | Purpose |
-|---|---|
+| --- | --- |
 | Foundation | Cross-cutting constraints such as security, privacy, accessibility, reliability, trust, and evidence quality |
 | Standard | Testable requirements for a domain |
-| Pattern | A preferred implementation approach with known tradeoffs |
-| Playbook | An ordered procedure for recurring work |
-| Profile | A task-oriented bundle of applicable standards |
-| Decision | A durable record explaining an important choice |
+| Pattern | Preferred implementation approach with known tradeoffs |
+| Playbook | Ordered procedure for recurring work |
+| Profile | Task-oriented bundle of applicable standards |
+| Decision | Durable explanation of an important choice |
 
-## Coverage
+Key machine-readable surfaces:
 
-The bounded v1 corpus covers recurring product, engineering, data, web, content,
-marketing, AI, and operational work. The [coverage matrix](coverage.md) maps each work
-area to its standards, profiles, playbooks, and approval state.
+- [`catalog.yaml`](catalog.yaml) indexes governed documents.
+- [`schema/standard.schema.json`](schema/standard.schema.json) defines standard frontmatter.
+- [`schema/project-showcase-record.schema.json`](schema/project-showcase-record.schema.json) defines canonical public project records.
+- [`source-register.yaml`](source-register.yaml) records source owners and freshness policy.
 
-Post-v1 drafts cover organizational knowledge systems, standards audits, specialist
-marketing channels, sales and revenue operations, app stores, media production, and
-commercial evidence reviews. New documents, agentic systems, privacy, and application
-security remain governed drafts pending the reviews listed in
-[version 1.0 readiness](governance/v1-readiness.md).
+Tools must preserve unknown frontmatter fields because Raintree does not define the
+complete OKF vocabulary.
 
-Supporting [integration bundles](integrations/) connect volatile provider surfaces to
-official sources, workflows, evaluations, and optional capability maps. Each named
-provider has its own playbook and manifest. Agent skills are versioned review aids;
-they do not turn provider documentation into universal policy.
+## Lifecycle and trust boundary
 
-## Agent access
+The OKF `status` field uses `draft`, `stable`, and `deprecated`. Raintree’s
+`governance_status` uses `draft`, `active`, `deprecated`, and `retired`. A stable
+document requires an independent verification event before a versioned release.
 
-Agents may read, search, cite, and apply this library. They must not change it unless a
+Source discovery, schema validation, migration, and author review do not count as
+independent content verification. Apply only rules whose conditions are true. Record
+missing evidence as a gap or unknown rather than inventing approval or conformance.
+
+Agents may read, search, cite, and apply the library. They must not change it unless a
 user explicitly assigns a standards-maintenance task. [`AGENTS.md`](AGENTS.md) defines
-this rule. Review and repository ownership enforce it even when filesystem permissions
-allow changes.
+that boundary.
 
-## Apply the library to this repository
+## Validate the library
 
-Repository changes must use the same standards as work in other Raintree projects.
-Start with the route that matches the artifact being changed:
+```bash
+ruby scripts/validate_catalog.rb
+ruby scripts/validate_integrations.rb
+ruby scripts/test_schema_drift.rb
+ruby scripts/test_workflows.rb
+ruby scripts/test_standards_lib.rb
+ruby scripts/test_validate_catalog.rb
+ruby scripts/test_validate_integrations.rb
+ruby scripts/test_project_readme.rb
+```
 
-| Repository work | Primary route | Common additional standards |
-|---|---|---|
-| Standards, profiles, playbooks, and public documentation | [Functional writing profile](profiles/functional-writing.md) | `FND-EVIDENCE`, `FND-TRUST`, and `FND-ACCESSIBILITY` |
-| Repository-wide conformance review | [Standards conformance audit](playbooks/standards-audit.md) | Every profile and conditional route activated by the inspected scope |
-| Agent instructions and reusable procedures | [Agentic system profile](profiles/agentic-system.md) | `WRITING-FUNCTIONAL` and `AGENT-VERIFICATION` |
-| Ruby validators, schemas, and command interfaces | [Programmatic interface and service change profile](profiles/service-api-change.md) | `ENGINEERING-QUALITY`, `SECURITY-APPLICATION`, and `API-CONTRACTS` |
-| Continuous integration and repository automation | `ENGINEERING-QUALITY` | `FND-CHANGE`, `SECURITY-APPLICATION`, and `AGENT-VERIFICATION` |
+## Raintree open-source system
 
-Apply only rules whose conditions are true. Record missing evidence as a gap or unknown;
-do not add approval, verification, or conformance claims that the available evidence
-does not support.
+Raintree Standards defines the governed requirements, evidence, profiles, and
+exceptions. Each sibling project can be used independently.
 
-## Contribute and report problems
+| Project | Responsibility |
+| --- | --- |
+| [DocPull](https://github.com/raintree-technology/docpull) | Acquires, versions, cites, and exports agent context. |
+| [PolicyStrata](https://github.com/raintree-technology/policystrata) | Tests policy behavior across agent, compiler, database, and release layers. |
+| [HIG Doctor](https://github.com/raintree-technology/hig-doctor) | Audits interface source and provides HIG guidance. |
+| [Trellis](https://github.com/raintree-technology/trellis) | Enforces shared JavaScript and TypeScript code policy through Biome. |
 
-- Read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing a change.
-- Report sensitive security concerns according to [SECURITY.md](SECURITY.md).
-- Follow the [Code of Conduct](CODE_OF_CONDUCT.md) in project spaces.
+See the [Raintree open-source portfolio](https://raintree.technology/portfolio#open-source)
+for current lifecycle and distribution links.
 
-## License
+## Project policies
 
-Standards and documentation are available under [CC BY 4.0](LICENSE.md). Software, schemas, workflows, and executable configuration are available under the MIT License. See [LICENSE.md](LICENSE.md) for the complete scope and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for source attribution.
+[Contribution requirements](CONTRIBUTING.md) · [Security](SECURITY.md) ·
+[Code of Conduct](CODE_OF_CONDUCT.md) · [License and attribution](LICENSE.md)
+
+Standards and documentation use CC BY 4.0. Software, schemas, workflows, and executable
+configuration use the MIT License. See [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)
+for source attribution.

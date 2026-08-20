@@ -1,5 +1,6 @@
 # Authoring templates
 
+* [Open-source documentation patterns](open-source-documentation.md) - Structures for repository, package, example, evidence, and maintainer documentation.
 * [Standard authoring template](standard.md) - Starting structure for an OKF-compatible governed Raintree standard.
 * [Task profile authoring template](profile.md) - Starting structure for an OKF-compatible Raintree task profile.
 * [Pattern authoring template](pattern.md) - Starting structure for an optional, source-neutral Raintree architecture pattern.

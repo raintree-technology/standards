@@ -42,7 +42,7 @@ module Standards
     RULE_LABELS = ["Level", "Applies when", "Why", "Verify", "Exceptions"].freeze
     STANDARD_HEADINGS = %w[Guidance Examples Sources].freeze
     PROFILE_HEADINGS = ["Required standards", "Conditional standards", "Completion evidence"].freeze
-    RESERVED_BASENAMES = %w[index.md log.md].freeze
+    RESERVED_BASENAMES = %w[README.md index.md log.md].freeze
     DOCUMENT_ID_PATTERN = /\A[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+\z/
     RULE_HEADING_PATTERN = /^### ((?:[A-Z][A-Z0-9]*-)+\d{3})\s+—\s+.+$/
     GOVERNED_REFERENCE_PATTERN = /`([A-Z][A-Z0-9]+(?:-[A-Z0-9]+)+)`/

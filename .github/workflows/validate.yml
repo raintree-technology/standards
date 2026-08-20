@@ -67,3 +67,6 @@ jobs:
 
       - name: Test integration validator behaviour
         run: ruby scripts/test_validate_integrations.rb
+
+      - name: Check the repository landing page contract
+        run: ruby scripts/test_project_readme.rb
