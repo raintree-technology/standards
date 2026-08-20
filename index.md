@@ -129,6 +129,7 @@ choose a profile under **Task profiles**.
 
 ## Maintenance
 
+* [Changelog](CHANGELOG.md) - Material requirement, profile, schema, lifecycle, and compatibility changes.
 * [Code of Conduct](CODE_OF_CONDUCT.md) - Expected behavior and enforcement in project spaces.
 * [Contributing](CONTRIBUTING.md) - Process for proposing and validating changes.
 * [Contributing standards](governance/contributing.md) - Acceptance and review requirements.

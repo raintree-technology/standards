@@ -132,7 +132,8 @@ for current lifecycle and distribution links.
 ## Project policies
 
 [Contribution requirements](CONTRIBUTING.md) · [Security](SECURITY.md) ·
-[Code of Conduct](CODE_OF_CONDUCT.md) · [License and attribution](LICENSE.md)
+[Code of Conduct](CODE_OF_CONDUCT.md) · [Changelog](CHANGELOG.md) ·
+[License and attribution](LICENSE.md)
 
 Standards and documentation use CC BY 4.0. Software, schemas, workflows, and executable
 configuration use the MIT License. See [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)
