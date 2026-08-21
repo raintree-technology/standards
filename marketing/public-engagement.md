@@ -37,7 +37,7 @@ Public communications and relationships must identify accountable speakers, dist
 
 ### MARKETING-PUBLIC-ENGAGEMENT-001 — Assign accountable public authority
 
-**Level:** required
+**Level:** required  
 **Applies when:** Publishing, responding, briefing, moderating, or speaking publicly on behalf of the organization.
 
 Define approved identities, topics, claims, embargoes, confidentiality, approval thresholds, incident escalation, correction authority, and records for employees, agencies, agents, and partners.
@@ -53,7 +53,7 @@ Define approved identities, topics, claims, embargoes, confidentiality, approval
 
 ### MARKETING-PUBLIC-ENGAGEMENT-002 — Disclose material relationships
 
-**Level:** required
+**Level:** required  
 **Applies when:** An endorsement, review, testimonial, recommendation, event, article, community post, or partnership involves payment, gifts, employment, control, affiliate benefit, or another unexpected connection.
 
 Place a clear disclosure with the representation in each medium and language, and ensure the underlying opinion and experience are honest and supported.
@@ -69,7 +69,7 @@ Place a clear disclosure with the representation in each medium and language, an
 
 ### MARKETING-PUBLIC-ENGAGEMENT-003 — Preserve authentic reviews and community signals
 
-**Level:** prohibited
+**Level:** prohibited  
 **Applies when:** Soliciting, publishing, ranking, rewarding, moderating, or reporting reviews, testimonials, reactions, members, followers, or engagement.
 
 Do not create or buy fake identity or sentiment, condition incentives on positive opinion, suppress honest negative feedback deceptively, or represent a controlled property as independent.
@@ -85,7 +85,7 @@ Do not create or buy fake identity or sentiment, condition incentives on positiv
 
 ### MARKETING-PUBLIC-ENGAGEMENT-004 — Govern community safety and moderation
 
-**Level:** required
+**Level:** required  
 **Applies when:** The organization hosts, sponsors, or materially controls a community or user-contribution surface.
 
 Publish conduct rules, reporting and appeal paths, moderator authority, response expectations, privacy boundaries, age or vulnerability controls, enforcement records, and emergency escalation proportionate to the community.
@@ -101,7 +101,7 @@ Publish conduct rules, reporting and appeal paths, moderator authority, response
 
 ### MARKETING-PUBLIC-ENGAGEMENT-005 — Protect participants and sources
 
-**Level:** required
+**Level:** required  
 **Applies when:** Publishing customer stories, quotes, names, images, case studies, event material, media contacts, or community contributions.
 
 Record informed permission, intended channels, editing and attribution, sensitive context, duration, withdrawal limits, safeguarding, and rights for every identifiable contribution.
@@ -117,7 +117,7 @@ Record informed permission, intended channels, editing and attribution, sensitiv
 
 ### MARKETING-PUBLIC-ENGAGEMENT-006 — Define partnership responsibility and exit
 
-**Level:** required
+**Level:** required  
 **Applies when:** Another organization shares branding, audiences, content, events, referrals, leads, claims, or delivery responsibility.
 
 Define objectives, roles, approvals, data and intellectual-property rights, brand use, disclosures, measurement, complaints, incidents, termination, removal, and post-termination obligations in a written agreement.
@@ -133,7 +133,7 @@ Define objectives, roles, approvals, data and intellectual-property rights, bran
 
 ### MARKETING-PUBLIC-ENGAGEMENT-007 — Correct public errors proportionately
 
-**Level:** required
+**Level:** required  
 **Applies when:** A material public statement, endorsement, report, or community action is wrong, outdated, misleading, or unauthorized.
 
 Stop further distribution, preserve evidence, assess affected audiences and downstream copies, publish a correction where it can reach them, notify partners, and update source material and automation.

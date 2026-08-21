@@ -52,7 +52,7 @@ Agents must leave users with an accurate, reproducible account of what changed, 
 
 ### AGENT-VERIFICATION-001 — Verify in proportion to risk
 
-**Level:** required
+**Level:** required  
 **Applies when:** An agent changes an artifact or system.
 
 Run the narrowest checks that directly exercise the changed behavior, plus broader checks warranted by likely blast radius. Include failure-path and recovery verification when those paths carry material risk.
@@ -68,7 +68,7 @@ Run the narrowest checks that directly exercise the changed behavior, plus broad
 
 ### AGENT-VERIFICATION-002 — Inspect the final artifact
 
-**Level:** required
+**Level:** required  
 **Applies when:** Generating or transforming code, documents, data, images, interfaces, or configuration.
 
 Review the resulting artifact in its intended form. Successful generation, compilation, or serialization is not evidence of correct content or acceptable presentation.
@@ -84,7 +84,7 @@ Review the resulting artifact in its intended form. Successful generation, compi
 
 ### AGENT-VERIFICATION-003 — Preserve unrelated user work
 
-**Level:** required
+**Level:** required  
 **Applies when:** Working in a mutable repository or shared system.
 
 Inspect current state before editing, distinguish pre-existing changes, and avoid overwriting, reverting, formatting, or including unrelated work.
@@ -100,7 +100,7 @@ Inspect current state before editing, distinguish pre-existing changes, and avoi
 
 ### AGENT-VERIFICATION-004 — Report residual uncertainty
 
-**Level:** required
+**Level:** required  
 **Applies when:** Any relevant check could not run, failed, used a substitute environment, or left evidence incomplete.
 
 State what was not verified, why, and the practical risk. Separate pre-existing failures from failures introduced by the change.
@@ -116,7 +116,7 @@ State what was not verified, why, and the practical risk. Separate pre-existing 
 
 ### AGENT-VERIFICATION-005 — Make the handoff reproducible
 
-**Level:** required
+**Level:** required  
 **Applies when:** Completing implementation or analysis.
 
 Identify material outputs, verification performed, outcomes, exceptions, and any next action the user must take. Cite applicable failed or deferred standards by stable ID.
@@ -132,7 +132,7 @@ Identify material outputs, verification performed, outcomes, exceptions, and any
 
 ### AGENT-VERIFICATION-006 — Remove temporary work
 
-**Level:** required
+**Level:** required  
 **Applies when:** The task creates diagnostics, generated previews, temporary data, debug code, or scratch files that are not deliverables.
 
 Remove temporary artifacts and restore temporary configuration before handoff. Preserve any artifact needed to reproduce a reported result or explicitly identify it as a deliverable.
@@ -148,7 +148,7 @@ Remove temporary artifacts and restore temporary configuration before handoff. P
 
 ### AGENT-VERIFICATION-007 — Require independent review for high-impact work
 
-**Level:** required
+**Level:** required  
 **Applies when:** A change materially affects security, privacy, legal or regulatory obligations, financial behavior, access control, destructive data handling, or another domain that requires an accountable specialist.
 
 Obtain review from the qualified owner required by the governing policy. The implementing agent can prepare evidence and recommendations but cannot treat self-review as independent approval.
@@ -164,7 +164,7 @@ Obtain review from the qualified owner required by the governing policy. The imp
 
 ### AGENT-VERIFICATION-008 — Ground the plan in the actual system
 
-**Level:** required
+**Level:** required  
 **Applies when:** An agent will diagnose, design, or change an unfamiliar or materially complex system.
 
 Inspect governing instructions, current state, relevant architecture, dependencies, existing patterns, and runtime behavior before choosing an implementation. Separate exploration and planning from mutation when a wrong assumption could expand scope or harm existing work.
@@ -181,7 +181,7 @@ Inspect governing instructions, current state, relevant architecture, dependenci
 
 ### AGENT-VERIFICATION-009 — Give the agent an executable completion signal
 
-**Level:** required
+**Level:** required  
 **Applies when:** Delegating implementation or transformation work to an agent.
 
 Provide or derive a check the agent can run against the intended outcome, such as a focused test, build, query, rendered inspection, state comparison, schema validation, or reference artifact. Define what pass, fail, and partial evidence mean before the agent uses the check as its stop condition.
@@ -198,7 +198,7 @@ Provide or derive a check the agent can run against the intended outcome, such a
 
 ### AGENT-VERIFICATION-010 — Review autonomous trajectories and outcomes
 
-**Level:** required
+**Level:** required  
 **Applies when:** An agent performs multiple steps, uses tools, delegates, retries, or changes external state without synchronous review of every step.
 
 Review the final authoritative state and enough of the trajectory to detect unauthorized scope, unsafe shortcuts, hidden failures, repeated dead ends, policy violations, and accidental reliance on unavailable or private information. Treat the model and harness together as the evaluated system.
@@ -215,7 +215,7 @@ Review the final authoritative state and enough of the trajectory to detect unau
 
 ### AGENT-VERIFICATION-011 — Turn recurring corrections into scoped guidance
 
-**Level:** required
+**Level:** required  
 **Applies when:** The same project rule, setup step, tool procedure, failure, or reviewer correction is likely to recur.
 
 Update the repository's governed agent instructions, skill, playbook, or knowledge system at the narrowest useful scope. State the trigger, expected outcome, required inputs, forbidden actions, verification, source, and owner. Resolve conflicts and duplicates rather than adding another overlapping instruction.

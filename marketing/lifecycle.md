@@ -36,7 +36,7 @@ Marketing must connect an evidenced audience need to a truthful offer, earn atte
 
 ### MARKETING-LIFECYCLE-001 — Maintain an evidenced positioning record
 
-**Level:** required
+**Level:** required  
 **Applies when:** Creating strategy, claims, campaigns, sales material, or lifecycle content.
 
 Record the target audience, problem, alternatives, differentiated value, supporting evidence, objections, limitations, prohibited claims, and approved terminology.
@@ -52,7 +52,7 @@ Record the target audience, problem, alternatives, differentiated value, support
 
 ### MARKETING-LIFECYCLE-002 — Ground audience insight in attributable research
 
-**Level:** required
+**Level:** required  
 **Applies when:** A decision relies on customer language, needs, objections, segments, or behavior.
 
 Record source, sample, method, period, selection limits, consent or authority, and the distinction between observed language and the team's interpretation.
@@ -68,7 +68,7 @@ Record source, sample, method, period, selection limits, consent or authority, a
 
 ### MARKETING-LIFECYCLE-003 — Substantiate express and implied claims before publication
 
-**Level:** required
+**Level:** required  
 **Applies when:** Content communicates product performance, comparison, results, price, scarcity, safety, endorsement, or other decision-relevant facts.
 
 Identify the reasonable overall impression, support each material express and implied claim with evidence suitable to the claim, and place qualifications where people will notice and understand them.
@@ -84,7 +84,7 @@ Identify the reasonable overall impression, support each material express and im
 
 ### MARKETING-LIFECYCLE-004 — Preserve a truthful offer and conversion path
 
-**Level:** required
+**Level:** required  
 **Applies when:** Asking a person to sign up, buy, subscribe, start a trial, grant access, or provide lead information.
 
 Present the included value, total material cost, recurring terms, eligibility, limitations, data use, cancellation or exit, and next step before commitment. Do not use obstruction, false urgency, disguised advertising, or preselected material consent.
@@ -100,7 +100,7 @@ Present the included value, total material cost, recurring terms, eligibility, l
 
 ### MARKETING-LIFECYCLE-005 — Govern communication permission and frequency
 
-**Level:** required
+**Level:** required  
 **Applies when:** Sending marketing email, text, push, in-product promotion, or other directed lifecycle communication.
 
 Record the governing jurisdiction and policy, lawful authority or permission, sender identity, purpose, audience, frequency, suppression, withdrawal, and proof of delivery behavior before activation.
@@ -116,7 +116,7 @@ Record the governing jurisdiction and policy, lawful authority or permission, se
 
 ### MARKETING-LIFECYCLE-006 — Optimize for achieved value, not compelled activity
 
-**Level:** required
+**Level:** required  
 **Applies when:** Improving signup, onboarding, activation, engagement, paywalls, cancellation, or retention.
 
 Define the user value and business outcome, protect guardrails, preserve meaningful choice, and reject tactics that increase a local metric by delaying exit, withholding material information, or driving low-quality activity.
@@ -132,7 +132,7 @@ Define the user value and business outcome, protect guardrails, preserve meaning
 
 ### MARKETING-LIFECYCLE-007 — Separate personalization from sensitive inference
 
-**Level:** required
+**Level:** required  
 **Applies when:** Content, offer, timing, or channel varies by identity, behavior, model, segment, or inferred attribute.
 
 Use only authorized, necessary data; document the targeting rule and sensitive proxies; provide applicable notice and control; and prevent protected or vulnerable groups from receiving harmful exclusion, pressure, or differential terms.
@@ -148,7 +148,7 @@ Use only authorized, necessary data; document the targeting rule and sensitive p
 
 ### MARKETING-LIFECYCLE-008 — Measure incrementality and durable outcomes honestly
 
-**Level:** required
+**Level:** required  
 **Applies when:** Evaluating a campaign, channel, conversion change, or lifecycle program.
 
 Define the decision, cost, exposure, attribution limits, baseline, primary outcome, guardrails, and time horizon. Distinguish observed platform attribution from causal incrementality and report uncertainty.
@@ -164,7 +164,7 @@ Define the decision, cost, exposure, attribution limits, baseline, primary outco
 
 ### MARKETING-LIFECYCLE-009 — Preserve learning and retire stale material
 
-**Level:** required
+**Level:** required  
 **Applies when:** A campaign, offer, message, segment, or lifecycle program ends or materially changes.
 
 Record the version, audience, exposure, result, limitations, decision, and reusable learning; remove or revalidate stale claims, endorsements, pricing, links, and automation.

@@ -11,7 +11,7 @@ review_by: 2027-02-13
 stale_after: 2027-02-13
 applies_to: [agentic-system, product-feature]
 tags: [ai, agents, tools, evaluation, safety, context]
-depends_on: [FND-EVIDENCE, FND-TRUST, FND-CHANGE, AGENT-VERIFICATION]
+depends_on: [FND-EVIDENCE, FND-TRUST, FND-CHANGE, AGENT-VERIFICATION, PRIVACY-DATA]
 generated: { by: codex/gpt-5, at: "2026-08-13T19:35:12Z" }
 sources:
   - id: anthropic-effective-agents
@@ -86,7 +86,7 @@ Provider features and model behavior change quickly. Treat provider documentatio
 
 ### AI-AGENTS-001 — Use the simplest architecture that meets measured needs
 
-**Level:** required
+**Level:** required  
 **Applies when:** Designing or materially changing a model workflow, agent, orchestration layer, or multi-agent system.
 
 Start with the least autonomous design that can meet the task contract: deterministic software, one model call, a fixed workflow, a tool-using agent, and then multiple agents in that order of increasing complexity. Add autonomy, handoffs, memory, or parallel agents only when evaluation shows a material improvement that justifies added latency, cost, nondeterminism, security exposure, and operational burden.
@@ -103,7 +103,7 @@ Start with the least autonomous design that can meet the task contract: determin
 
 ### AI-AGENTS-002 — Define the task contract before prompting
 
-**Level:** required
+**Level:** required  
 **Applies when:** Creating an agent capability, workflow, reusable prompt, skill, or playbook.
 
 Define the intended user, trigger, input boundary, desired outcome, required and forbidden actions, available tools, success and failure states, postconditions, escalation conditions, resource limits, and completion evidence before optimizing prompts or models.
@@ -120,7 +120,7 @@ Define the intended user, trigger, input boundary, desired outcome, required and
 
 ### AI-AGENTS-003 — Separate trusted instructions from untrusted content
 
-**Level:** required
+**Level:** required  
 **Applies when:** A model receives user text, retrieved documents, webpages, emails, files, tool output, database content, or messages from another model.
 
 Classify instruction sources by authority and keep untrusted content in the lowest appropriate authority channel. Never interpolate untrusted content into system, developer, policy, tool-description, or executable instruction fields. Mark data as data, preserve provenance, and use validated structured fields when information must cross into a higher-trust decision.
@@ -137,7 +137,7 @@ Classify instruction sources by authority and keep untrusted content in the lowe
 
 ### AI-AGENTS-004 — Keep context relevant, attributable, and current
 
-**Level:** required
+**Level:** required  
 **Applies when:** An agent uses conversation history, retrieval, memory, repository instructions, knowledge entries, summaries, or prior-session state.
 
 Include only context needed for the current decision. Preserve source, scope, precedence, freshness, and confidence. Define retrieval triggers and conflict behavior. Summarize or discard stale and low-value material before it crowds out current instructions, and do not let generated summaries silently become authoritative facts.
@@ -154,7 +154,7 @@ Include only context needed for the current decision. Preserve source, scope, pr
 
 ### AI-AGENTS-005 — Design tools as constrained contracts
 
-**Level:** required
+**Level:** required  
 **Applies when:** A model can select or invoke a function, API, MCP server, shell, browser, database, file operation, or other tool.
 
 Give each tool one clear purpose, distinct boundaries from similar tools, typed and bounded parameters, explicit units and defaults, structured results, actionable errors, side-effect classification, and examples for difficult cases. Reject unknown fields and invalid combinations at the trusted boundary. Prefer tool shapes that make the safe action easy and invalid actions impossible.
@@ -171,7 +171,7 @@ Give each tool one clear purpose, distinct boundaries from similar tools, typed 
 
 ### AI-AGENTS-006 — Grant the minimum authority for each run
 
-**Level:** required
+**Level:** required  
 **Applies when:** An agent can access private data, spend money, communicate externally, change durable state, execute code, or invoke privileged tools.
 
 Grant only the identities, data, tools, destinations, scopes, and duration needed for the current task. Separate read, propose, approve, and execute capabilities. Require a human approval at the last meaningful point before high-impact, irreversible, external, or ambiguous actions, and show the exact target, data, and consequence being approved.
@@ -188,7 +188,7 @@ Grant only the identities, data, tools, destinations, scopes, and duration neede
 
 ### AI-AGENTS-007 — Contain execution independently of model behavior
 
-**Level:** required
+**Level:** required  
 **Applies when:** An agent runs code, browses untrusted content, manipulates files, uses third-party tools, or can reach internal or external networks.
 
 Run the agent in an environment that independently constrains process, filesystem, credential, network, data, and resource access. Keep secrets and sensitive data outside the environment unless the task requires them. Restrict egress and tool permissions, isolate tenants and runs, and destroy or reset mutable environments according to the task's data and retention policy.
@@ -205,24 +205,23 @@ Run the agent in an environment that independently constrains process, filesyste
 
 ### AI-AGENTS-008 — Control personal and confidential data across the model path
 
-**Level:** required
+**Level:** required  
 **Applies when:** Prompts, context, files, embeddings, traces, evaluations, feedback, or tool calls may contain personal, confidential, regulated, or proprietary data.
 
-Map every provider, model, region, endpoint, subprocess, storage feature, log, feedback path, and human-review path that can receive the data. Apply `PRIVACY-DATA`, contractual controls, approved retention and training settings, minimization, access restrictions, deletion, and data-location requirements before processing. Do not assume API inputs, hidden prompts, traces, or evaluation datasets are ephemeral.
+Apply `PRIVACY-DATA-016`, which owns the model-path data-governance requirement, to every path the agent system creates, including orchestration, delegation, tool calls, memory, and observability. Extend the same governance to confidential, regulated, and proprietary data. Do not assume API inputs, hidden prompts, traces, or evaluation datasets are ephemeral.
 
 **Why:** Agent systems copy data through more surfaces than the final prompt and response, and provider defaults can differ by product or endpoint.
 
 **Verify:**
 
-- Trace representative data through orchestration, model calls, tools, storage, observability, evaluation, support, and deletion.
-- Compare actual provider and account settings with current official documentation and governing contracts.
+- Run the `PRIVACY-DATA-016` verification across the agent's full path inventory, including delegated agents and tools.
 - Confirm redaction and minimization occur before data enters any path that does not need the original value.
 
 **Exceptions:** None without the governing privacy, security, and contractual decision.
 
 ### AI-AGENTS-009 — Use environmental truth to drive progress
 
-**Level:** required
+**Level:** required  
 **Applies when:** An agent claims completion, changes external state, or performs a multi-step task.
 
 Make the agent inspect authoritative external state after material actions and before completion. Prefer executable checks, API reads, database state, rendered artifacts, or other outcome evidence over the agent's narration. Define maximum steps, time, cost, retries, and no-progress conditions, and stop or escalate when they are reached.
@@ -239,7 +238,7 @@ Make the agent inspect authoritative external state after material actions and b
 
 ### AI-AGENTS-010 — Make actions repeat-safe and recoverable
 
-**Level:** required
+**Level:** required  
 **Applies when:** Tool calls can be retried, duplicated, reordered, interrupted, or partially completed.
 
 Define idempotency, deduplication, ordering, transaction, compensation, timeout, retry, and resume behavior for every material side effect. Give the agent structured error state and a bounded recovery path. Do not let generic retries repeat payments, messages, deletions, account changes, or other non-idempotent actions.
@@ -256,7 +255,7 @@ Define idempotency, deduplication, ordering, transaction, compensation, timeout,
 
 ### AI-AGENTS-011 — Escalate ambiguity and high-impact judgment
 
-**Level:** required
+**Level:** required  
 **Applies when:** Missing information, preference, conflicting authority, novel conditions, or material risk can change the correct action.
 
 Ask the person or qualified owner who holds the missing authority rather than guessing. Define escalation triggers for security, privacy, legal, financial, safety, access, destructive change, public communication, and other high-impact domains. Present the decision, evidence, alternatives, and consequence at the checkpoint.
@@ -273,7 +272,7 @@ Ask the person or qualified owner who holds the missing authority rather than gu
 
 ### AI-AGENTS-012 — Version the full agent configuration
 
-**Level:** required
+**Level:** required  
 **Applies when:** An agent or model workflow informs decisions or performs recurring work.
 
 Version the model or snapshot, provider, system and developer instructions, tool schemas, orchestration code, retrieval and memory rules, guardrails, policies, environment image, and evaluation suite as one releaseable configuration. Treat changes to any of them as behavior changes and evaluate before promotion.
@@ -290,7 +289,7 @@ Version the model or snapshot, provider, system and developer instructions, tool
 
 ### AI-AGENTS-013 — Build representative, balanced evaluation tasks
 
-**Level:** required
+**Level:** required  
 **Applies when:** Developing, selecting, changing, or releasing an agentic system.
 
 Create evaluation tasks from actual requirements, production distributions, observed failures, expert risk analysis, and realistic edge cases. Cover both when a behavior should occur and when it should not. Include valid alternative paths, ambiguous inputs, long context, multilingual or multimodal input where supported, tool distractors, failures, and high-risk abuse cases.
@@ -307,7 +306,7 @@ Create evaluation tasks from actual requirements, production distributions, obse
 
 ### AI-AGENTS-014 — Protect evaluation validity and generalization
 
-**Level:** required
+**Level:** required  
 **Applies when:** Evaluation results support a model, architecture, prompt, safety, or release decision.
 
 Separate development, regression, and held-out evaluation data. Track task provenance and possible training or prompt contamination. Use reproducible environments, freeze material task and grader changes for comparisons, and test on internal or otherwise unseen work representative of the deployment before claiming generalization.
@@ -324,7 +323,7 @@ Separate development, regression, and held-out evaluation data. Track task prove
 
 ### AI-AGENTS-015 — Measure repeated end-to-end outcomes
 
-**Level:** required
+**Level:** required  
 **Applies when:** A stochastic model or agent is evaluated for quality, safety, reliability, latency, or cost.
 
 Run enough independent trials to reveal variability and report the metric that matches the operating promise. Distinguish per-trial success, success in at least one of several attempts, consistent success across all attempts, partial credit, safety failures, latency, tokens, tool calls, and cost. Do not report the best run as typical performance.
@@ -341,7 +340,7 @@ Run enough independent trials to reveal variability and report the metric that m
 
 ### AI-AGENTS-016 — Grade outcome, process, and policy separately
 
-**Level:** required
+**Level:** required  
 **Applies when:** Evaluating a multi-step agent or tool-using workflow.
 
 Grade authoritative final state, required intermediate behavior, and policy compliance with separate assertions. Prefer deterministic state and programmatic checks where they directly measure the requirement. Use model graders for judgment that needs them, calibrate those graders against expert human labels, inspect full traces for diagnosis, and allow valid alternative strategies.
@@ -358,7 +357,7 @@ Grade authoritative final state, required intermediate behavior, and policy comp
 
 ### AI-AGENTS-017 — Red-team the agent and its tools
 
-**Level:** required
+**Level:** required  
 **Applies when:** An agent processes untrusted content, accesses private context, or can take actions.
 
 Test adversarial instructions and conventional attacks across user input, retrieved content, files, webpages, tool results, memory, inter-agent messages, and environment artifacts. Cover data exfiltration, permission expansion, hidden action, policy override, confused deputy behavior, unsafe code, indirect injection, denial of service, and approval manipulation. Re-run material attacks after model, prompt, tool, or control changes.
@@ -375,7 +374,7 @@ Test adversarial instructions and conventional attacks across user input, retrie
 
 ### AI-AGENTS-018 — Observe decisions, tool use, and operational limits
 
-**Level:** required
+**Level:** required  
 **Applies when:** Operating an agentic system for users or recurring internal work.
 
 Record the configuration, task, high-level decisions, tool selection, validated arguments, results, approvals, state transitions, retries, errors, final outcome, latency, token use, and cost needed for debugging and governance. Protect sensitive reasoning and data, use stable correlation, and alert on loops, repeated denial, unusual tool or data access, limit exhaustion, safety-control activation, and outcome failure.
@@ -392,7 +391,7 @@ Record the configuration, task, high-level decisions, tool selection, validated 
 
 ### AI-AGENTS-019 — Parallelize only separable work
 
-**Level:** required
+**Level:** required  
 **Applies when:** Multiple model calls, agents, or sessions work concurrently or hand work to one another.
 
 Define independent scopes, inputs, output contracts, ownership boundaries, shared-state rules, budgets, and a synthesis or conflict-resolution step before parallel execution. Do not let workers edit the same mutable state or authorize one another without an explicit coordinator. Use multiple agents only when measured gains exceed coordination failures and added nondeterminism.
@@ -409,7 +408,7 @@ Define independent scopes, inputs, output contracts, ownership boundaries, share
 
 ### AI-AGENTS-020 — Maintain reusable instructions as governed knowledge
 
-**Level:** required
+**Level:** required  
 **Applies when:** A correction, workflow, project rule, tool procedure, or successful task pattern will recur.
 
 Place durable project-wide guidance in the repository's governed instruction or knowledge system and task-specific procedures in versioned skills or playbooks. Give each item a scope or trigger, owner, source, postconditions, forbidden actions, required inputs, and review path. Derive updates from reviewed successes and failures, remove duplicates, resolve conflicts, and retire stale guidance.

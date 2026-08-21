@@ -80,4 +80,10 @@ The [full-catalog agent review](agent-review-2026-08-13.md) has no unresolved ag
 - `SECURITY-APPLICATION-016`: the repository owner must approve response timing and authority, then an authorized reviewer must record a representative exercise.
 - `ENGINEERING-QUALITY-005` and `AGENT-VERIFICATION-007`: a qualified non-author must review the exact final revision.
 
+Five stable documents also depend on drafts and will fail the release gate until the
+drafts stabilize or the edges change: `ANALYTICS-MEASUREMENT` → `DATA-QUALITY`;
+`CONTENT-ERRORS` → `FND-ACCESSIBILITY` and `CONTENT-INTERFACE`;
+`PROFILE-PRODUCT-FEATURE` → `PRODUCT-DELIVERY` and `ENGINEERING-QUALITY`;
+`WEB-QUALITY` → `FND-ACCESSIBILITY`; `WRITING-FUNCTIONAL` → `FND-ACCESSIBILITY`.
+
 The release gate is expected to fail until this human work is complete. Use the linked templates to record real evidence. Do not downgrade the gate, mark agent research as independent verification, or promote drafts to make the command pass.

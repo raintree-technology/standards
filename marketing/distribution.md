@@ -37,7 +37,7 @@ Distribution programs must preserve accurate representation, informed choice, da
 
 ### MARKETING-DISTRIBUTION-001 — Define the distribution contract
 
-**Level:** required
+**Level:** required  
 **Applies when:** Submitting, syndicating, gating, referring, rewarding, or otherwise distributing an acquisition asset or offer.
 
 Record the audience, jurisdictions, channel, asset or listing, value exchange, claims, data flow, partner roles, incentive, budget, owner, duration, measures, stop conditions, and governing channel terms before launch.
@@ -53,7 +53,7 @@ Record the audience, jurisdictions, channel, asset or listing, value exchange, c
 
 ### MARKETING-DISTRIBUTION-002 — Keep directory and syndicated facts current
 
-**Level:** required
+**Level:** required  
 **Applies when:** Publishing product, organization, location, availability, price, or contact information outside an owned canonical surface.
 
 Use an authoritative source for each material field, disclose sponsorship or commercial placement, prohibit fabricated reviews or engagement, and set a review and removal path for every destination.
@@ -69,7 +69,7 @@ Use an authoritative source for each material field, disclose sponsorship or com
 
 ### MARKETING-DISTRIBUTION-003 — Make the lead-asset exchange explicit
 
-**Level:** required
+**Level:** required  
 **Applies when:** Access to a guide, tool, template, event, result, or other asset asks for personal data or a marketing permission.
 
 State what the person receives, what data is required, why it is needed, who receives it, and whether future communication is optional. Do not imply that unrelated marketing permission is required for an otherwise available asset.
@@ -85,7 +85,7 @@ State what the person receives, what data is required, why it is needed, who rec
 
 ### MARKETING-DISTRIBUTION-004 — Govern referrals and incentives
 
-**Level:** required
+**Level:** required  
 **Applies when:** A customer, partner, employee, creator, or other participant may receive value for a referral, recommendation, share, review, or conversion.
 
 Define eligibility, reward, attribution window, prohibited conduct, fraud controls, tax or reporting ownership, disclosure wording, dispute handling, and termination. Require material connections to be apparent with the recommendation.
@@ -101,7 +101,7 @@ Define eligibility, reward, attribution window, prohibited conduct, fraud contro
 
 ### MARKETING-DISTRIBUTION-005 — Review contests, prizes, and chance-based promotions by jurisdiction
 
-**Level:** required
+**Level:** required  
 **Applies when:** Distribution includes a contest, sweepstakes, drawing, prize, random selection, or purchase-linked chance.
 
 Before launch, obtain qualified review of classification, eligibility, geography, age, entry method, purchase conditions, official rules, disclosures, registration or bonding, tax handling, winner selection, publicity rights, and platform terms.
@@ -117,7 +117,7 @@ Before launch, obtain qualified review of classification, eligibility, geography
 
 ### MARKETING-DISTRIBUTION-006 — Limit partner and lead data movement
 
-**Level:** required
+**Level:** required  
 **Applies when:** A directory, affiliate, partner, referral system, form provider, or lead buyer receives personal, confidential, or audience data.
 
 Identify recipients and onward transfers, verify recipient identity and purpose, minimize fields, set retention and deletion, constrain reuse, protect transfer, honor rights and suppression, and monitor complaints and misuse.
@@ -133,7 +133,7 @@ Identify recipients and onward transfers, verify recipient identity and purpose,
 
 ### MARKETING-DISTRIBUTION-007 — Measure net value and retire the program
 
-**Level:** required
+**Level:** required  
 **Applies when:** Evaluating or ending a distribution, referral, listing, or acquisition-asset program.
 
 Report total cost, incentive and partner fees, reach, qualified outcomes, overlap, attribution limits, downstream value, fraud, complaints, privacy effects, and guardrails. Remove or correct stale assets, links, listings, permissions, and automation when the program ends.

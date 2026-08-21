@@ -54,7 +54,7 @@ Prevent avoidable failures before writing them: validate at the right time, pres
 
 ### CONTENT-ERRORS-001 — State what happened and the next action
 
-**Level:** required
+**Level:** required  
 **Applies when:** Showing any user-facing failure.
 
 State what did or did not happen, then give one concrete next action or an honest statement that no action is available yet. Include the known cause, what was preserved or lost, and a support path when they affect the user's decision.
@@ -71,7 +71,7 @@ State what did or did not happen, then give one concrete next action or an hones
 
 ### CONTENT-ERRORS-002 — Match the surface and persistence to severity
 
-**Level:** required
+**Level:** required  
 **Applies when:** Choosing where and how a failure appears.
 
 Place field-specific errors at the field, ongoing conditions in a persistent page-level region, blocking decisions in a focused interruption, and destination failures on a full page. Any message that requires action must remain available until the action is completed, replaced, or intentionally dismissed.
@@ -88,7 +88,7 @@ Place field-specific errors at the field, ongoing conditions in a persistent pag
 
 ### CONTENT-ERRORS-003 — Use calm language without blame
 
-**Level:** required
+**Level:** required  
 **Applies when:** Writing failure text or action labels.
 
 Use plain, direct language that matches the stakes. Describe the condition rather than blaming the user or a provider. Do not use playful interjections, jokes, excessive apology, or jargon. Label the primary action with the recovery verb.
@@ -105,7 +105,7 @@ Use plain, direct language that matches the stakes. Describe the condition rathe
 
 ### CONTENT-ERRORS-004 — Balance specificity with security
 
-**Level:** required
+**Level:** required  
 **Applies when:** The system knows a cause, but disclosing it could expose accounts, fraud controls, internal architecture, or sensitive state.
 
 Give the most specific explanation that remains safe. Do not reveal whether an account exists, which credential was correct, detection thresholds, stack traces, queries, file paths, secrets, or internal service names.
@@ -121,7 +121,7 @@ Give the most specific explanation that remains safe. Do not reveal whether an a
 
 ### CONTENT-ERRORS-005 — Preserve work and provide a way out
 
-**Level:** required
+**Level:** required  
 **Applies when:** A failed action involves user input, a retry, an external dependency, or a recurring condition.
 
 Preserve valid input and completed work where technically possible. Make retry safe, state what was retained, prevent duplicate side effects, and provide an alternate path or support route when retry can fail again.
@@ -138,7 +138,7 @@ Preserve valid input and completed work where technically possible. Make retry s
 
 ### CONTENT-ERRORS-006 — Make errors accessible
 
-**Level:** required
+**Level:** required  
 **Applies when:** A failure appears in a visual or interactive interface.
 
 Use words and semantics in addition to color or icons. Connect inline errors to their fields, identify invalid state programmatically, announce dynamic errors appropriately, and move focus only when needed to make a failed submission understandable.
@@ -155,7 +155,7 @@ Use words and semantics in addition to color or icons. Connect inline errors to 
 
 ### CONTENT-ERRORS-007 — Localize complete messages
 
-**Level:** required
+**Level:** required  
 **Applies when:** Error text can be translated or shown in more than one locale.
 
 Provide translators complete sentences with named placeholders and context. Do not concatenate fragments, embed assumptions about word order, or hard-code locale-specific dates, numbers, or time zones. Allow layout expansion and set correct language and direction.
@@ -172,7 +172,7 @@ Provide translators complete sentences with named placeholders and context. Do n
 
 ### CONTENT-ERRORS-008 — Keep protocol and human meaning consistent
 
-**Level:** required
+**Level:** required  
 **Applies when:** A failure is represented through HTTP or another machine-consumed protocol.
 
 Return the status and retry metadata that describe the actual condition. Do not serve missing or failed content with a success status, redirect unrelated missing pages to a generic destination, or describe planned downtime while returning success.
@@ -189,7 +189,7 @@ Return the status and retry metadata that describe the actual condition. Do not 
 
 ### CONTENT-ERRORS-009 — Map each message to a known trigger
 
-**Level:** required
+**Level:** required  
 **Applies when:** Implementing, reviewing, or reusing an error message.
 
 Give each message or failure family a stable identifier and map it to its triggering conditions, owning component, severity, user impact, and recovery path. Do not reuse one generic string across failures that require different actions.
@@ -205,7 +205,7 @@ Give each message or failure family a stable identifier and map it to its trigge
 
 ### CONTENT-ERRORS-010 — Review failures as product behavior
 
-**Level:** required
+**Level:** required  
 **Applies when:** Shipping a new failure path or maintaining a recurring one.
 
 Review frequency, blocking impact, recovery success, accessibility, support demand, and fallback use. Prioritize failures by user harm and frequency, and retire obsolete messages and telemetry.
@@ -222,7 +222,7 @@ Review frequency, blocking impact, recovery success, accessibility, support dema
 
 ### CONTENT-ERRORS-011 — Use stable machine-readable API problems
 
-**Level:** required
+**Level:** required  
 **Applies when:** An HTTP API returns errors to software clients and does not already have a governed domain error format.
 
 Use RFC 9457 problem details or an equally stable documented contract. Give each problem type durable semantics, an appropriate HTTP status, a short stable title, occurrence-specific human detail, structured extension fields for machine decisions, and documentation for recovery.
@@ -239,7 +239,7 @@ Use RFC 9457 problem details or an equally stable documented contract. Give each
 
 ### CONTENT-ERRORS-012 — Prevent high-impact submission errors
 
-**Level:** required
+**Level:** required  
 **Applies when:** A submission creates a legal or financial commitment, changes or deletes user-controlled data, publishes sensitive information, or is otherwise difficult to reverse.
 
 Before final submission, provide at least one effective safeguard: make the action reversible, validate and let the user correct the data, or present a review and confirmation step that identifies the material consequence.
@@ -256,7 +256,7 @@ Before final submission, provide at least one effective safeguard: make the acti
 
 ### CONTENT-ERRORS-013 — Make tool failures actionable to agents
 
-**Level:** required
+**Level:** required  
 **Applies when:** An API, function, MCP tool, job, or command returns an error that an automated caller may handle.
 
 Return a stable error code or type, safe human summary, affected operation or field, retry classification, and structured correction details needed to recover. Distinguish invalid input, unauthorized scope, unavailable approval, rate or resource limit, temporary dependency failure, conflict, already-completed state, and terminal failure. Do not expose secrets or let free-form error text become executable instruction.

@@ -130,7 +130,7 @@ Infisical features differ by deployment and edition. Where this standard require
 
 ### SECURITY-SECRETS-001 — Make Infisical the sole system of record
 
-**Level:** required
+**Level:** required  
 **Applies when:** A product, service, job, repository, deployment, test harness, or automation creates, stores, receives, or uses an application secret.
 
 Create and maintain the secret in the adopter's approved Infisical instance. Do not make source control, local environment files, CI variables, deployment-platform settings, password managers, tickets, chat, or personal notes authoritative. A destination may hold a controlled replica only when direct delivery is unavailable and `SECURITY-SECRETS-008` and `SECURITY-SECRETS-011` are satisfied.
@@ -149,7 +149,7 @@ Do not create new Infisical service tokens; Infisical deprecates them in favor o
 
 ### SECURITY-SECRETS-002 — Align Infisical hierarchy with security boundaries
 
-**Level:** required
+**Level:** required  
 **Applies when:** Creating or changing an Infisical organization, project, environment, folder, secret, or consumer mapping.
 
 Use a separate project for a product or platform domain whose ownership, trust, access population, lifecycle, incident response, and compliance obligations can be governed together. Use distinct environments for deployment and trust boundaries, and paths for consumer permission sets. Keep production values independently issued and separate from development, test, preview, and demonstration values.
@@ -168,7 +168,7 @@ Grant and fetch named environments and paths only. Do not use the root path, wil
 
 ### SECURITY-SECRETS-003 — Govern human access by effective privilege
 
-**Level:** required
+**Level:** required  
 **Applies when:** A person receives organization, project, environment, path, secret-value, approval, or administration access.
 
 Use named human accounts, enforced organization identity, strong authentication, bounded sessions, and group or role assignment. Prefer the organization and project `No Access` roles plus scoped custom roles. Minimize organization and project administrators, because built-in roles can span broad resources and administrators can bypass ordinary project boundaries.
@@ -189,7 +189,7 @@ Use SSO, MFA, group mapping, and automated provisioning or deprovisioning when s
 
 ### SECURITY-SECRETS-004 — Bound machine identities by permission set and blast radius
 
-**Level:** required
+**Level:** required  
 **Applies when:** CI, a deployed service, a job, an agent, an operator, or another automated consumer authenticates to Infisical.
 
 Create a machine identity for each distinct combination of project, environment, paths, actions, tenant boundary, and compromise impact. Replicas of the same application may share an identity when their permissions and security boundary are identical. Separate identities when environments, tenants, trust, deployment ownership, or required permissions differ.
@@ -210,7 +210,7 @@ Bind OIDC to exact issuer, audience, subject, repository, workflow, branch or pr
 
 ### SECURITY-SECRETS-005 — Choose and bound the secret delivery path
 
-**Level:** required
+**Level:** required  
 **Applies when:** Fetching, injecting, exporting, caching, synchronizing, building with, or exposing an Infisical-managed secret.
 
 Choose delivery according to the consumer and refresh contract: CLI process injection for local development; maintained SDK or API for deliberate in-memory runtime fetching; Infisical Agent for VM or container preload; Operator, External Secrets Operator, Agent, or SDK for Kubernetes; and Secret Sync only when the destination cannot fetch directly. Authenticate as the named human or workload and request only the selected environment and paths.
@@ -231,7 +231,7 @@ Never bake secrets into source, generated code, packages, images, caches, client
 
 ### SECURITY-SECRETS-006 — Rotate, revoke, and restore at the authoritative issuer
 
-**Level:** required
+**Level:** required  
 **Applies when:** Issuing, changing, rotating, expiring, revoking, restoring, or retiring a secret or consumer.
 
 Assign every secret family an owner, issuer, purpose, consumers, rotation or expiry policy, refresh behavior, and compromise response. Prefer dynamic credentials, then automated dual-phase rotation. During dual-phase rotation, monitor and update consumers before inactive credentials reach revocation. For a continuity-sensitive provider limited to single-phase rotation, disable unattended rotation and use a coordinated maintenance window with immediate consumer refresh and authentication-failure monitoring.
@@ -250,7 +250,7 @@ Change or revoke the credential at its authoritative issuer, update Infisical, r
 
 ### SECURITY-SECRETS-007 — Detect exposure before and after publication
 
-**Level:** required
+**Level:** required  
 **Applies when:** Maintaining a repository, pipeline, artifact, or connected source, or when a secret may have entered an unintended location.
 
 Run approved detection on staged changes before commit or merge and on the governed history or release scope in CI. Enable connected-repository monitoring and new-push scans when the available Infisical edition and source platform support them; otherwise run an equivalent owned recurring scan. Protect findings because they may contain live values.
@@ -269,7 +269,7 @@ Treat a match as exposed until triage proves it is a false positive or non-secre
 
 ### SECURITY-SECRETS-008 — Design availability, audit, and recovery
 
-**Level:** required
+**Level:** required  
 **Applies when:** Secret access supports a material service or Infisical, identity, network, cache, or audit availability can affect operation.
 
 Define behavior for unavailable, slow, denied, expired-token, stale-cache, partial, and recovered states. Decide when startup and refresh fail closed, whether a running process may continue with an in-memory value, the maximum stale lifetime, and how operators recover without bypassing controls. Test break-glass access without creating a standing alternate store.
@@ -288,7 +288,7 @@ Collect security-relevant Infisical authentication, read, write, permission, ide
 
 ### SECURITY-SECRETS-009 — Migrate without preserving shadow stores
 
-**Level:** required
+**Level:** required  
 **Applies when:** Adopting Infisical in an existing repository, product, service, or environment.
 
 Inventory secret names, issuers, owners, environments, consumers, current stores, copies, authentication methods, and rotation capability without copying values into the record. Create the target Infisical hierarchy and identities, move one bounded consumer group at a time, exercise delivery and failure behavior, then revoke old credentials or remove old store values as appropriate.
@@ -307,7 +307,7 @@ Do not retain silent fallback or indefinite dual delivery. A temporary dual path
 
 ### SECURITY-SECRETS-010 — Govern the Infisical control plane
 
-**Level:** required
+**Level:** required  
 **Applies when:** Creating, configuring, operating, upgrading, or self-hosting an Infisical organization or instance.
 
 Assign separate accountable owners for security policy, platform operation, recovery, and application-secret content. Govern default organization role, domain verification, SSO enforcement, MFA, session duration, groups, provisioning, project templates, approval policy, audit retention, and administrators as reviewed configuration. Capability-aware substitutes must preserve the same access, approval, expiry, attribution, and retention outcomes.
@@ -326,7 +326,7 @@ For self-hosting, require TLS, correct public site configuration, default-deny n
 
 ### SECURITY-SECRETS-011 — Control resolution, overrides, imports, and sync precedence
 
-**Level:** required
+**Level:** required  
 **Applies when:** Using personal overrides, secret references, imports, inherited values, or Secret Sync.
 
 Restrict personal overrides to named humans in local development. Prohibit them in CI, shared development, test, preview, staging, and production. Document them during troubleshooting and review them separately because ordinary secret reminders may not cover them.

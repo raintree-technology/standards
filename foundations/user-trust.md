@@ -47,7 +47,7 @@ Products and communications must help people make informed choices without conce
 
 ### FND-TRUST-001 — Represent consequences before commitment
 
-**Level:** required
+**Level:** required  
 **Applies when:** An action charges money, publishes information, deletes data, changes access, starts a recurring obligation, or is difficult to reverse.
 
 Explain the material consequence before the user commits. Place the explanation at the decision point and state price, recurrence, audience, data impact, or irreversibility in concrete terms.
@@ -63,7 +63,7 @@ Explain the material consequence before the user commits. Place the explanation 
 
 ### FND-TRUST-002 — Preserve meaningful choice
 
-**Level:** required
+**Level:** required  
 **Applies when:** Requesting consent, enrollment, tracking, upgrades, permissions, or communication preferences.
 
 Make acceptance and refusal understandable and similarly accessible. Do not make refusal misleading, punitive, preselected where active consent is required, or needlessly difficult.
@@ -79,7 +79,7 @@ Make acceptance and refusal understandable and similarly accessible. Do not make
 
 ### FND-TRUST-003 — Do not fabricate proof or urgency
 
-**Level:** prohibited
+**Level:** prohibited  
 **Applies when:** Showing scarcity, countdowns, testimonials, activity, popularity, endorsements, or demand.
 
 Do not invent, exaggerate, or present stale evidence as current. Do not imply a time, inventory, or social constraint that does not exist.
@@ -95,7 +95,7 @@ Do not invent, exaggerate, or present stale evidence as current. Do not imply a 
 
 ### FND-TRUST-004 — Optimize with user guardrails
 
-**Level:** required
+**Level:** required  
 **Applies when:** Optimizing conversion, engagement, retention, or revenue.
 
 Evaluate user harm and downstream outcomes alongside the target metric. At minimum consider complaints, cancellations, refunds, reversals, accessibility, comprehension, and long-term retention where relevant.
@@ -111,7 +111,7 @@ Evaluate user harm and downstream outcomes alongside the target metric. At minim
 
 ### FND-TRUST-005 — Make defaults and framing honest
 
-**Level:** required
+**Level:** required  
 **Applies when:** Setting a default, ordering choices, recommending an option, or describing an alternative.
 
 Choose and explain defaults according to the user's likely intent and material interests. State relevant costs and tradeoffs consistently across options.
@@ -127,7 +127,7 @@ Choose and explain defaults according to the user's likely intent and material i
 
 ### FND-TRUST-006 — Provide a practical exit or reversal
 
-**Level:** required
+**Level:** required  
 **Applies when:** A user can subscribe, enroll, grant access, publish, connect data, or begin a recurring relationship.
 
 Provide a discoverable way to stop, revoke, export, undo, or leave that is proportionate to the way the user entered. Explain effects that cannot be reversed.
@@ -143,7 +143,7 @@ Provide a discoverable way to stop, revoke, export, undo, or leave that is propo
 
 ### FND-TRUST-007 — Do not disguise commercial content or material terms
 
-**Level:** prohibited
+**Level:** prohibited  
 **Applies when:** Presenting prices, fees, subscriptions, advertisements, endorsements, rankings, comparisons, or sponsored content.
 
 Do not hide mandatory costs or renewal terms, make advertisements resemble independent content, imply a neutral ranking when placement is paid, or use visual hierarchy to obscure a material alternative or term.
@@ -160,7 +160,7 @@ Do not hide mandatory costs or renewal terms, make advertisements resemble indep
 
 ### FND-TRUST-008 — Identify automated judgment and its limits
 
-**Level:** required
+**Level:** required  
 **Applies when:** A model or agent generates consequential information, recommendations, decisions, communications, or actions that a person could reasonably mistake for verified human work.
 
 Make the automated role, material limits, source basis, and responsible human or organization clear at the point where they affect trust or action. Do not imply that an agent observed, verified, understood, approved, or completed more than the evidence shows.
@@ -177,7 +177,7 @@ Make the automated role, material limits, source basis, and responsible human or
 
 ### FND-TRUST-009 — Preserve control over delegated actions
 
-**Level:** required
+**Level:** required  
 **Applies when:** A system proposes or performs actions on a person's behalf.
 
 Let the person see and change the objective, important assumptions, scope, recipients, data, and material consequences before a high-impact or hard-to-reverse action. Provide practical pause, cancel, correction, escalation, and recovery paths, and do not turn silence or delayed response into permission for expanded action.

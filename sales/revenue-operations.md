@@ -37,7 +37,7 @@ Sales and revenue systems must carry accurate claims and commitments from first 
 
 ### SALES-REVENUE-OPERATIONS-001 — Govern sales claims and collateral
 
-**Level:** required
+**Level:** required  
 **Applies when:** Providing decks, demos, proposals, battlecards, scripts, case studies, comparisons, or generated responses to prospects or customers.
 
 Version approved claims, evidence, product scope, pricing, security and privacy statements, customer proof, prohibited representations, owner, and expiry. Separate current capability from roadmap and custom commitment.
@@ -53,7 +53,7 @@ Version approved claims, evidence, product scope, pricing, security and privacy 
 
 ### SALES-REVENUE-OPERATIONS-002 — Keep competitive intelligence attributable and lawful
 
-**Level:** required
+**Level:** required  
 **Applies when:** Collecting, analyzing, or sharing competitor products, prices, customers, strategy, or claims.
 
 Use lawful sources and access, preserve provenance and date, distinguish observation from inference, avoid confidential or deceptively obtained material, and route competitively sensitive exchange through qualified legal review.
@@ -69,7 +69,7 @@ Use lawful sources and access, preserve provenance and date, distinguish observa
 
 ### SALES-REVENUE-OPERATIONS-003 — Define lead and opportunity state contracts
 
-**Level:** required
+**Level:** required  
 **Applies when:** Leads, accounts, contacts, opportunities, stages, scores, territories, or lifecycle states drive work or reporting.
 
 Define entry, exit, owner, evidence, time, allowed transitions, duplicates, recycling, loss, suppression, and historical behavior for each state and score.
@@ -85,7 +85,7 @@ Define entry, exit, owner, evidence, time, allowed transitions, duplicates, recy
 
 ### SALES-REVENUE-OPERATIONS-004 — Route ownership fairly and recoverably
 
-**Level:** required
+**Level:** required  
 **Applies when:** Rules or models assign accounts, leads, credit, response priority, territory, commission, or service level.
 
 Version routing rules, inputs, tie-breaking, capacity, protected and sensitive proxies, overrides, audit, dispute, and fallback. Prevent silent loss and duplicate ownership.
@@ -101,7 +101,7 @@ Version routing rules, inputs, tie-breaking, capacity, protected and sensitive p
 
 ### SALES-REVENUE-OPERATIONS-005 — Preserve commitments through handoff
 
-**Level:** required
+**Level:** required  
 **Applies when:** Responsibility moves among marketing, sales, legal, finance, implementation, support, success, or renewal teams.
 
 Record promised scope, exclusions, price and term, security and privacy commitments, dependencies, customer objectives, risks, owner, acceptance, and unresolved decisions in the shared system of record.
@@ -117,7 +117,7 @@ Record promised scope, exclusions, price and term, security and privacy commitme
 
 ### SALES-REVENUE-OPERATIONS-006 — Make forecasts and attribution reproducible
 
-**Level:** required
+**Level:** required  
 **Applies when:** Pipeline, bookings, revenue, retention, quota, or source attribution affects decisions or compensation.
 
 Define population, time, currency, stage probability, ownership, credit, split, inclusion, adjustments, recognition boundary, model, and uncertainty; preserve historical snapshots and changes.
@@ -133,7 +133,7 @@ Define population, time, currency, stage probability, ownership, credit, split, 
 
 ### SALES-REVENUE-OPERATIONS-007 — Control system-of-record access and automation
 
-**Level:** required
+**Level:** required  
 **Applies when:** People, integrations, imports, models, or agents read or change revenue data or trigger customer action.
 
 Use least privilege, field and action ownership, protected exports, validation, idempotent updates, approval for high-impact bulk action, monitoring, rollback or correction, and revocation.

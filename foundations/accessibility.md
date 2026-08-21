@@ -40,7 +40,7 @@ People must be able to perceive, understand, navigate, and operate supported exp
 
 ### FND-ACCESSIBILITY-001 — Define the accessibility target
 
-**Level:** required
+**Level:** required  
 **Applies when:** Creating or materially changing a user-facing product, service, document, or communication.
 
 Record the supported platforms, accessibility baseline, user groups, assistive technologies, input methods, and any governing legal or contractual target before acceptance testing.
@@ -56,7 +56,7 @@ Record the supported platforms, accessibility baseline, user groups, assistive t
 
 ### FND-ACCESSIBILITY-002 — Preserve equivalent meaning and operation
 
-**Level:** required
+**Level:** required  
 **Applies when:** Information or functionality uses visual, auditory, motion, gesture, spatial, or timed presentation.
 
 Provide an equivalent way to perceive the information and complete the task without depending on one sense, precise gesture, device orientation, or time-limited response unless that characteristic is essential.
@@ -72,7 +72,7 @@ Provide an equivalent way to perceive the information and complete the task with
 
 ### FND-ACCESSIBILITY-003 — Support navigation and focus
 
-**Level:** required
+**Level:** required  
 **Applies when:** An experience contains interactive controls, navigation, dialogs, dynamic regions, or multiple steps.
 
 Keep focus visible, logical, and under user control. Make every supported action reachable without a pointer, preserve a meaningful reading order, and return focus predictably after temporary surfaces close.
@@ -88,7 +88,7 @@ Keep focus visible, logical, and under user control. Make every supported action
 
 ### FND-ACCESSIBILITY-004 — Expose names, roles, states, and relationships
 
-**Level:** required
+**Level:** required  
 **Applies when:** Software renders controls, status, validation, structure, or changing content.
 
 Use native platform semantics where available and expose accurate names, roles, values, states, errors, instructions, and relationships to accessibility APIs.
@@ -104,7 +104,7 @@ Use native platform semantics where available and expose accurate names, roles, 
 
 ### FND-ACCESSIBILITY-005 — Preserve readable and adaptable presentation
 
-**Level:** required
+**Level:** required  
 **Applies when:** Presenting text, icons, controls, data, or layouts.
 
 Maintain sufficient contrast, scalable text, distinguishable focus and state, usable target sizes, and reflow or adaptation under supported zoom, text size, orientation, contrast, color scheme, and localization settings.
@@ -120,7 +120,7 @@ Maintain sufficient contrast, scalable text, distinguishable focus and state, us
 
 ### FND-ACCESSIBILITY-006 — Make errors and changes understandable
 
-**Level:** required
+**Level:** required  
 **Applies when:** Input can fail, content changes asynchronously, or an action has material consequences.
 
 Identify errors in text, associate them with the affected input, announce important changes without stealing control, and provide prevention, review, correction, or reversal for consequential actions.
@@ -136,7 +136,7 @@ Identify errors in text, associate them with the affected input, announce import
 
 ### FND-ACCESSIBILITY-007 — Test with people and assistive technology
 
-**Level:** required
+**Level:** required  
 **Applies when:** Accessibility materially affects release acceptance.
 
 Combine automated checks, manual interaction checks, accessibility-tree inspection, and representative human evaluation. Do not treat an automated scan as proof of conformance.

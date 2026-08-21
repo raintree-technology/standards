@@ -376,7 +376,7 @@ module Standards
         RULE_LABELS.each do |label|
           @findings.add_unless(block.match?(/\*\*#{Regexp.escape(label)}:\*\*/), "#{relative}: #{rule_id} missing #{label}")
         end
-        level = block[/\*\*Level:\*\*\s*([^\n]+)/, 1]
+        level = block[/\*\*Level:\*\*\s*([^\n]+)/, 1]&.rstrip
         @findings.add_unless(RULE_LEVELS.include?(level), "#{relative}: #{rule_id} has invalid level #{level}")
       end
     end

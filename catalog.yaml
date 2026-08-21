@@ -8,6 +8,7 @@ release_status: approval-pending
 governance:
   - path: governance/authority.md
   - path: governance/contributing.md
+  - path: governance/documentation-quality.md
   - path: governance/exceptions.md
   - path: governance/v1-readiness.md
 

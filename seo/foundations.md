@@ -66,7 +66,7 @@ Search platform behavior changes frequently. Revalidate implementation details a
 
 ### SEO-FOUNDATIONS-001 — Give every indexable URL a distinct purpose
 
-**Level:** required
+**Level:** required  
 **Applies when:** A URL is intended to appear in organic search.
 
 Define the audience need, intended query or discovery context, and action or understanding the page supports. Provide substantive, accurate content not better represented by another canonical URL.
@@ -82,7 +82,7 @@ Define the audience need, intended query or discovery context, and action or und
 
 ### SEO-FOUNDATIONS-002 — Make indexability intentional
 
-**Level:** required
+**Level:** required  
 **Applies when:** Publishing, staging, duplicating, migrating, personalizing, or retiring public content.
 
 Set a deliberate combination of access control, HTTP status, robots directives, canonical target, sitemap inclusion, and internal links. Do not use crawl controls as access control or as the sole method for removing an indexed URL.
@@ -98,7 +98,7 @@ Set a deliberate combination of access control, HTTP status, robots directives, 
 
 ### SEO-FOUNDATIONS-003 — Return truthful HTTP status codes
 
-**Level:** required
+**Level:** required  
 **Applies when:** Content is missing, moved, unavailable, restricted, deleted, or temporarily offline.
 
 Return the status that describes the resource and use a redirect only when an appropriate destination exists. Avoid soft 404s, redirect chains, loops, blanket redirects, and error pages returning success.
@@ -114,7 +114,7 @@ Return the status that describes the resource and use a redirect only when an ap
 
 ### SEO-FOUNDATIONS-004 — Keep canonical signals consistent
 
-**Level:** required
+**Level:** required  
 **Applies when:** Multiple URLs can expose identical or near-identical content.
 
 Choose the intended canonical URL and align redirects, canonical annotations, sitemap inclusion, internal links, alternate-language annotations, and structured data with it.
@@ -130,7 +130,7 @@ Choose the intended canonical URL and align redirects, canonical annotations, si
 
 ### SEO-FOUNDATIONS-005 — Deliver essential meaning without interaction
 
-**Level:** required
+**Level:** required  
 **Applies when:** A page is intended for search discovery, sharing previews, feeds, or agent consumption.
 
 Include primary content, document title, description, canonical information, headings, links, and essential structured meaning in delivered HTML or a reliably rendered equivalent. Do not require a click, scroll, consent to nonessential tracking, or client-only state change to reveal the main subject.
@@ -146,7 +146,7 @@ Include primary content, document title, description, canonical information, hea
 
 ### SEO-FOUNDATIONS-006 — Mark up only visible, accurate content
 
-**Level:** required
+**Level:** required  
 **Applies when:** Publishing schema.org or search-platform structured data.
 
 Use the most specific truthful type supported by the visible page. Keep names, prices, availability, dates, ratings, authorship, and relationships consistent with what users can verify.
@@ -162,7 +162,7 @@ Use the most specific truthful type supported by the visible page. Keep names, p
 
 ### SEO-FOUNDATIONS-007 — Preserve discovery during migrations
 
-**Level:** required
+**Level:** required  
 **Applies when:** URLs, domains, protocols, paths, rendering systems, templates, or information architecture change.
 
 Inventory valuable URLs, map equivalent destinations one to one, preserve important content and internal paths, update canonical and alternate signals, and monitor crawl, indexing, traffic, and errors after launch.
@@ -179,7 +179,7 @@ Inventory valuable URLs, map equivalent destinations one to one, preserve import
 
 ### SEO-FOUNDATIONS-008 — Make titles, descriptions, headings, and links descriptive
 
-**Level:** required
+**Level:** required  
 **Applies when:** Publishing an indexable page or a page that links to one.
 
 Use a distinct descriptive document title, an accurate summary, one clear page topic, semantic heading structure, and link text that explains the destination. Keep important pages reachable through ordinary crawlable links.
@@ -195,7 +195,7 @@ Use a distinct descriptive document title, an accurate summary, one clear page t
 
 ### SEO-FOUNDATIONS-009 — Control URL proliferation
 
-**Level:** required
+**Level:** required  
 **Applies when:** Filters, sorting, search, tracking parameters, pagination, calendars, or generated combinations can create many URLs.
 
 Define which combinations deserve stable indexable URLs and how all others are linked, canonicalized, redirected, or excluded from crawl and indexing. Keep parameter behavior deterministic.
@@ -211,7 +211,7 @@ Define which combinations deserve stable indexable URLs and how all others are l
 
 ### SEO-FOUNDATIONS-010 — Measure qualified discovery and user value
 
-**Level:** required
+**Level:** required  
 **Applies when:** Evaluating search work or declaring a search migration complete.
 
 Use qualified organic outcomes and user value alongside crawl and indexing signals. Segment material sources of demand, annotate releases, and account for seasonality, reporting latency, and brand demand where relevant.
@@ -227,7 +227,7 @@ Use qualified organic outcomes and user value alongside crawl and indexing signa
 
 ### SEO-FOUNDATIONS-011 — Publish for a real audience, not ranking manipulation
 
-**Level:** required
+**Level:** required  
 **Applies when:** Creating, generating, consolidating, or materially revising indexable content.
 
 Publish content because it serves an identified audience and site purpose. Add original knowledge, evidence, experience, tools, or synthesis appropriate to the topic. Do not mass-produce, paraphrase, cloak, expire, or refresh content primarily to capture queries or manipulate ranking systems.
@@ -244,7 +244,7 @@ Publish content because it serves an identified audience and site purpose. Add o
 
 ### SEO-FOUNDATIONS-012 — Map multilingual and regional variants explicitly
 
-**Level:** required
+**Level:** required  
 **Applies when:** Equivalent or closely related pages target different languages, scripts, or regions.
 
 Give each variant a stable URL, correct document language, locale-appropriate content, self-consistent canonical signals, and reciprocal alternate relationships. Provide a useful fallback for unmatched locales and do not redirect users solely from an inferred location or language without a choice.

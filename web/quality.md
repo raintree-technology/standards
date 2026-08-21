@@ -11,7 +11,7 @@ review_by: 2026-11-13
 stale_after: 2026-11-13
 applies_to: [public-web-page, web-application]
 tags: [web, accessibility, performance, resilience, security, privacy]
-depends_on: [FND-CHANGE, FND-TRUST, FND-ACCESSIBILITY, SEO-FOUNDATIONS]
+depends_on: [FND-CHANGE, FND-TRUST, FND-ACCESSIBILITY, SEO-FOUNDATIONS, CONTENT-ERRORS]
 generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 sources:
   - id: wcag-22
@@ -62,7 +62,7 @@ This standard sets product-quality gates. Legal accessibility, privacy, security
 
 ### WEB-QUALITY-001 — Ship correct document identity and structure
 
-**Level:** required
+**Level:** required  
 **Applies when:** Serving an HTML document.
 
 Use the standards-mode doctype, valid document language and direction, an early UTF-8 declaration, a responsive viewport that does not disable zoom, one descriptive document title, logical landmarks, and one primary main region.
@@ -78,7 +78,7 @@ Use the standards-mode doctype, valid document language and direction, an early 
 
 ### WEB-QUALITY-002 — Use native semantics before recreating behavior
 
-**Level:** required
+**Level:** required  
 **Applies when:** Implementing controls, navigation, headings, forms, dialogs, disclosure, tables, or page structure.
 
 Use the native element whose semantics and behavior match the interaction. Add ARIA only to fill a real semantic gap, and implement the complete expected keyboard and state behavior when a custom control is necessary.
@@ -94,9 +94,13 @@ Use the native element whose semantics and behavior match the interaction. Add A
 
 ## Accessibility
 
+The rules in this section apply `FND-ACCESSIBILITY-003`, `FND-ACCESSIBILITY-004`, and
+`FND-ACCESSIBILITY-007` to web delivery. The foundation standard owns the underlying
+requirements; these rules add the web-specific conditions and checks.
+
 ### WEB-QUALITY-003 — Support keyboard operation and visible focus
 
-**Level:** required
+**Level:** required  
 **Applies when:** A page contains interactive behavior.
 
 Make every interaction reachable and operable through a keyboard in a logical order. Keep focus visible, unobscured, and out of traps; restore or move focus intentionally after dialogs, navigation, removal, and other context changes.
@@ -112,7 +116,7 @@ Make every interaction reachable and operable through a keyboard in a logical or
 
 ### WEB-QUALITY-004 — Provide names, labels, alternatives, and errors
 
-**Level:** required
+**Level:** required  
 **Applies when:** Presenting controls, forms, images, media, status changes, or validation.
 
 Expose programmatic names and labels, purposeful text alternatives, captions or transcripts where required, and errors connected to affected controls. Do not use color, placeholder text, position, sound, or icon shape as the only carrier of meaning.
@@ -128,7 +132,7 @@ Expose programmatic names and labels, purposeful text alternatives, captions or 
 
 ### WEB-QUALITY-005 — Test accessibility behavior, not only markup
 
-**Level:** required
+**Level:** required  
 **Applies when:** Shipping or materially changing an interactive flow.
 
 Test keyboard operation, focus movement, zoom and reflow, text spacing, meaningful screen-reader announcements, reduced motion, contrast, target size, and automated rules appropriate to the change.
@@ -144,7 +148,7 @@ Test keyboard operation, focus movement, zoom and reflow, text spacing, meaningf
 
 ### WEB-QUALITY-006 — Set and enforce a performance budget
 
-**Level:** required
+**Level:** required  
 **Applies when:** Shipping a public experience or materially increasing its resource or execution cost.
 
 Define budgets for loading, responsiveness, visual stability, transferred resources, server response, and third-party impact using representative devices, networks, locations, and user journeys. Validate laboratory behavior and available field data.
@@ -162,7 +166,7 @@ Define budgets for loading, responsiveness, visual stability, transferred resour
 
 ### WEB-QUALITY-007 — Preserve a useful baseline under partial failure
 
-**Level:** recommended
+**Level:** recommended  
 **Applies when:** JavaScript, an API, storage, a third party, a font, or nonessential media can fail independently.
 
 Keep primary content and essential actions understandable where practical. Provide explicit loading, empty, offline, timeout, stale, and error states rather than indefinite, blank, or misleading UI.
@@ -178,7 +182,7 @@ Keep primary content and essential actions understandable where practical. Provi
 
 ### WEB-QUALITY-008 — Prevent avoidable layout instability
 
-**Level:** required
+**Level:** required  
 **Applies when:** Loading images, embeds, ads, fonts, banners, personalization, or asynchronous content.
 
 Reserve stable space, provide intrinsic dimensions or an aspect ratio, and avoid inserting unexpected content before the user's reading or interaction position. Keep placeholders representative of final layout.
@@ -194,7 +198,7 @@ Reserve stable space, provide intrinsic dimensions or an aspect ratio, and avoid
 
 ### WEB-QUALITY-009 — Minimize and constrain third-party code
 
-**Level:** required
+**Level:** required  
 **Applies when:** Loading analytics, advertising, widgets, tag managers, embeds, fonts, or remote scripts.
 
 Document purpose, owner, provider, data access, consent behavior, performance cost, security boundary, failure behavior, and removal path. Grant the least capability practical and isolate untrusted content where possible.
@@ -213,7 +217,7 @@ Document purpose, owner, provider, data access, consent behavior, performance co
 
 ### WEB-QUALITY-010 — Keep secrets and privileged decisions off public clients
 
-**Level:** prohibited
+**Level:** prohibited  
 **Applies when:** Building browser-delivered code or configuration.
 
 Never place secrets, private keys, privileged credentials, or authorization decisions in a browser. Treat every delivered resource, source map, environment value, and network request as publicly observable.
@@ -229,7 +233,7 @@ Never place secrets, private keys, privileged credentials, or authorization deci
 
 ### WEB-QUALITY-011 — Make collection and consent behavior truthful
 
-**Level:** required
+**Level:** required  
 **Applies when:** Storing or transmitting identifiers, behavioral data, device data, or user-provided information.
 
 Make actual network and storage behavior match the disclosed purpose and consent state. Do not collect first and merely hide the interface until consent. Define retention, deletion, access, and provider behavior under the applicable privacy policy.
@@ -245,7 +249,7 @@ Make actual network and storage behavior match the disclosed purpose and consent
 
 ### WEB-QUALITY-012 — Externalize and localize complete meaning
 
-**Level:** required
+**Level:** required  
 **Applies when:** A product supports or plans to support multiple locales.
 
 Use locale-aware formatting and externalized complete messages. Do not concatenate translated sentence fragments or assume text length, plural rules, name shape, address shape, time zone, number format, or reading direction.
@@ -263,7 +267,7 @@ Use locale-aware formatting and externalized complete messages. Do not concatena
 
 ### WEB-QUALITY-013 — Expose stable, truthful meaning to machines
 
-**Level:** recommended
+**Level:** recommended  
 **Applies when:** Content is public or intended for agents, search engines, feeds, sharing clients, or integrations.
 
 Use descriptive titles, semantic headings, stable URLs, meaningful links, accessible names, truthful structured metadata, and server-visible primary content. Keep machine-readable representations consistent with what users receive.
@@ -279,7 +283,7 @@ Use descriptive titles, semantic headings, stable URLs, meaningful links, access
 
 ### WEB-QUALITY-014 — Protect transport and browser execution boundaries
 
-**Level:** required
+**Level:** required  
 **Applies when:** Serving a production public web experience.
 
 Use secure transport and engine-appropriate controls for content execution, framing, cross-origin access, referrer disclosure, and sensitive caching. Define these controls at the response or platform layer and review exceptions narrowly.
@@ -296,7 +300,7 @@ Use secure transport and engine-appropriate controls for content execution, fram
 
 ### WEB-QUALITY-015 — Verify supported environments and input modes
 
-**Level:** required
+**Level:** required  
 **Applies when:** Releasing or materially changing a public page or flow.
 
 Define supported browser, device, viewport, input, and assistive-technology coverage according to audience and risk. Inspect the material journey across representative environments, including touch and keyboard where applicable.
@@ -312,7 +316,7 @@ Define supported browser, device, viewport, input, and assistive-technology cove
 
 ### WEB-QUALITY-016 — Respect motion, timing, and input alternatives
 
-**Level:** required
+**Level:** required  
 **Applies when:** A page uses animation, auto-updating content, time limits, dragging, gestures, pointer paths, or motion triggered by interaction.
 
 Honor reduced-motion preferences, provide a way to disable nonessential interaction-triggered motion, and avoid flashes that exceed the governing accessibility threshold. Let users pause or control moving and auto-updating content, extend adjustable time limits, and complete path- or gesture-based actions through a simpler input unless the path is essential.
@@ -329,24 +333,24 @@ Honor reduced-motion preferences, provide a way to disable nonessential interact
 
 ### WEB-QUALITY-017 — Prevent high-impact input errors
 
-**Level:** required
+**Level:** required  
 **Applies when:** A web flow creates a legal or financial commitment, changes or deletes user-controlled data, submits test responses, or publishes sensitive information.
 
-Make the submission reversible, validate and allow correction, or provide a review and confirmation step that exposes the material values and consequences before final submission. Preserve entered data through correction where security permits.
+Apply `CONTENT-ERRORS-012`, which owns the safeguard requirement: before final submission, make the action reversible, validate and allow correction, or present a review and confirmation step that exposes the material values and consequences. Preserve entered data through correction where security permits.
 
-**Why:** Users need a way to detect and correct consequential mistakes before an irreversible outcome.
+**Why:** Web delivery adds navigation, refresh, and network failure paths that can bypass or repeat a safeguard that works in one uninterrupted session.
 
 **Verify:**
 
-- Intentionally submit incorrect material values and confirm the safeguard works with keyboard and assistive technology.
+- Run the `CONTENT-ERRORS-012` verification on the rendered flow, including keyboard and assistive-technology operation.
 - Check duplicate submission, back navigation, timeout, refresh, retry, and interrupted-network behavior.
-- Confirm review and confirmation content meets `FND-TRUST-001` and error behavior meets `CONTENT-ERRORS`.
+- Confirm review and confirmation content meets `FND-TRUST-001`.
 
-**Exceptions:** None where the governing accessibility requirement applies; otherwise document the approved alternate safeguard.
+**Exceptions:** Follow `CONTENT-ERRORS-012`.
 
 ### WEB-QUALITY-018 — Request browser capabilities in context
 
-**Level:** required
+**Level:** required  
 **Applies when:** Requesting location, camera, microphone, notifications, clipboard, fullscreen, sensors, storage, or another permission-controlled browser capability.
 
 Request the minimum capability only after a user action that makes the purpose clear. Explain the effect before the browser prompt, handle denial and revocation without trapping the user, and restrict capabilities for embedded or third-party content through Permissions Policy and sandboxing where supported.

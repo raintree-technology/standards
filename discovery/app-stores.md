@@ -41,7 +41,7 @@ App-store listings and submissions must represent the released application accur
 
 ### DISCOVERY-APP-STORES-001 — Pin the applicable store policy and account
 
-**Level:** required
+**Level:** required  
 **Applies when:** Preparing, changing, or submitting an app, product page, event, purchase, or store experiment.
 
 Record store, territories, account owner, agreements, policy version or review date, app identifier, build, product-page variant, reviewers, and submission authority.
@@ -57,7 +57,7 @@ Record store, territories, account owner, agreements, policy version or review d
 
 ### DISCOVERY-APP-STORES-002 — Keep metadata truthful and build-specific
 
-**Level:** required
+**Level:** required  
 **Applies when:** Publishing names, descriptions, keywords, categories, screenshots, previews, pricing, availability, awards, or claims.
 
 Represent functionality available in the submitted build and territory, including purchases and limitations; avoid irrelevant keywords, imitation, unverifiable claims, hidden functionality, real personal data, and misleading device imagery.
@@ -73,7 +73,7 @@ Represent functionality available in the submitted build and territory, includin
 
 ### DISCOVERY-APP-STORES-003 — Reconcile privacy and data declarations
 
-**Level:** required
+**Level:** required  
 **Applies when:** The app, SDKs, services, advertising, analytics, or accounts collect, share, retain, or infer data.
 
 Derive store privacy declarations from the released data map, including third-party SDK behavior, purposes, linking, tracking, security, retention, deletion, and territory differences. Keep store, in-app notice, permissions, and observed traffic consistent.
@@ -89,7 +89,7 @@ Derive store privacy declarations from the released data map, including third-pa
 
 ### DISCOVERY-APP-STORES-004 — Make the build reviewable
 
-**Level:** required
+**Level:** required  
 **Applies when:** A platform reviewer needs access to evaluate the submitted behavior.
 
 Provide complete review notes, stable backend availability, safe demo access or approved demo mode, required hardware or sample inputs, purchase visibility, non-obvious feature explanation, and a responsive contact without exposing real user data or production secrets.
@@ -105,7 +105,7 @@ Provide complete review notes, stable backend availability, safe demo access or 
 
 ### DISCOVERY-APP-STORES-005 — Localize complete store meaning
 
-**Level:** required
+**Level:** required  
 **Applies when:** A listing, purchase, event, privacy statement, or support path is available in multiple locales or territories.
 
 Localize complete messages, search terms, screenshots, captions, prices, eligibility, legal and privacy meaning, support, and cultural context; do not machine-publish unreviewed high-impact translations.
@@ -121,7 +121,7 @@ Localize complete messages, search terms, screenshots, captions, prices, eligibi
 
 ### DISCOVERY-APP-STORES-006 — Govern reviews, ratings, and store experiments
 
-**Level:** required
+**Level:** required  
 **Applies when:** Requesting reviews, responding publicly, testing listings, or using ratings and awards in claims.
 
 Use platform-supported prompts and honest selection, do not manipulate sentiment or suppress eligible negative users, protect reviewer privacy, substantiate rating claims with scope and date, and predefine experiment decisions and guardrails.
@@ -137,7 +137,7 @@ Use platform-supported prompts and honest selection, do not manipulate sentiment
 
 ### DISCOVERY-APP-STORES-007 — Monitor submission and post-release state
 
-**Level:** required
+**Level:** required  
 **Applies when:** A submission is in review, released, rejected, removed, phased, or rolled back.
 
 Track review communication, status, phased availability, crashes, store health, policy notices, reviews, purchases, privacy changes, support, and actual build adoption. Preserve rejection and appeal evidence and correct invalid metadata promptly.

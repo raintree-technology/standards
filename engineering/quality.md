@@ -36,7 +36,7 @@ Software changes must have an explicit design boundary, evidence proportionate t
 
 ### ENGINEERING-QUALITY-001 — Record consequential design decisions
 
-**Level:** required
+**Level:** required  
 **Applies when:** A change introduces a durable boundary, dependency, data flow, failure mode, or operational commitment.
 
 Record the problem, constraints, considered options, decision, consequences, ownership, and conditions that would trigger reconsideration.
@@ -52,7 +52,7 @@ Record the problem, constraints, considered options, decision, consequences, own
 
 ### ENGINEERING-QUALITY-002 — Keep components and authority bounded
 
-**Level:** required
+**Level:** required  
 **Applies when:** Adding or changing a component, service, job, library, or automation.
 
 Give each component a focused responsibility, explicit interface, minimum required authority, owned failure behavior, and observable resource boundary.
@@ -68,7 +68,7 @@ Give each component a focused responsibility, explicit interface, minimum requir
 
 ### ENGINEERING-QUALITY-003 — Test behavior at the cheapest effective layer
 
-**Level:** required
+**Level:** required  
 **Applies when:** A change creates or modifies behavior that can regress.
 
 Map material behavior and risk to deterministic unit, contract, integration, end-to-end, property, performance, security, or manual checks at the lowest layer that can prove the claim.
@@ -84,7 +84,7 @@ Map material behavior and risk to deterministic unit, contract, integration, end
 
 ### ENGINEERING-QUALITY-004 — Control dependency introduction and change
 
-**Level:** required
+**Level:** required  
 **Applies when:** Adding, replacing, upgrading, or materially reconfiguring a dependency.
 
 Confirm necessity, maintenance state, source, license, integrity, transitive impact, runtime authority, failure behavior, and removal path before adoption.
@@ -100,7 +100,7 @@ Confirm necessity, maintenance state, source, license, integrity, transitive imp
 
 ### ENGINEERING-QUALITY-005 — Require review independent of authorship
 
-**Level:** required
+**Level:** required  
 **Applies when:** A change can affect users, production data, security, privacy, money, availability, or a shared interface.
 
 Have a qualified reviewer who did not author the change inspect its design, implementation, evidence, and residual risk before release.
@@ -116,7 +116,7 @@ Have a qualified reviewer who did not author the change inspect its design, impl
 
 ### ENGINEERING-QUALITY-006 — Build from attributable inputs
 
-**Level:** required
+**Level:** required  
 **Applies when:** Producing a deployable artifact or distributed package.
 
 Use versioned source, locked inputs, protected build steps, attributable artifacts, and integrity evidence sufficient to connect the release to the reviewed source and configuration.
@@ -132,7 +132,7 @@ Use versioned source, locked inputs, protected build steps, attributable artifac
 
 ### ENGINEERING-QUALITY-007 — Make failure observable without exposing sensitive data
 
-**Level:** required
+**Level:** required  
 **Applies when:** Software runs outside an author's direct interactive control.
 
 Emit structured health, error, latency, saturation, and dependency signals tied to user and business outcomes, while excluding or protecting secrets and personal data.
@@ -148,7 +148,7 @@ Emit structured health, error, latency, saturation, and dependency signals tied 
 
 ### ENGINEERING-QUALITY-008 — Release only the reviewed final state
 
-**Level:** required
+**Level:** required  
 **Applies when:** Approving a build, deployment, package, or handoff.
 
 Run risk-matched checks on the final integrated artifact, inspect intended behavior, record unresolved limitations, and bind approval to the exact version released.

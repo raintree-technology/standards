@@ -35,7 +35,7 @@ The risk of a change must determine its release boundaries, observability, stop 
 
 ### FND-CHANGE-001 — Identify the failure boundary
 
-**Level:** required
+**Level:** required  
 **Applies when:** A change can affect production users, data, security, revenue, availability, or external integrations.
 
 Document what can fail, the maximum plausible impact, affected dependencies and populations, and how operators will detect the failure.
@@ -51,7 +51,7 @@ Document what can fail, the maximum plausible impact, affected dependencies and 
 
 ### FND-CHANGE-002 — Define recovery before release
 
-**Level:** required
+**Level:** required  
 **Applies when:** A change is not trivially reversible or can create durable side effects.
 
 Define rollback, roll-forward, restoration, compensation, or containment steps before release. Include the trigger, authority, dependencies, expected duration, and any data or external effects that reversal cannot undo.
@@ -67,7 +67,7 @@ Define rollback, roll-forward, restoration, compensation, or containment steps b
 
 ### FND-CHANGE-003 — Limit blast radius
 
-**Level:** recommended
+**Level:** recommended  
 **Applies when:** Partial rollout, feature flags, canaries, dry runs, shadow traffic, or bounded batches are feasible.
 
 Expose the smallest representative population that can produce useful evidence, observe it for a defined period, and expand only after its acceptance criteria pass.
@@ -83,7 +83,7 @@ Expose the smallest representative population that can produce useful evidence, 
 
 ### FND-CHANGE-004 — Preserve observability through the transition
 
-**Level:** required
+**Level:** required  
 **Applies when:** A change modifies critical behavior, dependencies, data shape, or a key metric.
 
 Ensure operators can distinguish old and new behavior, expected transition effects, and actual failures throughout rollout and recovery.
@@ -99,7 +99,7 @@ Ensure operators can distinguish old and new behavior, expected transition effec
 
 ### FND-CHANGE-005 — Set stop and promotion conditions
 
-**Level:** required
+**Level:** required  
 **Applies when:** A change is released in stages or requires an operator decision.
 
 Define measurable conditions to continue, pause, roll back, or escalate, plus the person or automated control authorized to act.
@@ -115,7 +115,7 @@ Define measurable conditions to continue, pause, roll back, or escalate, plus th
 
 ### FND-CHANGE-006 — Rehearse high-risk operations
 
-**Level:** required
+**Level:** required  
 **Applies when:** Recovery is complex, time-sensitive, rarely performed, or depends on manual coordination.
 
 Exercise the release and recovery path in the closest safe environment available. Record differences from production and resolve failures that would prevent recovery.
@@ -131,7 +131,7 @@ Exercise the release and recovery path in the closest safe environment available
 
 ### FND-CHANGE-007 — Authorize and record production changes
 
-**Level:** required
+**Level:** required  
 **Applies when:** A change affects production behavior, data, access, infrastructure, security controls, or external integrations.
 
 Record the requested outcome, affected components, implementation and recovery plan, accountable approver, operator, timing, and resulting state. Separate authorization from execution when organizational policy or risk requires it.
@@ -147,7 +147,7 @@ Record the requested outcome, affected components, implementation and recovery p
 
 ### FND-CHANGE-008 — Validate and close the change
 
-**Level:** required
+**Level:** required  
 **Applies when:** A production change, migration, rollout, or recovery action finishes or stops.
 
 Confirm the intended state, material user and system outcomes, monitoring health, and removal of temporary access or controls. Record whether the change completed, paused, rolled back, or left follow-up work.
@@ -164,7 +164,7 @@ Confirm the intended state, material user and system outcomes, monitoring health
 
 ### FND-CHANGE-009 — Bound autonomous change
 
-**Level:** required
+**Level:** required  
 **Applies when:** An automated or model-driven system can choose, repeat, or sequence changes without synchronous human direction.
 
 Set explicit limits for scope, targets, privileges, time, steps, retries, concurrency, cost, and durable side effects. Define no-progress, uncertainty, policy-conflict, and risk triggers that stop or escalate the run. Require authoritative post-action checks before further expansion and preserve an operator stop control that remains available during likely failures.

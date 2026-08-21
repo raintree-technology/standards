@@ -40,7 +40,7 @@ Database work must preserve correctness, availability, recoverability, and clear
 
 ### DATA-DATABASE-001 — Encode important invariants at the strongest practical layer
 
-**Level:** required
+**Level:** required  
 **Applies when:** The database can enforce an invariant without preventing a legitimate workflow.
 
 Use constraints, types, foreign keys, uniqueness, or transactional checks for invariants whose violation would corrupt meaning. Application validation alone is insufficient when concurrent writers or alternate write paths can bypass it.
@@ -56,7 +56,7 @@ Use constraints, types, foreign keys, uniqueness, or transactional checks for in
 
 ### DATA-DATABASE-002 — Keep mixed application and schema versions compatible
 
-**Level:** required
+**Level:** required  
 **Applies when:** Application instances, workers, jobs, or clients can overlap during deployment.
 
 Use an expand–migrate–contract sequence. Add compatible schema first, migrate reads and writes, backfill and verify data, remove old callers, then contract in a separate controlled step.
@@ -73,7 +73,7 @@ Use an expand–migrate–contract sequence. Add compatible schema first, migrat
 
 ### DATA-DATABASE-003 — Bound locks and resource consumption
 
-**Level:** required
+**Level:** required  
 **Applies when:** A migration, backfill, index build, validation, or query runs against production-sized data.
 
 Estimate or measure lock mode and duration, rows and bytes scanned, transaction duration, memory, temporary space, write-ahead or transaction log growth, replication lag, and downstream load. Batch, throttle, or use an online operation when one operation can exceed the system's safe budget.
@@ -90,7 +90,7 @@ Estimate or measure lock mode and duration, rows and bytes scanned, transaction 
 
 ### DATA-DATABASE-004 — Prove access-path changes with representative plans
 
-**Level:** required
+**Level:** required  
 **Applies when:** Adding or removing an index, rewriting a query for performance, or changing access patterns.
 
 Compare query plans and timings using representative parameters, cardinality, distribution, concurrency, and cache conditions. Account for write amplification, storage, maintenance, and selectivity.
@@ -107,7 +107,7 @@ Compare query plans and timings using representative parameters, cardinality, di
 
 ### DATA-DATABASE-005 — Define recovery for destructive or semantic changes
 
-**Level:** required
+**Level:** required  
 **Applies when:** Data is deleted, transformed, merged, re-keyed, deduplicated, or reinterpreted.
 
 Specify whether recovery uses rollback, backup restore, shadow data, event replay, compensation, or a corrective migration. Define the last reversible point and what cannot be restored automatically.
@@ -123,7 +123,7 @@ Specify whether recovery uses rollback, backup restore, shadow data, event repla
 
 ### DATA-DATABASE-006 — Prove restore readiness separately from backup success
 
-**Level:** required
+**Level:** required  
 **Applies when:** The system owns durable or business-critical data.
 
 Define recovery point and recovery time objectives, monitor backup completion and retention, and conduct restore exercises that verify usable data and dependent service recovery.
@@ -139,7 +139,7 @@ Define recovery point and recovery time objectives, monitor backup completion an
 
 ### DATA-DATABASE-007 — Bound every growing access path
 
-**Level:** avoid
+**Level:** required  
 **Applies when:** Query result size or work can grow with tenant or global data volume.
 
 Avoid unbounded reads, writes, cascades, scans, and offset pagination on large changing datasets. Use explicit limits, stable ordering, cursor-based continuation, partitions, or bounded batches.
@@ -155,7 +155,7 @@ Avoid unbounded reads, writes, cascades, scans, and offset pagination on large c
 
 ### DATA-DATABASE-008 — Make backfills resumable and observable
 
-**Level:** required
+**Level:** required  
 **Applies when:** Updating existing rows or rebuilding derived state outside one small transaction.
 
 Use deterministic selection, idempotent or checkpointed batches, bounded transactions, progress measurement, error capture, and a safe restart procedure. Prevent the backfill from overwriting newer valid writes.
@@ -171,7 +171,7 @@ Use deterministic selection, idempotent or checkpointed batches, bounded transac
 
 ### DATA-DATABASE-009 — Verify data meaning after migration
 
-**Level:** required
+**Level:** required  
 **Applies when:** A change transforms, maps, aggregates, or reclassifies data.
 
 Validate business invariants and representative records, not only row counts. Define treatment of nulls, duplicates, invalid legacy values, time zones, rounding, and partial failures.
@@ -187,7 +187,7 @@ Validate business invariants and representative records, not only row counts. De
 
 ### DATA-DATABASE-010 — Assign lifecycle ownership
 
-**Level:** required
+**Level:** required  
 **Applies when:** A change creates temporary columns, dual writes, compatibility code, shadow tables, indexes, or deferred cleanup.
 
 Assign an owner, completion condition, and due date for each temporary state. Monitor it until contraction or intentional adoption is complete.
@@ -203,7 +203,7 @@ Assign an owner, completion condition, and due date for each temporary state. Mo
 
 ### DATA-DATABASE-011 — Preserve transactional and concurrency semantics
 
-**Level:** required
+**Level:** required  
 **Applies when:** A change modifies read-modify-write behavior, transaction boundaries, isolation, retries, deduplication, ordering, or concurrent access to shared records.
 
 Define the required atomicity, isolation, ordering, and conflict behavior. Handle retries and concurrent writers without lost updates, duplicate side effects, write skew, or reliance on timing that the database does not guarantee.
@@ -220,7 +220,7 @@ Define the required atomicity, isolation, ordering, and conflict behavior. Handl
 
 ### DATA-DATABASE-012 — Use least privilege for database changes
 
-**Level:** required
+**Level:** required  
 **Applies when:** An application, migration, backfill, operator, or automation receives database credentials or elevated rights.
 
 Grant only the operations, objects, environments, and duration required. Separate routine application access from schema administration and recovery access, and record use of elevated or emergency credentials.

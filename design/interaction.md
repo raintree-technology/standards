@@ -36,7 +36,7 @@ Interfaces must help people understand where they are, what they can do, what wi
 
 ### DESIGN-INTERACTION-001 — Design the complete task flow
 
-**Level:** required
+**Level:** required  
 **Applies when:** A user starts, progresses through, or exits a multi-step task.
 
 Map entry points, prerequisites, decisions, state changes, exits, interruptions, resumption, success, and recovery before approving the interaction.
@@ -52,7 +52,7 @@ Map entry points, prerequisites, decisions, state changes, exits, interruptions,
 
 ### DESIGN-INTERACTION-002 — Keep navigation and hierarchy predictable
 
-**Level:** required
+**Level:** required  
 **Applies when:** Users move among views, sections, modes, or nested content.
 
 Use consistent destinations, labels, placement, hierarchy, back behavior, and location cues. Do not change navigation context merely because an element receives focus or input.
@@ -68,7 +68,7 @@ Use consistent destinations, labels, placement, hierarchy, back behavior, and lo
 
 ### DESIGN-INTERACTION-003 — Use familiar controls with complete states
 
-**Level:** required
+**Level:** required  
 **Applies when:** Selecting or creating an interactive component.
 
 Prefer the platform or design-system component whose semantics and behavior match the task. Define default, hover where relevant, focus, active, selected, disabled, loading, success, error, and unavailable states.
@@ -84,7 +84,7 @@ Prefer the platform or design-system component whose semantics and behavior matc
 
 ### DESIGN-INTERACTION-004 — Make forms efficient and recoverable
 
-**Level:** required
+**Level:** required  
 **Applies when:** Users enter, select, review, or submit information.
 
 Ask only for needed information, use suitable input controls and autocomplete, preserve valid work, validate at a helpful time, explain requirements, and support correction before resubmission.
@@ -100,7 +100,7 @@ Ask only for needed information, use suitable input controls and autocomplete, p
 
 ### DESIGN-INTERACTION-005 — Adapt without losing meaning or operation
 
-**Level:** required
+**Level:** required  
 **Applies when:** Layout can change with viewport, window, orientation, input, text size, locale, or content length.
 
 Reflow and reprioritize while preserving essential content, controls, relationships, reading order, and task continuity. Do not hide required functionality only because space is constrained.
@@ -116,7 +116,7 @@ Reflow and reprioritize while preserving essential content, controls, relationsh
 
 ### DESIGN-INTERACTION-006 — Represent system status and latency
 
-**Level:** required
+**Level:** required  
 **Applies when:** An action, load, synchronization, or background process is not immediate.
 
 Show whether work is pending, progressing, delayed, completed, partially completed, failed, cancelled, or safe to leave. Prevent duplicate commitment while preserving a controlled retry or cancel path.
@@ -132,7 +132,7 @@ Show whether work is pending, progressing, delayed, completed, partially complet
 
 ### DESIGN-INTERACTION-007 — Prevent and recover from consequential mistakes
 
-**Level:** required
+**Level:** required  
 **Applies when:** An action can cause financial, privacy, security, legal, destructive, or difficult-to-reverse effects.
 
 Present the consequence before commitment and provide appropriate review, confirmation, authorization, reversal, or recovery without relying on a generic confirmation dialog alone.
@@ -148,7 +148,7 @@ Present the consequence before commitment and provide appropriate review, confir
 
 ### DESIGN-INTERACTION-008 — Govern reusable design decisions
 
-**Level:** required
+**Level:** required  
 **Applies when:** Components, tokens, patterns, or content conventions are reused across products.
 
 Version their contract, accessibility behavior, supported variants, ownership, adoption guidance, change policy, and deprecation path. Keep implementation and design references synchronized.

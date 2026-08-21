@@ -41,7 +41,7 @@ Images, audio, video, and generated creative must have attributable inputs, auth
 
 ### MEDIA-PRODUCTION-RIGHTS-001 — Define the media contract before production
 
-**Level:** required
+**Level:** required  
 **Applies when:** Commissioning, recording, generating, editing, licensing, or publishing media.
 
 Record purpose, audience, claims, formats, channels, territories, duration, accessibility target, people and assets, rights, budget, owner, approvals, source retention, and expiry before irreversible production or publication.
@@ -57,7 +57,7 @@ Record purpose, audience, claims, formats, channels, territories, duration, acce
 
 ### MEDIA-PRODUCTION-RIGHTS-002 — Preserve asset and generation provenance
 
-**Level:** required
+**Level:** required  
 **Applies when:** Media includes stock, customer, employee, commissioned, public-domain, licensed, synthetic, or model-generated material.
 
 Record creator or source, acquisition date, original file, license or status, model and material settings where relevant, reference inputs, edits, attribution, restrictions, and derivative relationship.
@@ -73,7 +73,7 @@ Record creator or source, acquisition date, original file, license or status, mo
 
 ### MEDIA-PRODUCTION-RIGHTS-003 — Obtain authority from identifiable people
 
-**Level:** required
+**Level:** required  
 **Applies when:** Media depicts, records, imitates, identifies, quotes, or reveals a person or their private context.
 
 Record informed permission or another approved authority covering capture, editing, synthetic alteration, attribution, channels, territories, duration, sensitive context, withdrawal limits, and safeguarding. Do not clone identity or voice without explicit authorization.
@@ -89,7 +89,7 @@ Record informed permission or another approved authority covering capture, editi
 
 ### MEDIA-PRODUCTION-RIGHTS-004 — Make media accessible by design
 
-**Level:** required
+**Level:** required  
 **Applies when:** Media carries information, instruction, emotion needed for meaning, or interactive function.
 
 Plan accurate text alternatives, captions, transcripts, visual-description equivalents, accessible players, readable on-screen text, contrast, safe motion and flashing, and keyboard operation at script and storyboard time.
@@ -105,7 +105,7 @@ Plan accurate text alternatives, captions, transcripts, visual-description equiv
 
 ### MEDIA-PRODUCTION-RIGHTS-005 — Keep representations and edits truthful
 
-**Level:** required
+**Level:** required  
 **Applies when:** Editing, compositing, staging, generating, reenacting, enhancing, or selecting media that supports a factual or product claim.
 
 Do not alter material context, performance, product behavior, identity, sequence, scale, results, or endorsement in a way that creates a misleading impression. Disclose simulation, reenactment, or synthetic media when omission would affect interpretation.
@@ -121,7 +121,7 @@ Do not alter material context, performance, product behavior, identity, sequence
 
 ### MEDIA-PRODUCTION-RIGHTS-006 — Protect production people, data, and environments
 
-**Level:** required
+**Level:** required  
 **Applies when:** Production uses locations, devices, accounts, user data, unreleased products, hazardous activity, children, or vulnerable participants.
 
 Use safety planning, minimum data, synthetic accounts, controlled sets, secure transfer, bounded access, incident contacts, child and vulnerability safeguards, and removal of credentials and metadata before publication.
@@ -137,7 +137,7 @@ Use safety planning, minimum data, synthetic accounts, controlled sets, secure t
 
 ### MEDIA-PRODUCTION-RIGHTS-007 — Govern distribution, changes, and retirement
 
-**Level:** required
+**Level:** required  
 **Applies when:** Media is exported, localized, syndicated, adapted, embedded, licensed onward, or expires.
 
 Bind each derivative to its source, rights, approval, accessibility assets, claims, channel constraints, publication locations, owner, version, and expiry; propagate corrections and takedowns through partners and caches.

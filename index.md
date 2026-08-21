@@ -10,10 +10,10 @@ choose a profile under **Task profiles**.
 
 ## Browse by area
 
-* [API](api/) - Programmatic interface design, compatibility, errors, bounds, runtime behavior, and evolution.
-* [AI](ai/) - Agent architecture, context, tools, evaluation, safety, and operation standards.
 * [Agents](agents/) - Standards for agent verification and handoff.
+* [AI](ai/) - Agent architecture, context, tools, evaluation, safety, and operation standards.
 * [Analytics](analytics/) - Measurement and instrumentation standards.
+* [API](api/) - Programmatic interface design, compatibility, errors, bounds, runtime behavior, and evolution.
 * [Content](content/) - Interface content and state communication standards.
 * [Data](data/) - Database and data-system standards.
 * [Design](design/) - Interaction and design-system standards.
@@ -28,14 +28,14 @@ choose a profile under **Task profiles**.
 * [Marketing](marketing/) - Core lifecycle marketing standards and coverage maps.
 * [Media](media/) - Media production, accessibility, provenance, and rights standards.
 * [Operations](operations/) - Reliability, incidents, recovery, support, and vendor standards.
-* [Playbooks](playbooks/) - Versioned vendor and platform operating procedures.
 * [Patterns](patterns/) - Preferred implementation approaches with explicit scope and tradeoffs.
+* [Playbooks](playbooks/) - Versioned vendor and platform operating procedures.
 * [Privacy](privacy/) - Personal-data purpose, choice, rights, retention, and sharing standards.
 * [Product](product/) - Discovery, requirements, launch, onboarding, and outcome standards.
 * [Sales](sales/) - Sales enablement, revenue operations, and pipeline-governance standards.
+* [Search](seo/) - Search discovery and indexing standards.
 * [Security](security/) - Application security design, implementation, and verification standards.
 * [Task profiles](profiles/) - Progressive entry points for common work types.
-* [Search](seo/) - Search discovery and indexing standards.
 * [Templates](templates/) - OKF-compatible authoring templates.
 * [Web](web/) - Public web quality standards.
 * [Writing](writing/) - Standards for functional writing and change summaries.
@@ -100,6 +100,7 @@ choose a profile under **Task profiles**.
 * [Direct outreach and prospecting](marketing/direct-outreach.md) - Contact sourcing, channel authority, identity, suppression, vendors, and measurement.
 * [Public, community, and partner engagement](marketing/public-engagement.md) - Public relations, social publishing, communities, creators, influencers, and partnerships.
 * [Distribution, referral, and acquisition assets](marketing/distribution.md) - Listings, lead assets, referrals, incentives, contests, data movement, and retirement.
+* [Public project showcase](marketing/project-showcase.md) - Truthful, useful project records across portfolios, repositories, and public profiles.
 * [Sales enablement and revenue operations](sales/revenue-operations.md) - Claims, competitive intelligence, lead lifecycle, systems of record, forecasts, and handoffs.
 * [App-store discovery and submission](discovery/app-stores.md) - Store metadata, policy, privacy declarations, review readiness, localization, and release monitoring.
 * [Media production, accessibility, and rights](media/production-rights.md) - Source rights, releases, synthetic media, accessible alternatives, derivatives, and retention.

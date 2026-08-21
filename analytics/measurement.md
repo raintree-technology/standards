@@ -48,7 +48,7 @@ Instrumentation must produce interpretable evidence for a defined decision witho
 
 ### ANALYTICS-MEASUREMENT-001 — Start with a decision
 
-**Level:** required
+**Level:** required  
 **Applies when:** Adding or materially changing an event, property, dashboard, or metric.
 
 Document the decision the measurement supports, the question it answers, its owner, and the action that materially different outcomes would trigger.
@@ -64,7 +64,7 @@ Document the decision the measurement supports, the question it answers, its own
 
 ### ANALYTICS-MEASUREMENT-002 — Give events stable semantic contracts
 
-**Level:** required
+**Level:** required  
 **Applies when:** Instrumenting behavioral events.
 
 Define the trigger, actor, object, event time, processing time, required and optional properties, allowed values, identity semantics, source, owner, and versioning policy. Name the observed fact rather than an implementation detail.
@@ -80,7 +80,7 @@ Define the trigger, actor, object, event time, processing time, required and opt
 
 ### ANALYTICS-MEASUREMENT-003 — Validate the full measurement path
 
-**Level:** required
+**Level:** required  
 **Applies when:** Shipping new or changed instrumentation.
 
 Verify that the real user or system action emits the expected number of correctly shaped events, reaches the intended destination, respects consent, and appears in downstream analysis with correct identity and time semantics.
@@ -96,7 +96,7 @@ Verify that the real user or system action emits the expected number of correctl
 
 ### ANALYTICS-MEASUREMENT-004 — Minimize collected and exposed data
 
-**Level:** required
+**Level:** required  
 **Applies when:** Choosing event properties, identity data, or analytics access.
 
 Collect only the fields needed for the documented purpose. Do not send secrets, credentials, session tokens, unrestricted URLs, free-form user content, or unnecessary personal data. Restrict access and precision to what the decision requires.
@@ -113,7 +113,7 @@ Collect only the fields needed for the documented purpose. Do not send secrets, 
 
 ### ANALYTICS-MEASUREMENT-005 — Define denominator, eligibility, and time
 
-**Level:** required
+**Level:** required  
 **Applies when:** Reporting a rate, funnel, cohort, retention value, or experiment outcome.
 
 State who can enter the metric, the numerator, denominator, identity unit, time zone, event-time or processing-time basis, window, exclusions, repeated-action handling, and late-arriving-data policy.
@@ -129,7 +129,7 @@ State who can enter the metric, the numerator, denominator, identity unit, time 
 
 ### ANALYTICS-MEASUREMENT-006 — Make identity behavior explicit
 
-**Level:** required
+**Level:** required  
 **Applies when:** Measurement spans anonymous and authenticated use, devices, accounts, workspaces, or shared entities.
 
 Define when identifiers are created, linked, split, reset, deleted, and used as the unit of analysis. Avoid retroactive stitching that changes historical populations without an explicit policy.
@@ -145,7 +145,7 @@ Define when identifiers are created, linked, split, reset, deleted, and used as 
 
 ### ANALYTICS-MEASUREMENT-007 — Version meaning changes
 
-**Level:** required
+**Level:** required  
 **Applies when:** A trigger, property, identity rule, transformation, or metric definition changes meaning.
 
 Version the contract or create a new event or metric. Record the effective time, migration behavior, dashboard impact, and whether old and new values can be compared.
@@ -161,7 +161,7 @@ Version the contract or create a new event or metric. Record the effective time,
 
 ### ANALYTICS-MEASUREMENT-008 — Monitor data quality and ownership
 
-**Level:** required
+**Level:** required  
 **Applies when:** A metric or event informs recurring decisions, experiments, financial reporting, or critical operations.
 
 Assign an owner and monitor expected volume, schema, null rates, duplicates, freshness, and key distribution changes. Define escalation and deprecation paths.
@@ -177,7 +177,7 @@ Assign an owner and monitor expected volume, schema, null rates, duplicates, fre
 
 ### ANALYTICS-MEASUREMENT-009 — Define retention and deletion behavior
 
-**Level:** required
+**Level:** required  
 **Applies when:** Analytics stores identifiers, personal data, or detailed behavioral history.
 
 Set retention according to the stated purpose and governing policy. Define deletion, anonymization, export, and downstream propagation behavior before collection begins.
@@ -193,7 +193,7 @@ Set retention according to the stated purpose and governing policy. Define delet
 
 ### ANALYTICS-MEASUREMENT-010 — Bound names, values, and cardinality
 
-**Level:** required
+**Level:** required  
 **Applies when:** Defining event names, property names, identifiers, arrays, free-form values, or dimensions used for grouping and filtering.
 
 Keep event and property names stable and free of dynamic values. Use typed, bounded values and documented enumerations where practical. Identify and control fields whose unique values, length, or nested structure can grow without a known limit.
@@ -210,7 +210,7 @@ Keep event and property names stable and free of dynamic values. Use typed, boun
 
 ### ANALYTICS-MEASUREMENT-011 — Preserve transformation lineage
 
-**Level:** required
+**Level:** required  
 **Applies when:** Raw events are cleaned, joined, filtered, sampled, modeled, aggregated, corrected, or exported before a decision uses them.
 
 Record the source datasets, transformation version, filters, joins, identity rules, sampling or weighting, correction logic, and effective period. Make it possible to trace a reported value back to the producing contracts and code.
@@ -227,7 +227,7 @@ Record the source datasets, transformation version, filters, joins, identity rul
 
 ### ANALYTICS-MEASUREMENT-012 — Treat linkable data as sensitive
 
-**Level:** required
+**Level:** required  
 **Applies when:** Data is pseudonymous, hashed, device-linked, precise, or combinable with other data to identify or single out a person or household.
 
 Do not describe linkable data as anonymous solely because direct names or emails were removed. Apply purpose, access, retention, deletion, and sharing controls according to its realistic re-identification and inference risk.

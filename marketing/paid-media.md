@@ -37,7 +37,7 @@ Paid advertising must identify its sponsor, support its claims, respect audience
 
 ### MARKETING-PAID-MEDIA-001 — Approve the campaign contract before spend
 
-**Level:** required
+**Level:** required  
 **Applies when:** Funding a paid placement, sponsored distribution, promotion, or ad experiment.
 
 Record the objective, audience, jurisdictions, offer, claims, creative variants, destinations, budget, bid authority, schedule, owners, platform policies, stop conditions, and success and guardrail measures before launch.
@@ -53,7 +53,7 @@ Record the objective, audience, jurisdictions, offer, claims, creative variants,
 
 ### MARKETING-PAID-MEDIA-002 — Make sponsorship and material terms apparent
 
-**Level:** required
+**Level:** required  
 **Applies when:** A placement could be mistaken for editorial, organic, independent, or user-generated content.
 
 Identify the content as advertising or sponsored communication and disclose the responsible advertiser and material conditions where people encounter the claim.
@@ -69,7 +69,7 @@ Identify the content as advertising or sponsored communication and disclose the 
 
 ### MARKETING-PAID-MEDIA-003 — Keep creative and destination claims consistent
 
-**Level:** required
+**Level:** required  
 **Applies when:** An ad links, deep-links, or directs people to an offer, form, store, or product experience.
 
 Ensure the strongest express and implied claim, price, availability, eligibility, urgency, and visual representation remain supported and consistent through the destination and commitment path.
@@ -85,7 +85,7 @@ Ensure the strongest express and implied claim, price, availability, eligibility
 
 ### MARKETING-PAID-MEDIA-004 — Govern targeting and exclusions
 
-**Level:** required
+**Level:** required  
 **Applies when:** Audience delivery uses personal data, inferred attributes, lookalikes, exclusions, location, age, or automated optimization.
 
 Document the input data, authority, sensitive proxies, intended and excluded recipients, platform expansion settings, fairness and harm review, and applicable notice or control. Do not target or exclude using prohibited sensitive data or protected status.
@@ -101,7 +101,7 @@ Document the input data, authority, sensitive proxies, intended and excluded rec
 
 ### MARKETING-PAID-MEDIA-005 — Control accounts, partners, and spend
 
-**Level:** required
+**Level:** required  
 **Applies when:** People, agencies, platforms, or automation can publish ads or commit budget.
 
 Use named identities, least privilege, approval thresholds, protected payment methods, change logging, separation of duties for high spend, and rapid revocation. Define agency and platform responsibilities contractually.
@@ -117,7 +117,7 @@ Use named identities, least privilege, approval thresholds, protected payment me
 
 ### MARKETING-PAID-MEDIA-006 — Measure incrementality, cost, and harm
 
-**Level:** required
+**Level:** required  
 **Applies when:** Reporting campaign performance or making a budget decision.
 
 Report spend, fees, exposure, outcome quality, attribution model, overlap, lag, modeled data, fraud or invalid traffic, downstream value, and guardrails. Use controlled evidence for causal incrementality claims.
@@ -133,7 +133,7 @@ Report spend, fees, exposure, outcome quality, attribution model, overlap, lag, 
 
 ### MARKETING-PAID-MEDIA-007 — Stop and archive campaigns completely
 
-**Level:** required
+**Level:** required  
 **Applies when:** An offer, claim, audience, creative, event, or campaign expires or becomes invalid.
 
 Pause all placements and automated variants, revoke obsolete audiences and access, reconcile final spend and outcomes, preserve required records, and remove stale destinations or route them truthfully.

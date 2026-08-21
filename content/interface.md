@@ -36,7 +36,7 @@ Interface text must help people recognize, decide, act, and recover in context w
 
 ### CONTENT-INTERFACE-001 — Name controls by their outcome
 
-**Level:** required
+**Level:** required  
 **Applies when:** Text labels an action, destination, field, option, or setting.
 
 Use the shortest specific wording that tells the user what the control affects or where it goes. Keep the visible label and accessible name consistent.
@@ -52,7 +52,7 @@ Use the shortest specific wording that tells the user what the control affects o
 
 ### CONTENT-INTERFACE-002 — Explain required information in context
 
-**Level:** required
+**Level:** required  
 **Applies when:** Asking for input, permission, consent, configuration, or commitment.
 
 State what is needed, why it is needed when not obvious, the expected format or scope, and any material consequence before the user commits.
@@ -68,7 +68,7 @@ State what is needed, why it is needed when not obvious, the expected format or 
 
 ### CONTENT-INTERFACE-003 — Give every state a useful message
 
-**Level:** required
+**Level:** required  
 **Applies when:** A view or component can be empty, loading, pending, offline, partially complete, unavailable, successful, or failed.
 
 State the current condition, its scope, whether work is continuing or preserved, and the next available action. Do not use success language before the outcome is confirmed.
@@ -84,7 +84,7 @@ State the current condition, its scope, whether work is continuing or preserved,
 
 ### CONTENT-INTERFACE-004 — Make confirmations specific to the consequence
 
-**Level:** required
+**Level:** required  
 **Applies when:** Asking a user to confirm a consequential action.
 
 Name the action, affected object or scope, immediate and delayed consequences, reversibility, and the exact commitment control. Avoid generic questions such as “Are you sure?”
@@ -100,7 +100,7 @@ Name the action, affected object or scope, immediate and delayed consequences, r
 
 ### CONTENT-INTERFACE-005 — Use inclusive, non-blaming language
 
-**Level:** required
+**Level:** required  
 **Applies when:** Referring to people, identity, ability, failure, eligibility, or behavior.
 
 Use relevant, respectful, specific language; avoid stereotypes, unnecessary identity references, assumptions, blame, and metaphors that obscure the task.
@@ -116,7 +116,7 @@ Use relevant, respectful, specific language; avoid stereotypes, unnecessary iden
 
 ### CONTENT-INTERFACE-006 — Keep terminology consistent across the journey
 
-**Level:** required
+**Level:** required  
 **Applies when:** The same object, action, status, or measure appears in multiple surfaces.
 
 Use one governed term unless a platform convention or audience requires a documented variation. Do not alternate synonyms for style.
@@ -132,7 +132,7 @@ Use one governed term unless a platform convention or audience requires a docume
 
 ### CONTENT-INTERFACE-007 — Prepare complete units for localization
 
-**Level:** required
+**Level:** required  
 **Applies when:** Interface content may be translated or localized.
 
 Store complete messages with context, variables, plural and grammatical behavior, and sufficient layout flexibility. Do not build sentences from separately translated fragments.
@@ -148,7 +148,7 @@ Store complete messages with context, variables, plural and grammatical behavior
 
 ### CONTENT-INTERFACE-008 — Review content in the rendered interaction
 
-**Level:** required
+**Level:** required  
 **Applies when:** Approving interface content for release.
 
 Inspect the final text with realistic data, layout, states, input methods, and assistive output rather than approving strings in isolation.

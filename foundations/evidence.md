@@ -43,7 +43,7 @@ Decisions and completion claims must match the strength, scope, and freshness of
 
 ### FND-EVIDENCE-001 — Separate observation, inference, and recommendation
 
-**Level:** required
+**Level:** required  
 **Applies when:** Reporting research, analysis, diagnosis, or results.
 
 Label or phrase material statements so readers can distinguish what was directly observed, what was inferred from those observations, and what action is recommended.
@@ -59,7 +59,7 @@ Label or phrase material statements so readers can distinguish what was directly
 
 ### FND-EVIDENCE-002 — Use current primary sources for volatile claims
 
-**Level:** required
+**Level:** required  
 **Applies when:** A claim depends on current law, platform behavior, vendor limits, pricing, security advice, search behavior, or an active standard.
 
 Verify the claim against a current primary or authoritative source and place the source close enough that a reviewer can identify what it supports. Record the publication, version, or review date when freshness affects the decision.
@@ -76,7 +76,7 @@ Verify the claim against a current primary or authoritative source and place the
 
 ### FND-EVIDENCE-003 — Do not claim unperformed verification
 
-**Level:** prohibited
+**Level:** prohibited  
 **Applies when:** Describing tests, reviews, deployments, measurements, user behavior, or completion.
 
 Never state or imply that a check ran, passed, covered a condition, or proved an outcome when it did not.
@@ -92,7 +92,7 @@ Never state or imply that a check ran, passed, covered a condition, or proved an
 
 ### FND-EVIDENCE-004 — Match confidence to evidence quality
 
-**Level:** required
+**Level:** required  
 **Applies when:** Drawing conclusions from analytics, experiments, interviews, incidents, simulations, or partial inspection.
 
 State limitations that could materially change the conclusion, including sample size, selection bias, missing data, confounding, instrumentation gaps, environmental differences, and uninspected scope.
@@ -108,7 +108,7 @@ State limitations that could materially change the conclusion, including sample 
 
 ### FND-EVIDENCE-005 — Preserve evidence provenance
 
-**Level:** required
+**Level:** required  
 **Applies when:** Evidence affects a decision, release, exception, or material claim.
 
 Record enough provenance for another reviewer to locate and interpret the evidence: source, version or commit, query or method, time period, environment, and relevant parameters.
@@ -124,7 +124,7 @@ Record enough provenance for another reviewer to locate and interpret the eviden
 
 ### FND-EVIDENCE-006 — Resolve material conflicting evidence
 
-**Level:** required
+**Level:** required  
 **Applies when:** Credible sources or checks support different conclusions.
 
 Report the conflict, compare source authority, freshness, scope, and method, and state why one interpretation is preferred or why the decision remains unresolved.
@@ -140,7 +140,7 @@ Report the conflict, compare source authority, freshness, scope, and method, and
 
 ### FND-EVIDENCE-007 — Define quantitative results and their uncertainty
 
-**Level:** required
+**Level:** required  
 **Applies when:** A measured value, estimate, rate, comparison, or threshold materially affects a decision.
 
 Define the quantity, unit, population, method, time basis, aggregation, rounding, and uncertainty or variability needed to interpret the result. When reporting an interval or confidence statement, identify how it was calculated and what it represents.
@@ -157,7 +157,7 @@ Define the quantity, unit, population, method, time basis, aggregation, rounding
 
 ### FND-EVIDENCE-008 — Measure variable systems with repeated trials
 
-**Level:** required
+**Level:** required  
 **Applies when:** A stochastic model, agent, heuristic, human-review process, or nondeterministic environment materially affects an outcome.
 
 Run enough independent trials to characterize variability and report the aggregation that matches real use. Distinguish typical per-attempt performance, success after retries or candidate selection, consistent success across repeated use, worst material failures, latency, and cost. Do not present a selected successful run as representative.
@@ -174,7 +174,7 @@ Run enough independent trials to characterize variability and report the aggrega
 
 ### FND-EVIDENCE-009 — Protect evaluation validity
 
-**Level:** required
+**Level:** required  
 **Applies when:** A benchmark, evaluation set, rubric, grader, simulation, or test environment supports a capability or release claim.
 
 Use tasks and environments that represent the target work, including important edge and failure cases. Separate development from held-out evaluation, track exposure and contamination risk, freeze material task and grader versions for comparisons, and confirm a reference solution can pass without hidden expectations.
@@ -191,7 +191,7 @@ Use tasks and environments that represent the target work, including important e
 
 ### FND-EVIDENCE-010 — Validate judgment-based graders
 
-**Level:** required
+**Level:** required  
 **Applies when:** A person, model, rubric, proxy metric, or composite score judges quality that cannot be checked directly.
 
 Define each criterion independently, identify the evidence available to the grader, and calibrate grader decisions against qualified human review or an authoritative outcome. Measure disagreement and material false acceptance and rejection. Keep final-state correctness, required process, policy compliance, style, latency, and cost separate unless the decision explicitly defines a justified combination.

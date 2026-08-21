@@ -112,7 +112,7 @@ Raintree-owned JavaScript and TypeScript repositories use Biome as the required 
 
 ### ENGINEERING-JS-QUALITY-001 — Inherit the shared Trellis policy
 
-**Level:** required
+**Level:** required  
 **Applies when:** A Raintree-owned repository contains maintained JavaScript or TypeScript source.
 
 Install `@biomejs/biome` and `@raintree-technology/trellis` as exact development dependencies at the repository root. Extend `@raintree-technology/trellis/biome` from the root Biome configuration. Do not copy Trellis configuration or plugins into the consuming repository.
@@ -129,7 +129,7 @@ Install `@biomejs/biome` and `@raintree-technology/trellis` as exact development
 
 ### ENGINEERING-JS-QUALITY-002 — Keep Biome and Trellis compatible
 
-**Level:** required
+**Level:** required  
 **Applies when:** Installing or updating Biome or Trellis.
 
 Use the exact Biome version declared by the selected Trellis release's peer dependency. Update the two packages together, review the effective rule and severity changes, and commit the resulting lockfile change.
@@ -146,7 +146,7 @@ Use the exact Biome version declared by the selected Trellis release's peer depe
 
 ### ENGINEERING-JS-QUALITY-003 — Keep one authoritative root configuration
 
-**Level:** required
+**Level:** required  
 **Applies when:** Configuring Biome in a repository or workspace.
 
 Commit one root `biome.json` or `biome.jsonc` next to the root package manifest. Reference the installed Biome schema, inherit Trellis there, and put shared formatter, linter, assist, VCS, and file-scope settings in that file. Commands and supported editors must resolve the same root configuration.
@@ -163,7 +163,7 @@ Commit one root `biome.json` or `biome.jsonc` next to the root package manifest.
 
 ### ENGINEERING-JS-QUALITY-004 — Define owned source and scanner scope
 
-**Level:** required
+**Level:** required  
 **Applies when:** Configuring Biome in a repository or workspace.
 
 Start `files.includes` with a positive owned-scope pattern. Exclude build output, caches, vendored trees, generated artifacts, fixtures that intentionally violate policy, and other files the repository cannot fix at their source. Use ordinary exclusions when project or type rules still need to index an excluded file; use force-ignore exclusions for output or external trees that must not be scanned. Enable Git VCS integration and ignore-file support, but keep material ownership boundaries explicit in Biome configuration.
@@ -181,7 +181,7 @@ Start `files.includes` with a positive owned-scope pattern. Exclude build output
 
 ### ENGINEERING-JS-QUALITY-005 — Inherit root policy in monorepos
 
-**Level:** required
+**Level:** required  
 **Applies when:** A repository contains nested workspaces or package-level Biome configurations.
 
 Install Biome and Trellis at the repository root. Make every nested Biome configuration inherit the root with `"extends": ["//"]` and keep only package-specific scope or policy below it. Run the blocking full check from the root so all owned packages and nested configurations participate.
@@ -198,7 +198,7 @@ Install Biome and Trellis at the repository root. Make every nested Biome config
 
 ### ENGINEERING-JS-QUALITY-006 — Keep product policy local
 
-**Level:** required
+**Level:** required  
 **Applies when:** A repository has framework, architecture, accessibility, import-boundary, runtime, or file-scope requirements beyond Trellis.
 
 Declare those requirements in the repository's Biome configuration or another checked repository policy. Do not add product-specific rules or exceptions to Trellis merely to share configuration within one product.
@@ -214,7 +214,7 @@ Declare those requirements in the repository's Biome configuration or another ch
 
 ### ENGINEERING-JS-QUALITY-007 — Configure all three Biome tools explicitly
 
-**Level:** required
+**Level:** required  
 **Applies when:** A repository adopts or materially changes its Biome configuration.
 
 Keep the formatter, linter, and assist enabled for their owned supported files. Configure formatting choices in the root file, inherit Trellis's recommended and explicit lint rules, and enable import organization through Assist. Use language or path overrides only where the repository has a concrete constraint.
@@ -231,7 +231,7 @@ Keep the formatter, linter, and assist enabled for their owned supported files. 
 
 ### ENGINEERING-JS-QUALITY-008 — Use the Raintree formatting baseline
 
-**Level:** recommended
+**Level:** recommended  
 **Applies when:** Creating a repository or intentionally selecting or replacing its formatter conventions.
 
 Use spaces with width 2, a line width of 100, double quotes for JavaScript and JSX, required semicolons, trailing commas where supported, and organized imports. Keep `formatWithErrors` disabled so malformed source is not silently rewritten.
@@ -247,7 +247,7 @@ Use spaces with width 2, a line width of 100, double quotes for JavaScript and J
 
 ### ENGINEERING-JS-QUALITY-009 — Separate read-only gates from write commands
 
-**Level:** required
+**Level:** required  
 **Applies when:** A JavaScript or TypeScript change is reviewed, merged, released, or handed off as complete.
 
 Expose a documented developer gate that runs `biome check` over the full owned scope without writing changes and a continuous-integration gate that runs `biome ci` after a frozen install of the committed lockfile. Invoke the repository-local pinned binary and emit the complete actionable diagnostic set. Error diagnostics must fail; warning diagnostics must remain visible. Keep write mode in a separately named developer command and never run it in the gate.
@@ -265,7 +265,7 @@ Expose a documented developer gate that runs `biome check` over the full owned s
 
 ### ENGINEERING-JS-QUALITY-010 — Control automatic fixes
 
-**Level:** required
+**Level:** required  
 **Applies when:** Applying Biome or plugin fixes to maintained source.
 
 Run safe write actions only from a developer command and inspect the resulting diff. Apply unsafe fixes only to an explicit path or finding set after reviewing the stated semantic change. Run type checks and behavior checks after either class of fix.
@@ -282,7 +282,7 @@ Run safe write actions only from a developer command and inspect the resulting d
 
 ### ENGINEERING-JS-QUALITY-011 — Resolve or explain every diagnostic
 
-**Level:** required
+**Level:** required  
 **Applies when:** Biome reports a diagnostic in maintained source changed by the work.
 
 Fix the underlying issue when the rule applies. If the rule does not apply, use the narrowest supported suppression, state the concrete reason beside it, and keep the affected code within ordinary review scope. Do not use blanket file, directory, or rule disablement to make a change pass.
@@ -299,7 +299,7 @@ Fix the underlying issue when the rule applies. If the rule does not apply, use 
 
 ### ENGINEERING-JS-QUALITY-012 — Keep editor feedback aligned
 
-**Level:** recommended
+**Level:** recommended  
 **Applies when:** A team uses a supported editor for maintained JavaScript or TypeScript.
 
 Use a Biome-maintained editor extension where available, require the repository configuration, select Biome as the formatter for supported files, and apply only safe fixes and configured Assist actions on save. Do not commit inline editor configuration that weakens repository rules.
@@ -316,7 +316,7 @@ Use a Biome-maintained editor extension where available, require the repository 
 
 ### ENGINEERING-JS-QUALITY-013 — Preserve coverage during migration
 
-**Level:** required
+**Level:** required  
 **Applies when:** Replacing ESLint, Prettier, import sorting, or another static-analysis or formatting tool with Biome.
 
 Inventory existing rules, plugins, ignores, overrides, scripts, editor settings, and continuous-integration gates before migration. Use Biome migration commands only as a starting artifact, review their output, and retain any check for which Biome and local rules do not provide equivalent coverage. Delete the former configuration only after the new full-scope gates pass and every lost or changed check has a recorded decision.
@@ -334,7 +334,7 @@ Inventory existing rules, plugins, ignores, overrides, scripts, editor settings,
 
 ### ENGINEERING-JS-QUALITY-014 — Keep type and behavior verification separate
 
-**Level:** required
+**Level:** required  
 **Applies when:** A repository contains TypeScript or executable JavaScript behavior.
 
 Do not treat Biome or Trellis as a replacement for the repository's compiler, type check, build, tests, or risk-matched behavior verification. TypeScript repositories must expose and run a no-emit type-check or an equivalent framework compiler check. Run the applicable build and tests independently of the Biome gate.
@@ -351,7 +351,7 @@ Do not treat Biome or Trellis as a replacement for the repository's compiler, ty
 
 ### ENGINEERING-JS-QUALITY-015 — Use deterministic Trellis handoffs
 
-**Level:** contextual
+**Level:** contextual  
 **Applies when:** Active Trellis findings are assigned to a coding agent or transferred between reviewers or teams.
 
 Generate a Trellis JSON todo report for the agreed paths and preserve its durable IDs in the work record. Use the repository's blocking Biome command, not report generation, to decide whether the completed change passes policy.
@@ -368,7 +368,7 @@ Generate a Trellis JSON todo report for the agreed paths and preserve its durabl
 
 ### ENGINEERING-JS-QUALITY-016 — Vendor anti-slop for TypeScript
 
-**Level:** required
+**Level:** required  
 **Applies when:** A Raintree-owned repository contains maintained TypeScript source.
 
 Copy the anti-slop plugin source into a repository-owned tooling directory, register it as an Oxlint JavaScript plugin, and enable every upstream anti-slop rule at error severity. Record the upstream version or commit and license. Do not depend on anti-slop as a fixed npm package or load it from an unreviewed remote location.
@@ -385,7 +385,7 @@ Copy the anti-slop plugin source into a repository-owned tooling directory, regi
 
 ### ENGINEERING-JS-QUALITY-017 — Pin and qualify the Oxlint plugin runtime
 
-**Level:** required
+**Level:** required  
 **Applies when:** Installing or updating anti-slop, Oxlint, or `@oxlint/plugins`.
 
 Install exact matching versions of `oxlint` and `@oxlint/plugins` as development dependencies and commit the lockfile. Because Oxlint JavaScript plugins are alpha and outside its semantic-versioning guarantees, exercise anti-slop's representative valid and invalid fixtures on every runtime update before accepting the new pair.
@@ -402,7 +402,7 @@ Install exact matching versions of `oxlint` and `@oxlint/plugins` as development
 
 ### ENGINEERING-JS-QUALITY-018 — Keep Oxlint configuration and scope explicit
 
-**Level:** required
+**Level:** required  
 **Applies when:** Configuring anti-slop in a TypeScript repository.
 
 Register the vendored plugin under the stable name `anti-slop` in the root Oxlint or Vite+ configuration. Merge existing ignores and add explicit patterns for dependencies, generated outputs, the vendored plugin, and installed or generated agent-tooling directories. Do not replace existing ignores or ignore every hidden directory. When Vite+ owns the gate, apply the relevant exclusions to both linting and formatting.
@@ -419,7 +419,7 @@ Register the vendored plugin under the stable name `anti-slop` in the root Oxlin
 
 ### ENGINEERING-JS-QUALITY-019 — Gate anti-slop independently
 
-**Level:** required
+**Level:** required  
 **Applies when:** A TypeScript change is reviewed, merged, released, or handed off as complete.
 
 Expose a read-only repository command that runs the pinned Oxlint binary over the full owned TypeScript scope, fails on every anti-slop diagnostic, and reports unused disable directives as errors. Run it after a frozen install in continuous integration and alongside, not instead of, the Biome, type, build, and behavior gates.
@@ -436,7 +436,7 @@ Expose a read-only repository command that runs the pinned Oxlint binary over th
 
 ### ENGINEERING-JS-QUALITY-020 — Preserve type evidence when resolving findings
 
-**Level:** required
+**Level:** required  
 **Applies when:** anti-slop reports a finding in maintained source.
 
 Resolve findings by preserving inference, using `as const` or `satisfies`, defining named owner contracts, parsing untrusted values at I/O boundaries, and replacing module mocks or reflective access with explicit dependency seams and typed interfaces. Do not silence a finding by widening a value, adding `any`, `unknown`, `object`, `{}`, a chained assertion, an unchecked cast, or an alias that conceals the same uncertainty.
@@ -454,7 +454,7 @@ Resolve findings by preserving inference, using `as const` or `satisfies`, defin
 
 ### ENGINEERING-JS-QUALITY-021 — Maintain the vendored policy as owned code
 
-**Level:** required
+**Level:** required  
 **Applies when:** Updating or changing vendored anti-slop source.
 
 Compare the current vendored source, local modifications, and candidate upstream revision before replacement. Preserve intentional local behavior, add focused rule tests for semantic changes, keep product-specific rules in a separate plugin, and update provenance only after the final vendored artifact passes its tests and repository gates.
@@ -471,7 +471,7 @@ Compare the current vendored source, local modifications, and candidate upstream
 
 ### ENGINEERING-JS-QUALITY-022 — Expose one layered quality workflow
 
-**Level:** required
+**Level:** required  
 **Applies when:** A repository configures its developer and continuous-integration commands.
 
 Expose one read-only developer command that runs the applicable Biome with Trellis, anti-slop, type, and focused behavior checks. Keep each layer available as a directly runnable named command. Expose a full continuous-integration command or equivalent separately reported jobs that run the final Biome CI gate, anti-slop, type checking, full tests, and the production build when the repository has one. Keep the write command separate and limit it to reviewed Biome formatting and safe fixes.
@@ -489,7 +489,7 @@ Expose one read-only developer command that runs the applicable Biome with Trell
 
 ### ENGINEERING-JS-QUALITY-023 — Give overlapping diagnostics one owner
 
-**Level:** required
+**Level:** required  
 **Applies when:** Two configured tools report the same underlying defect or policy concern.
 
 Compare the tools' scope, semantics, severity, diagnostic quality, fix safety, and stability. Keep one authoritative diagnostic when the checks are materially equivalent; keep both only when each detects distinct cases or supplies necessary evidence. Record the ownership decision beside the affected configuration. Do not disable a required Trellis or anti-slop rule merely to remove duplicate output unless the remaining gate has documented equivalent or stronger coverage and the applicable exception is approved.

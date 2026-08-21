@@ -36,7 +36,7 @@ Data products must preserve defined meaning, provenance, fitness for use, and ac
 
 ### DATA-QUALITY-001 — Define meaning and intended decisions
 
-**Level:** required
+**Level:** required  
 **Applies when:** Creating or materially changing a dataset, field, metric, model, or data product.
 
 Define the business meaning, unit, population, grain, valid values, time semantics, source, intended decisions, and known unsuitable uses.
@@ -52,7 +52,7 @@ Define the business meaning, unit, population, grain, valid values, time semanti
 
 ### DATA-QUALITY-002 — Assign accountable ownership
 
-**Level:** required
+**Level:** required  
 **Applies when:** Data is relied on by another team, product, report, model, or operational process.
 
 Assign owners for meaning, production, access, quality incidents, retention, and consumer communication, with a maintained contact and escalation route.
@@ -68,7 +68,7 @@ Assign owners for meaning, production, access, quality incidents, retention, and
 
 ### DATA-QUALITY-003 — Preserve end-to-end lineage
 
-**Level:** required
+**Level:** required  
 **Applies when:** Data is copied, joined, aggregated, inferred, corrected, or exported.
 
 Record material sources, transformations, versions, filters, joins, models, destinations, and processing times so a result can be traced backward and impact can be traced forward.
@@ -84,7 +84,7 @@ Record material sources, transformations, versions, filters, joins, models, dest
 
 ### DATA-QUALITY-004 — Set measurable quality expectations
 
-**Level:** required
+**Level:** required  
 **Applies when:** Data supports a release, operational process, customer experience, financial result, or material decision.
 
 Define and monitor the relevant completeness, validity, consistency, uniqueness, timeliness, accuracy, and reconciliation expectations with thresholds tied to use.
@@ -100,7 +100,7 @@ Define and monitor the relevant completeness, validity, consistency, uniqueness,
 
 ### DATA-QUALITY-005 — Reconcile boundaries and durable outcomes
 
-**Level:** required
+**Level:** required  
 **Applies when:** Data crosses systems, batches, queues, financial boundaries, or mutable source states.
 
 Account for accepted, rejected, duplicated, delayed, corrected, and missing records and reconcile totals and material invariants at defined boundaries.
@@ -116,7 +116,7 @@ Account for accepted, rejected, duplicated, delayed, corrected, and missing reco
 
 ### DATA-QUALITY-006 — Govern schema and meaning changes
 
-**Level:** required
+**Level:** required  
 **Applies when:** Producers can change fields, values, timing, identity, or interpretation used by consumers.
 
 Version material changes, assess affected consumers, provide a compatibility or migration period, and confirm adoption before removing the old meaning.
@@ -132,7 +132,7 @@ Version material changes, assess affected consumers, provide a compatibility or 
 
 ### DATA-QUALITY-007 — Control correction and deletion through derived copies
 
-**Level:** required
+**Level:** required  
 **Applies when:** Source data can be corrected, restricted, expired, or deleted.
 
 Propagate the required change through caches, indexes, aggregates, exports, models, backups, and downstream recipients or record why a copy is lawfully retained and isolated.
@@ -148,7 +148,7 @@ Propagate the required change through caches, indexes, aggregates, exports, mode
 
 ### DATA-QUALITY-008 — Make quality incidents recoverable
 
-**Level:** required
+**Level:** required  
 **Applies when:** Incorrect data can propagate to decisions, users, models, or external recipients.
 
 Provide detection, quarantine, stop, replay or correction, consumer notification, and post-recovery verification procedures proportionate to impact.

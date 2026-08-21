@@ -29,7 +29,7 @@ adapt its depth and visual treatment to its audience.
 
 ### MARKETING-PROJECT-SHOWCASE-001 — Maintain one canonical project record
 
-**Level:** required
+**Level:** required  
 **Applies when:** The same project appears on more than one owned public surface.
 
 Maintain one canonical record for project identity, classification, status, source
@@ -51,7 +51,7 @@ platform cannot consume the canonical record. Record the snapshot date and owner
 
 ### MARKETING-PROJECT-SHOWCASE-002 — State the project outcome and audience
 
-**Level:** required
+**Level:** required  
 **Applies when:** A project is named or promoted on a public surface.
 
 Pair the project name with a plain description of the outcome it creates and the
@@ -71,7 +71,7 @@ page or README must add enough detail to distinguish the project from alternativ
 
 ### MARKETING-PROJECT-SHOWCASE-003 — Provide a direct next action
 
-**Level:** required
+**Level:** required  
 **Applies when:** A visitor can inspect, install, try, read about, or contribute to the
 project.
 
@@ -93,7 +93,7 @@ with a clearly labeled archive or retrospective destination.
 
 ### MARKETING-PROJECT-SHOWCASE-004 — Label project class and lifecycle truthfully
 
-**Level:** required
+**Level:** required  
 **Applies when:** A portfolio mixes products, open-source projects, research, archives,
 experiments, or internal systems.
 
@@ -115,7 +115,7 @@ the section explicitly defines that all included projects are active.
 
 ### MARKETING-PROJECT-SHOWCASE-005 — Attach evidence to adoption and quality claims
 
-**Level:** required
+**Level:** required  
 **Applies when:** Publishing downloads, installs, stars, users, benchmark results,
 coverage counts, performance claims, or comparisons.
 
@@ -138,7 +138,7 @@ it does not imply measured adoption, performance, or comparative superiority.
 
 ### MARKETING-PROJECT-SHOWCASE-006 — Show the maintained ecosystem as a system
 
-**Level:** required
+**Level:** required  
 **Applies when:** An organization maintains multiple public projects that serve
 related parts of one workflow.
 
@@ -162,7 +162,7 @@ ecosystem link.
 
 ### MARKETING-PROJECT-SHOWCASE-007 — Verify the final public record
 
-**Level:** required
+**Level:** required  
 **Applies when:** Publishing or materially changing a project showcase.
 
 Inspect the rendered record in its intended medium. Verify hierarchy, readable
@@ -185,7 +185,7 @@ substitute and record the untested behavior and owner.
 
 ### MARKETING-PROJECT-SHOWCASE-008 — Match the document to its job
 
-**Level:** required
+**Level:** required  
 **Applies when:** Writing or restructuring repository documentation.
 
 Classify each document before editing it. Use the matching pattern from
@@ -213,7 +213,7 @@ platform requirement and apply the closest matching pattern.
 
 ### MARKETING-PROJECT-SHOWCASE-009 — Lead repository pages with first use
 
-**Level:** required
+**Level:** required  
 **Applies when:** The document is a repository landing page for distributable software.
 
 Order the page around a first successful use: identity and lifecycle, outcome and

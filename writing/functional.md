@@ -11,7 +11,7 @@ review_by: 2027-02-13
 stale_after: 2027-02-13
 applies_to: [functional-writing]
 tags: [writing, documentation, communication, content]
-depends_on: [FND-EVIDENCE, FND-TRUST, FND-ACCESSIBILITY]
+depends_on: [FND-EVIDENCE, FND-TRUST, FND-ACCESSIBILITY, AGENT-VERIFICATION]
 generated: { by: codex/gpt-5, at: "2026-08-13T20:57:53Z" }
 sources:
   - id: asd-ste100
@@ -62,7 +62,7 @@ When rules compete, protect accuracy first, then clarity, consistency, and brevi
 
 ### WRITING-FUNCTIONAL-001 — Define the reader and purpose
 
-**Level:** required
+**Level:** required  
 **Applies when:** Creating or materially revising functional writing.
 
 Write for a named or reasonably inferable reader and one primary purpose. Include the context that the least-informed intended reader needs to understand or act.
@@ -78,7 +78,7 @@ Write for a named or reasonably inferable reader and one primary purpose. Includ
 
 ### WRITING-FUNCTIONAL-002 — Preserve accuracy over style
 
-**Level:** required
+**Level:** required  
 **Applies when:** Any writing rule would remove a necessary qualification, change meaning, or make the text misleading.
 
 Keep the accurate meaning. Mark material uncertainty as an assumption, limitation, or unknown. Do not claim certainty, simplicity, safety, or completion beyond the available evidence.
@@ -94,7 +94,7 @@ Keep the accurate meaning. Mark material uncertainty as an assumption, limitatio
 
 ### WRITING-FUNCTIONAL-003 — Use consistent, concrete terms
 
-**Level:** required
+**Level:** required  
 **Applies when:** An artifact names a concept, control, command, path, value, or measurement more than once.
 
 Use one term for each concept. Use exact names and concrete values where they affect interpretation or action. Define an acronym or specialized term before its first use unless the intended reader can be expected to know it.
@@ -110,7 +110,7 @@ Use one term for each concept. Use exact names and concrete values where they af
 
 ### WRITING-FUNCTIONAL-004 — Put the outcome before supporting detail
 
-**Level:** required
+**Level:** required  
 **Applies when:** Writing an answer, explanation, report, summary, document, or message with supporting detail.
 
 State the result, decision, request, or main claim first. Start each paragraph with its topic, and keep each paragraph focused on one topic.
@@ -126,7 +126,7 @@ State the result, decision, request, or main claim first. Start each paragraph w
 
 ### WRITING-FUNCTIONAL-005 — Write direct, complete sentences
 
-**Level:** recommended
+**Level:** recommended  
 **Applies when:** Writing explanatory prose or instructions.
 
 Prefer short, common words, active voice, present tense, and explicit subjects. Keep one main instruction or claim in each sentence. Remove filler, unexplained idioms, figurative language, and unnecessary noun forms.
@@ -142,7 +142,7 @@ Prefer short, common words, active voice, present tense, and explicit subjects. 
 
 ### WRITING-FUNCTIONAL-006 — Make procedures executable
 
-**Level:** required
+**Level:** required  
 **Applies when:** Writing instructions that a reader must follow.
 
 State the goal and prerequisites before the steps. Put a condition or warning before the action it governs. Address the reader as “you” or use the imperative. Give one action per step, and state a non-obvious expected result.
@@ -158,7 +158,7 @@ State the goal and prerequisites before the steps. Put a condition or warning be
 
 ### WRITING-FUNCTIONAL-007 — Match structure to meaning
 
-**Level:** required
+**Level:** required  
 **Applies when:** Organizing headings, paragraphs, lists, warnings, or links.
 
 Use numbered lists for sequences and bulleted lists for unordered sets. Keep list items grammatically parallel. Use headings that describe their sections and link text that describes its destination.
@@ -174,7 +174,7 @@ Use numbered lists for sequences and bulleted lists for unordered sets. Keep lis
 
 ### WRITING-FUNCTIONAL-008 — Format names and alternatives accessibly
 
-**Level:** required
+**Level:** required  
 **Applies when:** Referring to interface controls, commands, filenames, paths, literal values, links, or meaningful images.
 
 Copy interface labels exactly and format them according to the publishing system. Distinguish commands, filenames, paths, and literal values from prose. Give every meaningful image an equivalent text alternative.
@@ -190,7 +190,7 @@ Copy interface labels exactly and format them according to the publishing system
 
 ### WRITING-FUNCTIONAL-009 — Write change summaries for scanning
 
-**Level:** required
+**Level:** required  
 **Applies when:** Writing a commit subject, pull request title, change-log title, or another summary that describes a proposed or completed change.
 
 Use a short imperative summary that names the outcome of the change. Capitalize its first word and omit a trailing period. Separate a body from its summary with a blank line. Use the body for context, rationale, effects, risks, or rejected alternatives that the artifact itself does not show.
@@ -206,7 +206,7 @@ Use a short imperative summary that names the outcome of the change. Capitalize 
 
 ### WRITING-FUNCTIONAL-010 — Review the final text in context
 
-**Level:** required
+**Level:** required  
 **Applies when:** Functional writing is ready for delivery or publication.
 
 Inspect the final rendered or plain-text artifact in its intended medium. Check accuracy, terminology, opening summary, structure, brevity, accessibility, and the reader's ability to act.
@@ -224,7 +224,7 @@ This rule specializes `AGENT-VERIFICATION-002` for functional writing. Use this 
 
 ### WRITING-FUNCTIONAL-011 — Prepare source text for localization
 
-**Level:** required
+**Level:** required  
 **Applies when:** Functional text will be translated, localized, or reused across locales.
 
 Write complete messages with enough context for translators. Keep variables out of sentence fragments, identify placeholder meaning and grammatical role, and avoid assumptions about word order, plural forms, gender, name shape, date and number formats, text length, or reading direction.
@@ -241,7 +241,7 @@ Write complete messages with enough context for translators. Keep variables out 
 
 ### WRITING-FUNCTIONAL-012 — Make quantitative and tabular content interpretable
 
-**Level:** required
+**Level:** required  
 **Applies when:** Presenting measurements, comparisons, tables, charts, or computed results.
 
 State units, time periods, populations, denominators, definitions, and material uncertainty. Give tables descriptive headers and a reading order, and provide a text equivalent or summary for charts that carries the decision-relevant meaning.
@@ -258,7 +258,7 @@ State units, time periods, populations, denominators, definitions, and material 
 
 ### WRITING-FUNCTIONAL-013 — Test consequential content for understanding
 
-**Level:** required
+**Level:** required  
 **Applies when:** Text governs a high-impact decision, repeated task, unfamiliar procedure, broad public obligation, or a flow with evidence of misunderstanding.
 
 Evaluate the final content with representative intended readers or an approved comprehension method. Test whether readers can find, understand, and act on the material information rather than asking only whether they like the wording.
@@ -275,7 +275,7 @@ Evaluate the final content with representative intended readers or an approved c
 
 ### WRITING-FUNCTIONAL-014 — Make agent instructions scoped and testable
 
-**Level:** required
+**Level:** required  
 **Applies when:** Writing repository instructions, prompts, skills, playbooks, tool descriptions, review rules, or durable knowledge for an agent.
 
 State the trigger and scope, desired outcome, prerequisites and required user input, ordered procedure where order matters, postconditions, forbidden actions, escalation conditions, and verification. Put durable project rules in the governed project instruction system and task-specific procedures in the narrowest reusable artifact. Resolve precedence and conflicts explicitly.

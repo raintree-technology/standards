@@ -12,7 +12,7 @@ review_by: 2027-02-16
 stale_after: 2027-02-16
 applies_to: [company-brain, enterprise-search, knowledge-base, retrieval-system, expertise-discovery]
 tags: [knowledge, retrieval, provenance, authorization, audit]
-depends_on: [FND-EVIDENCE, FND-TRUST, FND-CHANGE, DATA-QUALITY, SECURITY-APPLICATION, PRIVACY-DATA, ENGINEERING-QUALITY, AGENT-VERIFICATION]
+depends_on: [FND-EVIDENCE, FND-TRUST, FND-CHANGE, DATA-QUALITY, SECURITY-APPLICATION, PRIVACY-DATA, ENGINEERING-QUALITY, AGENT-VERIFICATION, AI-AGENTS]
 generated: { by: codex/gpt-5, at: "2026-08-17T06:08:51Z" }
 sources:
   - id: w3c-prov-o
@@ -43,7 +43,7 @@ This draft requires independent review of the final artifact and qualified AI, s
 
 ### KNOWLEDGE-SYSTEMS-001 — Define the knowledge-system boundary
 
-**Level:** required
+**Level:** required  
 **Applies when:** Designing, operating, or materially changing a system that collects, indexes, retrieves, summarizes, connects, or answers from organizational information.
 
 Record the system's purposes, intended users and automated consumers, supported decisions, source systems, derived stores, retrieval and output surfaces, owners, data classifications, environments, exclusions, and known unsuitable uses. Identify where domain standards and external policy govern each source and consumer.
@@ -60,7 +60,7 @@ Record the system's purposes, intended users and automated consumers, supported 
 
 ### KNOWLEDGE-SYSTEMS-002 — Preserve source authority and ownership
 
-**Level:** required
+**Level:** required  
 **Applies when:** Knowledge is copied, normalized, summarized, ranked, inferred, or combined from one or more sources.
 
 Identify the authoritative source and owner for each material fact or record type, define precedence and conflict behavior, and keep derived indexes and summaries subordinate to those authorities. Do not present availability in the knowledge system as proof that content is approved, complete, or current.
@@ -77,7 +77,7 @@ Identify the authoritative source and owner for each material fact or record typ
 
 ### KNOWLEDGE-SYSTEMS-003 — Preserve provenance through derivation and retrieval
 
-**Level:** required
+**Level:** required  
 **Applies when:** Content is copied, chunked, transformed, embedded, summarized, joined, ranked, inferred, cited, or exported.
 
 Preserve enough provenance to identify the source system, stable source reference, source version or event, source and ingestion times, material transformations and model configuration, scope, and lineage to derived copies. Keep protected provenance available through access-controlled references rather than removing it.
@@ -94,7 +94,7 @@ Preserve enough provenance to identify the source system, stable source referenc
 
 ### KNOWLEDGE-SYSTEMS-004 — Preserve authorization across every knowledge path
 
-**Level:** required
+**Level:** required  
 **Applies when:** Any participating source, record, field, relationship, inference, or output has access restrictions.
 
 Apply `SECURITY-APPLICATION-002` to ingestion, processing, indexes, search, synthesis, caches, logs, exports, administration, and background jobs. A derived store or combined answer must not grant access broader than the effective source permissions and approved inference policy for the requesting actor, tenant, purpose, and time.
@@ -111,7 +111,7 @@ Apply `SECURITY-APPLICATION-002` to ingestion, processing, indexes, search, synt
 
 ### KNOWLEDGE-SYSTEMS-005 — Reconcile ingestion and source change
 
-**Level:** required
+**Level:** required  
 **Applies when:** Knowledge moves from a source into another store, index, cache, model, or consumer.
 
 Define identity, ordering, deduplication, replay, checkpoint, retry, partial-failure, and reconciliation behavior for each data path. Set use-specific freshness objectives and account for accepted, rejected, delayed, duplicated, missing, corrected, restricted, and deleted records.
@@ -128,7 +128,7 @@ Define identity, ordering, deduplication, replay, checkpoint, retry, partial-fai
 
 ### KNOWLEDGE-SYSTEMS-006 — Propagate correction, restriction, and deletion
 
-**Level:** required
+**Level:** required  
 **Applies when:** Source content can be corrected, reclassified, access-restricted, expired, withdrawn, or deleted.
 
 Apply `DATA-QUALITY-007`, `PRIVACY-DATA-007`, and `PRIVACY-DATA-008` as applicable across raw copies, chunks, embeddings, summaries, links, caches, model context, feedback, evaluations, exports, recipients, backups, and restoration. Define immediate suppression and later physical deletion behavior separately when deletion cannot complete at once.
@@ -145,7 +145,7 @@ Apply `DATA-QUALITY-007`, `PRIVACY-DATA-007`, and `PRIVACY-DATA-008` as applicab
 
 ### KNOWLEDGE-SYSTEMS-007 — Bound source connectors and evidence envelopes
 
-**Level:** required
+**Level:** required  
 **Applies when:** A connector, adapter, import, plugin, crawler, API client, or custom job participates in the knowledge system.
 
 Define each connector's purpose, owner, identity, source scope, permissions, fields, schedule or event triggers, side effects, schema, output contract, error behavior, limits, retention, and removal path. Use a consistent evidence envelope that carries the provenance, authorization, lifecycle, and classification fields needed by downstream controls without pretending unlike source meanings are identical.
@@ -162,7 +162,7 @@ Define each connector's purpose, owner, identity, source scope, permissions, fie
 
 ### KNOWLEDGE-SYSTEMS-008 — Match retrieval to measured information needs
 
-**Level:** required
+**Level:** required  
 **Applies when:** Search, ranking, routing, recommendation, or retrieval selects organizational knowledge for a person or automated consumer.
 
 Identify the question and evidence types the system must support, including exact identifiers, paraphrases, current status, authoritative policy, and scoped domain questions. Select and combine retrieval methods only when evaluation shows they improve those uses, and prevent irrelevant source volume or one ranking signal from silently determining authority.
@@ -179,7 +179,7 @@ Identify the question and evidence types the system must support, including exac
 
 ### KNOWLEDGE-SYSTEMS-009 — Preserve context and material conflict
 
-**Level:** required
+**Level:** required  
 **Applies when:** A system returns excerpts, chunks, summaries, fused results, or cross-source answers.
 
 Include enough surrounding context to retain the source's subject, conditions, time, status, qualifications, and material disagreement. Do not merge duplicate or related evidence in a way that hides independent support, dissent, version differences, or a more authoritative source.
@@ -196,7 +196,7 @@ Include enough surrounding context to retain the source's subject, conditions, t
 
 ### KNOWLEDGE-SYSTEMS-010 — Ground answers and fail honestly
 
-**Level:** required
+**Level:** required  
 **Applies when:** A system summarizes, recommends, explains, or answers from organizational knowledge.
 
 Make each material factual claim traceable to accessible evidence and distinguish source observation, generated inference, recommendation, and unresolved uncertainty according to `FND-EVIDENCE`. Refuse, narrow, or escalate when evidence is absent, inaccessible, stale beyond the declared use, materially conflicting, or outside scope.
@@ -213,7 +213,7 @@ Make each material factual claim traceable to accessible evidence and distinguis
 
 ### KNOWLEDGE-SYSTEMS-011 — Evaluate the complete knowledge path
 
-**Level:** required
+**Level:** required  
 **Applies when:** Releasing or materially changing sources, connectors, transformations, permissions, retrieval, ranking, synthesis, models, scopes, or output interfaces.
 
 Evaluate the integrated path from source state and actor permissions through retrieval to the final outcome. Include representative successes, misses, denials, unanswerable questions, stale and conflicting evidence, correction and deletion, prompt injection where models are present, dependency failure, latency, and cost. Apply `FND-EVIDENCE-008` through `FND-EVIDENCE-010` and `AI-AGENTS` when stochastic or model-based components affect results.
@@ -230,7 +230,7 @@ Evaluate the integrated path from source state and actor permissions through ret
 
 ### KNOWLEDGE-SYSTEMS-012 — Keep use and control activity auditable
 
-**Level:** required
+**Level:** required  
 **Applies when:** Operating a knowledge system for people, automations, or agents.
 
 Record the source and project scope, requesting actor or protected correlation, retrieval and policy decisions, evidence references, denials, administrative changes, exports, errors, and final outcome needed for investigation and governance. Apply `SECURITY-APPLICATION-013`, minimize logged content, protect log access and integrity, and define retention and review triggers.
@@ -247,7 +247,7 @@ Record the source and project scope, requesting actor or protected correlation, 
 
 ### KNOWLEDGE-SYSTEMS-013 — Govern correction, ownership transfer, and retirement
 
-**Level:** required
+**Level:** required  
 **Applies when:** People can report incorrect knowledge, a source changes ownership, or a connector, source, index, model, or project scope is retired.
 
 Provide an owned path to report, assess, correct, communicate, and verify material knowledge errors. Transfer ownership explicitly, notify affected consumers of meaning or availability changes, and remove obsolete access, jobs, data, credentials, references, and unsupported claims during retirement.
@@ -264,7 +264,7 @@ Provide an owned path to report, assess, correct, communicate, and verify materi
 
 ### KNOWLEDGE-SYSTEMS-014 — Protect people in expertise and workforce inference
 
-**Level:** required
+**Level:** required  
 **Applies when:** A system identifies experts, ranks people, summarizes employee activity, infers skills or relationships, or informs work allocation, evaluation, access, discipline, or another consequential workforce decision.
 
 Apply `PRIVACY-DATA`, `FND-TRUST`, and the governing employment, human-resources, and legal policy. Define the permitted purpose, evidence, affected people, correction and contest path, human decision boundary, and prohibited uses. Do not treat message volume, repository activity, reactions, retrieval rank, or model inference alone as proof of expertise, performance, intent, or suitability.

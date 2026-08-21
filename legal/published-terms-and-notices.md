@@ -127,7 +127,7 @@ This standard is an operating and verification baseline, not a clause library or
 
 ### LEGAL-PUBLISHED-TERMS-001 — Define the governing scope and owner
 
-**Level:** required
+**Level:** required  
 **Applies when:** Creating, adopting, or materially revising a public legal document.
 
 Before drafting, record the responsible legal entity, products and channels covered, intended and excluded users, business or consumer context, supported jurisdictions and languages, effective date, accountable legal and operational owners, and qualified review required before publication. Do not copy another organization's terms as a substitute for this determination.
@@ -144,7 +144,7 @@ Before drafting, record the responsible legal entity, products and channels cove
 
 ### LEGAL-PUBLISHED-TERMS-002 — Maintain a coherent document set
 
-**Level:** required
+**Level:** required  
 **Applies when:** More than one agreement, policy, notice, addendum, order form, or linked schedule governs the same service or relationship.
 
 Maintain a document map that names every component, its audience and subject, how it is incorporated, and which document controls each type of conflict. Use stable links and exact names. Do not leave material obligations split across documents with circular, missing, or contradictory precedence.
@@ -161,7 +161,7 @@ Maintain a document map that names every component, its audience and subject, ho
 
 ### LEGAL-PUBLISHED-TERMS-003 — Derive notices from actual practice
 
-**Level:** required
+**Level:** required  
 **Applies when:** A privacy, cookie, AI, security, subprocessor, or service notice describes system behavior or organizational practice.
 
 Draft and update the notice from current processing records, architecture, product behavior, vendor terms, security controls, support operations, and commercial commitments. Separate current fact, contractual commitment, user choice, future intention, and legal requirement. Do not publish an aspirational control as present behavior.
@@ -178,7 +178,7 @@ Draft and update the notice from current processing records, architecture, produ
 
 ### LEGAL-PUBLISHED-TERMS-004 — Put material information at the decision point
 
-**Level:** required
+**Level:** required  
 **Applies when:** A person signs up, pays, renews, uploads data, enables optional processing, accepts a material restriction, or takes another consequential action.
 
 Present the information needed for that decision before commitment and close to the affected action. At minimum include the material price and recurrence, cancellation or termination effect, data use or disclosure, audience or publication effect, significant eligibility or use restriction, and any other consequence identified by the qualified review. A link to full terms may supplement but must not replace a decision-point disclosure needed to prevent a misleading impression.
@@ -195,7 +195,7 @@ Present the information needed for that decision before commitment and close to 
 
 ### LEGAL-PUBLISHED-TERMS-005 — Separate contract assent, privacy notice, and consent
 
-**Level:** required
+**Level:** required  
 **Applies when:** An interface presents legal terms, a privacy notice, or a request for consent.
 
 Identify the legal function of each item. Do not describe a privacy notice as consent, bundle unrelated optional data purposes into acceptance of service terms, or use agreement to terms as proof of a separate choice that the governing decision requires. Keep refusal and withdrawal behavior consistent with the identified function.
@@ -212,7 +212,7 @@ Identify the legal function of each item. Do not describe a privacy notice as co
 
 ### LEGAL-PUBLISHED-TERMS-006 — Preserve exact assent and notice evidence
 
-**Level:** required
+**Level:** required  
 **Applies when:** The organization relies on acceptance, acknowledgment, consent, notice, or continued use as evidence of a legal relationship or choice.
 
 Preserve the exact document version, incorporated document set, decision-point presentation, action taken, actor or account, time, locale, channel, and applicable commercial or regional variant. Make the evidence retrievable without reconstructing it from the current page. Minimize and protect personal data in the record.
@@ -229,7 +229,7 @@ Preserve the exact document version, incorporated document set, decision-point p
 
 ### LEGAL-PUBLISHED-TERMS-007 — Version, archive, and date every publication
 
-**Level:** required
+**Level:** required  
 **Applies when:** Publishing or changing any governed legal document.
 
 Assign an immutable version or content digest, publication time, effective time, change owner, and review record. Preserve prior versions and a material change summary for the required retention period. Keep current and archived documents distinguishable, linkable, and reproducible.
@@ -246,7 +246,7 @@ Assign an immutable version or content digest, publication time, effective time,
 
 ### LEGAL-PUBLISHED-TERMS-008 — Control material changes prospectively
 
-**Level:** required
+**Level:** required  
 **Applies when:** A change affects price, renewal, data use, data sharing, model training, ownership, confidentiality, acceptable use, suspension, termination, dispute rights, liability, security, or another item identified as material by qualified review.
 
 Classify the change before publication. Follow the approved notice, timing, renewed assent or consent, objection, termination, refund, data treatment, and regional process. Do not apply a broader data use or weaker commitment to previously collected data or completed conduct unless the qualified decision confirms the authority and required affirmative choice.
@@ -263,7 +263,7 @@ Classify the change before publication. Follow the approved notice, timing, rene
 
 ### LEGAL-PUBLISHED-TERMS-009 — Make privacy notices complete and timely
 
-**Level:** contextual
+**Level:** contextual  
 **Applies when:** A privacy notice is required by the governing privacy or legal decision.
 
 Provide the notice at the time and place required for the data source and interaction. Cover the identity and contact details of the responsible organization; data and source categories; purposes and authority; recipients; transfers; retention or its criteria; applicable choices and rights; complaint and contact paths; required-data consequences; and automated decision information where applicable. Use layered and just-in-time notice without omitting required information from the complete notice.
@@ -280,7 +280,7 @@ Provide the notice at the time and place required for the data source and intera
 
 ### LEGAL-PUBLISHED-TERMS-010 — Govern AI-specific commitments
 
-**Level:** contextual
+**Level:** contextual  
 **Applies when:** The service generates, analyzes, recommends, or acts through models, or user data can be used to train, evaluate, improve, or review a model.
 
 State the automated role and material reliance limits; ownership and permitted use of inputs and outputs; training, evaluation, retention, logging, and human-review treatment; prohibited or restricted uses; customer and provider responsibilities; and any product-specific terms identified by qualified review. Keep these statements consistent across the contract, privacy notice, product controls, vendor terms, and sales claims.
@@ -297,7 +297,7 @@ State the automated role and material reliance limits; ownership and permitted u
 
 ### LEGAL-PUBLISHED-TERMS-011 — Make legal documents understandable and accessible
 
-**Level:** required
+**Level:** required  
 **Applies when:** A legal document or notice is presented to a person.
 
 Use clear, plain, audience-appropriate language and a structure that exposes material terms before detail. Provide accessible headings, links, tables, controls, zoom and reflow behavior, and equivalent content across supported channels. Preserve legal meaning in each supported language and route high-impact translations through qualified review.
@@ -314,7 +314,7 @@ Use clear, plain, audience-appropriate language and a structure that exposes mat
 
 ### LEGAL-PUBLISHED-TERMS-012 — Verify publication and operation together
 
-**Level:** required
+**Level:** required  
 **Applies when:** Releasing or materially changing a governed legal document or the behavior it describes.
 
 Do not approve publication from document review alone. Verify links, routing, effective dates, document precedence, assent records, notice delivery, choices, rights paths, billing and cancellation, retention, subprocessors, contacts, and product behavior as one release. Assign monitoring and a review trigger for later product, vendor, law, jurisdiction, or organizational changes.
@@ -331,7 +331,7 @@ Do not approve publication from document review alone. Verify links, routing, ef
 
 ### LEGAL-PUBLISHED-TERMS-013 — Form online assent through clear notice and action
 
-**Level:** required
+**Level:** required  
 **Applies when:** A contract or incorporated term is accepted through a website, application, device, message, or other electronic flow.
 
 Place a conspicuous description and link to the applicable terms next to the action that forms the agreement. State explicitly that the action constitutes agreement and require an unambiguous action associated with those terms. Do not rely on footer links, passive browsing, account use, or notice spread across unrelated screens unless qualified counsel approves the specific formation method and evidence.
@@ -348,7 +348,7 @@ Place a conspicuous description and link to the applicable terms next to the act
 
 ### LEGAL-PUBLISHED-TERMS-014 — Review standard terms for fairness and balance
 
-**Level:** contextual
+**Level:** contextual  
 **Applies when:** Non-negotiated or consumer terms allocate material rights, obligations, remedies, or discretion.
 
 Require qualified legal review of both the wording and practical effect of price and renewal changes, unilateral modification, suspension and termination, refunds, assignment, arbitration and forum selection, class or jury waivers, liability limits, indemnities, intellectual-property licenses, evidence burdens, complaint paths, and remedies. Do not use clarity or assent as a substitute for substantive fairness.
@@ -365,7 +365,7 @@ Require qualified legal review of both the wording and practical effect of price
 
 ### LEGAL-PUBLISHED-TERMS-015 — Deliver retainable electronic records when required
 
-**Level:** contextual
+**Level:** contextual  
 **Applies when:** A governing law, contract, or qualified decision requires a writing, signature, durable medium, retainable disclosure, or copy for the recipient.
 
 Provide the record in a form the recipient can access, save or print, and reproduce accurately for the required period. Follow any required electronic-delivery consent, paper option, withdrawal, contact-update, hardware or software disclosure, and renewed-consent process. Do not treat page availability or an email link as sufficient without verifying the governing delivery and retention requirements.
@@ -382,7 +382,7 @@ Provide the record in a form the recipient can access, save or print, and reprod
 
 ### LEGAL-PUBLISHED-TERMS-016 — Govern recurring offers from enrollment through cancellation
 
-**Level:** contextual
+**Level:** contextual  
 **Applies when:** An offer includes a free-to-paid conversion, automatic renewal, continuous service, recurring charge, or renewal price change.
 
 Before obtaining agreement or billing information, present the recurring nature, price or calculation, frequency, trial or promotional end, renewal period, minimum commitment, cancellation deadline and method, and material restrictions identified by qualified review. Obtain and retain the required separate affirmative consent and acknowledgment. Deliver required reminders and make cancellation timely, direct, and no harder than the applicable enrollment channel.
@@ -399,7 +399,7 @@ Before obtaining agreement or billing information, present the recurring nature,
 
 ### LEGAL-PUBLISHED-TERMS-017 — Govern device storage, tracking, and preference signals
 
-**Level:** contextual
+**Level:** contextual  
 **Applies when:** A service stores or accesses information on a device, uses cookies, pixels, SDKs, local storage, advertising identifiers, link decoration, fingerprinting, or receives a recognized privacy preference signal.
 
 Maintain a current inventory of each technology, provider, data, purpose, duration, first- or third-party role, and governing consent or exception decision. Block non-permitted behavior until the required choice, provide equally usable accept and reject controls, make later review and withdrawal practical, and honor recognized preference signals across in-scope processing. Do not limit the review to browser cookies.
@@ -416,7 +416,7 @@ Maintain a current inventory of each technology, provider, data, purpose, durati
 
 ### LEGAL-PUBLISHED-TERMS-018 — Enforce age and audience boundaries in the service
 
-**Level:** contextual
+**Level:** contextual  
 **Applies when:** Terms set a minimum age, the service is directed to or likely used by minors, age affects consent or contracting capacity, or age assurance is used.
 
 Record the governing age and audience decision, the evidence needed, parental or guardian process where applicable, and the product response for uncertain, underage, and aging-up users. Make terms and notices understandable for the affected age group. Minimize age-assurance data, restrict it to the approved purpose, test accuracy and bias, and delete it on the approved schedule. Do not rely on a terms statement when the service knowingly permits contradictory use.
@@ -433,7 +433,7 @@ Record the governing age and audience decision, the evidence needed, parental or
 
 ### LEGAL-PUBLISHED-TERMS-019 — Apply restrictions and remedies consistently
 
-**Level:** contextual
+**Level:** contextual  
 **Applies when:** Terms or an acceptable-use policy allow content moderation, account restriction, suspension, termination, forfeiture, reporting, or another adverse action.
 
 Define the prohibited conduct, decision authority, evidence, severity and proportionality factors, notice, cure, appeal, restoration, data access, refund, and emergency path. Apply the published rule consistently and preserve the decision record. Do not reserve unlimited discretion that masks undocumented or discriminatory enforcement.
@@ -450,7 +450,7 @@ Define the prohibited conduct, decision authority, evidence, severity and propor
 
 ### LEGAL-PUBLISHED-TERMS-020 — Preserve commitments through transfer and shutdown
 
-**Level:** required
+**Level:** required  
 **Applies when:** A merger, acquisition, financing, insolvency, asset sale, assignment, product shutdown, or entity change may transfer or end contracts, data, or user rights.
 
 Inventory the terms, privacy promises, negotiated restrictions, consent records, data roles, retention duties, prepaid value, exports, rights requests, and deletion commitments that survive or constrain the event. Obtain qualified review before disclosure or transfer, give required notice and choice, and prevent a successor or buyer from using data beyond the recorded commitments without the required authority.

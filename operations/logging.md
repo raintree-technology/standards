@@ -12,7 +12,7 @@ review_by: 2026-11-17
 stale_after: 2026-11-17
 applies_to: [typescript-service, typescript-client, node-service, service-change, service-operation]
 tags: [operations, logging, observability, typescript, nodejs, browser, pino]
-depends_on: [ENGINEERING-QUALITY, OPERATIONS-RELIABILITY, SECURITY-APPLICATION, PRIVACY-DATA]
+depends_on: [ENGINEERING-QUALITY, OPERATIONS-RELIABILITY, SECURITY-APPLICATION, PRIVACY-DATA, API-CONTRACTS]
 generated: { by: codex/gpt-5, at: "2026-08-17T08:28:28Z" }
 sources:
   - id: pino-readme
@@ -93,7 +93,7 @@ Server-side TypeScript services must emit protected, machine-readable events tha
 
 ### OPERATIONS-LOGGING-001 — Use Pino behind one application logging boundary
 
-**Level:** required
+**Level:** required  
 **Applies when:** A server-side TypeScript application or service runs on Node.js or a Pino-supported server runtime.
 
 Use a supported Pino major through one application-owned logger module. Application code, shared libraries, framework hooks, and background jobs must use that boundary rather than `console`, ad hoc stdout writes, or competing logging packages. Lock the resolved version, keep its Node.js release line compatible with Pino's support policy, and review upgrades and transports under `ENGINEERING-QUALITY-004`.
@@ -112,7 +112,7 @@ When a framework provides an official Pino integration, inject or reuse the appl
 
 ### OPERATIONS-LOGGING-002 — Emit a stable structured event contract
 
-**Level:** required
+**Level:** required  
 **Applies when:** The application emits an operational log event.
 
 Emit one newline-delimited JSON object per event with the following application contract:
@@ -146,7 +146,7 @@ Reserve `time`, `level`, `msg`, `event`, `schemaVersion`, `service`, `version`, 
 
 ### OPERATIONS-LOGGING-003 — Carry bounded operation context with child loggers
 
-**Level:** contextual
+**Level:** contextual  
 **Applies when:** Work crosses an asynchronous boundary or operators need to correlate events for a request, job, message, or distributed operation.
 
 Create a Pino child logger at the owned boundary and bind validated context once. Pass that logger explicitly or retrieve it from an `AsyncLocalStorage` context established with `run`; do not use process-global mutable context or allow one concurrent operation's bindings to enter another. Include the applicable request, job, message, trace, and span identifiers and propagate standard trace context across service boundaries under `API-CONTRACTS-031`. When `spanId` is present, include its `traceId`. Do not use correlation identifiers as authentication, authorization, idempotency, secrecy, or proof of identity.
@@ -163,7 +163,7 @@ Create a Pino child logger at the owned boundary and bind validated context once
 
 ### OPERATIONS-LOGGING-004 — Serialize errors as structured errors
 
-**Level:** required
+**Level:** required  
 **Applies when:** Code records an exception or failure object.
 
 Pass the `Error` to the logger under the configured error key, normally `err`, so Pino's error serializer can preserve its type, message, stack, code, and supported cause chain. Preserve the original `cause` when wrapping an error. Normalize thrown non-`Error` values into a bounded error representation. Add safe operation and outcome fields separately. Do not interpolate an error into the message, log only `error.message`, or record the same exception at every layer.
@@ -179,7 +179,7 @@ Pass the `Error` to the logger under the configured error key, normally `err`, s
 
 ### OPERATIONS-LOGGING-005 — Minimize and redact sensitive data before delivery
 
-**Level:** required
+**Level:** required  
 **Applies when:** Secrets, credentials, personal data, confidential content, or attacker-controlled text could reach a log call.
 
 Log an allowlist of diagnostic fields instead of raw request, response, body, headers, cookies, query, session, user, token, database record, or third-party payload objects. Configure centrally owned Pino redaction paths at initialization as defense in depth, including nested, array, alternate-case, and framework-specific locations used by the application. Prefer explicit paths; use wildcards only when their coverage and cost are measured. Remove secrets instead of retaining a reversible, partial, or recognizable form. Never let external input define redaction paths. Keep production redaction in every destination, including debug, error, audit, transport, and support output.
@@ -198,7 +198,7 @@ Redaction is a final guard, not permission to construct a sensitive event. It do
 
 ### OPERATIONS-LOGGING-006 — Give each level one operational meaning
 
-**Level:** required
+**Level:** required  
 **Applies when:** Defining or calling a log level.
 
 Use `fatal` only immediately before process termination, `error` for a failed operation that needs investigation or response, `warn` for an abnormal condition the service handled but an owner should assess, `info` for bounded lifecycle and business-operation milestones, and `debug` or `trace` for temporary diagnostic detail. Keep Pino's numeric levels and define an explicit downstream severity mapping. Do not introduce custom levels unless every destination, alert, and OpenTelemetry mapping is tested with them.
@@ -217,7 +217,7 @@ Configure the minimum level by environment without code changes. Do not let requ
 
 ### OPERATIONS-LOGGING-007 — Bound log volume and field cardinality
 
-**Level:** required
+**Level:** required  
 **Applies when:** A code path can repeat with traffic, data size, retries, polling, batching, or attacker activity.
 
 Set an event size limit below every process, runtime, collector, transport, network, and backend limit and bound repeated events, collections, object depth, strings, stack traces, and high-cardinality fields. Do not serialize entire domain objects merely because they are available. Check `isLevelEnabled` before constructing expensive diagnostic fields. Prefer metrics for aggregate counts and traces for sampled execution detail. Apply deterministic sampling or rate limits only after preserving errors, security-relevant and audit events, rare outcomes, and enough counts to measure what was suppressed.
@@ -233,7 +233,7 @@ Set an event size limit below every process, runtime, collector, transport, netw
 
 ### OPERATIONS-LOGGING-008 — Separate service emission from log delivery
 
-**Level:** required
+**Level:** required  
 **Applies when:** Logs leave the process or require formatting, transformation, routing, or remote transmission.
 
 Emit production JSON to the runtime's managed stdout or approved local destination. Perform pretty printing only in local development. Run transformation and remote transmission outside the request hot path through a Pino transport worker, sidecar, runtime collector, or platform collector. Custom writable streams and transports must honor backpressure, surface errors, close their destination, and flush before completing close.
@@ -254,7 +254,7 @@ When bundling an application that uses Pino transports, include and resolve Pino
 
 ### OPERATIONS-LOGGING-009 — Define the events the service must produce
 
-**Level:** required
+**Level:** required  
 **Applies when:** A service, job, consumer, or scheduled function has behavior that operators, security responders, support, or dependent teams must detect or reconstruct.
 
 Maintain a reviewed event catalog that names the event, triggering condition, owner, level, required fields, data classification, expected volume, retention class, consumer, and alert or query when applicable. Cover at least process and worker start, readiness, draining, and stop; deployment or configuration identity; owned operation success and failure; dependency timeout and circuit state; retry exhaustion; queue or job terminal state; data-integrity or reconciliation failure; and the security-relevant behavior required by `SECURITY-APPLICATION-013`.
@@ -273,7 +273,7 @@ Record outcomes at the boundary that owns them. Do not log routine internal step
 
 ### OPERATIONS-LOGGING-010 — Keep serializers and logger hooks deterministic and safe
 
-**Level:** required
+**Level:** required  
 **Applies when:** Configuring a serializer, formatter, mixin, hook, timestamp function, custom transport transform, or logger wrapper.
 
 Keep logger extension code synchronous where Pino requires it, bounded, deterministic, and free of network, filesystem, database, cryptographic, or other blocking work. It must return JSON-serializable data, never throw into application behavior, never mutate caller-owned or shared objects, and preserve required fields, numeric severity, redaction, and error handling. Do not use a mixin or hook to recover ambient mutable context when an explicit child logger or bounded asynchronous context can provide it.
@@ -292,7 +292,7 @@ Treat extension failures as observable logging-pipeline failures without recursi
 
 ### OPERATIONS-LOGGING-011 — Protect logs throughout their lifecycle
 
-**Level:** required
+**Level:** required  
 **Applies when:** Logs are buffered, transmitted, collected, indexed, searched, exported, copied, backed up, or deleted.
 
 Classify each stream and destination from the most sensitive event it can receive. Encrypt protected logs across untrusted networks and at rest where required; restrict producer, reader, exporter, administrator, and deletion permissions separately; record and monitor access; and prevent application workloads from altering retained records. Define retention and deletion by purpose, incident need, privacy obligation, contract, and cost, including debug streams, dead-letter data, archives, backups, exports, and support bundles.
@@ -311,7 +311,7 @@ Keep tenant and environment boundaries through collection and query. Do not send
 
 ### OPERATIONS-LOGGING-012 — Monitor the logging pipeline as a dependency
 
-**Level:** required
+**Level:** required  
 **Applies when:** Operational decisions, alerts, investigations, support, security detection, or audit evidence depend on collected logs.
 
 Measure emission, accepted and rejected records, parse failures, queue depth, backpressure, retries, drops, duplicate delivery, ingestion delay, indexing delay, storage use, query availability, clock skew, and cost at the boundaries the platform exposes. Alert an owner on material loss, delay, corruption, access failure, or unexpected volume without depending solely on the failing log path. Synchronize process clocks and preserve both event time and collector-observed time when delay or offline delivery can be material.
@@ -330,7 +330,7 @@ Use a bounded synthetic canary or reconciliation record to prove end-to-end deli
 
 ### OPERATIONS-LOGGING-013 — Govern browser and other untrusted-client logs separately
 
-**Level:** contextual
+**Level:** contextual  
 **Applies when:** TypeScript runs in a browser, mobile shell, edge client, desktop client, or another user-controlled runtime and sends logs off the device.
 
 Do not assume the server Pino configuration applies in a client runtime. Pino browser output uses console methods by default and does not support Pino redaction. Construct an allowlisted event that contains no secret, credential, session value, raw URL query, form value, page content, personal data without authority, or trusted security conclusion before calling the logger or transmitter.
@@ -349,7 +349,7 @@ Treat client identity, time, level, event fields, and error detail as untrusted 
 
 ### OPERATIONS-LOGGING-014 — Separate diagnostic, security, and audit evidence
 
-**Level:** required
+**Level:** required  
 **Applies when:** A log event supports security detection, privileged-action review, financial or compliance evidence, or reconstruction of who changed consequential state.
 
 Label the event purpose and route it to controls appropriate to that purpose. A security event must record the bounded action, outcome, protected actor reference, target reference, service identity, trusted server time, correlation, and control or reason code needed for detection without storing credentials or unnecessary payloads. An audit record additionally requires defined completeness, ordering, durable write behavior, access history, retention, integrity protection, and correction semantics. Ordinary diagnostic logs are not an authoritative audit ledger.

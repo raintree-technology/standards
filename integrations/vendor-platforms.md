@@ -26,7 +26,7 @@ This draft requires independent engineering, platform, security, privacy, and op
 
 ### INTEGRATIONS-VENDOR-001 — Inventory the effective vendor contract
 
-**Level:** required
+**Level:** required  
 **Applies when:** Adding, changing, operating, or auditing an external platform dependency.
 
 Record the provider, products and capabilities used, account and project boundary, environments, regions, data categories, recipients, credentials and roles, API and SDK versions, callbacks, limits, billing owner, support route, service objectives, retention, deletion, recovery, and exit path. Trace actual code, configuration, control-plane settings, and network flow rather than relying only on intended architecture.
@@ -42,7 +42,7 @@ Record the provider, products and capabilities used, account and project boundar
 
 ### INTEGRATIONS-VENDOR-002 — Revalidate provider guidance and review aids
 
-**Level:** required
+**Level:** required  
 **Applies when:** Designing, changing, or auditing a provider integration.
 
 Load the active provider playbook. When the executing environment supplies a mapped agent skill, record its logical name and installed package version and use it to locate provider-specific checks. Verify every volatile claim, API shape, security control, limit, default, deprecation, and release instruction against current official provider documentation. Treat skills as routing and review aids, not evidence that the deployed system conforms.
@@ -60,7 +60,7 @@ If a mapped skill is unavailable, record the gap and continue with current offic
 
 ### INTEGRATIONS-VENDOR-003 — Separate environments and minimize provider authority
 
-**Level:** required
+**Level:** required  
 **Applies when:** A provider exposes credentials, roles, projects, accounts, branches, datasets, domains, or environment-specific configuration.
 
 Separate production from development, test, and preview resources. Use a distinct workload identity or credential per service and environment, grant only required permissions, keep secrets out of source and client bundles, and prevent non-production workloads from reaching production data or mutation authority by default. Prefer short-lived workload identity and provider bindings over broad static keys when supported.
@@ -77,7 +77,7 @@ Separate production from development, test, and preview resources. Use a distinc
 
 ### INTEGRATIONS-VENDOR-004 — Make callbacks authentic, repeat-safe, and recoverable
 
-**Level:** required
+**Level:** required  
 **Applies when:** Receiving webhooks, event destinations, drains, callbacks, or other provider-initiated requests.
 
 Verify authenticity over the raw body using the current provider method before processing. Persist or enqueue accepted events before acknowledging when durable processing matters. Handle duplicates, delay, retry, replay, and out-of-order delivery without duplicating side effects or regressing state. Reconcile from the provider's authoritative API or export after missed-delivery windows and outages.
@@ -94,7 +94,7 @@ Verify authenticity over the raw body using the current provider method before p
 
 ### INTEGRATIONS-VENDOR-005 — Bound retries and durable side effects
 
-**Level:** required
+**Level:** required  
 **Applies when:** A provider request creates, updates, sends, transfers, bills, refunds, deletes, publishes, or otherwise causes a durable side effect.
 
 Use provider-supported idempotency where available and an application operation key tied to the business action. Persist attempt and result state, distinguish safe retry from reconciliation, and prevent concurrent or delayed workers from repeating the effect. Do not treat a timeout as proof of failure.
@@ -110,7 +110,7 @@ Use provider-supported idempotency where available and an application operation 
 
 ### INTEGRATIONS-VENDOR-006 — Release the tested artifact with its effective configuration
 
-**Level:** required
+**Level:** required  
 **Applies when:** Provider code, infrastructure, environment values, rules, bindings, schemas, domains, or credentials change.
 
 Bind tests to the exact build and effective environment configuration that will receive traffic. Use staged or preview release where supported, define promotion and stop conditions, and verify rollback or compensation including state that a code rollback cannot undo. Rebuild or redeploy when provider configuration changes do not apply to existing artifacts.
@@ -126,7 +126,7 @@ Bind tests to the exact build and effective environment configuration that will 
 
 ### INTEGRATIONS-VENDOR-007 — Observe outcomes without leaking provider data
 
-**Level:** required
+**Level:** required  
 **Applies when:** A provider affects user-visible, financial, security, data, or availability outcomes.
 
 Capture structured operation, latency, outcome, retry, reconciliation, and provider-correlation signals with bounded cardinality. Exclude credentials, raw financial data, full callback payloads, message bodies, and unnecessary personal data. Alert on actionable failure and verify telemetry delivery, authenticity, retention, access, deletion, and outage behavior.
@@ -142,7 +142,7 @@ Capture structured operation, latency, outcome, retry, reconciliation, and provi
 
 ### INTEGRATIONS-VENDOR-008 — Resolve guidance conflicts by source role and specificity
 
-**Level:** required
+**Level:** required  
 **Applies when:** Provider documentation, an agent skill, an engineering article, a sample, or another standard gives different advice for the same integration decision.
 
 Classify each source before applying it. Current provider documentation is normative for provider behavior. A provider-specific skill may route the review but cannot override current provider documentation. A cross-provider skill cannot override the dedicated provider playbook or provider-specific skill. Provider and third-party engineering articles may explain failure modes and design tradeoffs but cannot be the sole authority for an API shape, default, limit, security control, or release action. Record the conflict, versions or dates, chosen rule, and evidence.
@@ -159,7 +159,7 @@ Classify each source before applying it. Current provider documentation is norma
 
 ### INTEGRATIONS-VENDOR-009 — Inventory deprecated, legacy, adjacent, and negative paths
 
-**Level:** required
+**Level:** required  
 **Applies when:** A provider offers more than one API generation, integration mode, runtime, account type, storage product, or release path.
 
 Maintain a zero-gap surface ledger that marks each discovered surface as mapped, adjacent, legacy, or excluded. Name deprecated and unsafe patterns that an audit must detect, including old SDKs, retired products, insecure samples, broad credentials, and control-plane-only configuration. Do not infer safety from the absence of a capability in the local bundle.
@@ -175,7 +175,7 @@ Maintain a zero-gap surface ledger that marks each discovered surface as mapped,
 
 ### INTEGRATIONS-VENDOR-010 — Reconcile cross-system state explicitly
 
-**Level:** required
+**Level:** required  
 **Applies when:** Local state and provider state can change in separate transactions.
 
 Define the local source of intent, the provider source of outcome, the operation identity, state transitions, and reconciliation owner. Use an outbox, durable job, or equivalent handoff when a local commit must cause a provider side effect. Treat callbacks as notifications to reconcile, not as the only durable record of provider truth. Prevent stale or out-of-order observations from moving state backward.
@@ -191,7 +191,7 @@ Define the local source of intent, the provider source of outcome, the operation
 
 ### INTEGRATIONS-VENDOR-011 — Test concurrency, reordering, replay, and ambiguous outcomes
 
-**Level:** required
+**Level:** required  
 **Applies when:** Provider operations or callbacks can overlap, retry, arrive late, or time out.
 
 Test more than the success path. Cover concurrent identical and conflicting requests, response loss after provider acceptance, duplicate and delayed callbacks, reversed event order, partial batches, retry exhaustion, and recovery after the provider retention or retry window. Assert business invariants and final converged state, not only HTTP status or job completion.
@@ -207,7 +207,7 @@ Test more than the success path. Cover concurrent identical and conflicting requ
 
 ### INTEGRATIONS-VENDOR-012 — Detect control-plane and effective-state drift
 
-**Level:** required
+**Level:** required  
 **Applies when:** Provider behavior depends on dashboard settings, DNS, domains, roles, environment values, callbacks, rules, branches, aliases, or other state outside the application artifact.
 
 Keep desired configuration in a reviewable record where supported and compare it with effective provider state. Identify which changes require a rebuild, redeploy, migration, propagation wait, or manual publication. Record who can change each control and how emergency changes return to the managed baseline.
@@ -223,7 +223,7 @@ Keep desired configuration in a reviewable record where supported and compare it
 
 ### INTEGRATIONS-VENDOR-013 — Bound quota, cost, egress, and cardinality
 
-**Level:** required
+**Level:** required  
 **Applies when:** Provider use is metered, rate limited, regionally multiplied, data-volume sensitive, or able to create unbounded resources or telemetry dimensions.
 
 Model cost and quota by operation, payload size, region, retry, fan-out, cache behavior, retained resource, and telemetry cardinality. Set application budgets, concurrency and batch bounds, pagination, payload limits, and stop conditions before provider hard limits. Attribute usage to a tenant, workflow, deployment, or other accountable unit without exposing sensitive data.
@@ -239,7 +239,7 @@ Model cost and quota by operation, payload size, region, retry, fan-out, cache b
 
 ### INTEGRATIONS-VENDOR-014 — Exercise provider failure, compromise, and exit
 
-**Level:** required
+**Level:** required  
 **Applies when:** A vendor can affect critical function, data, security, compliance, cost, or recovery.
 
 Maintain and exercise response for provider outage and degradation, quota or cost exhaustion, credential compromise, callback failure, account suspension, breaking change, data export, deletion, and replacement or shutdown. Name user, financial, and data effects that switching code or providers cannot reverse.

@@ -26,7 +26,7 @@ A new or materially changed standard must:
 - Update `catalog.yaml`.
 - Preserve unknown OKF front-matter fields when reading and writing documents.
 - Record `generated` after a meaningful content change; record `verified` only after an independent source or resource check.
-- Remain `draft` until an independent qualified reviewer records `verified` against the exact artifact.
+- Mark a document `stable` only when its requirements are settled. Independent verification may remain pending before v1, and the `--release` gate blocks a versioned release until an independent qualified reviewer records `verified` against the exact artifact.
 - Register external source-set ownership and freshness in `source-register.yaml`.
 - Set `release_target` when a governed document is intentionally outside the catalog's current target release; omission means the current target.
 

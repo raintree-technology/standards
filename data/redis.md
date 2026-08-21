@@ -90,7 +90,7 @@ This standard adds Redis-specific requirements to the general database, security
 
 ### DATA-REDIS-001 — Classify each workload and its failure contract
 
-**Level:** required
+**Level:** required  
 **Applies when:** Redis stores or transports application data.
 
 Record whether each workload is a rebuildable cache, session store, rate limiter, coordination mechanism, message transport, derived store, or authoritative store. Define its source of truth, permitted staleness and data loss, eviction behavior, behavior when Redis is slow or unavailable, and recovery owner.
@@ -109,7 +109,7 @@ Do not share one Redis eviction and persistence boundary between workloads whose
 
 ### DATA-REDIS-002 — Bound memory and choose eviction deliberately
 
-**Level:** required
+**Level:** required  
 **Applies when:** Redis runs outside a disposable local environment.
 
 Set an explicit memory limit and an eviction policy that matches `DATA-REDIS-001`. Size the host and limit using representative key footprints and peak behavior, including allocator fragmentation, client and replication buffers, persistence work, modules, and copy-on-write growth outside the logical dataset.
@@ -128,7 +128,7 @@ Use `noeviction` when silent removal is not permitted. When eviction is permitte
 
 ### DATA-REDIS-003 — Bound keys, values, collections, and slot concentration
 
-**Level:** required
+**Level:** required  
 **Applies when:** A Redis data model is created or materially changed.
 
 Define a stable key schema, ownership, maximum value size, maximum collection cardinality, retention or expiry, and maximum work for every access path. Select data types from required operations and command complexity. In Redis Cluster, use hash tags only for recorded same-slot operations and prove they do not create unacceptable hot-slot concentration.
@@ -145,7 +145,7 @@ Define a stable key schema, ownership, maximum value size, maximum collection ca
 
 ### DATA-REDIS-004 — Make expiration and cache invalidation correct under concurrency
 
-**Level:** required
+**Level:** required  
 **Applies when:** Data expires, is cached from another source, or is invalidated after a source write.
 
 Create a cache value and its expiry atomically. Define the maximum stale interval, invalidation order, miss behavior, negative-cache policy, and protection against concurrent regeneration. Exercise races between a cache miss, source read, source commit, invalidation, refill, expiry, and retry.
@@ -162,7 +162,7 @@ Create a cache value and its expiry atomically. Define the maximum stale interva
 
 ### DATA-REDIS-005 — Bound connections, deadlines, and retries
 
-**Level:** required
+**Level:** required  
 **Applies when:** An application or job connects to Redis.
 
 Use a maintained client compatible with the deployed topology. Configure bounded connection reuse, connection establishment, command execution, pool acquisition, and retry behavior within the caller's latency and retry budgets. Classify retried operations by idempotency and handle an interrupted response as an unknown outcome when the command may have executed.
@@ -181,7 +181,7 @@ Use dedicated connections where Pub/Sub, blocking commands, or client behavior c
 
 ### DATA-REDIS-006 — Keep online command work bounded
 
-**Level:** prohibited
+**Level:** prohibited  
 **Applies when:** A command runs against a production Redis deployment.
 
 Do not use `KEYS`, an unbounded collection read or mutation, an unbounded pipeline, or a long-running script on an online production path.
@@ -200,7 +200,7 @@ Use cursor scans for operational key iteration, bounded command variants and bat
 
 ### DATA-REDIS-007 — Restrict Redis network and command authority
 
-**Level:** required
+**Level:** required  
 **Applies when:** Redis contains non-public data or supports a non-local environment.
 
 Keep Redis off the public internet, restrict network paths to approved clients and operators, encrypt traffic across untrusted or policy-required boundaries, and authenticate clients with separate least-privilege identities. Disable unauthenticated default access and deny administrative, destructive, debugging, and key-discovery commands to application identities unless the workload requires a reviewed subset.
@@ -217,7 +217,7 @@ Keep Redis off the public internet, restrict network paths to approved clients a
 
 ### DATA-REDIS-008 — Match persistence and failover to acknowledged data-loss bounds
 
-**Level:** required
+**Level:** required  
 **Applies when:** Loss of acknowledged Redis writes has a material effect.
 
 Define the recovery point, recovery time, availability, and consistency requirements, then select persistence, replication, replica placement, write-admission, and acknowledgment behavior that meets them. Record that asynchronous replication, Sentinel, Redis Cluster, and `WAIT` do not by themselves provide strong consistency or guarantee retention of every acknowledged write.
@@ -234,7 +234,7 @@ Define the recovery point, recovery time, availability, and consistency requirem
 
 ### DATA-REDIS-009 — Prove restore and reconstruction separately from replication
 
-**Level:** required
+**Level:** required  
 **Applies when:** Redis data or stream state cannot be safely regenerated inside the recovery objective.
 
 Maintain protected recovery material independent of the active replication path and exercise restoration into an isolated environment. Verify application meaning, expirations, scripts or functions, stream and consumer-group state, credentials, dependencies, and client reconnection after restore.
@@ -251,7 +251,7 @@ Maintain protected recovery material independent of the active replication path 
 
 ### DATA-REDIS-010 — Observe Redis and caller outcomes
 
-**Level:** required
+**Level:** required  
 **Applies when:** Redis supports production traffic or business processing.
 
 Monitor caller-visible latency and errors together with Redis command latency, memory and resident memory, fragmentation, CPU, network, connections and buffers, hit and miss rate where applicable, evictions, expirations, rejected writes, persistence health, replication state, hot keys, large keys, and slow commands. For streams, also monitor lag, pending work, idle consumers, redelivery, and retention.
@@ -270,7 +270,7 @@ Alerts must connect a threshold or trend to the workload contract, an owned resp
 
 ### DATA-REDIS-011 — Exercise dependency failure and refill behavior
 
-**Level:** required
+**Level:** required  
 **Applies when:** Redis is on a production request or processing path.
 
 Exercise Redis unavailable, slow, full, partitioned, failed over, flushed or restored, and recovering under representative traffic. Bound fallback traffic, concurrency, queues, retries, and refill rate so Redis failure does not cause a wider dependency collapse.
@@ -287,7 +287,7 @@ Exercise Redis unavailable, slow, full, partitioned, failed over, flushed or res
 
 ### DATA-REDIS-012 — Choose messaging semantics explicitly
 
-**Level:** required
+**Level:** required  
 **Applies when:** Redis Pub/Sub, Streams, or list operations transport events or work.
 
 Use Pub/Sub only when permanent loss during disconnect is acceptable or a separate durable source supports reconciliation. For Streams or other redeliverable work, define acknowledgment, idempotent processing, pending-entry recovery, poison-message handling, ordering scope, retention, trimming, and backpressure.
@@ -304,7 +304,7 @@ Use Pub/Sub only when permanent loss during disconnect is acceptable or a separa
 
 ### DATA-REDIS-013 — Treat distributed locks as expiring leases
 
-**Level:** contextual
+**Level:** contextual  
 **Applies when:** Redis coordinates exclusive work or protects an external resource.
 
 Acquire a lock atomically with a unique ownership token and finite lifetime, release it only when the token still matches, and bound acquisition and renewal. When an expired or partitioned holder could still modify the protected resource, enforce a fencing token or a stronger authority at that resource.

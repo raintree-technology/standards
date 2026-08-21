@@ -36,7 +36,7 @@ Product work must solve an evidenced user and business problem, state the intend
 
 ### PRODUCT-DELIVERY-001 — Ground the problem in evidence
 
-**Level:** required
+**Level:** required  
 **Applies when:** Proposing a new product capability or material behavior change.
 
 Identify the affected users, their context and unmet need, current behavior, business objective, evidence, uncertainty, and why intervention is warranted.
@@ -52,7 +52,7 @@ Identify the affected users, their context and unmet need, current behavior, bus
 
 ### PRODUCT-DELIVERY-002 — Define the outcome and non-goals
 
-**Level:** required
+**Level:** required  
 **Applies when:** Work is prioritized or accepted for implementation.
 
 State the intended user and business outcome, measurable success and guardrails, non-goals, constraints, dependencies, and conditions that would stop or change the work.
@@ -68,7 +68,7 @@ State the intended user and business outcome, measurable success and guardrails,
 
 ### PRODUCT-DELIVERY-003 — Specify complete behavior and states
 
-**Level:** required
+**Level:** required  
 **Applies when:** A feature changes user-visible or externally observable behavior.
 
 Define normal, empty, loading, partial, error, offline, denied, interrupted, repeated, cancelled, completed, and recovery states that can materially occur, including permissions and data effects.
@@ -84,7 +84,7 @@ Define normal, empty, loading, partial, error, offline, denied, interrupted, rep
 
 ### PRODUCT-DELIVERY-004 — Prioritize by value, risk, and cost
 
-**Level:** required
+**Level:** required  
 **Applies when:** Choosing between competing product work or scope.
 
 Record the decision using expected user value, strategic fit, evidence strength, delivery and operating cost, opportunity cost, dependencies, and material risk rather than a score alone.
@@ -100,7 +100,7 @@ Record the decision using expected user value, strategic fit, evidence strength,
 
 ### PRODUCT-DELIVERY-005 — Validate the riskiest assumption early
 
-**Level:** required
+**Level:** required  
 **Applies when:** A material assumption about value, usability, feasibility, viability, or safety remains unresolved.
 
 Choose the smallest valid research, prototype, technical exercise, or controlled exposure that can change the decision before committing broader cost or impact.
@@ -116,7 +116,7 @@ Choose the smallest valid research, prototype, technical exercise, or controlled
 
 ### PRODUCT-DELIVERY-006 — Launch with explicit readiness and recovery
 
-**Level:** required
+**Level:** required  
 **Applies when:** Releasing behavior to users or dependent systems.
 
 Confirm functional, content, accessibility, privacy, security, analytics, support, operational, communication, rollout, and recovery readiness for the final artifact.
@@ -132,7 +132,7 @@ Confirm functional, content, accessibility, privacy, security, analytics, suppor
 
 ### PRODUCT-DELIVERY-007 — Design onboarding around achieved value
 
-**Level:** required
+**Level:** required  
 **Applies when:** Users must learn, configure, migrate, or grant access before receiving value.
 
 Minimize required setup, explain requested commitment in context, preserve skip or return paths where practical, and measure successful value rather than completion of instructional steps alone.
@@ -148,7 +148,7 @@ Minimize required setup, explain requested commitment in context, preserve skip 
 
 ### PRODUCT-DELIVERY-008 — Review outcomes and close temporary work
 
-**Level:** required
+**Level:** required  
 **Applies when:** A launched change reaches its defined review point.
 
 Compare outcomes and guardrails with the predeclared baseline, document limitations and segments, decide to keep, change, expand, or remove the behavior, and close temporary flags, compatibility, and support conditions.

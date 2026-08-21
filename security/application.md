@@ -58,7 +58,7 @@ This standard is a baseline, not a claim that one checklist covers every threat.
 
 ### SECURITY-APPLICATION-001 — Define security requirements and trust boundaries
 
-**Level:** required
+**Level:** required  
 **Applies when:** Creating or materially changing an application, data flow, integration, privilege, externally reachable surface, or security control.
 
 Before implementation, record protected assets, actors, privileges, entry points, trust boundaries, data flows, dependencies, assumptions, abuse cases, required controls, and owners. Threat-model material changes and map applicable, version-qualified ASVS requirements to implementation and verification evidence.
@@ -75,7 +75,7 @@ Before implementation, record protected assets, actors, privileges, entry points
 
 ### SECURITY-APPLICATION-002 — Enforce authorization on every trusted operation
 
-**Level:** required
+**Level:** required  
 **Applies when:** A user, service, device, job, or administrator reads data or performs an action with access restrictions.
 
 Enforce authorization in the trusted application or service for every request and object. Default to deny. Derive actor identity and tenant context from trusted authentication state, not client-supplied ownership fields. Check action, object, tenant, relationship, state, and field-level permissions as applicable, including indirect and bulk access.
@@ -92,7 +92,7 @@ Enforce authorization in the trusted application or service for every request an
 
 ### SECURITY-APPLICATION-003 — Protect authentication and account recovery
 
-**Level:** required
+**Level:** required  
 **Applies when:** An application establishes, recovers, links, or changes a user or service identity.
 
 Use an approved identity system and an authentication strength proportionate to risk. Protect enrollment, sign-in, recovery, factor changes, identifier changes, and account linking against enumeration, guessing, replay, automation, and takeover. Require phishing-resistant authentication where governing risk or policy calls for it, and notify or step up authentication for material account changes.
@@ -109,7 +109,7 @@ Use an approved identity system and an authentication strength proportionate to 
 
 ### SECURITY-APPLICATION-004 — Manage sessions through their full life cycle
 
-**Level:** required
+**Level:** required  
 **Applies when:** An application creates or accepts a session, token, cookie, API credential, or delegated authorization grant.
 
 Generate unpredictable credentials, transmit and store them safely, bind them to the intended client and audience where applicable, set the narrowest scope and lifetime, rotate identifiers after authentication or privilege change, and invalidate them on logout, revocation, account disablement, or material compromise. Protect browser sessions against cross-site request forgery and use restrictive cookie attributes.
@@ -126,7 +126,7 @@ Generate unpredictable credentials, transmit and store them safely, bind them to
 
 ### SECURITY-APPLICATION-005 — Handle untrusted input by context
 
-**Level:** required
+**Level:** required  
 **Applies when:** Data crosses a trust boundary into commands, queries, templates, markup, headers, paths, files, parsers, interpreters, or downstream systems.
 
 Validate allowed type, structure, range, length, and semantics at the trusted boundary. Use parameterized interfaces for queries and commands, and encode output for its exact destination context. Do not build executable syntax by concatenating untrusted data. Canonicalize only when the target comparison and normalization rules are defined.
@@ -143,7 +143,7 @@ Validate allowed type, structure, range, length, and semantics at the trusted bo
 
 ### SECURITY-APPLICATION-006 — Isolate files and active content
 
-**Level:** required
+**Level:** required  
 **Applies when:** Users or external systems upload, import, generate, transform, preview, or serve files or rich content.
 
 Allow only needed formats and sizes, verify content rather than trusting names or declared types, generate server-side storage names, and store untrusted files outside executable application paths. Scan or safely transform content according to risk. Serve it with deliberate content type, disposition, origin, and permissions so it cannot execute with unintended authority.
@@ -160,7 +160,7 @@ Allow only needed formats and sizes, verify content rather than trusting names o
 
 ### SECURITY-APPLICATION-007 — Restrict outbound requests and callbacks
 
-**Level:** required
+**Level:** required  
 **Applies when:** Untrusted or partially trusted data can influence a server-side URL, host, port, protocol, redirect, webhook, import, fetch, or callback.
 
 Allow only needed protocols and destinations, resolve and validate the effective destination at the trusted boundary, restrict network egress, and block access to local, private, link-local, metadata, and control-plane services unless explicitly required. Revalidate redirects and defend against DNS rebinding and alternate address forms.
@@ -177,7 +177,7 @@ Allow only needed protocols and destinations, resolve and validate the effective
 
 ### SECURITY-APPLICATION-008 — Keep secrets out of code, clients, and evidence
 
-**Level:** required
+**Level:** required  
 **Applies when:** Creating, receiving, storing, using, rotating, or revoking credentials, signing keys, encryption keys, tokens, or other secrets.
 
 Store secrets in an approved secret or key system. Never place them in source, client-delivered code, images, fixtures, tickets, logs, analytics, prompts, screenshots, or ordinary build output. Grant the minimum identity, scope, environment, and lifetime. Support rotation and prompt revocation, and treat exposure as an incident rather than merely deleting the visible value.
@@ -194,7 +194,7 @@ Store secrets in an approved secret or key system. Never place them in source, c
 
 ### SECURITY-APPLICATION-009 — Use approved cryptography and key management
 
-**Level:** required
+**Level:** required  
 **Applies when:** Protecting confidentiality, integrity, authenticity, password verifiers, signatures, random values, or data in transit or at rest.
 
 Use organization-approved, current protocols, algorithms, modes, parameters, and maintained libraries. Do not design custom cryptography. Use cryptographically secure randomness, authenticated encryption where confidentiality and integrity are required, purpose-separated keys, and a key life cycle covering generation, storage, access, rotation, revocation, backup, destruction, and algorithm migration.
@@ -211,7 +211,7 @@ Use organization-approved, current protocols, algorithms, modes, parameters, and
 
 ### SECURITY-APPLICATION-010 — Ship secure configuration and safe failure behavior
 
-**Level:** required
+**Level:** required  
 **Applies when:** Configuring an application, framework, service, runtime, container, proxy, cloud resource, or error path.
 
 Start from deny-by-default configuration. Disable unused services, routes, accounts, methods, debug features, sample content, directory listing, and unsafe framework defaults. Set needed security headers and resource policies. Fail closed for authorization and integrity decisions, while preserving a controlled recovery path. Return users safe, useful errors without exposing secrets, stack traces, queries, internal paths, or security control details.
@@ -228,7 +228,7 @@ Start from deny-by-default configuration. Disable unused services, routes, accou
 
 ### SECURITY-APPLICATION-011 — Govern dependencies and build provenance
 
-**Level:** required
+**Level:** required  
 **Applies when:** Application behavior or security depends on a package, image, action, compiler, build service, external script, or downloaded artifact.
 
 Maintain an inventory of direct and transitive components and their source. Pin or constrain versions according to the ecosystem's safe update model, verify artifact integrity and origin, restrict who and what can alter builds, and monitor disclosed vulnerabilities and compromised components. Remove unused dependencies and define an owned update and emergency replacement path.
@@ -245,7 +245,7 @@ Maintain an inventory of direct and transitive components and their source. Pin 
 
 ### SECURITY-APPLICATION-012 — Bound resource use and automated abuse
 
-**Level:** required
+**Level:** required  
 **Applies when:** An operation can consume material compute, memory, storage, bandwidth, money, messages, third-party quota, or human review capacity.
 
 Set limits for input size, parsing, nesting, decompression, execution time, retries, concurrency, pagination, output, queued work, and cost. Apply actor-, tenant-, object-, and system-level controls where one identity or distributed traffic could cause harm. Make retries idempotent where repeated side effects are possible and degrade safely when limits are reached.
@@ -262,7 +262,7 @@ Set limits for input size, parsing, nesting, decompression, execution time, retr
 
 ### SECURITY-APPLICATION-013 — Log and detect security-relevant behavior
 
-**Level:** required
+**Level:** required  
 **Applies when:** An application authenticates actors, enforces access, changes privilege or security configuration, handles protected data, or detects abuse.
 
 Record enough context to investigate authentication, authorization denials, privilege and configuration changes, sensitive administrative actions, input rejection, control failure, and suspected abuse. Protect log integrity and access, use consistent time and correlation, alert on actionable conditions, and exclude secrets and unnecessary personal data. Define owners, retention, escalation, and expected response.
@@ -279,7 +279,7 @@ Record enough context to investigate authentication, authorization denials, priv
 
 ### SECURITY-APPLICATION-014 — Require extra controls for administrative and high-impact actions
 
-**Level:** required
+**Level:** required  
 **Applies when:** An action changes access, identity, security policy, money, publication, deletion, exports, production configuration, or many users or records.
 
 Restrict the action to named roles and the narrowest scope. Require recent or stepped-up authentication according to risk, protect browser actions against forgery, present the exact target and effect before commitment, prevent unintended repetition, and create an attributable audit record. Separate request, approval, and execution when the governing risk requires it.
@@ -296,7 +296,7 @@ Restrict the action to named roles and the narrowest scope. Require recent or st
 
 ### SECURITY-APPLICATION-015 — Verify controls against the integrated system
 
-**Level:** required
+**Level:** required  
 **Applies when:** Releasing or materially changing an application or security-relevant behavior.
 
 Execute the selected security verification plan against the integrated artifact and representative deployment. Cover applicable ASVS 5.0.0 requirements, threat-model abuse cases, authorization negatives, input and output boundaries, dependency and configuration review, secrets, logging, and recovery. Use independent qualified review for high-impact, novel, externally exposed, or materially privileged systems.
@@ -313,7 +313,7 @@ Execute the selected security verification plan against the integrated artifact 
 
 ### SECURITY-APPLICATION-016 — Prepare vulnerability and incident response
 
-**Level:** required
+**Level:** required  
 **Applies when:** Operating an application or releasing a security-relevant component.
 
 Maintain owned paths to receive vulnerability reports and security alerts, triage impact, contain exposure, revoke credentials and sessions, preserve protected evidence, correct the cause, restore safely, notify required parties, and verify recovery. Define severity, response timing, decision authority, communication boundaries, and lessons that feed requirements and threat models.
@@ -330,7 +330,7 @@ Maintain owned paths to receive vulnerability reports and security alerts, triag
 
 ### SECURITY-APPLICATION-017 — Defend model workflows against prompt injection
 
-**Level:** required
+**Level:** required  
 **Applies when:** A model or agent receives untrusted user input, retrieved content, files, webpages, messages, tool results, or memory while it can access private context or tools.
 
 Keep untrusted data out of high-authority instruction channels and executable templates. Preserve source and trust labels, extract only validated structured fields for privileged decisions, and enforce authorization, data release, recipients, and action policy outside the model. Treat direct and indirect prompt injection as an expected attack rather than a prompt-quality defect.
@@ -347,7 +347,7 @@ Keep untrusted data out of high-authority instruction channels and executable te
 
 ### SECURITY-APPLICATION-018 — Contain model-driven execution
 
-**Level:** required
+**Level:** required  
 **Applies when:** A model or agent can execute code, browse, manipulate files, call external services, access internal systems, or operate without per-step human review.
 
 Constrain process, filesystem, credential, network, tool, data, tenant, time, memory, storage, and spend access independently of model behavior. Keep credentials outside the runtime unless needed, restrict egress and tool scopes, isolate runs, and reset mutable state. Do not rely on prompts, model training, or classifiers as the only barrier.
@@ -364,7 +364,7 @@ Constrain process, filesystem, credential, network, tool, data, tenant, time, me
 
 ### SECURITY-APPLICATION-019 — Approve the exact agent action
 
-**Level:** required
+**Level:** required  
 **Applies when:** A model-selected action can disclose data, communicate externally, spend money, change access, delete or publish content, run privileged code, or create another material side effect.
 
 Require an approval or pre-authorized policy that binds the exact actor, action, target, data, scope, cost, and material consequence. Reopen approval when any bound value changes. Keep proposal, approval, and execution identities separate when risk requires it, and verify final state after execution.

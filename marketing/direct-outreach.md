@@ -37,7 +37,7 @@ Direct outreach must use an authorized and attributable contact source, be relev
 
 ### MARKETING-DIRECT-OUTREACH-001 — Approve the audience and channel before contact
 
-**Level:** required
+**Level:** required  
 **Applies when:** Contacting a person or organization through email, text, call, voicemail, social direct message, or comparable directed channel.
 
 Record recipient type, source, jurisdiction, channel, solicitation status, authority or permission, purpose, sender, frequency, and required disclosures before enrollment.
@@ -53,7 +53,7 @@ Record recipient type, source, jurisdiction, channel, solicitation status, autho
 
 ### MARKETING-DIRECT-OUTREACH-002 — Govern prospect data provenance
 
-**Level:** required
+**Level:** required  
 **Applies when:** Collecting, enriching, purchasing, scraping, inferring, or importing prospect data.
 
 Record source, collection date, stated purpose, seller or provider, license or terms, accuracy, sensitive fields, notice, objection path, retention, recipients, and prohibited use. Reject data without defensible provenance.
@@ -69,7 +69,7 @@ Record source, collection date, stated purpose, seller or provider, license or t
 
 ### MARKETING-DIRECT-OUTREACH-003 — Identify the sender and purpose truthfully
 
-**Level:** required
+**Level:** required  
 **Applies when:** Sending or instigating direct outreach.
 
 Use accurate routing, sender identity, subject or opening, organizational relationship, commercial purpose, and contact information. Do not impersonate a colleague, customer, independent researcher, or personal acquaintance.
@@ -85,7 +85,7 @@ Use accurate routing, sender identity, subject or opening, organizational relati
 
 ### MARKETING-DIRECT-OUTREACH-004 — Keep outreach relevant and bounded
 
-**Level:** required
+**Level:** required  
 **Applies when:** Selecting message content, personalization, sequence, cadence, or follow-up.
 
 Use only necessary information, connect the message to a credible recipient context, avoid sensitive or intrusive inference, cap attempts and duration, and stop when the premise is invalid or the person signals disinterest.
@@ -101,7 +101,7 @@ Use only necessary information, connect the message to a credible recipient cont
 
 ### MARKETING-DIRECT-OUTREACH-005 — Make refusal immediate and durable
 
-**Level:** required
+**Level:** required  
 **Applies when:** A recipient can withdraw, object, opt out, block, or request no further contact.
 
 Offer an accessible refusal path appropriate to the channel, accept reasonable refusal language, suppress further governed contact within the applicable deadline, and retain only what is needed to honor suppression.
@@ -117,7 +117,7 @@ Offer an accessible refusal path appropriate to the channel, accept reasonable r
 
 ### MARKETING-DIRECT-OUTREACH-006 — Control senders, domains, automation, and vendors
 
-**Level:** required
+**Level:** required  
 **Applies when:** A system or third party sources contacts, generates messages, or sends on the organization's behalf.
 
 Use approved identities, least privilege, authentication, volume and frequency limits, quality sampling, complaint monitoring, content and list controls, incident response, and contractual responsibility. Preserve a global stop mechanism.
@@ -133,7 +133,7 @@ Use approved identities, least privilege, authentication, volume and frequency l
 
 ### MARKETING-DIRECT-OUTREACH-007 — Measure quality without rewarding pressure
 
-**Level:** required
+**Level:** required  
 **Applies when:** Evaluating people, automation, lists, or campaigns.
 
 Measure qualified outcomes, complaints, refusals, invalid contacts, reputation, downstream value, and harm alongside sends, opens, replies, meetings, or pipeline. Do not reward behavior that bypasses permission or suppression.

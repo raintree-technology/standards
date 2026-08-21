@@ -50,7 +50,7 @@ This standard does not determine which laws apply or provide legal advice. Recor
 
 ### PRIVACY-DATA-001 — Map the processing before implementation
 
-**Level:** required
+**Level:** required  
 **Applies when:** A system collects, receives, derives, stores, uses, discloses, transfers, or deletes personal data.
 
 Maintain a processing record that identifies the people affected; data categories, including inferences and linkable identifiers; source; purpose; processing operations; systems and locations; recipients; organization role; owner; access groups; retention; deletion path; and governing policy or decision.
@@ -67,7 +67,7 @@ Maintain a processing record that identifies the people affected; data categorie
 
 ### PRIVACY-DATA-002 — Establish authority for each purpose
 
-**Level:** required
+**Level:** required  
 **Applies when:** Personal-data processing is proposed or its purpose, data, people, recipient, location, or decision impact materially changes.
 
 Record the permitted purpose and the law, contract, organization policy, or qualified privacy or legal decision that authorizes it before processing begins. Do not treat product value, technical availability, a privacy notice, or consent language alone as authority when the governing regime requires another condition.
@@ -84,7 +84,7 @@ Record the permitted purpose and the law, contract, organization policy, or qual
 
 ### PRIVACY-DATA-003 — Minimize data and exposure by default
 
-**Level:** required
+**Level:** required  
 **Applies when:** Choosing data to collect, derive, retain, expose, request, or share.
 
 Use only the data, precision, identifiability, frequency, and retention needed for the recorded purpose. Choose local, aggregate, coarse, ephemeral, or user-supplied data over persistent or inferred data when those choices meet the purpose. Default optional processing and access to off or the narrowest scope.
@@ -101,7 +101,7 @@ Use only the data, precision, identifiability, frequency, and retention needed f
 
 ### PRIVACY-DATA-004 — Control secondary use and purpose changes
 
-**Level:** required
+**Level:** required  
 **Applies when:** Existing personal data may be used for a purpose, model, audience, recipient, or decision not covered by its original record.
 
 Do not begin the new use until a qualified owner assesses compatibility with the original purpose and authority, updates the processing record, provides any required notice or choice, and approves added safeguards. Keep data collected for safety or abuse prevention from being reused for unrelated growth, evaluation, or profiling without separate authority.
@@ -118,7 +118,7 @@ Do not begin the new use until a qualified owner assesses compatibility with the
 
 ### PRIVACY-DATA-005 — Explain processing at the relevant time
 
-**Level:** required
+**Level:** required  
 **Applies when:** Personal data is collected, requested, inferred, shared, or used in a way a person may not reasonably expect.
 
 Present accurate, plain-language information close to the relevant interaction. Explain what data is involved, why it is needed, important recipients, material consequences, retention or its determining criteria, available choices and rights, and how to exercise them. The explanation must match actual behavior and remain available after the interaction.
@@ -135,7 +135,7 @@ Present accurate, plain-language information close to the relevant interaction. 
 
 ### PRIVACY-DATA-006 — Make consent specific and reversible
 
-**Level:** required
+**Level:** required  
 **Applies when:** The governing privacy or legal process selects consent as the authority or required control for processing.
 
 Request an informed, specific, affirmative choice for each materially distinct optional purpose. Do not use silence, preselected controls, bundled unrelated purposes, misleading emphasis, or service denial for processing that is not needed to provide the requested service. Record the consent version, purposes, time, and method. Make review and withdrawal no harder than giving consent, and stop future processing promptly across recipients and systems.
@@ -152,7 +152,7 @@ Request an informed, specific, affirmative choice for each materially distinct o
 
 ### PRIVACY-DATA-007 — Support applicable data rights end to end
 
-**Level:** required
+**Level:** required  
 **Applies when:** Governing law, contract, policy, or product commitment grants access, correction, deletion, portability, restriction, objection, or opt-out rights.
 
 Provide an owned request process that verifies identity in proportion to the disclosure or action risk, searches every in-scope system and recipient, applies the correct action, records exceptions, meets the governing deadline, and gives a clear response. Do not collect more identity evidence than the request requires or use the process to discourage a valid request.
@@ -169,7 +169,7 @@ Provide an owned request process that verifies identity in proportion to the dis
 
 ### PRIVACY-DATA-008 — Enforce retention and deletion across copies
 
-**Level:** required
+**Level:** required  
 **Applies when:** Personal data is stored, cached, logged, exported, backed up, or held by a recipient.
 
 Set a retention period or objective deletion trigger for each purpose before collection. Delete, de-identify under an approved process, or return data when the purpose or authority ends. Cover raw, derived, indexed, cached, logged, exported, backup, and recipient copies, and prevent deleted data from silently returning during restoration.
@@ -186,7 +186,7 @@ Set a retention period or objective deletion trigger for each purpose before col
 
 ### PRIVACY-DATA-009 — Preserve accuracy, provenance, and correction
 
-**Level:** required
+**Level:** required  
 **Applies when:** Personal data or an inference affects a user-facing state, eligibility, safety action, material decision, or disclosure.
 
 Record the source, observation or inference status, relevant time, and known limits. Keep data accurate enough for its purpose, expose or route correction when applicable, and propagate material corrections to dependent systems and recipients. Do not present an inference as a verified fact.
@@ -203,7 +203,7 @@ Record the source, observation or inference status, relevant time, and known lim
 
 ### PRIVACY-DATA-010 — Treat pseudonymous and linkable data as personal
 
-**Level:** required
+**Level:** required  
 **Applies when:** Direct identifiers are removed, transformed, hashed, tokenized, aggregated, or kept separately.
 
 Assess realistic singling-out, linkage, inference, and reversal risk using internal and reasonably available external data. Continue personal-data controls for pseudonymous or linkable data. Describe data as de-identified only when a qualified process defines the threat model, technical transformation, access and disclosure limits, re-identification prohibition, review interval, and response to increased linkage risk.
@@ -220,7 +220,7 @@ Assess realistic singling-out, linkage, inference, and reversal risk using inter
 
 ### PRIVACY-DATA-011 — Assess heightened and collective harm
 
-**Level:** required
+**Level:** required  
 **Applies when:** Processing involves sensitive context or data, children, people with reduced power or safety options, precise location, communications, biometrics, finances, health, protected traits, third-party data, or group-level inference.
 
 Obtain qualified privacy review before processing. Assess harm to individuals, households, communities, and people represented in data but not operating the product. Apply stricter minimization, access, disclosure, retention, testing, and human-review controls, and avoid deriving sensitive traits unless the approved purpose requires them.
@@ -237,7 +237,7 @@ Obtain qualified privacy review before processing. Assess harm to individuals, h
 
 ### PRIVACY-DATA-012 — Govern recipients, processors, and transfers
 
-**Level:** required
+**Level:** required  
 **Applies when:** Personal data is disclosed to another team, legal entity, service provider, partner, public audience, or processing location.
 
 Before disclosure, verify that the recipient and transfer are covered by the recorded purpose and authority. Record the data, role, location, access path, onward recipients, and owner. Require terms and controls for instructions, confidentiality, access, security, retention, deletion or return, rights support, incident notice, subprocessors, and verification. Apply any governing transfer review.
@@ -254,7 +254,7 @@ Before disclosure, verify that the recipient and transfer are covered by the rec
 
 ### PRIVACY-DATA-013 — Perform privacy risk review before high-risk processing
 
-**Level:** required
+**Level:** required  
 **Applies when:** Processing is novel, large-scale, systematic, sensitive, hard to avoid, difficult to reverse, used for monitoring or profiling, combines datasets, makes or supports consequential decisions, or otherwise meets a governing impact-assessment trigger.
 
 Complete the required privacy impact assessment before implementation or procurement. Describe purposes, necessity, proportionality, information flows, affected people, threats, harms, mitigations, alternatives, consultation, owners, residual risk, approval, and review triggers. Do not release processing whose residual risk requires consultation or acceptance that has not occurred.
@@ -271,7 +271,7 @@ Complete the required privacy impact assessment before implementation or procure
 
 ### PRIVACY-DATA-014 — Keep personal data out of unsafe development paths
 
-**Level:** required
+**Level:** required  
 **Applies when:** Developing, testing, debugging, demonstrating, supporting, training, or evaluating a system outside its approved production processing.
 
 Use synthetic, generated, or approved de-identified data by default. Do not copy production personal data into local, test, preview, demo, support, or training environments unless the recorded purpose cannot be met otherwise and a qualified owner approves scope, access, security, retention, deletion, and disclosure controls.
@@ -288,7 +288,7 @@ Use synthetic, generated, or approved de-identified data by default. Do not copy
 
 ### PRIVACY-DATA-015 — Verify privacy behavior in the released system
 
-**Level:** required
+**Level:** required  
 **Applies when:** Releasing or materially changing personal-data processing.
 
 Test the actual end-to-end system against its processing record, notices, choices, rights, access rules, retention, recipients, and impact assessment. Include negative and lifecycle states, not only the successful collection path. Record evidence, limitations, and unresolved risk without exposing personal data in the evidence itself.
@@ -305,7 +305,7 @@ Test the actual end-to-end system against its processing record, notices, choice
 
 ### PRIVACY-DATA-016 — Govern model inputs, traces, evaluation, and feedback
 
-**Level:** required
+**Level:** required  
 **Applies when:** Personal data can enter a model prompt, context, file, embedding, memory, tool call, trace, evaluation dataset, annotation task, feedback path, or provider support process.
 
 Map and govern each data path separately. Record provider, product, endpoint, region, subprocessors, human access, retention, training or improvement use, storage controls, deletion, and incident terms from current official documentation and contract settings. Minimize or redact before transfer and do not infer that a chat, API, hidden prompt, trace, or evaluation feature shares another feature's controls.

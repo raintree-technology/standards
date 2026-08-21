@@ -40,7 +40,7 @@ Services must define the outcomes they protect, detect material degradation, pro
 
 ### OPERATIONS-RELIABILITY-001 — Define service objectives from user outcomes
 
-**Level:** required
+**Level:** required  
 **Applies when:** A service supports production users, business processes, or dependent systems.
 
 Define the critical journeys and measurable availability, correctness, latency, durability, and recovery objectives that protect them, including the population and measurement window.
@@ -56,7 +56,7 @@ Define the critical journeys and measurable availability, correctness, latency, 
 
 ### OPERATIONS-RELIABILITY-002 — Observe symptoms, causes, and dependencies
 
-**Level:** required
+**Level:** required  
 **Applies when:** A service can degrade outside direct operator observation.
 
 Collect bounded, protected signals for user-visible outcomes, traffic, errors, latency, saturation, change events, and critical dependencies with enough context to scope a failure.
@@ -72,7 +72,7 @@ Collect bounded, protected signals for user-visible outcomes, traffic, errors, l
 
 ### OPERATIONS-RELIABILITY-003 — Alert only when action is defined
 
-**Level:** required
+**Level:** required  
 **Applies when:** A signal can page or interrupt a responder.
 
 Tie alerts to material impact or imminent risk, an owned response, severity, routing, deduplication, and escalation. Review false, missed, noisy, and unactionable alerts.
@@ -88,7 +88,7 @@ Tie alerts to material impact or imminent risk, an owned response, severity, rou
 
 ### OPERATIONS-RELIABILITY-004 — Maintain executable runbooks
 
-**Level:** required
+**Level:** required  
 **Applies when:** Diagnosis, containment, recovery, failover, or support depends on non-obvious operational steps.
 
 Document triggers, authority, prerequisites, safe commands or actions, expected output, stop conditions, communication, rollback, verification, and escalation using current system names and access paths.
@@ -104,7 +104,7 @@ Document triggers, authority, prerequisites, safe commands or actions, expected 
 
 ### OPERATIONS-RELIABILITY-005 — Govern incident command and communication
 
-**Level:** required
+**Level:** required  
 **Applies when:** An event materially threatens confidentiality, integrity, availability, safety, money, or user trust.
 
 Assign incident command, severity, technical and communication roles, decision log, containment authority, update cadence, stakeholder routes, evidence preservation, and closure criteria.
@@ -120,7 +120,7 @@ Assign incident command, severity, technical and communication roles, decision l
 
 ### OPERATIONS-RELIABILITY-006 — Practice recovery against objectives
 
-**Level:** required
+**Level:** required  
 **Applies when:** A service or dependency has recovery point, recovery time, continuity, or failover expectations.
 
 Exercise recovery from isolated, partial, regional, corrupted, unavailable, and dependency-loss conditions as applicable, measuring achieved outcome rather than procedure completion alone.
@@ -136,7 +136,7 @@ Exercise recovery from isolated, partial, regional, corrupted, unavailable, and 
 
 ### OPERATIONS-RELIABILITY-007 — Learn without distorting incident evidence
 
-**Level:** required
+**Level:** required  
 **Applies when:** An incident or near miss reveals a material control, design, process, or organizational weakness.
 
 Build a factual timeline, distinguish contributing conditions from triggers, identify detection and response gaps, assign bounded corrective work, and verify whether the change reduced recurrence or impact.
@@ -152,7 +152,7 @@ Build a factual timeline, distinguish contributing conditions from triggers, ide
 
 ### OPERATIONS-RELIABILITY-008 — Support affected users through recovery
 
-**Level:** required
+**Level:** required  
 **Applies when:** Users may encounter failure, delay, data inconsistency, or degraded behavior.
 
 Give support current impact, affected scope, safe workarounds, escalation, communication status, and recovery verification without exposing protected incident details.
@@ -168,7 +168,7 @@ Give support current impact, affected scope, safe workarounds, escalation, commu
 
 ### OPERATIONS-RELIABILITY-009 — Govern vendor dependencies
 
-**Level:** required
+**Level:** required  
 **Applies when:** An external provider can affect critical function, data, security, compliance, cost, or recovery.
 
 Record purpose, owner, data and authority, contract and service expectations, concentration risk, monitoring, incident contact, portability, termination, data return or deletion, and tested fallback or accepted dependency risk.

@@ -12,7 +12,7 @@ review_by: 2026-11-17
 stale_after: 2026-11-17
 applies_to: [code-removal, dead-code-removal, dependency-cleanup]
 tags: [engineering, cleanup, dead-code, dependencies, knip, ruff, deptry, vulture]
-depends_on: [FND-EVIDENCE, FND-CHANGE, ENGINEERING-QUALITY, AGENT-VERIFICATION]
+depends_on: [FND-EVIDENCE, FND-CHANGE, ENGINEERING-QUALITY, AGENT-VERIFICATION, ENGINEERING-JS-QUALITY]
 generated: { by: codex/gpt-5, at: "2026-08-17T08:39:18Z" }
 sources:
   - id: knip-first-cleanup
@@ -89,7 +89,7 @@ Unused code and dependencies should be removed only after static findings are re
 
 ### ENGINEERING-CODE-REMOVAL-001 — Define the reachable surface before deleting
 
-**Level:** required
+**Level:** required  
 **Applies when:** A cleanup may remove a file, export, symbol, import, dependency, script, command, or registration.
 
 Identify the repository scope, runtime and development entry points, published package surfaces, package-manager workspaces, generated sources, tests, scripts, framework conventions, plugins, dynamic imports, reflection, configuration references, environment-selected implementations, import-time registrations, and side-effect imports that can make code reachable. Include non-code consumers such as deployment definitions, templates, documentation examples that are tested or supported, and external callers. Configure the analysis tools to represent that surface before accepting their findings.
@@ -105,7 +105,7 @@ Identify the repository scope, runtime and development entry points, published p
 
 ### ENGINEERING-CODE-REMOVAL-002 — Treat unused findings as candidates, not proof
 
-**Level:** required
+**Level:** required  
 **Applies when:** Knip, Ruff, or another static tool reports an item as unused.
 
 Inspect the reported item and its consumers before deletion. Check public exports, package manifests and entry-point metadata, command and script references, string-based lookup, dependency injection, decorators, registration hooks, import-time effects, optional and platform-specific integrations, type-only consumers, serialized names, migrations and rollback paths, and external callers that the tool may not observe. Distinguish an unused implementation from a required interface placeholder, compatibility shim, feature-flag fallback, or emergency recovery path.
@@ -121,7 +121,7 @@ Inspect the reported item and its consumers before deletion. Check public export
 
 ### ENGINEERING-CODE-REMOVAL-003 — Use Knip for TypeScript and JavaScript reachability
 
-**Level:** recommended
+**Level:** recommended  
 **Applies when:** Cleanup includes TypeScript or JavaScript files, exports, types, dependencies, binaries, or workspace packages.
 
 Use Knip as the default repository-level unused-code analyzer. Start without custom configuration to inspect detected defaults and plugins, then make targeted `entry` and `project` corrections. In a workspace repository, validate every package and the root workspace; root-level `entry` and `project` settings do not configure the workspace named `.`. Generate required artifacts before analysis and account for path aliases, scripts, non-standard file compilers, and dynamic imports.
@@ -140,7 +140,7 @@ Run the ordinary analysis and a separate production analysis when shipped code d
 
 ### ENGINEERING-CODE-REMOVAL-004 — Use Ruff only for the Python findings it can prove
 
-**Level:** recommended
+**Level:** recommended  
 **Applies when:** Cleanup includes Python imports, local variables, arguments, loop bindings, or suppression comments.
 
 Use the repository's pinned Ruff version and repository-owned configuration; do not allow an unrecorded user-level configuration to determine the result. Confirm the analyzed file scope, exclusions, target Python version, preview setting, selected rules, per-file ignores, and dummy-variable convention. At minimum, assess `F401` for unused imports and `F841` for unused local variables. Include stable rules such as `F811`, `F842`, `B007`, the `ARG` family, and `RUF100` when their semantics match the project; consider `RUF059` only when the selected Ruff version treats it as appropriate for the project.
@@ -158,7 +158,7 @@ Review every unsafe fix and every change to `__init__.py`, `__all__`, import-tim
 
 ### ENGINEERING-CODE-REMOVAL-005 — Remove in bounded changes and verify the final graph
 
-**Level:** required
+**Level:** required  
 **Applies when:** One or more removal candidates have been classified as removable.
 
 Delete the smallest coherent set, update direct references, documentation, configuration, permissions, telemetry, manifests, and ownership records, and preserve supported public behavior unless an approved compatibility process governs its removal. Remove package dependencies with the repository's package manager so manifests, catalogs, and lockfiles agree. Do not remove retained data, schema, credentials, feature flags, fallback paths, or operational signals merely because their current code reader was deleted; route those lifecycle changes through their applicable standards.
@@ -176,7 +176,7 @@ Treat automatic fixes as proposed edits. For Knip, inspect a trustworthy report 
 
 ### ENGINEERING-CODE-REMOVAL-006 — Keep exceptions narrow and attributable
 
-**Level:** required
+**Level:** required  
 **Applies when:** A reported item is retained or an analysis result is suppressed.
 
 Use the narrowest supported configuration or inline exception. Record the hidden finding, reason, affected scope, owner, and condition or date for review. Do not disable an issue category for the whole repository to hide one unexplained result.
@@ -192,7 +192,7 @@ Use the narrowest supported configuration or inline exception. Record the hidden
 
 ### ENGINEERING-CODE-REMOVAL-007 — Ratchet a trustworthy baseline
 
-**Level:** recommended
+**Level:** recommended  
 **Applies when:** A repository will continue to use Knip, Ruff, deptry, Vulture, or an equivalent analyzer after the cleanup, or an existing backlog prevents a clean first run.
 
 After the analysis graph and rule scope are trustworthy, enforce the cleaned scope in continuous integration. A legacy backlog may be adopted by issue type, workspace, production scope, or a non-increasing issue budget. Keep unresolved categories visible as warnings or recorded backlog; do not report a passing non-zero budget or `--no-exit-code` run as a clean result. Tighten the gate as findings are resolved, and make configuration hints blocking once the configuration is owned and stable.
@@ -209,7 +209,7 @@ After the analysis graph and rule scope are trustworthy, enforce the cleaned sco
 
 ### ENGINEERING-CODE-REMOVAL-008 — Use deptry for Python dependency classification
 
-**Level:** recommended
+**Level:** recommended  
 **Applies when:** Python cleanup may add, remove, retain, or reclassify a runtime, optional, development, or transitive dependency.
 
 Use a pinned deptry version in the project's own environment to compare imported modules with the repository's authoritative dependency declarations. Configure the correct source roots, dependency file, regular and development groups, optional groups, notebooks, and per-rule exceptions. Assess `DEP001` missing dependencies, `DEP002` unused runtime dependencies, `DEP003` transitive dependencies used directly, `DEP004` development dependencies used by runtime code, and `DEP005` packages that duplicate the standard library.
@@ -228,7 +228,7 @@ Treat every result as a classification task. An undeclared or transitive depende
 
 ### ENGINEERING-CODE-REMOVAL-009 — Use Vulture only as contextual Python discovery
 
-**Level:** contextual
+**Level:** contextual  
 **Applies when:** A cleanup seeks repository-level candidates among Python functions, methods, classes, properties, attributes, variables, or unreachable blocks that Ruff does not report.
 
 Run a pinned Vulture version across the intended application, library, and test scope. Start with the highest useful confidence threshold and lower it only to expand a manually reviewed candidate queue. Never authorize deletion from Vulture's confidence score alone, including a 100 percent result. Trace implicit use through decorators, descriptors, dataclasses, serialization, dependency injection, callbacks, framework and test discovery, command and plugin entry points, reflection, name-based dispatch, inheritance, overrides, protocols, and external consumers.
@@ -247,7 +247,7 @@ Prefer a checked Python whitelist for intentional implicit uses over broad name,
 
 ### ENGINEERING-CODE-REMOVAL-010 — Test analyzer configuration with positive and negative canaries
 
-**Level:** required
+**Level:** required  
 **Applies when:** A repository adopts, materially reconfigures, upgrades, or relies on an unused-code or dependency analyzer as completion evidence.
 
 Maintain isolated repository-owned canaries for the applicable scenarios below. Each positive canary represents code or a dependency that must remain reachable; each negative canary represents an item the analyzer must report. Keep canaries outside shipped artifacts and ordinary finding budgets. Run them after tool, plugin, compiler, framework, packaging, entry-point, or analyzer-configuration changes.

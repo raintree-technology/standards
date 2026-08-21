@@ -40,7 +40,7 @@ Growth experiments must produce trustworthy learning and durable customer and bu
 
 ### GROWTH-EXPERIMENTS-001 — Write the hypothesis before exposure
 
-**Level:** required
+**Level:** required  
 **Applies when:** Comparing a treatment with a baseline or changing a growth mechanism to learn from outcomes.
 
 Before exposure, record the user problem, proposed mechanism, target population, treatment and control, expected direction, primary metric, guardrails, analysis method, and decision rule.
@@ -56,7 +56,7 @@ Before exposure, record the user problem, proposed mechanism, target population,
 
 ### GROWTH-EXPERIMENTS-002 — Define assignment, exposure, and contamination
 
-**Level:** required
+**Level:** required  
 **Applies when:** Running a controlled experiment.
 
 Specify eligibility, unit of randomization, allocation, persistence, exposure event, analysis population, concurrent experiments, and ways treatment can leak or interfere between groups.
@@ -73,7 +73,7 @@ Specify eligibility, unit of randomization, allocation, persistence, exposure ev
 
 ### GROWTH-EXPERIMENTS-003 — Declare one primary decision metric
 
-**Level:** required
+**Level:** required  
 **Applies when:** An experiment informs a ship, rollback, or expansion decision.
 
 Choose one primary metric before exposure. Treat additional metrics, segments, and cuts as supporting or exploratory unless a multiple-testing method is declared in advance.
@@ -89,7 +89,7 @@ Choose one primary metric before exposure. Treat additional metrics, segments, a
 
 ### GROWTH-EXPERIMENTS-004 — Protect guardrails and user trust
 
-**Level:** required
+**Level:** required  
 **Applies when:** Treatment can affect cost, comprehension, accessibility, cancellations, refunds, complaints, reliability, or long-term retention.
 
 Define acceptable guardrail bounds and the action a breach triggers. Do not ship a primary-metric winner that breaches a material guardrail without accountable review and a recorded exception.
@@ -105,7 +105,7 @@ Define acceptable guardrail bounds and the action a breach triggers. Do not ship
 
 ### GROWTH-EXPERIMENTS-005 — Do not stop opportunistically
 
-**Level:** prohibited
+**Level:** prohibited  
 **Applies when:** Repeatedly observing experiment results.
 
 Do not end an experiment merely when a desired threshold or favorable interval appears. Use a predeclared fixed horizon or a valid sequential method with its decision boundaries.
@@ -121,7 +121,7 @@ Do not end an experiment merely when a desired threshold or favorable interval a
 
 ### GROWTH-EXPERIMENTS-006 — Preserve every result and decision
 
-**Level:** required
+**Level:** required  
 **Applies when:** An experiment concludes or is stopped.
 
 Record implementation, dates, eligibility, exposure, metric results, uncertainty, guardrails, data-quality checks, limitations, decision, and reusable learning, including negative and inconclusive outcomes.
@@ -137,7 +137,7 @@ Record implementation, dates, eligibility, exposure, metric results, uncertainty
 
 ### GROWTH-EXPERIMENTS-007 — Plan for decision sensitivity
 
-**Level:** required
+**Level:** required  
 **Applies when:** A controlled experiment is expected to support a consequential decision.
 
 Before exposure, define the smallest effect worth acting on, expected baseline and variance, planned horizon or information requirement, and practical limits on sample or duration.
@@ -153,7 +153,7 @@ Before exposure, define the smallest effect worth acting on, expected baseline a
 
 ### GROWTH-EXPERIMENTS-008 — Check experiment integrity before outcomes
 
-**Level:** required
+**Level:** required  
 **Applies when:** Analyzing a controlled experiment.
 
 Check allocation balance, eligibility, exposure logging, treatment delivery, missing data, duplicate units, crossovers, and material pre-treatment differences before interpreting outcome metrics.
@@ -169,7 +169,7 @@ Check allocation balance, eligibility, exposure logging, treatment delivery, mis
 
 ### GROWTH-EXPERIMENTS-009 — Evaluate persistence and heterogeneous harm
 
-**Level:** required
+**Level:** required  
 **Applies when:** Novelty, learning, delayed cost, repeated exposure, or materially different user groups could change the result.
 
 Inspect the effect over time and across predeclared high-risk or decision-relevant groups. Plan follow-up measurement when the experimental window cannot observe the expected downstream outcome.
@@ -185,7 +185,7 @@ Inspect the effect over time and across predeclared high-risk or decision-releva
 
 ### GROWTH-EXPERIMENTS-010 — Separate practical value from statistical evidence
 
-**Level:** required
+**Level:** required  
 **Applies when:** Interpreting an experiment for a product or business decision.
 
 Report effect size and uncertainty in natural units, compare them with the predeclared smallest effect worth acting on, and include implementation, user, and operational costs. Do not equate crossing a statistical threshold with a worthwhile change.
@@ -202,7 +202,7 @@ Report effect size and uncertainty in natural units, compare them with the prede
 
 ### GROWTH-EXPERIMENTS-011 — Do not experiment on known obligations or harm
 
-**Level:** prohibited
+**Level:** prohibited  
 **Applies when:** A treatment would withhold a legal, safety, accessibility, privacy, security, or contractual requirement, or expose users to a condition already known to be materially harmful.
 
 Do not randomize whether users receive a required protection or known necessary correction. Use experiments to compare compliant and acceptably safe implementations, not to decide whether to honor the obligation.
@@ -218,7 +218,7 @@ Do not randomize whether users receive a required protection or known necessary 
 
 ### GROWTH-EXPERIMENTS-012 — Qualify treatment delivery before ramping exposure
 
-**Level:** required
+**Level:** required  
 **Applies when:** Launching a controlled experiment in a user-facing environment.
 
 Before interpreting outcomes or expanding exposure, verify assignment, persistence, treatment rendering, event collection, exclusion logic, guardrail alerts, and stop controls across representative browsers, devices, account states, and repeat visits.

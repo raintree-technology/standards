@@ -11,7 +11,7 @@ review_by: 2027-02-16
 stale_after: 2027-02-16
 applies_to: [api-change, service-change, library-api-change]
 tags: [api, design, contracts, compatibility]
-depends_on: [FND-EVIDENCE, FND-CHANGE, SECURITY-APPLICATION]
+depends_on: [FND-EVIDENCE, FND-CHANGE, SECURITY-APPLICATION, CONTENT-ERRORS]
 generated: { by: codex/gpt-5, at: "2026-08-16T23:36:18Z" }
 sources:
   - id: rfc-9110
@@ -153,7 +153,7 @@ APIs must preserve defined meaning across clients, versions, retries, failures, 
 
 ### API-CONTRACTS-001 — Define the contract before implementation
 
-**Level:** required
+**Level:** required  
 **Applies when:** Adding or materially changing a programmatic interface.
 
 Specify operations, authentication, authorization, inputs, outputs, errors, side effects, limits, compatibility, and lifecycle in a reviewable contract before release.
@@ -169,7 +169,7 @@ Specify operations, authentication, authorization, inputs, outputs, errors, side
 
 ### API-CONTRACTS-002 — Use truthful protocol semantics
 
-**Level:** required
+**Level:** required  
 **Applies when:** A protocol defines methods, status, headers, or media types.
 
 Return protocol signals that match the actual outcome, including success, validation failure, missing access, absence, conflict, throttling, and temporary unavailability.
@@ -185,10 +185,10 @@ Return protocol signals that match the actual outcome, including success, valida
 
 ### API-CONTRACTS-003 — Make errors stable and actionable
 
-**Level:** required
+**Level:** required  
 **Applies when:** A request can fail in a way callers need to handle.
 
-Return a stable machine-readable error identifier, safe human detail, affected field or operation where appropriate, trace reference, and retry or remediation guidance without exposing secrets.
+Return a stable machine-readable error identifier, safe human detail, affected field or operation where appropriate, trace reference, and retry or remediation guidance without exposing secrets. For HTTP APIs, meet `CONTENT-ERRORS-011`: use RFC 9457 problem details or an equally stable documented contract.
 
 **Why:** Parsing prose or guessing from one status code creates fragile callers and unsafe diagnostics.
 
@@ -201,7 +201,7 @@ Return a stable machine-readable error identifier, safe human detail, affected f
 
 ### API-CONTRACTS-004 — Bound collections and work
 
-**Level:** required
+**Level:** required  
 **Applies when:** A response or operation can grow with stored data, fan-out, or caller input.
 
 Set enforceable limits on request size, response size, page size, processing time, concurrency, and fan-out. Use stable continuation semantics for changing collections. Prefer cursor or continuation-token pagination when a collection can become large or change during traversal; do not expose an offset contract that cannot meet expected deep-page cost and consistency needs. Keep continuation tokens opaque, bind them to the applicable query state, and never treat possession of a token as authorization.
@@ -218,7 +218,7 @@ Set enforceable limits on request size, response size, page size, processing tim
 
 ### API-CONTRACTS-005 — Define retry and idempotency behavior
 
-**Level:** required
+**Level:** required  
 **Applies when:** Requests can be retried after timeout, disconnection, or partial failure.
 
 Declare which operations are safe to retry and protect non-idempotent effects with a bounded idempotency, deduplication, or reconciliation mechanism.
@@ -234,7 +234,7 @@ Declare which operations are safe to retry and protect non-idempotent effects wi
 
 ### API-CONTRACTS-006 — Evolve contracts compatibly
 
-**Level:** required
+**Level:** required  
 **Applies when:** Existing callers may use the interface during or after a change.
 
 Classify compatibility before implementation and prefer additive evolution. Do not remove, rename, relocate, narrow, or change the meaning or type of published behavior while supported callers depend on it. When a breaking change is justified, preserve old and new callers through an explicit version or migration window, publish deprecation and removal dates, and measure remaining use before removal. Internal ownership does not make a break safe unless every affected caller can be identified, coordinated, and verified.
@@ -250,7 +250,7 @@ Classify compatibility before implementation and prefer additive evolution. Do n
 
 ### API-CONTRACTS-007 — Make throttling fair and observable
 
-**Level:** required
+**Level:** required  
 **Applies when:** Capacity, abuse, cost, or contractual limits require rate control.
 
 Define the counted identity, window or algorithm, shared-resource boundary, response semantics, retry guidance, exemptions, and operator visibility. Do not let one tenant consume another tenant's protected allocation without an explicit policy. Provide an owned way to reduce or suspend one abusive or malfunctioning caller without disabling healthy callers.
@@ -266,23 +266,23 @@ Define the counted identity, window or algorithm, shared-resource boundary, resp
 
 ### API-CONTRACTS-008 — Verify authorization at the resource boundary
 
-**Level:** required
+**Level:** required  
 **Applies when:** An operation reads or changes protected resources.
 
-Authorize the authenticated principal for the exact operation, tenant, object, fields, and current state on the trusted side of the interface.
+Apply `SECURITY-APPLICATION-002`, which owns the enforcement requirement, at the interface contract: authorize the authenticated principal for the exact operation, tenant, object, fields, and current state on the trusted side of the interface.
 
 **Why:** Endpoint-level authentication alone does not prevent cross-tenant or object-level access.
 
 **Verify:**
 
-- Exercise allowed and denied cases across tenants, roles, object identifiers, field selection, and state transitions.
+- Run the `SECURITY-APPLICATION-002` verification against the published contract: allowed and denied cases across tenants, roles, object identifiers, field selection, and state transitions.
 - Confirm bulk, nested, export, and error paths enforce the same boundary.
 
 **Exceptions:** Explicitly public resources require classification and tests for unintended fields or state changes.
 
 ### API-CONTRACTS-009 — Model caller-visible product concepts
 
-**Level:** required
+**Level:** required  
 **Applies when:** Designing a new resource, operation, or material contract shape.
 
 Represent stable product concepts and caller workflows with familiar protocol patterns. Do not expose storage links, service boundaries, job mechanics, or other implementation structure unless callers need that concept to use or control the product correctly.
@@ -298,7 +298,7 @@ Represent stable product concepts and caller workflows with familiar protocol pa
 
 ### API-CONTRACTS-010 — Make secure adoption direct
 
-**Level:** required
+**Level:** required  
 **Applies when:** An API is intended for independent adoption by external or cross-team callers.
 
 Provide the least complex authentication and first-request path allowed by the threat model. Document a runnable minimal request, credential scope, storage expectations, expiration, rotation, revocation, and the path to stronger delegated access when needed. Do not require an interactive delegated flow for a server-to-server use case unless the security model requires it.
@@ -314,7 +314,7 @@ Provide the least complex authentication and first-request path allowed by the t
 
 ### API-CONTRACTS-011 — Keep costly expansions explicit
 
-**Level:** required
+**Level:** required  
 **Applies when:** A field, relationship, computation, or downstream call materially increases response cost, latency, fan-out, or failure risk.
 
 Keep the baseline response bounded and make costly expansions explicit and off by default. Define allowed expansions, nesting and size limits, authorization, partial-failure behavior, and cost or throttling semantics in the contract.
@@ -330,7 +330,7 @@ Keep the baseline response bounded and make costly expansions explicit and off b
 
 ### API-CONTRACTS-012 — Prevent lost concurrent updates
 
-**Level:** required
+**Level:** required  
 **Applies when:** More than one actor can update or delete a resource based on previously read state and an unnoticed overwrite could cause harm.
 
 Expose a resource version or validator and support a conditional mutation that rejects stale state. Define the conflict or precondition response, whether a missing precondition is allowed, and how callers can refetch, merge, or retry without silently discarding another actor's change.
@@ -346,7 +346,7 @@ Expose a resource version or validator and support a conditional mutation that r
 
 ### API-CONTRACTS-013 — Define caching and freshness behavior
 
-**Level:** required
+**Level:** required  
 **Applies when:** A response can pass through a browser, shared cache, gateway, client cache, or other component that may reuse it.
 
 Declare whether the response can be stored and reused, its cache-key dimensions, freshness lifetime, revalidation behavior, and allowed stale behavior. Protect authenticated, tenant-specific, personal, and otherwise sensitive responses from shared or cross-context reuse. Use protocol cache controls and validators consistently with the documented semantics.
@@ -362,7 +362,7 @@ Declare whether the response can be stored and reused, its cache-key dimensions,
 
 ### API-CONTRACTS-014 — Define asynchronous operation lifecycle
 
-**Level:** required
+**Level:** required  
 **Applies when:** Work can exceed the synchronous request deadline, continue after disconnection, or finish outside the initiating request.
 
 Return a durable operation handle or equivalent status resource. Define identity, states and transitions, status retrieval, result and error shape, progress semantics when present, cancellation behavior, retry and duplicate-submission behavior, authorization, retention, and expiration. Terminal results must remain distinguishable from an unknown or expired operation.
@@ -378,7 +378,7 @@ Return a durable operation handle or equivalent status resource. Define identity
 
 ### API-CONTRACTS-015 — Define event and webhook delivery
 
-**Level:** required
+**Level:** required  
 **Applies when:** A service publishes events or calls a consumer-controlled endpoint.
 
 Define stable event identity, source, type and schema version, occurrence time, subject, payload semantics, authentication or integrity protection, acknowledgement deadline, retry and backoff behavior, duplicate and ordering behavior, delivery horizon, replay or recovery path, and subscription and secret lifecycle. Consumers must be able to distinguish a redelivery of one event from a separate occurrence.
@@ -394,7 +394,7 @@ Define stable event identity, source, type and schema version, occurrence time, 
 
 ### API-CONTRACTS-016 — Inventory and retire deployed surfaces
 
-**Level:** required
+**Level:** required  
 **Applies when:** An API or version is deployed to any production or non-production environment.
 
 Maintain an owned inventory of hosts, environments, routes or methods, versions, exposure, authentication, data classification, lifecycle state, and intended consumers. Reconcile the inventory and published contract with the routes that gateways and applications actually serve. Signal deprecation and sunset through documented machine-readable protocol mechanisms where available, then remove the route, credentials, documentation, monitoring, and network exposure when retirement completes.
@@ -410,7 +410,7 @@ Maintain an owned inventory of hosts, environments, routes or methods, versions,
 
 ### API-CONTRACTS-017 — Design from representative use cases
 
-**Level:** required
+**Level:** required  
 **Applies when:** Adding a new API or materially expanding its caller-visible concepts.
 
 Identify representative simple, complex, failure, and misuse cases before fixing the contract. Draft the smallest interface that supports them, write realistic calling code or requests, review it with intended callers and implementers, and retain accepted examples as contract or compatibility checks.
@@ -426,7 +426,7 @@ Identify representative simple, complex, failure, and misuse cases before fixing
 
 ### API-CONTRACTS-018 — Keep vocabulary and shapes consistent
 
-**Level:** required
+**Level:** required  
 **Applies when:** Naming or shaping operations, resources, parameters, fields, results, or failures.
 
 Use intelligible, customary, and unambiguous names; one term must keep one meaning across the interface. Use types that represent the domain value directly, and keep parameter order, defaults, nullability, units, identifiers, and result shapes consistent across similar operations. Operations with materially different behavior must not rely on a shared name or overload that hides the difference.
@@ -442,7 +442,7 @@ Use intelligible, customary, and unambiguous names; one term must keep one meani
 
 ### API-CONTRACTS-019 — Minimize public surface and mutability
 
-**Level:** required
+**Level:** required  
 **Applies when:** Deciding whether a capability, type, field, state transition, extension point, or implementation detail is caller-visible.
 
 Expose only what demonstrated caller use cases require and default the rest to private. Prefer immutable values and constrained state transitions. Do not expose storage, subclassing, inheritance, override, or other implementation extension points unless their supported behavior, invariants, compatibility, concurrency, and lifecycle are part of the contract.
@@ -458,7 +458,7 @@ Expose only what demonstrated caller use cases require and default the rest to p
 
 ### API-CONTRACTS-020 — Reject invalid use before effects
 
-**Level:** required
+**Level:** required  
 **Applies when:** Invalid input, state, authorization, or preconditions can be detected before a durable or external side effect.
 
 Validate the complete request at the earliest trusted boundary and return the documented failure before committing effects. When validation or authorization can fail only after work begins, define atomicity, partial success, compensation, status, and reconciliation behavior.
@@ -474,7 +474,7 @@ Validate the complete request at the earliest trusted boundary and return the do
 
 ### API-CONTRACTS-021 — Return structured values and ordinary empty states
 
-**Level:** required
+**Level:** required  
 **Applies when:** Callers need to inspect, branch on, calculate with, or persist returned information.
 
 Return structured fields with appropriate types instead of requiring callers to parse display strings or undocumented encodings. Represent ordinary absence with the contract's normal empty or optional form, and reserve errors or exceptional control flow for conditions that prevent the operation from fulfilling its contract.
@@ -490,7 +490,7 @@ Return structured fields with appropriate types instead of requiring callers to 
 
 ### API-CONTRACTS-022 — Document every exported contract element
 
-**Level:** required
+**Level:** required  
 **Applies when:** An element is available to callers outside its owning implementation.
 
 Document purpose, inputs, outputs, side effects, errors, limits, units, defaults, nullability, concurrency, security, lifecycle, and examples wherever they affect correct use. Keep a runnable minimal example and representative advanced and failure examples synchronized with the released contract.
@@ -506,7 +506,7 @@ Document purpose, inputs, outputs, side effects, errors, limits, units, defaults
 
 ### API-CONTRACTS-023 — Define field presence and update ownership
 
-**Level:** required
+**Level:** required  
 **Applies when:** A request or response contains optional, nullable, immutable, input-only, output-only, defaulted, or partially updated fields.
 
 Define each field's presence and ownership semantics, including whether it is required, optional, nullable, immutable, caller-set, or server-set. Distinguish omitted, null, empty, zero, false, and default values wherever they have different effects. Partial updates must identify the fields being changed and define whether omission preserves, clears, resets, or ignores each value.
@@ -522,7 +522,7 @@ Define each field's presence and ownership semantics, including whether it is re
 
 ### API-CONTRACTS-024 — Specify consistency guarantees
 
-**Level:** required
+**Level:** required  
 **Applies when:** Callers can observe replicated, cached, asynchronous, or concurrently changing data.
 
 Define read-after-write, read-after-delete, snapshot, monotonic-read, ordering, and replication-lag behavior where callers can observe a difference. State the scope of each guarantee, including resource, collection, tenant, region, replica, session, and time bounds as applicable.
@@ -538,7 +538,7 @@ Define read-after-write, read-after-delete, snapshot, monotonic-read, ordering, 
 
 ### API-CONTRACTS-025 — Define lifecycle states and transitions
 
-**Level:** required
+**Level:** required  
 **Applies when:** A caller-visible resource or operation moves through states over time.
 
 Model lifecycle states and allowed transitions explicitly. Distinguish transient, stable, terminal, failed, canceled, deleted, expired, and unknown states where applicable. Expose actions rather than allowing arbitrary state assignment when transitions have side effects, authorization, or preconditions.
@@ -554,7 +554,7 @@ Model lifecycle states and allowed transitions explicitly. Distinguish transient
 
 ### API-CONTRACTS-026 — Make collection queries deterministic
 
-**Level:** required
+**Level:** required  
 **Applies when:** A collection supports filtering, searching, sorting, pagination, counts, or caller-selected projections.
 
 Define the query grammar, supported fields and operators, type coercion, case and locale behavior, null and missing-value handling, default and requested ordering, deterministic tie-breaking, authorization scope, and invalid-query response. Define whether counts are exact or estimated and bind continuation state to the filter, sort, projection, and consistency context that produced it.
@@ -570,7 +570,7 @@ Define the query grammar, supported fields and operators, type coercion, case an
 
 ### API-CONTRACTS-027 — Represent identifiers and quantities precisely
 
-**Level:** required
+**Level:** required  
 **Applies when:** A contract carries identifiers, time, dates, durations, money, measurements, counts, percentages, offsets, or other values whose representation affects meaning.
 
 Use stable types and document format, unit, scale, precision, range, timezone or calendar basis, rounding, overflow, and comparison semantics as applicable. Treat opaque identifiers as opaque and preserve leading zeros and case rules. Money must identify currency and avoid binary floating-point assumptions where exact decimal value matters.
@@ -586,7 +586,7 @@ Use stable types and document format, unit, scale, precision, range, timezone or
 
 ### API-CONTRACTS-028 — Define bulk and partial-result semantics
 
-**Level:** required
+**Level:** required  
 **Applies when:** One request reads or changes multiple independently identifiable items or sub-operations.
 
 Define batch limits, ordering, atomicity, isolation, authorization, idempotency, and whether one failure rejects all work or returns partial results. For partial results, correlate every item with a success, failure, or unattempted state and make retrying only unresolved items safe.
@@ -602,7 +602,7 @@ Define batch limits, ordering, atomicity, isolation, authorization, idempotency,
 
 ### API-CONTRACTS-029 — Preserve forward compatibility with unknown data
 
-**Level:** required
+**Level:** required  
 **Applies when:** Fields, variants, enum values, event types, union members, or schema extensions may be added during the supported lifetime.
 
 Define how clients handle unknown response data and how servers handle unknown request data. Clients must not fail solely because a compatible response adds an unknown field or open value. Preserve reserved names, numeric tags, discriminators, and retired identifiers so they cannot be reused with a different meaning.
@@ -618,7 +618,7 @@ Define how clients handle unknown response data and how servers handle unknown r
 
 ### API-CONTRACTS-030 — Define deadlines and cancellation
 
-**Level:** required
+**Level:** required  
 **Applies when:** Work can block, call dependencies, consume scarce resources, or continue after the caller stops waiting.
 
 Define client and server deadlines, timeout signals, downstream budget propagation, cancellation acknowledgement, and whether cancellation stops pending work, interrupts active work, compensates completed work, or only stops waiting. A timeout or disconnect must not be presented as proof that no side effect occurred.
@@ -634,7 +634,7 @@ Define client and server deadlines, timeout signals, downstream budget propagati
 
 ### API-CONTRACTS-031 — Separate correlation from authority and deduplication
 
-**Level:** required
+**Level:** required  
 **Applies when:** Requests cross process boundaries or callers and operators need to trace an operation.
 
 Accept or generate a safe correlation identifier and propagate standard trace context across participating boundaries where supported. Document which identifiers are caller-supplied, returned, logged, and propagated. Never treat correlation or trace identifiers as authentication, authorization, secrecy, freshness, or idempotency unless a separate contract explicitly grants that role.
@@ -650,7 +650,7 @@ Accept or generate a safe correlation identifier and propagate standard trace co
 
 ### API-CONTRACTS-032 — Treat SDK behavior as part of the contract
 
-**Level:** required
+**Level:** required  
 **Applies when:** The API owner publishes or endorses generated or handwritten client libraries, command tools, or language bindings.
 
 Version each client against supported service contracts and define authentication, configuration, defaults, retries, idempotency, pagination, long-running operations, errors, cancellation, timeouts, unknown values, and thread or task safety. Follow language conventions without changing wire or semantic meaning, and publish support and deprecation policy for each runtime.
